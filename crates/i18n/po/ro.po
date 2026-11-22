@@ -21895,6 +21895,21 @@ msgstr "adresa unei cutii poștale partajate nu poate fi schimbată: eliminați-
 msgid "a shared mailbox's rules are its own: this version doesn't make them"
 msgstr "regulile unei cutii poștale partajate sunt ale ei: această versiune nu le creează"
 
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "a sign-in with your identity provider is never sent to Microsoft's or Google's mail servers"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "a sign-in with your identity provider is only sent to a mail server on this computer in a test"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "a sign-in with your identity provider is only used with this account's own mail servers"
+msgstr ""
+
 #. why a command can't run
 #: crates/engine/src/cmd/picture.rs
 #, fuzzy
@@ -22139,6 +22154,11 @@ msgstr "introduceți o parolă pentru conectare"
 msgid "enter a user name to sign in"
 msgstr "introduceți un nume de utilizator pentru conectare"
 
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "enter the client id registered for MailCraft at your identity provider"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/reading/remote.rs
 #, fuzzy
@@ -22150,6 +22170,11 @@ msgstr "toți cei de la @{domain}"
 #, fuzzy
 msgid "expected and replacement must be on one line"
 msgstr "textul căutat și cel înlocuitor trebuie să fie pe o singură linie"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "find your identity provider's sign-in addresses (Discover), or enter them"
+msgstr ""
 
 #. folder name
 #: crates/model/src/mailbox.rs
@@ -23449,6 +23474,11 @@ msgstr "apariția modificată nu mai există"
 msgid "the check stopped unexpectedly"
 msgstr "verificarea s-a oprit neașteptat"
 
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "the client id can only be letters, digits and punctuation, at most 200 of them"
+msgstr ""
+
 #. why a mail server couldn't be used
 #: crates/proto/src/imap/mod.rs
 #, fuzzy
@@ -23610,6 +23640,11 @@ msgstr "dosarul în care este acest mesaj nu mai este pe acest computer"
 #, fuzzy
 msgid "the folder was numbered anew while it was being read"
 msgstr "dosarul a fost renumerotat în timpul citirii"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "the identity provider (issuer) address can't have a query or a fragment"
+msgstr ""
 
 #. what a command says
 #: crates/engine/src/import_pst.rs
@@ -23784,6 +23819,11 @@ msgstr "platforma a refuzat sau a eșuat"
 #, fuzzy
 msgid "the proposed end is not after the proposed start"
 msgstr "sfârșitul propus nu este după începutul propus"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "the redirect port must be between 1 and 65535, or automatic"
+msgstr ""
 
 #. what a command says
 #: crates/model/src/mailbox_followup.rs
@@ -24678,6 +24718,11 @@ msgstr "scrieți o adresă, de exemplu cineva@example.org, sau un domeniu, de ex
 msgid "unexpected server response: {reason}"
 msgstr "răspuns neașteptat de la server: {reason}"
 
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "use common, consumers, organizations, or a directory's id or domain as the tenant"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/security.rs
 #, fuzzy
@@ -24837,6 +24882,11 @@ msgstr "v-ați conectat ca altcineva"
 #, fuzzy
 msgid "you@example.org"
 msgstr "dvs@example.org"
+
+#. name
+#: crates/model/src/mailbox.rs
+msgid "your identity provider"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/graph_switch.rs

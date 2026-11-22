@@ -21795,6 +21795,21 @@ msgstr "l'indirizzo di una cassetta postale condivisa non può essere modificato
 msgid "a shared mailbox's rules are its own: this version doesn't make them"
 msgstr "le regole di una cassetta postale condivisa sono sue: questa versione non le crea"
 
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "a sign-in with your identity provider is never sent to Microsoft's or Google's mail servers"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "a sign-in with your identity provider is only sent to a mail server on this computer in a test"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "a sign-in with your identity provider is only used with this account's own mail servers"
+msgstr ""
+
 #. why a command can't run
 #: crates/engine/src/cmd/picture.rs
 #, fuzzy
@@ -22036,6 +22051,11 @@ msgstr "inserire una password per accedere"
 msgid "enter a user name to sign in"
 msgstr "inserire un nome utente per accedere"
 
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "enter the client id registered for MailCraft at your identity provider"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/reading/remote.rs
 #, fuzzy
@@ -22047,6 +22067,11 @@ msgstr "tutti in @{domain}"
 #, fuzzy
 msgid "expected and replacement must be on one line"
 msgstr "il testo da cercare e quello sostitutivo devono essere su una sola riga"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "find your identity provider's sign-in addresses (Discover), or enter them"
+msgstr ""
 
 #. folder name
 #: crates/model/src/mailbox.rs
@@ -23346,6 +23371,11 @@ msgstr "l'occorrenza modificata non c'è più"
 msgid "the check stopped unexpectedly"
 msgstr "la verifica si è interrotta in modo imprevisto"
 
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "the client id can only be letters, digits and punctuation, at most 200 of them"
+msgstr ""
+
 #. why a mail server couldn't be used
 #: crates/proto/src/imap/mod.rs
 #, fuzzy
@@ -23507,6 +23537,11 @@ msgstr "la cartella che contiene questo messaggio non è più su questo computer
 #, fuzzy
 msgid "the folder was numbered anew while it was being read"
 msgstr "la cartella è stata rinumerata durante la lettura"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "the identity provider (issuer) address can't have a query or a fragment"
+msgstr ""
 
 #. what a command says
 #: crates/engine/src/import_pst.rs
@@ -23681,6 +23716,11 @@ msgstr "la piattaforma ha rifiutato o non è riuscita"
 #, fuzzy
 msgid "the proposed end is not after the proposed start"
 msgstr "la fine proposta non è successiva all'inizio proposto"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "the redirect port must be between 1 and 65535, or automatic"
+msgstr ""
 
 #. what a command says
 #: crates/model/src/mailbox_followup.rs
@@ -24573,6 +24613,11 @@ msgstr "digita un indirizzo, ad esempio qualcuno@example.org, o un dominio, ad e
 msgid "unexpected server response: {reason}"
 msgstr "risposta inattesa del server: {reason}"
 
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "use common, consumers, organizations, or a directory's id or domain as the tenant"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/security.rs
 #, fuzzy
@@ -24732,6 +24777,11 @@ msgstr "hai effettuato l'accesso come un'altra persona"
 #, fuzzy
 msgid "you@example.org"
 msgstr "nome@example.org"
+
+#. name
+#: crates/model/src/mailbox.rs
+msgid "your identity provider"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/graph_switch.rs

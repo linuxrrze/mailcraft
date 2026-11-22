@@ -21738,6 +21738,21 @@ msgstr "საერთო საფოსტო ყუთის მისამ
 msgid "a shared mailbox's rules are its own: this version doesn't make them"
 msgstr "საერთო საფოსტო ყუთის წესები მისი საკუთარია: ეს ვერსია მათ არ ქმნის"
 
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "a sign-in with your identity provider is never sent to Microsoft's or Google's mail servers"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "a sign-in with your identity provider is only sent to a mail server on this computer in a test"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "a sign-in with your identity provider is only used with this account's own mail servers"
+msgstr ""
+
 #. why a command can't run
 #: crates/engine/src/cmd/picture.rs
 #, fuzzy
@@ -21979,6 +21994,11 @@ msgstr "შესასვლელად შეიყვანეთ პარ�
 msgid "enter a user name to sign in"
 msgstr "შესასვლელად შეიყვანეთ მომხმარებლის სახელი"
 
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "enter the client id registered for MailCraft at your identity provider"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/reading/remote.rs
 #, fuzzy
@@ -21990,6 +22010,11 @@ msgstr "ყველა დომენიდან @{domain}"
 #, fuzzy
 msgid "expected and replacement must be on one line"
 msgstr "მოსალოდნელი და ჩამნაცვლებელი ტექსტი ერთ ხაზზე უნდა იყოს"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "find your identity provider's sign-in addresses (Discover), or enter them"
+msgstr ""
 
 #. folder name
 #: crates/model/src/mailbox.rs
@@ -23290,6 +23315,11 @@ msgstr "შეცვლილი შემთხვევა აღარ არ
 msgid "the check stopped unexpectedly"
 msgstr "შემოწმება მოულოდნელად შეწყდა"
 
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "the client id can only be letters, digits and punctuation, at most 200 of them"
+msgstr ""
+
 #. why a mail server couldn't be used
 #: crates/proto/src/imap/mod.rs
 #, fuzzy
@@ -23448,6 +23478,11 @@ msgstr "საქაღალდე, რომელშიც ეს წერ�
 #. why a mail server couldn't be used
 #: crates/net/src/sync.rs
 msgid "the folder was numbered anew while it was being read"
+msgstr ""
+
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "the identity provider (issuer) address can't have a query or a fragment"
 msgstr ""
 
 #. what a command says
@@ -23623,6 +23658,11 @@ msgstr "პლატფორმამ უარი თქვა ან შე�
 #, fuzzy
 msgid "the proposed end is not after the proposed start"
 msgstr "შემოთავაზებული დასასრული შემოთავაზებული დასაწყისის შემდეგ არ არის"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "the redirect port must be between 1 and 65535, or automatic"
+msgstr ""
 
 #. what a command says
 #: crates/model/src/mailbox_followup.rs
@@ -24511,6 +24551,11 @@ msgstr "აკრიფეთ მისამართი, მაგალით
 msgid "unexpected server response: {reason}"
 msgstr "სერვერის მოულოდნელი პასუხი: {reason}"
 
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "use common, consumers, organizations, or a directory's id or domain as the tenant"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/security.rs
 #, fuzzy
@@ -24669,6 +24714,11 @@ msgstr "სხვა მომხმარებლით შეხვედი�
 #, fuzzy
 msgid "you@example.org"
 msgstr "you@example.org"
+
+#. name
+#: crates/model/src/mailbox.rs
+msgid "your identity provider"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/graph_switch.rs

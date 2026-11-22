@@ -21814,6 +21814,21 @@ msgstr "a megosztott postafiók címe nem módosítható: távolítsa el és adj
 msgid "a shared mailbox's rules are its own: this version doesn't make them"
 msgstr "a megosztott postafiók szabályai a sajátjai: ez a verzió nem teszi őket"
 
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "a sign-in with your identity provider is never sent to Microsoft's or Google's mail servers"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "a sign-in with your identity provider is only sent to a mail server on this computer in a test"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "a sign-in with your identity provider is only used with this account's own mail servers"
+msgstr ""
+
 #. why a command can't run
 #: crates/engine/src/cmd/picture.rs
 #, fuzzy
@@ -22055,6 +22070,11 @@ msgstr "jelszót kell megadnia a bejelentkezéshez"
 msgid "enter a user name to sign in"
 msgstr "beírandó felhasználónév"
 
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "enter the client id registered for MailCraft at your identity provider"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/reading/remote.rs
 #, fuzzy
@@ -22066,6 +22086,11 @@ msgstr "Mindenki a @{domain}-n"
 #, fuzzy
 msgid "expected and replacement must be on one line"
 msgstr "a keresett és a helyettesítő szövegnek egy sorban kell lennie"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "find your identity provider's sign-in addresses (Discover), or enter them"
+msgstr ""
 
 #. folder name
 #: crates/model/src/mailbox.rs
@@ -23366,6 +23391,11 @@ msgstr "a módosított előfordulás már nincs meg"
 msgid "the check stopped unexpectedly"
 msgstr "az ellenőrzés váratlanul leállt"
 
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "the client id can only be letters, digits and punctuation, at most 200 of them"
+msgstr ""
+
 #. why a mail server couldn't be used
 #: crates/proto/src/imap/mod.rs
 #, fuzzy
@@ -23527,6 +23557,11 @@ msgstr "A mappa, amiben ez az üzenet van, már nincs ezen a számítógépen."
 #, fuzzy
 msgid "the folder was numbered anew while it was being read"
 msgstr "a mappa számozása megváltozott olvasás közben"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "the identity provider (issuer) address can't have a query or a fragment"
+msgstr ""
 
 #. what a command says
 #: crates/engine/src/import_pst.rs
@@ -23701,6 +23736,11 @@ msgstr "a platform visszautasította vagy megbukott"
 #, fuzzy
 msgid "the proposed end is not after the proposed start"
 msgstr "a javasolt befejezés nem a javasolt kezdet után történik"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "the redirect port must be between 1 and 65535, or automatic"
+msgstr ""
 
 #. what a command says
 #: crates/model/src/mailbox_followup.rs
@@ -24593,6 +24633,11 @@ msgstr "Írjon be egy címet, például valaki@pream.org vagy egy domain, mint p
 msgid "unexpected server response: {reason}"
 msgstr "váratlan szerver válasz: {reason}"
 
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "use common, consumers, organizations, or a directory's id or domain as the tenant"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/security.rs
 #, fuzzy
@@ -24752,6 +24797,11 @@ msgstr "másik fiókkal jelentkezett be"
 #, fuzzy
 msgid "you@example.org"
 msgstr "you@pream.org"
+
+#. name
+#: crates/model/src/mailbox.rs
+msgid "your identity provider"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/graph_switch.rs

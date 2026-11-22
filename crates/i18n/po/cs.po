@@ -21870,6 +21870,21 @@ msgstr "adresu sdílené poštovní schránky nelze změnit: odeberte ji a přid
 msgid "a shared mailbox's rules are its own: this version doesn't make them"
 msgstr "sdílená poštovní schránka má vlastní pravidla: tato verze je nevytváří"
 
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "a sign-in with your identity provider is never sent to Microsoft's or Google's mail servers"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "a sign-in with your identity provider is only sent to a mail server on this computer in a test"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "a sign-in with your identity provider is only used with this account's own mail servers"
+msgstr ""
+
 #. why a command can't run
 #: crates/engine/src/cmd/picture.rs
 #, fuzzy
@@ -22113,6 +22128,11 @@ msgstr "k přihlášení zadejte heslo"
 msgid "enter a user name to sign in"
 msgstr "k přihlášení zadejte uživatelské jméno"
 
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "enter the client id registered for MailCraft at your identity provider"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/reading/remote.rs
 #, fuzzy
@@ -22124,6 +22144,11 @@ msgstr "všichni na @{domain}"
 #, fuzzy
 msgid "expected and replacement must be on one line"
 msgstr "hledaný i náhradní text musí být na jednom řádku"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "find your identity provider's sign-in addresses (Discover), or enter them"
+msgstr ""
 
 #. folder name
 #: crates/model/src/mailbox.rs
@@ -23424,6 +23449,11 @@ msgstr "změněný výskyt už neexistuje"
 msgid "the check stopped unexpectedly"
 msgstr "kontrola se nečekaně zastavila"
 
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "the client id can only be letters, digits and punctuation, at most 200 of them"
+msgstr ""
+
 #. why a mail server couldn't be used
 #: crates/proto/src/imap/mod.rs
 #, fuzzy
@@ -23585,6 +23615,11 @@ msgstr "složka, ve které tato zpráva je, už v tomto počítači není"
 #, fuzzy
 msgid "the folder was numbered anew while it was being read"
 msgstr "složka byla během čtení přečíslována"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "the identity provider (issuer) address can't have a query or a fragment"
+msgstr ""
 
 #. what a command says
 #: crates/engine/src/import_pst.rs
@@ -23759,6 +23794,11 @@ msgstr "platforma odmítla nebo selhala"
 #, fuzzy
 msgid "the proposed end is not after the proposed start"
 msgstr "navržený konec není po navrženém začátku"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "the redirect port must be between 1 and 65535, or automatic"
+msgstr ""
 
 #. what a command says
 #: crates/model/src/mailbox_followup.rs
@@ -24653,6 +24693,11 @@ msgstr "zadejte adresu, například nekdo@example.org, nebo doménu, například
 msgid "unexpected server response: {reason}"
 msgstr "neočekávaná odpověď serveru: {reason}"
 
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "use common, consumers, organizations, or a directory's id or domain as the tenant"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/security.rs
 #, fuzzy
@@ -24812,6 +24857,11 @@ msgstr "přihlásili jste se jako někdo jiný"
 #, fuzzy
 msgid "you@example.org"
 msgstr "vy@example.org"
+
+#. name
+#: crates/model/src/mailbox.rs
+msgid "your identity provider"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/graph_switch.rs
