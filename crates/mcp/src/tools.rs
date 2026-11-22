@@ -291,6 +291,12 @@ pub(crate) const NAMING_PARAMS: &[&str] = &[
     "url",
     "mailto",
     "fingerprint",
+    // An own identity provider's addresses, as a host found them or the owner typed them (#1831).
+    "issuer",
+    "oauthIssuer",
+    "authorizeUrl",
+    "tokenUrl",
+    "revokeUrl",
 ];
 
 /// `v` with every string under one of [`NAMING_PARAMS`] that is one whole frame, as
