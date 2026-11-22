@@ -291,7 +291,7 @@ pub(crate) const NAMING_PARAMS: &[&str] = &[
     "url",
     "mailto",
     "fingerprint",
-    // An own identity provider's addresses, as a host found them or the owner typed them (#1831).
+    // An own identity provider's addresses, as Discover or an autoconfig document found them.
     "issuer",
     "oauthIssuer",
     "authorizeUrl",
