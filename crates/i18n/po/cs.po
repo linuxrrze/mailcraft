@@ -3519,6 +3519,11 @@ msgstr ""
 msgid "Client secret (optional)"
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Client secret sent"
+msgstr ""
+
 #. ribbon, ribbon location
 #: crates/engine/src/cmd/edit.rs crates/engine/src/cmd/format.rs crates/ui-egui/src/ribbon.rs
 #, fuzzy
@@ -7520,6 +7525,11 @@ msgid "In line with text"
 msgstr "Na řádku s textem"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "In the Authorization header (client_secret_basic)"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/lib.rs
 #, fuzzy
 msgid "In the Outbox: it is on its way"
@@ -7536,6 +7546,11 @@ msgstr "Ve složce Pošta k odeslání: čeká na svůj čas"
 #, fuzzy
 msgid "In the folder pane's order"
 msgstr "V pořadí podokna složek"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "In the form (client_secret_post)"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
