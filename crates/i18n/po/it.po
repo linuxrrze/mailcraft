@@ -13545,6 +13545,11 @@ msgstr "Rinomina di una categoria sul server: {done} di {total} messaggi"
 msgid "Renewing the sign-in…"
 msgstr "Rinnovo dell'accesso…"
 
+#. interface
+#: crates/ui-egui/src/lib.rs
+msgid "Renewing the sign-in… If it can't be renewed, sign in on the page that opens in your browser."
+msgstr ""
+
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt crates/ui-egui/src/forms.rs crates/ui-egui/src/meeting_dialogs/share.rs
 #, fuzzy
@@ -17414,6 +17419,11 @@ msgid "The client secret can only be letters, digits and punctuation"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/lib.rs
+msgid "The client secret for {account} isn't stored on this computer: enter it again in Account Settings (File › Info)"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/account_setup.rs
 #, fuzzy
 msgid "The connection test only checks that this server answers. If it does want a sign-in, the first message you send says so."
@@ -20803,6 +20813,11 @@ msgstr "In attesa della registrazione Google di MailCraft"
 #, fuzzy
 msgid "Waiting for the approval stopped unexpectedly"
 msgstr "L'attesa dell'approvazione si è interrotta in modo imprevisto"
+
+#. interface
+#: crates/ui-egui/src/lib.rs
+msgid "Waiting for the system's credential store…"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/credits.rs
