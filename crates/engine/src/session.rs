@@ -1276,6 +1276,9 @@ pub struct Session {
     /// The automatic replies of each account that signs in with Microsoft, as its server last
     /// said (`sync.applyAutomaticReplies`). The server's, read again each session: never saved.
     pub auto_replies: std::collections::HashMap<Id, crate::cmd::auto_replies::Known>,
+    /// What each IMAP account's ManageSieve server last said of its Sieve scripts
+    /// (`sync.applySieve`, #9999). The server's: never saved.
+    pub sieve: std::collections::HashMap<Id, crate::cmd::sieve_replies::SieveKnown>,
     pub(crate) history: Vec<Undo>,
     pub(crate) redo: Vec<Undo>,
     /// Counts every change to the steps to undo and redo ([`Session::undo_steps_moved`]).
@@ -1508,6 +1511,7 @@ impl Session {
             pst_tops: HashMap::new(),
             server_search: Default::default(),
             auto_replies: Default::default(),
+            sieve: Default::default(),
             history: Vec::new(),
             redo: Vec::new(),
             steps_moved: 0,
@@ -3489,6 +3493,7 @@ impl Session {
         self.run_had.clear();
         self.jmap_read.clear();
         self.auto_replies.clear();
+        self.sieve.clear();
         // The background fetch's waits and offline flag were the old mailbox's.
         self.driver.fetch.forget();
         self.openings = self.openings.wrapping_add(1);
