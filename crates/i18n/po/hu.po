@@ -2180,6 +2180,12 @@ msgstr "A naptár frissítése a fiók kiszolgálójáról az értekezlet körü
 msgid "Ask the list to stop sending you its mail. MailCraft asks first and says how."
 msgstr "Kérje meg a listát, hogy ne küldjön több levelet. A MailCraft előbb rákérdez, és elmondja, hogyan történik."
 
+#. interface
+#: crates/ui-egui/src/backstage.rs
+#, fuzzy
+msgid "Ask the server for your automatic replies again."
+msgstr "Az automatikus válaszok újbóli lekérése a kiszolgálótól."
+
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
 #, fuzzy
@@ -2441,23 +2447,23 @@ msgstr "Az automatikus válaszok be vannak kapcsolva ehhez a fiókhoz: {address}
 #. what a command says
 #: crates/engine/src/cmd/auto_replies.rs
 #, fuzzy
-msgid "Automatic replies are kept on the mail server, and MailCraft can set them only for accounts that sign in with Microsoft so far: IMAP has no standard way to set them (Sieve vacation replies may come later)"
-msgstr "Automatikus válaszok a postaszerveren maradnak, és a MailCraft csak olyan fiókokra tudja beállítani őket, amelyek eddig a Microsoftnál jelentkeztek: IMAP nem tudja a szokásos módon beállítani azokat (a Sieve nyaralási válaszok később is bekövetkezhetnek)"
+msgid "Automatic replies are kept on the mail server: MailCraft sets them for accounts that sign in with Microsoft, and for IMAP accounts whose server keeps Sieve scripts (ManageSieve)"
+msgstr "Az automatikus válaszok a levelezőszerveren vannak: a MailCraft a Microsofttal bejelentkező fiókoknál és azoknál az IMAP-fiókoknál állítja be őket, amelyek szervere Sieve-szkripteket tárol (ManageSieve)"
 
 #. interface
-#: crates/ui-egui/src/auto_replies.rs
+#: crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/sieve_replies.rs
 #, fuzzy
 msgid "Automatic replies are off"
 msgstr "Az automatikus válaszok ki vannak kapcsolva"
 
 #. interface
-#: crates/ui-egui/src/auto_replies.rs
+#: crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/sieve_replies.rs
 #, fuzzy
 msgid "Automatic replies are on"
 msgstr "Az automatikus válaszok be vannak kapcsolva"
 
 #. interface
-#: crates/ui-egui/src/auto_replies.rs
+#: crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/sieve_replies.rs
 #, fuzzy
 msgid "Automatic replies are set for the time range you chose"
 msgstr "Automatikus válaszok vannak beállítva a kiválasztott időtartományhoz"
@@ -2473,6 +2479,12 @@ msgstr "Automatikus válaszok: a MailCraft módosíthatja őket"
 #, fuzzy
 msgid "Automatic replies: MailCraft needs you to sign in again to read them"
 msgstr "Automatikus válasz: MailCraft kell, hogy jelentkezzen be újra olvasni őket"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Automatic replies: MailCraft's Sieve script was changed elsewhere, and is left as it is"
+msgstr "Automatikus válaszok: a MailCraft Sieve-szkriptjét máshol módosították, ezért változatlanul marad"
 
 #. interface
 #: crates/ui-egui/src/auto_replies.rs
@@ -2499,7 +2511,7 @@ msgid "Automatic replies: changing them waits for your permission"
 msgstr "Automatikus válasz: az engedélyedre vár, hogy megváltoztassák őket"
 
 #. interface
-#: crates/ui-egui/src/auto_replies.rs
+#: crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/sieve_replies.rs
 #, fuzzy
 msgid "Automatic replies: couldn't be read ({why})"
 msgstr "Automatikus válasz: nem sikerült elolvasni ({why})"
@@ -2517,7 +2529,25 @@ msgid "Automatic replies: from {start} to {end}"
 msgstr "Automatikus válaszok: {start} – {end}"
 
 #. interface
-#: crates/ui-egui/src/auto_replies.rs
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Automatic replies: not available ({why})"
+msgstr "Automatikus válaszok: nem érhetők el ({why})"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Automatic replies: not available, this server doesn't offer Sieve scripts (ManageSieve)"
+msgstr "Automatikus válaszok: nem érhetők el, ez a szerver nem kínál Sieve-szkripteket (ManageSieve)"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Automatic replies: not available, this server's Sieve scripts can't send them"
+msgstr "Automatikus válaszok: nem érhetők el, a szerver Sieve-szkriptjei nem tudják elküldeni őket"
+
+#. interface
+#: crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/sieve_replies.rs
 #, fuzzy
 msgid "Automatic replies: not read yet"
 msgstr "Automatikus válaszok: még nem olvasták"
@@ -2535,10 +2565,16 @@ msgid "Automatic replies: on, until you turn them off"
 msgstr "Automatikus válasz: be, amíg ki nem kapcsolod őket"
 
 #. interface
-#: crates/ui-egui/src/auto_replies.rs
+#: crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/sieve_replies.rs
 #, fuzzy
 msgid "Automatic replies: reading…"
 msgstr "Automatikus válasz: olvasás…"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Automatic replies: the server didn't take your sign-in"
+msgstr "Automatikus válaszok: a szerver nem fogadta el a bejelentkezését"
 
 #. interface
 #: crates/ui-egui/src/auto_replies.rs
@@ -3285,7 +3321,7 @@ msgid "Changing your automatic replies wasn't allowed ({why}). Press OK to ask a
 msgstr "Automatikus válaszváltoztatás nem megengedett ({why}). Nyomja meg az OK-ot, ha újra megkérdezi: A Microsoft oldala megnyílik a böngészőjében."
 
 #. interface
-#: crates/ui-egui/src/auto_replies.rs
+#: crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/sieve_replies.rs
 #, fuzzy
 msgid "Changing your automatic replies…"
 msgstr "Automatikus válaszváltás…"
@@ -8864,6 +8900,12 @@ msgstr "Mail, calendar, people and tasks, written from screw in Rust. Ez fut nat
 msgid "MailCraft can now keep {account} in step with Microsoft through Microsoft Graph, the way Outlook on the web does, instead of IMAP. Your folders, flags, categories and drafts then match what you see in Outlook, and your mail keeps coming even where your organisation has turned IMAP off."
 msgstr "MailCraft most tartsa {account} lépést Microsoft keresztül Microsoft Graph, ahogy az Outlook az interneten csinál, ahelyett, hogy IMAP. A mappák, zászlók, kategóriák és vázlatok majd egyezni, amit látsz az Outlook, és a posta folyamatosan jön, még ott is, ahol a szervezet kikapcsolta IMAP ki."
 
+#. interface
+#: crates/ui-egui/src/auto_replies.rs
+#, fuzzy
+msgid "MailCraft can't keep automatic replies on this account's server: {why}. {advice}"
+msgstr "A MailCraft nem tud automatikus válaszokat tárolni ennek a fióknak a kiszolgálóján: {why}. {advice}"
+
 #. name
 #: crates/engine/src/cmd/rules.rs
 #, fuzzy
@@ -9159,6 +9201,18 @@ msgstr "MailCraft {version} nem volt telepítve: ez a verzió még mindig az egy
 #, fuzzy
 msgid "MailCraft's Google Desktop registration is not yet configured for this build."
 msgstr "A MailCraft Google Desktop regisztrációja még nincs beállítva ehhez az épülethez."
+
+#. interface
+#: crates/ui-egui/src/auto_replies.rs
+#, fuzzy
+msgid "MailCraft's Sieve script on the server was changed elsewhere since MailCraft wrote it, so MailCraft leaves it as it is. To set your automatic replies here, replace it with MailCraft's: what was changed in it elsewhere is lost."
+msgstr "A MailCraft Sieve-szkriptjét a szerveren azóta máshol módosították, hogy a MailCraft megírta, ezért a MailCraft változatlanul hagyja. Ha itt szeretné beállítani az automatikus válaszokat, cserélje le a MailCraft szkriptjére: ami máshol változott benne, elvész."
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "MailCraft's Sieve script on the server was changed elsewhere."
+msgstr "a MailCraft Sieve-szkriptjét a szerveren máshol módosították."
 
 #. what a command says
 #: crates/engine/src/cmd/sieve_replies.rs
@@ -13062,7 +13116,7 @@ msgid "Reading shared mailboxes needs your permission: use Send/Receive"
 msgstr "A megosztott postafiókák olvasásához az engedélyedre van szükség: használd a Send/Receive alkalmazást"
 
 #. interface
-#: crates/ui-egui/src/auto_replies.rs
+#: crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/sieve_replies.rs
 #, fuzzy
 msgid "Reading the automatic replies stopped unexpectedly"
 msgstr "Az automatikus válaszok olvasása váratlanul leállt"
@@ -13650,6 +13704,12 @@ msgstr "A megnyitottat egy .mailcraft fájllal cserélje ki"
 #, fuzzy
 msgid "Replace with"
 msgstr "Csere:"
+
+#. interface
+#: crates/ui-egui/src/auto_replies.rs
+#, fuzzy
+msgid "Replace with MailCraft's"
+msgstr "Csere a MailCraft szkriptjére"
 
 #. interface
 #: crates/ui-egui/src/signatures.rs
@@ -15743,6 +15803,12 @@ msgid "Sieve scripts are only read from and written to the account's own mail se
 msgstr "A Sieve-szkripteket csak a fiók saját levelezőszerveréről olvassa és oda írja a program"
 
 #. interface
+#: crates/ui-egui/src/account_setup.rs
+#, fuzzy
+msgid "Sieve server (Automatic Replies)"
+msgstr "Sieve-szerver (automatikus válaszok)"
+
+#. interface
 #: crates/ui-egui/src/dialogs.rs
 #, fuzzy
 msgid "Sign In"
@@ -15887,7 +15953,7 @@ msgid "Sign in with Microsoft once more to let MailCraft read the folders you ke
 msgstr "Jelentkezz be a Microsoft-nál még egyszer, hogy a MailCraft elolvashassa a kedvencek alatt tartott mappákat az Outlook-ban. Csak olvasnak, sosem változnak, és minden más marad, ahogy van."
 
 #. interface
-#: crates/ui-egui/src/auto_replies.rs
+#: crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/sieve_replies.rs
 #, fuzzy
 msgid "Sign in with Send/Receive first, then change your automatic replies."
 msgstr "Jelentkezz be a Küldés/Értesítés első, majd változtass automatikus válasz."
@@ -17098,6 +17164,12 @@ msgstr "A digitális aláírás lejárt."
 msgid "The Entire Series"
 msgstr "Az egész sorozat"
 
+#. interface
+#: crates/ui-egui/src/account_setup.rs
+#, fuzzy
+msgid "The Sieve server is a host name, with a port after a colon if it isn't 4190"
+msgstr "A Sieve-szerver egy gépnév, kettőspont után a porttal, ha az nem 4190"
+
 #. what a command says
 #: crates/mobile/src/sync_api.rs
 #, fuzzy
@@ -17717,6 +17789,12 @@ msgid "The incoming mail server isn't a host name (letters, digits, dots and das
 msgstr "A bejövő levelező szerver nem egy gazdanév (betűk, számjegyek, pontok és műszerfalak)"
 
 #. interface
+#: crates/ui-egui/src/account_setup.rs
+#, fuzzy
+msgid "The incoming server, port 4190"
+msgstr "A bejövő szerver, 4190-es port"
+
+#. interface
 #: crates/ui-egui/src/backstage.rs
 #, fuzzy
 msgid "The interface fonts are Inter, Source Sans 3 and JetBrains Mono (SIL Open Font License 1.1). Every icon is drawn in code and is original work. No artwork, fonts or text from other mail programs are included."
@@ -18315,6 +18393,12 @@ msgstr "A szerver nem mondta, hogy mikor vannak mások elfoglaltak."
 #, fuzzy
 msgid "The server didn't send the messages. Try again in a few minutes."
 msgstr "A szerver nem küldte el az üzeneteket, de pár perc múlva újra megpróbálhatja."
+
+#. interface
+#: crates/ui-egui/src/auto_replies.rs
+#, fuzzy
+msgid "The server didn't take your sign-in. Check the account's password in Account Settings."
+msgstr "A szerver nem fogadta el a bejelentkezését. Ellenőrizze a fiók jelszavát a Fiókbeállításokban."
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -19023,6 +19107,12 @@ msgstr "A fiók kedvencei az Outlookból származnak, és ott módosíthatók. A
 msgid "This account's calendar can't be asked yet: Send/Receive signs it in first."
 msgstr "A fiók naptára még nem érhető el. Előbb jelentkezzen be a Küldés/fogadás paranccsal."
 
+#. interface
+#: crates/ui-egui/src/auto_replies.rs
+#, fuzzy
+msgid "This account's server doesn't offer Sieve scripts (ManageSieve), so MailCraft can't keep automatic replies there."
+msgstr "A fiók szervere nem kínál Sieve-szkripteket (ManageSieve), ezért a MailCraft nem tud ott automatikus válaszokat tárolni."
+
 #. what a command says
 #: crates/engine/src/cmd/sieve_replies.rs
 #, fuzzy
@@ -19138,7 +19228,7 @@ msgid "This build can't reach the account's server."
 msgstr "A MailCraft ezen verziója nem tudja elérni a fiók kiszolgálóját."
 
 #. interface
-#: crates/ui-egui/src/auto_replies.rs
+#: crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/sieve_replies.rs
 #, fuzzy
 msgid "This build can't reach the server to change automatic replies. Use the desktop app."
 msgstr "Ez a konstrukció nem éri el a szervert az automatikus válaszok megváltoztatásához."
@@ -19824,6 +19914,18 @@ msgid "This series is still on its way to the account's server. Change one of it
 msgstr "A sorozat még nem érkezett meg a fiók kiszolgálójára. Egy kis idő múlva módosíthatja valamelyik előfordulását."
 
 #. interface
+#: crates/ui-egui/src/auto_replies.rs
+#, fuzzy
+msgid "This server can't send them only during a time range."
+msgstr "Ez a szerver nem tudja csak egy időszakban küldeni őket."
+
+#. interface
+#: crates/ui-egui/src/auto_replies.rs
+#, fuzzy
+msgid "This server keeps Sieve scripts, but they can't send automatic replies (it has no vacation extension)."
+msgstr "Ez a szerver tárol Sieve-szkripteket, de azok nem tudnak automatikus válaszokat küldeni (nincs vacation bővítménye)."
+
+#. interface
 #: crates/ui-egui/src/shared_mailboxes.rs
 #, fuzzy
 msgid "This shared mailbox's account is gone"
@@ -20244,7 +20346,7 @@ msgid "Try Signing In Again"
 msgstr "Próbáljon újra bejelentkezni!"
 
 #. interface
-#: crates/ui-egui/src/account_setup/help.rs crates/ui-egui/src/backstage.rs crates/ui-egui/src/nav.rs crates/ui-egui/src/reading/remote.rs crates/ui-egui/src/reading/unsubscribe.rs crates/ui-egui/src/report_problem.rs
+#: crates/ui-egui/src/account_setup/help.rs crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/backstage.rs crates/ui-egui/src/nav.rs crates/ui-egui/src/reading/remote.rs crates/ui-egui/src/reading/unsubscribe.rs crates/ui-egui/src/report_problem.rs
 #, fuzzy
 msgid "Try again"
 msgstr "Próbáld újra."
@@ -21026,6 +21128,12 @@ msgid "When"
 msgstr "Mikor"
 
 #. interface
+#: crates/ui-egui/src/auto_replies.rs
+#, fuzzy
+msgid "When you press OK, MailCraft's Sieve script on the server is replaced with these automatic replies."
+msgstr "Az OK megnyomásakor a MailCraft Sieve-szkriptje a szerveren lecserélődik ezekre az automatikus válaszokra."
+
+#. interface
 #: crates/ui-egui/src/graph_switch.rs
 #, fuzzy
 msgid "When you switch:"
@@ -21060,6 +21168,12 @@ msgstr "Ahol a kártya azt mondja, hogy a kulcs: MailCraft nem hozza el."
 #, fuzzy
 msgid "Where they differ, the kept contact has:"
 msgstr "Amennyiben ezek különböznek, a fenntartott kapcsolat:"
+
+#. interface
+#: crates/ui-egui/src/account_setup.rs
+#, fuzzy
+msgid "Where your server keeps Sieve scripts (ManageSieve), if not on the incoming server at port 4190. Your sign-in is sent there."
+msgstr "Ahol a szervere a Sieve-szkripteket tárolja (ManageSieve), ha nem a bejövő szerver 4190-es portján. A bejelentkezése oda kerül."
 
 #. what a command says
 #: crates/engine/src/cmd/calendar.rs
@@ -21444,11 +21558,23 @@ msgstr "Kapcsold ki a munka offline (Küld / Fogadja) kapcsolódni."
 #. interface
 #: crates/ui-egui/src/auto_replies.rs
 #, fuzzy
+msgid "Your Sieve script \"{name}\" runs on the server instead of MailCraft's: these replies are kept there, but aren't sent while it runs. MailCraft never switches your script off."
+msgstr "A szerveren a MailCraft helyett az Ön „{name}” Sieve-szkriptje fut: ezek a válaszok ott tárolódnak, de amíg az fut, nem mennek ki. A MailCraft soha nem kapcsolja ki az Ön szkriptjét."
+
+#. interface
+#: crates/ui-egui/src/auto_replies.rs
+#, fuzzy
 msgid "Your automatic replies couldn't be read: {error}"
 msgstr "Az automatikus válaszod nem olvasható: {error}"
 
 #. interface
-#: crates/ui-egui/src/auto_replies.rs
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your automatic replies were saved on the server, but another Sieve script of yours runs there, so they aren't sent"
+msgstr "Az automatikus válaszai a szerverre kerültek, de ott egy másik Sieve-szkriptje fut, ezért nem mennek ki"
+
+#. interface
+#: crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/sieve_replies.rs
 #, fuzzy
 msgid "Your automatic replies weren't changed"
 msgstr "Az automatikus válaszod nem változott."
@@ -24595,6 +24721,12 @@ msgstr "a szerver nem küldte el a szkriptet"
 msgid "the server didn't take it ({why})"
 msgstr "A szerver nem vitte el ({why})"
 
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "the server didn't take your sign-in."
+msgstr "a szerver nem fogadta el a bejelentkezését."
+
 #. what a command says
 #: crates/engine/src/cmd/rules.rs
 #, fuzzy
@@ -24612,6 +24744,12 @@ msgstr "A szerver nem engedi, hogy ez a szabály megváltozzon."
 #, fuzzy
 msgid "the server doesn't offer STARTTLS"
 msgstr "A kiszolgáló nem kínál StartTLS-t"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "the server doesn't offer Sieve scripts (ManageSieve)."
+msgstr "a szerver nem kínál Sieve-szkripteket (ManageSieve)."
 
 #. why a mail server couldn't be used
 #: crates/proto/src/imap/mod.rs
@@ -25785,6 +25923,12 @@ msgstr "{line} nem volt olvasható az utolsó menetben: {folders}"
 #, fuzzy
 msgid "{line} · the server's certificate needs your say"
 msgstr "{line} · A kiszolgáló tanúsítványát jóvá kell hagynia"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "{line} · your Sieve script \"{name}\" runs instead"
+msgstr "{line} · helyette az Ön „{name}” Sieve-szkriptje fut"
 
 #. date and time
 #: crates/i18n/src/date.rs
@@ -27427,6 +27571,10 @@ msgstr "−Bin"
 #, fuzzy
 msgid "−Lines"
 msgstr "−Sorok"
+
+#, fuzzy
+#~ msgid "Automatic replies are kept on the mail server, and MailCraft can set them only for accounts that sign in with Microsoft so far: IMAP has no standard way to set them (Sieve vacation replies may come later)"
+#~ msgstr "Automatikus válaszok a postaszerveren maradnak, és a MailCraft csak olyan fiókokra tudja beállítani őket, amelyek eddig a Microsoftnál jelentkeztek: IMAP nem tudja a szokásos módon beállítani azokat (a Sieve nyaralási válaszok később is bekövetkezhetnek)"
 
 #, fuzzy
 #~ msgid "Use a 12-hour clock (3:05 PM)"
