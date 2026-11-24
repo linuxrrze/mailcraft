@@ -677,6 +677,7 @@ const NEVER: &[&str] = &[
     "sync.applyMailboxSettings",
     "sync.applyAutomaticReplies",
     "sync.applySieve",
+    "sync.sieveScript",
     // Subscribed calendars (#209): the addresses a host is to look at, and what it brought.
     "sync.subscriptionRequest",
     "sync.applySubscription",
