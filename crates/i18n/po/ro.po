@@ -22841,13 +22841,13 @@ msgid "due"
 msgstr "termen"
 
 #. why a mail server couldn't be used
-#: crates/net/src/sync.rs crates/proto/src/imap/password.rs
+#: crates/net/src/sieve.rs crates/net/src/sync.rs crates/proto/src/imap/password.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
 msgid "enter a password to sign in"
 msgstr "introduceți o parolă pentru conectare"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/password.rs
+#: crates/proto/src/imap/password.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
 msgid "enter a user name to sign in"
 msgstr "introduceți un nume de utilizator pentru conectare"
@@ -24331,7 +24331,7 @@ msgid "the OpenPGP key is larger than a Public key is kept"
 msgstr "cheia OpenPGP este mai mare decât se păstrează o cheie publică"
 
 #. why a mail server couldn't be used
-#: crates/net/src/sync.rs
+#: crates/net/src/sieve.rs crates/net/src/sync.rs
 #, fuzzy
 msgid "the account has no incoming server"
 msgstr "contul nu are server de intrare"
@@ -24355,7 +24355,7 @@ msgid "the account has no usable e-mail address to send from"
 msgstr "contul nu are o adresă de e-mail utilizabilă de la care să trimită"
 
 #. why a mail server couldn't be used
-#: crates/net/src/send.rs crates/net/src/sync.rs
+#: crates/net/src/send.rs crates/net/src/sieve.rs crates/net/src/sync.rs
 #, fuzzy
 msgid "the account has no user name or e-mail address to sign in with"
 msgstr "contul nu are nume de utilizator sau adresă de e-mail cu care să se conecteze"
@@ -24493,7 +24493,7 @@ msgid "the client secret can only be letters, digits and punctuation"
 msgstr "secretul clientului poate conține doar litere, cifre și semne de punctuație"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/mod.rs
+#: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
 msgid "the command was refused"
 msgstr "comanda a fost refuzată"
@@ -25057,19 +25057,19 @@ msgid "the server answered {status}"
 msgstr "serverul a răspuns {status}"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/mod.rs
+#: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
 msgid "the server asked for more than a sign-in has"
 msgstr "serverul a cerut mai mult decât conține o conectare"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/mod.rs crates/proto/src/smtp.rs
+#: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/mod.rs crates/proto/src/smtp.rs
 #, fuzzy
 msgid "the server asked for more than a user name and access token"
 msgstr "serverul a cerut mai mult decât un nume de utilizator și un token de acces"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/smtp.rs
+#: crates/proto/src/managesieve/mod.rs crates/proto/src/smtp.rs
 #, fuzzy
 msgid "the server asked for more than a user name and password"
 msgstr "serverul a cerut mai mult decât un nume de utilizator și o parolă"
@@ -25213,19 +25213,19 @@ msgid "the server ended the command early"
 msgstr "serverul a încheiat comanda prea devreme"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/status.rs
+#: crates/proto/src/imap/status.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
 msgid "the server ended the session"
 msgstr "serverul a încheiat sesiunea"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/idle.rs crates/proto/src/imap/mod.rs
+#: crates/proto/src/imap/idle.rs crates/proto/src/imap/mod.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
 msgid "the server ended the session: {reason}"
 msgstr "serverul a încheiat sesiunea: {reason}"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/mod.rs
+#: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
 msgid "the server greeted with a refusal: {reason}"
 msgstr "serverul a salutat cu un refuz: {reason}"
@@ -25243,13 +25243,13 @@ msgid "the server keeps this folder: it can't be renamed, moved or deleted"
 msgstr "serverul păstrează acest dosar: nu poate fi redenumit, mutat sau șters"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/smtp.rs
+#: crates/proto/src/managesieve/mod.rs crates/proto/src/smtp.rs
 #, fuzzy
 msgid "the server offers no way to sign in with a password"
 msgstr "serverul nu oferă nicio metodă de conectare cu parolă"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/smtp.rs
+#: crates/proto/src/managesieve/mod.rs crates/proto/src/smtp.rs
 #, fuzzy
 msgid "the server offers no way to sign in with an access token"
 msgstr "serverul nu oferă nicio metodă de conectare cu token de acces"
@@ -25309,7 +25309,7 @@ msgid "the server sent a web page instead of a picture"
 msgstr "serverul a trimis o pagină web în loc de imagine"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/mod.rs crates/proto/src/smtp.rs
+#: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/mod.rs crates/proto/src/smtp.rs
 #, fuzzy
 msgid "the server sent data before the secure connection started"
 msgstr "serverul a trimis date înainte să înceapă conexiunea securizată"
@@ -25327,7 +25327,7 @@ msgid "the server sent nothing"
 msgstr "serverul nu a trimis nimic"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/idle.rs crates/proto/src/imap/mod.rs crates/proto/src/imap/status.rs
+#: crates/proto/src/imap/idle.rs crates/proto/src/imap/mod.rs crates/proto/src/imap/status.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
 msgid "the server sent too many responses to one command"
 msgstr "serverul a trimis prea multe răspunsuri la o singură comandă"
@@ -25345,7 +25345,7 @@ msgid "the server sent {claimed} bytes in one piece, more than the {mb} MB MailC
 msgstr "serverul a trimis {claimed} octeți dintr-o bucată, mai mult decât cei {mb} MB acceptați de MailCraft"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/line.rs
+#: crates/proto/src/line.rs crates/proto/src/managesieve/parse.rs
 #, fuzzy
 msgid "the server sent {n} bytes in one piece, more than MailCraft accepts"
 msgstr "serverul a trimis {n} octeți dintr-o bucată, mai mult decât acceptă MailCraft"
@@ -25381,7 +25381,7 @@ msgid "the server's reply has too many lines"
 msgstr "răspunsul serverului are prea multe rânduri"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/mod.rs
+#: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/parse.rs
 #, fuzzy
 msgid "the server's response has too many parts"
 msgstr "răspunsul serverului are prea multe părți"
@@ -25393,7 +25393,7 @@ msgid "the server's response is nested too deeply"
 msgstr "răspunsul serverului este imbricat prea adânc"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/mod.rs
+#: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/parse.rs
 #, fuzzy
 msgid "the server's response is too long"
 msgstr "răspunsul serverului este prea lung"
@@ -25482,13 +25482,13 @@ msgid "the user name or access token is too long to be sent"
 msgstr "numele de utilizator sau tokenul de acces este prea lung pentru a fi trimis"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/mod.rs crates/proto/src/smtp.rs
+#: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/mod.rs crates/proto/src/smtp.rs
 #, fuzzy
 msgid "the user name or password has a character that can't be sent"
 msgstr "numele de utilizator sau parola conține un caracter care nu poate fi trimis"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/password.rs
+#: crates/proto/src/imap/password.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
 msgid "the user name or password is too long"
 msgstr "numele de utilizator sau parola este prea lungă"
@@ -28507,3 +28507,164 @@ msgstr "−Linii"
 #~ msgid "The draft stays in Drafts. {why}"
 #~ msgstr "Ciorna rămâne în Ciorne. {why}"
 
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "\"{name}\" can't be used as a script name"
+msgstr "„{name}” nu poate fi folosit ca nume de script"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "A ManageSieve server greets as soon as it is connected to. This port may expect an encrypted connection from the start (on Dovecot, ssl = yes on the sieve listener), which ManageSieve doesn't use: it starts unencrypted and switches to encryption with STARTTLS. Or a proxy in front of the server waits for something MailCraft doesn't send. Check the Sieve server (Automatic Replies) in Account Settings, or ask the server's administrator."
+msgstr "Un server ManageSieve salută imediat ce se face conexiunea. Este posibil ca acest port să aștepte o conexiune criptată de la început (în Dovecot, ssl = yes pe listener-ul sieve), pe care ManageSieve nu o folosește: începe necriptat și trece la criptare cu STARTTLS. Sau un proxy din fața serverului așteaptă ceva ce MailCraft nu trimite. Verificați serverul Sieve (răspunsuri automate) din setările contului sau întrebați administratorul serverului."
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "Check the Sieve server (Automatic Replies) in Account Settings, and that your mail server has ManageSieve switched on."
+msgstr "Verificați serverul Sieve (răspunsuri automate) din setările contului și dacă serverul de e-mail are ManageSieve activat."
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "Check the Sieve server (Automatic Replies) in Account Settings: ManageSieve is usually on port 4190 of the incoming mail server."
+msgstr "Verificați serverul Sieve (răspunsuri automate) din setările contului: ManageSieve este de obicei pe portul 4190 al serverului de e-mail primit."
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "MailCraft connected to {at}, but the server said nothing"
+msgstr "MailCraft s-a conectat la {at}, dar serverul nu a spus nimic"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "MailCraft signs in only over an encrypted connection, so it didn't sign in there: your password would cross the network unencrypted. Ask the server's administrator to turn on TLS for ManageSieve."
+msgstr "MailCraft se autentifică doar printr-o conexiune criptată, așa că nu s-a autentificat acolo: parola ar traversa rețeaua necriptată. Cereți administratorului serverului să activeze TLS pentru ManageSieve."
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "ManageSieve starts unencrypted and switches to encryption with STARTTLS, so MailCraft doesn't sign in there. On Dovecot, set ssl = no on the sieve listener (the connection is still encrypted, by STARTTLS), or name another port in Account Settings › Sieve server (Automatic Replies)."
+msgstr "ManageSieve începe necriptat și trece la criptare cu STARTTLS, așa că MailCraft nu se autentifică acolo. În Dovecot, setați ssl = no pe listener-ul sieve (conexiunea rămâne criptată, prin STARTTLS) sau indicați alt port în Setări cont › Server Sieve (răspunsuri automate)."
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "Nothing was sent to it. Check the Sieve server (Automatic Replies) in Account Settings, or ask the server's administrator about its certificate."
+msgstr "Nu i s-a trimis nimic. Verificați serverul Sieve (răspunsuri automate) din setările contului sau întrebați administratorul serverului despre certificatul acestuia."
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "Sieve scripts are only read from and written to the account's own mail server"
+msgstr "Scripturile Sieve sunt citite și scrise doar pe serverul de e-mail al contului"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "a POP3 server"
+msgstr "un server POP3"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "a server that encrypts from the first byte"
+msgstr "un server care criptează de la primul octet"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "a web server"
+msgstr "un server web"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "an IMAP server"
+msgstr "un server IMAP"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "an SMTP server"
+msgstr "un server SMTP"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "an SSH server"
+msgstr "un server SSH"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "couldn't make a secure connection to {at}: {reason}"
+msgstr "nu s-a putut stabili o conexiune securizată cu {at}: {reason}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "nothing answers at {at} ({reason})"
+msgstr "nimic nu răspunde la {at} ({reason})"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "something answers at {at}, but it isn't a ManageSieve server"
+msgstr "ceva răspunde la {at}, dar nu este un server ManageSieve"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "something answers at {at}, but it isn't a ManageSieve server: it looks like {what}"
+msgstr "ceva răspunde la {at}, dar nu este un server ManageSieve: pare să fie {what}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "the ManageSieve server at {at} doesn't offer STARTTLS"
+msgstr "serverul ManageSieve de la {at} nu oferă STARTTLS"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "the script is larger than the {kb} KB MailCraft sends"
+msgstr "scriptul depășește cei {kb} KB pe care îi trimite MailCraft"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "the server didn't greet like a ManageSieve server"
+msgstr "serverul nu a salutat ca un server ManageSieve"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "the server didn't send the script"
+msgstr "serverul nu a trimis scriptul"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "the server sent MailCraft to another server for the Sieve scripts, which it doesn't follow"
+msgstr "serverul a trimis MailCraft la alt server pentru scripturile Sieve, iar MailCraft nu urmează trimiterea"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs crates/proto/src/managesieve/parse.rs
+#, fuzzy
+msgid "the server sent something that isn't a ManageSieve response"
+msgstr "serverul a trimis ceva ce nu este un răspuns ManageSieve"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "{at} closed the connection without a word"
+msgstr "{at} a închis conexiunea fără niciun cuvânt"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "{at} expects an encrypted connection from the start, which ManageSieve doesn't use"
+msgstr "{at} așteaptă o conexiune criptată de la început, pe care ManageSieve nu o folosește"

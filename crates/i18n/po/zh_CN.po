@@ -22738,13 +22738,13 @@ msgid "due"
 msgstr "到期"
 
 #. why a mail server couldn't be used
-#: crates/net/src/sync.rs crates/proto/src/imap/password.rs
+#: crates/net/src/sieve.rs crates/net/src/sync.rs crates/proto/src/imap/password.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
 msgid "enter a password to sign in"
 msgstr "输入密码登录"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/password.rs
+#: crates/proto/src/imap/password.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
 msgid "enter a user name to sign in"
 msgstr "输入用户名以登录"
@@ -24229,7 +24229,7 @@ msgid "the OpenPGP key is larger than a Public key is kept"
 msgstr "OpenPGP 密钥超过公钥可保存的大小上限"
 
 #. why a mail server couldn't be used
-#: crates/net/src/sync.rs
+#: crates/net/src/sieve.rs crates/net/src/sync.rs
 #, fuzzy
 msgid "the account has no incoming server"
 msgstr "此账户没有收件服务器"
@@ -24253,7 +24253,7 @@ msgid "the account has no usable e-mail address to send from"
 msgstr "此账户没有可用于发信的电子邮件地址"
 
 #. why a mail server couldn't be used
-#: crates/net/src/send.rs crates/net/src/sync.rs
+#: crates/net/src/send.rs crates/net/src/sieve.rs crates/net/src/sync.rs
 #, fuzzy
 msgid "the account has no user name or e-mail address to sign in with"
 msgstr "此账户没有可用于登录的用户名或电子邮件地址"
@@ -24391,7 +24391,7 @@ msgid "the client secret can only be letters, digits and punctuation"
 msgstr "客户端密码只能包含字母、数字和标点符号"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/mod.rs
+#: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
 msgid "the command was refused"
 msgstr "命令被拒绝"
@@ -24955,19 +24955,19 @@ msgid "the server answered {status}"
 msgstr "服务器响应：{status}"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/mod.rs
+#: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
 msgid "the server asked for more than a sign-in has"
 msgstr "服务器要求的内容超出登录信息所含的内容"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/mod.rs crates/proto/src/smtp.rs
+#: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/mod.rs crates/proto/src/smtp.rs
 #, fuzzy
 msgid "the server asked for more than a user name and access token"
 msgstr "服务器要求的内容超出用户名和访问令牌所含的内容"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/smtp.rs
+#: crates/proto/src/managesieve/mod.rs crates/proto/src/smtp.rs
 #, fuzzy
 msgid "the server asked for more than a user name and password"
 msgstr "服务器要求的内容超出用户名和密码所含的内容"
@@ -25111,19 +25111,19 @@ msgid "the server ended the command early"
 msgstr "服务器提前结束了命令"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/status.rs
+#: crates/proto/src/imap/status.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
 msgid "the server ended the session"
 msgstr "服务器结束了会话"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/idle.rs crates/proto/src/imap/mod.rs
+#: crates/proto/src/imap/idle.rs crates/proto/src/imap/mod.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
 msgid "the server ended the session: {reason}"
 msgstr "服务器结束会话：{reason}"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/mod.rs
+#: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
 msgid "the server greeted with a refusal: {reason}"
 msgstr "服务器在问候响应中拒绝连接：{reason}"
@@ -25141,13 +25141,13 @@ msgid "the server keeps this folder: it can't be renamed, moved or deleted"
 msgstr "此文件夹由服务器保留：无法重命名、移动或删除"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/smtp.rs
+#: crates/proto/src/managesieve/mod.rs crates/proto/src/smtp.rs
 #, fuzzy
 msgid "the server offers no way to sign in with a password"
 msgstr "服务器不支持使用密码登录"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/smtp.rs
+#: crates/proto/src/managesieve/mod.rs crates/proto/src/smtp.rs
 #, fuzzy
 msgid "the server offers no way to sign in with an access token"
 msgstr "服务器不支持使用访问令牌登录"
@@ -25207,7 +25207,7 @@ msgid "the server sent a web page instead of a picture"
 msgstr "服务器发送了网页而不是图片"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/mod.rs crates/proto/src/smtp.rs
+#: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/mod.rs crates/proto/src/smtp.rs
 #, fuzzy
 msgid "the server sent data before the secure connection started"
 msgstr "服务器在安全连接建立前发送了数据"
@@ -25225,7 +25225,7 @@ msgid "the server sent nothing"
 msgstr "服务器没有发送任何内容"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/idle.rs crates/proto/src/imap/mod.rs crates/proto/src/imap/status.rs
+#: crates/proto/src/imap/idle.rs crates/proto/src/imap/mod.rs crates/proto/src/imap/status.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
 msgid "the server sent too many responses to one command"
 msgstr "服务器对一个命令发送了太多响应"
@@ -25243,7 +25243,7 @@ msgid "the server sent {claimed} bytes in one piece, more than the {mb} MB MailC
 msgstr "服务器一次发送了 {claimed} 字节，超过 MailCraft 允许的 {mb} MB"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/line.rs
+#: crates/proto/src/line.rs crates/proto/src/managesieve/parse.rs
 #, fuzzy
 msgid "the server sent {n} bytes in one piece, more than MailCraft accepts"
 msgstr "服务器一次发送了 {n} 字节，超过 MailCraft 允许的大小"
@@ -25279,7 +25279,7 @@ msgid "the server's reply has too many lines"
 msgstr "服务器的回复有太多行"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/mod.rs
+#: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/parse.rs
 #, fuzzy
 msgid "the server's response has too many parts"
 msgstr "服务器的响应包含太多部分"
@@ -25291,7 +25291,7 @@ msgid "the server's response is nested too deeply"
 msgstr "服务器的响应嵌套得太深"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/mod.rs
+#: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/parse.rs
 #, fuzzy
 msgid "the server's response is too long"
 msgstr "服务器的响应太长"
@@ -25380,13 +25380,13 @@ msgid "the user name or access token is too long to be sent"
 msgstr "用户名或访问令牌太长而无法发送"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/mod.rs crates/proto/src/smtp.rs
+#: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/mod.rs crates/proto/src/smtp.rs
 #, fuzzy
 msgid "the user name or password has a character that can't be sent"
 msgstr "用户名或密码含有无法发送的字符"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/imap/password.rs
+#: crates/proto/src/imap/password.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
 msgid "the user name or password is too long"
 msgstr "用户名或密码太长"
@@ -28143,3 +28143,164 @@ msgstr "−行"
 #~ msgid "The draft stays in Drafts. {why}"
 #~ msgstr "草稿保留在“草稿”中。{why}"
 
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "\"{name}\" can't be used as a script name"
+msgstr "“{name}”不能用作脚本名称"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "A ManageSieve server greets as soon as it is connected to. This port may expect an encrypted connection from the start (on Dovecot, ssl = yes on the sieve listener), which ManageSieve doesn't use: it starts unencrypted and switches to encryption with STARTTLS. Or a proxy in front of the server waits for something MailCraft doesn't send. Check the Sieve server (Automatic Replies) in Account Settings, or ask the server's administrator."
+msgstr "ManageSieve 服务器在连接建立后会立即发出问候。此端口可能要求从一开始就使用加密连接（在 Dovecot 中为 sieve 监听器上的 ssl = yes），而 ManageSieve 不这样做：它先以未加密方式开始，再通过 STARTTLS 切换到加密。也可能是服务器前的代理在等待 MailCraft 不会发送的内容。请在账户设置中检查“Sieve 服务器（自动答复）”，或询问服务器管理员。"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "Check the Sieve server (Automatic Replies) in Account Settings, and that your mail server has ManageSieve switched on."
+msgstr "请在账户设置中检查“Sieve 服务器（自动答复）”，并确认您的邮件服务器已开启 ManageSieve。"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "Check the Sieve server (Automatic Replies) in Account Settings: ManageSieve is usually on port 4190 of the incoming mail server."
+msgstr "请在账户设置中检查“Sieve 服务器（自动答复）”：ManageSieve 通常位于收信服务器的 4190 端口。"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "MailCraft connected to {at}, but the server said nothing"
+msgstr "MailCraft 已连接到 {at}，但服务器没有任何回应"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "MailCraft signs in only over an encrypted connection, so it didn't sign in there: your password would cross the network unencrypted. Ask the server's administrator to turn on TLS for ManageSieve."
+msgstr "MailCraft 只通过加密连接登录，因此没有在那里登录：否则您的密码会以未加密形式在网络上传输。请让服务器管理员为 ManageSieve 开启 TLS。"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "ManageSieve starts unencrypted and switches to encryption with STARTTLS, so MailCraft doesn't sign in there. On Dovecot, set ssl = no on the sieve listener (the connection is still encrypted, by STARTTLS), or name another port in Account Settings › Sieve server (Automatic Replies)."
+msgstr "ManageSieve 先以未加密方式开始，再通过 STARTTLS 切换到加密，因此 MailCraft 不会在那里登录。在 Dovecot 中，请在 sieve 监听器上设置 ssl = no（连接仍会通过 STARTTLS 加密），或在“账户设置 › Sieve 服务器（自动答复）”中指定其他端口。"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "Nothing was sent to it. Check the Sieve server (Automatic Replies) in Account Settings, or ask the server's administrator about its certificate."
+msgstr "没有向它发送任何内容。请在账户设置中检查“Sieve 服务器（自动答复）”，或向服务器管理员询问其证书。"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "Sieve scripts are only read from and written to the account's own mail server"
+msgstr "Sieve 脚本只会从该账户自己的邮件服务器读取，也只写入该服务器"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "a POP3 server"
+msgstr "POP3 服务器"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "a server that encrypts from the first byte"
+msgstr "从第一个字节起就加密的服务器"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "a web server"
+msgstr "Web 服务器"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "an IMAP server"
+msgstr "IMAP 服务器"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "an SMTP server"
+msgstr "SMTP 服务器"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "an SSH server"
+msgstr "SSH 服务器"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "couldn't make a secure connection to {at}: {reason}"
+msgstr "无法与 {at} 建立安全连接：{reason}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "nothing answers at {at} ({reason})"
+msgstr "{at} 无任何响应（{reason}）"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "something answers at {at}, but it isn't a ManageSieve server"
+msgstr "{at} 有响应，但不是 ManageSieve 服务器"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "something answers at {at}, but it isn't a ManageSieve server: it looks like {what}"
+msgstr "{at} 有响应，但不是 ManageSieve 服务器：看起来像{what}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "the ManageSieve server at {at} doesn't offer STARTTLS"
+msgstr "{at} 上的 ManageSieve 服务器不提供 STARTTLS"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "the script is larger than the {kb} KB MailCraft sends"
+msgstr "脚本超过了 MailCraft 可发送的 {kb} KB"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "the server didn't greet like a ManageSieve server"
+msgstr "服务器未按 ManageSieve 协议发送问候响应"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "the server didn't send the script"
+msgstr "服务器没有发送该脚本"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "the server sent MailCraft to another server for the Sieve scripts, which it doesn't follow"
+msgstr "服务器把 MailCraft 引向另一台服务器获取 Sieve 脚本，MailCraft 不会跟随"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs crates/proto/src/managesieve/parse.rs
+#, fuzzy
+msgid "the server sent something that isn't a ManageSieve response"
+msgstr "服务器发送的内容不是 ManageSieve 响应"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "{at} closed the connection without a word"
+msgstr "{at} 未作任何回应就关闭了连接"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "{at} expects an encrypted connection from the start, which ManageSieve doesn't use"
+msgstr "{at} 要求从一开始就使用加密连接，而 ManageSieve 不这样做"
