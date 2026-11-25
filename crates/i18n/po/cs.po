@@ -63,6 +63,12 @@ msgstr "„{line}“ není odpověď IMAP"
 msgid "\"{line}\" is not an SMTP reply"
 msgstr "„{line}“ není odpověď SMTP"
 
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "\"{name}\" can't be used as a script name"
+msgstr "„{name}“ nelze použít jako název skriptu"
+
 #. interface
 #: crates/ui-egui/src/dialogs.rs
 #, fuzzy
@@ -457,6 +463,12 @@ msgstr "Probíhá import souboru .pst: zkuste to znovu, až skončí"
 #, fuzzy
 msgid "A JMAP account's mail can't be snoozed yet."
 msgstr "Poštu účtu JMAP zatím nelze odložit."
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "A ManageSieve server greets as soon as it is connected to. This port may expect an encrypted connection from the start (on Dovecot, ssl = yes on the sieve listener), which ManageSieve doesn't use: it starts unencrypted and switches to encryption with STARTTLS. Or a proxy in front of the server waits for something MailCraft doesn't send. Check the Sieve server (Automatic Replies) in Account Settings, or ask the server's administrator."
+msgstr "Server ManageSieve se ozve hned po připojení. Tento port možná očekává šifrované spojení od začátku (v Dovecotu ssl = yes u posluchače sieve), které ManageSieve nepoužívá: začíná nešifrovaně a na šifrování přejde pomocí STARTTLS. Nebo proxy před serverem čeká na něco, co MailCraft neposílá. Zkontrolujte Server Sieve (automatické odpovědi) v Nastavení účtu nebo se obraťte na správce serveru."
 
 #. interface
 #: crates/ui-egui/src/reading/warnings.rs
@@ -2579,6 +2591,12 @@ msgstr "Automatické odpovědi: načítám…"
 #. interface
 #: crates/ui-egui/src/sieve_replies.rs
 #, fuzzy
+msgid "Automatic replies: set by your Sieve script \"{name}\", which runs on the server"
+msgstr "Automatické odpovědi: nastavuje je váš skript Sieve „{name}“, který běží na serveru"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
 msgid "Automatic replies: the server didn't take your sign-in"
 msgstr "Automatické odpovědi: server nepřijal vaše přihlášení"
 
@@ -3445,6 +3463,18 @@ msgstr "Kontrolovat nové verze"
 #, fuzzy
 msgid "Check spelling with a local dictionary"
 msgstr "Zkontrolovat pravopis podle místního slovníku"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "Check the Sieve server (Automatic Replies) in Account Settings, and that your mail server has ManageSieve switched on."
+msgstr "Zkontrolujte Server Sieve (automatické odpovědi) v Nastavení účtu a zda má váš poštovní server zapnutý ManageSieve."
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "Check the Sieve server (Automatic Replies) in Account Settings: ManageSieve is usually on port 4190 of the incoming mail server."
+msgstr "Zkontrolujte Server Sieve (automatické odpovědi) v Nastavení účtu: ManageSieve bývá na portu 4190 serveru příchozí pošty."
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -7708,6 +7738,12 @@ msgstr "Importuji… {messages} z {total}"
 msgid "In Junk E-mail, preview an attachment from its menu."
 msgstr "V Nevyžádané poště zobrazte náhled přílohy z její nabídky."
 
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "In MailCraft's Sieve script, as it was changed elsewhere"
+msgstr "Ve skriptu Sieve od MailCraftu, jak byl jinde změněn"
+
 #. what a command says
 #: crates/engine/src/cmd/tasks/status.rs
 #, fuzzy
@@ -7785,6 +7821,12 @@ msgstr "Ve výběru"
 #, fuzzy
 msgid "In this calendar:"
 msgstr "V tomto kalendáři:"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "In your Sieve script \"{name}\""
+msgstr "Ve vašem skriptu Sieve „{name}“"
 
 #. interface
 #: crates/ui-egui/src/import_pst.rs
@@ -8007,6 +8049,12 @@ msgstr "Vystavil:"
 #, fuzzy
 msgid "Issued to"
 msgstr "Vystaveno pro"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "It also sends automatic replies of its own."
+msgstr "Posílá také vlastní automatické odpovědi."
 
 #. interface
 #: crates/ui-egui/src/meeting_dialogs.rs
@@ -8915,6 +8963,12 @@ msgstr "Vytvořili jeho přispěvatelé:"
 msgid "Made in another program or on the web, with parts MailCraft can't show"
 msgstr "Vytvořeno v jiném programu nebo na webu, s částmi, které MailCraft nemůže zobrazit"
 
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Made in another program: MailCraft shows these rules and never changes them"
+msgstr "Vytvořeno v jiném programu: MailCraft tato pravidla zobrazuje a nikdy je nemění"
+
 #. android, command label, interface, name, ribbon location
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MainActivity.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Navigation.kt crates/engine/src/cmd/compose.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/mail.rs crates/engine/src/cmd/send_later.rs crates/engine/src/cmd/view.rs crates/engine/src/session.rs crates/ui-egui/src/backstage.rs crates/ui-egui/src/lib.rs
 #, fuzzy
@@ -9090,6 +9144,18 @@ msgid "MailCraft can't keep this account's rules on its server"
 msgstr "MailCraft nemůže uchovávat pravidla tohoto účtu na jeho serveru"
 
 #. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "MailCraft can't keep this account's rules on its server, so they run on this computer: {why}. {advice}"
+msgstr "MailCraft nemůže uchovávat pravidla tohoto účtu na jeho serveru, proto běží na tomto počítači: {why}. {advice}"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "MailCraft can't read the rules of this script."
+msgstr "MailCraft neumí přečíst pravidla tohoto skriptu."
+
+#. interface
 #: crates/ui-egui/src/account_setup/exchange.rs
 #, fuzzy
 msgid "MailCraft can't sign in to this server this way yet (it wants Kerberos). Ask your administrator whether it can take a user name and password over an encrypted connection."
@@ -9100,6 +9166,12 @@ msgstr "MailCraft se k tomuto serveru zatím takto přihlásit neumí (vyžaduje
 #, fuzzy
 msgid "MailCraft carries the software below. The Rust libraries of its core are listed with their versions in the source repository."
 msgstr "MailCraft obsahuje níže uvedený software. Knihovny Rustu jeho jádra jsou s verzemi uvedeny ve zdrojovém repozitáři."
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "MailCraft connected to {at}, but the server said nothing"
+msgstr "MailCraft se připojil k {at}, ale server nic neřekl"
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Accounts.kt
@@ -9263,6 +9335,12 @@ msgstr "MailCraft přečte klíč bez hesla a soubor, stále jím chráněný, u
 msgid "MailCraft sends {host} the address this list gave for unsubscribing, which may identify you to it, and nothing else: no cookies, no sign-in. Like any connection, it also shows your internet address."
 msgstr "MailCraft pošle na {host} adresu, kterou tato konference uvedla pro odhlášení odběru, což vás jí může identifikovat, a nic dalšího: žádné cookies, žádné přihlášení. Jako každé připojení ukáže také vaši internetovou adresu."
 
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "MailCraft signs in only over an encrypted connection, so it didn't sign in there: your password would cross the network unencrypted. Ask the server's administrator to turn on TLS for ManageSieve."
+msgstr "MailCraft se přihlašuje jen přes šifrované spojení, proto se tam nepřihlásil: vaše heslo by šlo sítí nešifrovaně. Požádejte správce serveru, aby pro ManageSieve zapnul TLS."
+
 #. interface
 #: crates/ui-egui/src/opening.rs
 #, fuzzy
@@ -9369,10 +9447,22 @@ msgid "MailCraft's Google Desktop registration is not yet configured for this bu
 msgstr "Registrace desktopové aplikace Google pro MailCraft zatím není pro toto sestavení nakonfigurována."
 
 #. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "MailCraft's Sieve script on the server was changed elsewhere"
+msgstr "skript Sieve od MailCraftu byl na serveru změněn jinde"
+
+#. interface
 #: crates/ui-egui/src/auto_replies.rs
 #, fuzzy
 msgid "MailCraft's Sieve script on the server was changed elsewhere since MailCraft wrote it, so MailCraft leaves it as it is. To set your automatic replies here, replace it with MailCraft's: what was changed in it elsewhere is lost."
 msgstr "Skript Sieve od MailCraftu byl na serveru od svého zápisu změněn jinde, proto ho MailCraft nechává, jak je. Chcete-li zde nastavit automatické odpovědi, nahraďte ho skriptem MailCraftu: co se v něm jinde změnilo, bude ztraceno."
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "MailCraft's Sieve script on the server was changed elsewhere, so MailCraft leaves it as it is, and these rules run on this computer. Replace it with MailCraft's to keep them on the server: what was changed in it elsewhere is lost."
+msgstr "Skript Sieve od MailCraftu byl na serveru změněn jinde, proto ho MailCraft nechává, jak je, a tato pravidla běží v tomto počítači. Chcete-li je mít na serveru, nahraďte ho skriptem MailCraftu: co se v něm jinde změnilo, bude ztraceno."
 
 #. interface
 #: crates/ui-egui/src/sieve_replies.rs
@@ -9463,6 +9553,12 @@ msgstr "Spravovat pravidla…"
 #, fuzzy
 msgid "Manage Task"
 msgstr "Správa úkolu"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "ManageSieve starts unencrypted and switches to encryption with STARTTLS, so MailCraft doesn't sign in there. On Dovecot, set ssl = no on the sieve listener (the connection is still encrypted, by STARTTLS), or name another port in Account Settings › Sieve server (Automatic Replies)."
+msgstr "ManageSieve začíná nešifrovaně a na šifrování přejde pomocí STARTTLS, proto se tam MailCraft nepřihlásí. V Dovecotu nastavte u posluchače sieve ssl = no (spojení bude dál šifrované, pomocí STARTTLS), nebo zadejte jiný port v Nastavení účtu › Server Sieve (automatické odpovědi)."
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AccountScreens.kt
@@ -11266,6 +11362,12 @@ msgstr "Žádná z těchto zpráv už v této poštovní schránce není."
 msgid "None yet."
 msgstr "Zatím nic."
 
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "None."
+msgstr "Žádná."
+
 #. interface, what a command says
 #: crates/engine/src/cmd/tasks/status.rs crates/ui-egui/src/advanced_search.rs crates/ui-egui/src/forms.rs
 #, fuzzy
@@ -11607,6 +11709,12 @@ msgstr "Nic se neudělalo: to, na co jste byli dotázáni, se mezitím změnilo.
 msgid "Nothing was sent to Microsoft, and your password isn't kept."
 msgstr "Microsoftu se nic neodeslalo a vaše heslo se neuchovává."
 
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "Nothing was sent to it. Check the Sieve server (Automatic Replies) in Account Settings, or ask the server's administrator about its certificate."
+msgstr "Nic mu nebylo odesláno. Zkontrolujte Server Sieve (automatické odpovědi) v Nastavení účtu nebo se správce serveru zeptejte na jeho certifikát."
+
 #. interface
 #: crates/ui-egui/src/sending.rs
 #, fuzzy
@@ -11744,6 +11852,18 @@ msgstr "Na serveru"
 #, fuzzy
 msgid "On the server · Searching…"
 msgstr "Na serveru · Hledám…"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "On the server, changed elsewhere: Replace with MailCraft's would remove it"
+msgstr "Na serveru, změněno jinde: Nahradit skriptem MailCraftu by ho odstranilo"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "On the server, made in another program: MailCraft never changes it"
+msgstr "Na serveru, vytvořeno v jiném programu: MailCraft ho nikdy nemění"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -16048,6 +16168,18 @@ msgstr ""
 msgid "Side-by-Side"
 msgstr "Vedle sebe"
 
+#. command label
+#: crates/engine/src/cmd/sieve_replies.rs
+#, fuzzy
+msgid "Sieve Script to Send"
+msgstr "Skript Sieve k odeslání"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "Sieve scripts are only read from and written to the account's own mail server"
+msgstr "Skripty Sieve se čtou a zapisují jen na vlastním poštovním serveru účtu"
+
 #. interface
 #: crates/ui-egui/src/account_setup.rs
 #, fuzzy
@@ -19444,6 +19576,12 @@ msgstr "Kalendáře tohoto účtu se zatím nelze ptát: Odeslat/přijmout ho ne
 msgid "This account's server doesn't offer Sieve scripts (ManageSieve), so MailCraft can't keep automatic replies there."
 msgstr "Server tohoto účtu nenabízí skripty Sieve (ManageSieve), takže na něm MailCraft nemůže uchovávat automatické odpovědi."
 
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "This account's server doesn't offer Sieve scripts (ManageSieve), so its rules run on this computer."
+msgstr "Server tohoto účtu nenabízí skripty Sieve (ManageSieve), takže jeho pravidla běží v tomto počítači."
+
 #. what a command says
 #: crates/engine/src/cmd/sieve_replies.rs
 #, fuzzy
@@ -20271,6 +20409,12 @@ msgstr "Tento server je neumí posílat jen v určitém časovém rozmezí."
 #, fuzzy
 msgid "This server keeps Sieve scripts, but they can't send automatic replies (it has no vacation extension)."
 msgstr "Tento server uchovává skripty Sieve, ale neumějí posílat automatické odpovědi (nemá rozšíření vacation)."
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "This server's Sieve scripts can't file mail into folders, so its rules run on this computer."
+msgstr "Skripty Sieve tohoto serveru neumějí ukládat poštu do složek, takže jeho pravidla běží v tomto počítači."
 
 #. interface
 #: crates/ui-egui/src/shared_mailboxes.rs
@@ -21960,6 +22104,12 @@ msgid "You're working offline. Turn off Work Offline (Send / Receive) to connect
 msgstr "Pracujete offline. Chcete-li se připojit, vypněte Pracovat offline (Odeslat / přijmout)."
 
 #. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your Sieve script \"{name}\" runs on the server instead of MailCraft's, so these rules run on this computer. MailCraft never switches your script off."
+msgstr "Na serveru běží místo skriptu MailCraftu váš skript Sieve „{name}“, takže tato pravidla běží v tomto počítači. MailCraft váš skript nikdy nevypne."
+
+#. interface
 #: crates/ui-egui/src/auto_replies.rs
 #, fuzzy
 msgid "Your Sieve script \"{name}\" runs on the server instead of MailCraft's: these replies are kept there, but aren't sent while it runs. MailCraft never switches your script off."
@@ -22242,6 +22392,24 @@ msgid "Your own name."
 msgstr "Vaše vlastní jméno."
 
 #. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your rules are kept on the server"
+msgstr "Vaše pravidla jsou uložena na serveru"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your rules were saved on the server, but another Sieve script of yours runs there, so they run on this computer"
+msgstr "Vaše pravidla byla uložena na server, ale běží tam jiný váš skript Sieve, takže běží v tomto počítači"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your rules weren't changed on the server"
+msgstr "Vaše pravidla na serveru nebyla změněna"
+
+#. interface
 #: crates/ui-egui/src/mail_view.rs
 #, fuzzy
 msgid "Z on top"
@@ -22372,6 +22540,12 @@ msgstr "účet Microsoft nebo Exchange odesílá z jiných adres, jen pokud to j
 #, fuzzy
 msgid "a Microsoft sign-in is only used with Microsoft's own mail servers: this account names another server"
 msgstr "přihlášení Microsoft se používá jen s vlastními poštovními servery Microsoftu: tento účet uvádí jiný server"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "a POP3 server"
+msgstr "POP3 server"
 
 #. what a command says
 #: crates/engine/src/cmd/calendar.rs
@@ -22565,6 +22739,12 @@ msgstr "pravidlo čekající na odeslání na server se řadí za ta, která tam
 msgid "a sender address has no e-mail address"
 msgstr "adresa odesílatele neobsahuje e-mailovou adresu"
 
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "a server that encrypts from the first byte"
+msgstr "server, který šifruje od prvního bajtu"
+
 #. what a command says
 #: crates/engine/src/cmd/account.rs
 #, fuzzy
@@ -22668,6 +22848,12 @@ msgid "a task needs a title"
 msgstr "úkol potřebuje název"
 
 #. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "a web server"
+msgstr "webový server"
+
+#. why a mail server couldn't be used
 #: crates/net/src/oauth/custom.rs
 #, fuzzy
 msgid "access was refused on the sign-in page"
@@ -22714,11 +22900,29 @@ msgstr "podpis HTML zobrazuje obrázky jen z jejich webové adresy: nejprve z to
 msgid "an HTML signature shows pictures from their web address: switch it to rich text to add one"
 msgstr "podpis HTML zobrazuje obrázky z jejich webové adresy: chcete-li nějaký přidat, přepněte ho na formátovaný text"
 
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "an IMAP server"
+msgstr "IMAP server"
+
 #. what a command says
 #: crates/engine/src/digital_signature.rs
 #, fuzzy
 msgid "an S/MIME certificate is trusted through its certification authority and isn't marked Verified"
 msgstr "certifikát S/MIME je důvěryhodný díky své certifikační autoritě a není označen jako Ověřený"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "an SMTP server"
+msgstr "SMTP server"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "an SSH server"
+msgstr "SSH server"
 
 #. what a command says
 #: crates/engine/src/cmd/account.rs
@@ -22788,6 +22992,12 @@ msgid_plural "and {n} more, not merged now"
 msgstr[0] "a {n} další, teď nesloučený"
 msgstr[1] "a {n} další, teď nesloučené"
 msgstr[2] "a {n} dalších, teď nesloučených"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "another Sieve script of yours runs on the server"
+msgstr "na serveru běží jiný váš skript Sieve"
 
 #. what a command says
 #: crates/engine/src/cmd/compose.rs
@@ -22921,6 +23131,12 @@ msgstr "zkopírovat do {folder}"
 #, fuzzy
 msgid "copy it to {folder} - {who}"
 msgstr "zkopírovat do {folder} - {who}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "couldn't make a secure connection to {at}: {reason}"
+msgstr "nepodařilo se navázat zabezpečené spojení s {at}: {reason}"
 
 #. why a mail server couldn't be used
 #: crates/net/src/lib.rs
@@ -23305,6 +23521,18 @@ msgstr "odejde na server při dalším připojení"
 #. name
 #: crates/engine/src/cmd/rules.rs
 #, fuzzy
+msgid "it has a part MailCraft can't write as Sieve"
+msgstr "má část, kterou MailCraft neumí zapsat v Sieve"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "it has no conditions, and on the server it would act on every message"
+msgstr "nemá žádné podmínky a na serveru by působila na každou zprávu"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
 msgid "it has two conditions of one kind, and the server would take either of them rather than both"
 msgstr "má dvě podmínky jednoho druhu a server by přijal kteroukoli z nich, ne obě"
 
@@ -23331,6 +23559,12 @@ msgstr "je to druh obrázku, který zde nelze zobrazit"
 #, fuzzy
 msgid "it is a kind of picture that can't be shown here (AVIF or HEIC)"
 msgstr "je to druh obrázku, který zde nelze zobrazit (AVIF nebo HEIC)"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "it is being written to the server"
+msgstr "právě se zapisuje na server"
 
 #. interface
 #: crates/ui-egui/src/reading/images.rs
@@ -23409,6 +23643,12 @@ msgstr "jeho účet"
 #, fuzzy
 msgid "its name isn't one a certificate can be checked against"
 msgstr "jeho název není takový, vůči kterému lze certifikát ověřit"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "its sizes are larger than the server takes"
+msgstr "její velikosti jsou větší, než server přijme"
 
 #. interface
 #: crates/ui-egui/src/opened_message.rs
@@ -23865,6 +24105,12 @@ msgstr "neznámé do prvního Odeslat/přijmout"
 msgid "not sent: {why}. Send with \"confirmed\": true to send it anyway, or with \"moveToBcc\": true to move the people outside the organisation to Bcc first"
 msgstr "neodesláno: {why}. Odešlete s \"confirmed\": true, aby se přesto odeslalo, nebo s \"moveToBcc\": true, aby se lidé mimo organizaci nejprve přesunuli do Skryté kopie"
 
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "nothing answers at {at} ({reason})"
+msgstr "na {at} nic neodpovídá ({reason})"
+
 #. what a command says
 #: crates/engine/src/cmd/format.rs
 #, fuzzy
@@ -24276,6 +24522,18 @@ msgstr "velikost je {min} KB až {max} KB"
 msgid "someone@example.org or @example.org"
 msgstr "někdo@example.org nebo @example.org"
 
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "something answers at {at}, but it isn't a ManageSieve server"
+msgstr "na {at} něco odpovídá, ale není to server ManageSieve"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "something answers at {at}, but it isn't a ManageSieve server: it looks like {what}"
+msgstr "na {at} něco odpovídá, ale není to server ManageSieve: vypadá to jako {what}"
+
 #. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
@@ -24443,11 +24701,23 @@ msgstr "čtečka souboru .pst se zastavila dřív, než byla hotova"
 msgid "the Inbox of this account hasn't been read yet"
 msgstr "Doručená pošta tohoto účtu ještě nebyla přečtena"
 
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "the ManageSieve server at {at} doesn't offer STARTTLS"
+msgstr "server ManageSieve na {at} nenabízí STARTTLS"
+
 #. what a command says
 #: crates/engine/src/cmd/keys.rs
 #, fuzzy
 msgid "the OpenPGP key is larger than a Public key is kept"
 msgstr "klíč OpenPGP je větší, než jaký se uchovává jako veřejný klíč"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the account has no address to look for"
+msgstr "účet nemá adresu, kterou by šlo hledat"
 
 #. why a mail server couldn't be used
 #: crates/net/src/sieve.rs crates/net/src/sync.rs
@@ -24490,6 +24760,12 @@ msgstr "účet už neexistuje"
 #, fuzzy
 msgid "the account {name} is the online archive of is gone"
 msgstr "účet {name}, jehož online archivem toto je, už neexistuje"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the account's Deleted Items isn't on the server"
+msgstr "složka Odstraněná pošta účtu není na serveru"
 
 #. why a mail server couldn't be used
 #: crates/net/src/transport.rs
@@ -24905,17 +25181,17 @@ msgstr "poslední kalendář nelze odstranit"
 msgid "the list shows every account's folder: open one account's folder, or name the folder"
 msgstr "seznam zobrazuje složky všech účtů: otevřete složku jednoho účtu, nebo složku pojmenujte"
 
-#. why a mail server couldn't be used
-#: crates/proto/src/oauthbearer.rs
-#, fuzzy
-msgid "the mail server's name can't be sent with a sign-in"
-msgstr "název poštovního serveru nelze odeslat s přihlášením"
-
 #. what a command says
 #: crates/engine/src/cmd/sieve_replies.rs
 #, fuzzy
 msgid "the mail server doesn't know your contacts: replies outside the organisation go to nobody or to everybody"
 msgstr "poštovní server nezná vaše kontakty: odpovědi mimo organizaci jdou nikomu, nebo všem"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/oauthbearer.rs
+#, fuzzy
+msgid "the mail server's name can't be sent with a sign-in"
+msgstr "název poštovního serveru nelze odeslat s přihlášením"
 
 #. what a command says
 #: crates/engine/src/cmd/file.rs
@@ -25109,6 +25385,12 @@ msgstr "adresa pro odvolání {why}"
 msgid "the same calendar item is named twice; nothing was changed"
 msgstr "stejná položka kalendáře je uvedena dvakrát; nic se nezměnilo"
 
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "the script is larger than the {kb} KB MailCraft sends"
+msgstr "skript je větší než {kb} KB, které MailCraft odešle"
+
 #. what a command says
 #: crates/engine/src/cmd/mail.rs
 #, fuzzy
@@ -25284,10 +25566,22 @@ msgid "the server didn't end IDLE properly"
 msgstr "server správně neukončil IDLE"
 
 #. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "the server didn't greet like a ManageSieve server"
+msgstr "server nepozdravil jako server ManageSieve"
+
+#. why a mail server couldn't be used
 #: crates/proto/src/imap/mod.rs
 #, fuzzy
 msgid "the server didn't greet like an IMAP server"
 msgstr "server nepozdravil jako server IMAP"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "the server didn't send the script"
+msgstr "server skript neposlal"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -25434,6 +25728,12 @@ msgid "the server said: {reason}"
 msgstr "server řekl: {reason}"
 
 #. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "the server sent MailCraft to another server for the Sieve scripts, which it doesn't follow"
+msgstr "server odkázal MailCraft kvůli skriptům Sieve na jiný server, kam MailCraft nepůjde"
+
+#. why a mail server couldn't be used
 #: crates/proto/src/line.rs
 #, fuzzy
 msgid "the server sent a line longer than {kb} KB"
@@ -25462,6 +25762,12 @@ msgstr "server poslal data, která během nečinnosti nemá důvod posílat"
 #, fuzzy
 msgid "the server sent nothing"
 msgstr "server nic neposlal"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs crates/proto/src/managesieve/parse.rs
+#, fuzzy
+msgid "the server sent something that isn't a ManageSieve response"
+msgstr "server poslal něco, co není odpověď ManageSieve"
 
 #. why a mail server couldn't be used
 #: crates/proto/src/imap/idle.rs crates/proto/src/imap/mod.rs crates/proto/src/imap/status.rs crates/proto/src/managesieve/mod.rs
@@ -25504,6 +25810,72 @@ msgstr "server odpovídal příliš dlouho"
 #, fuzzy
 msgid "the server wouldn't send “{subject}” whole, so it can't be forwarded as an attachment"
 msgstr "server odmítl poslat „{subject}“ celou, takže ji nelze přeposlat jako přílohu"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't do one of its actions or conditions"
+msgstr "skripty Sieve na serveru neumějí provést jednu z jejích akcí nebo podmínek"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't flag mail for a day"
+msgstr "skripty Sieve na serveru neumějí označit poštu na určitý den"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at attachments"
+msgstr "skripty Sieve na serveru neumějí zjišťovat přílohy"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at categories"
+msgstr "skripty Sieve na serveru neumějí zjišťovat kategorie"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at importance"
+msgstr "skripty Sieve na serveru neumějí zjišťovat důležitost"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at sensitivity"
+msgstr "skripty Sieve na serveru neumějí zjišťovat citlivost"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't set categories"
+msgstr "skripty Sieve na serveru neumějí nastavovat kategorie"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't set importance"
+msgstr "skripty Sieve na serveru neumějí nastavovat důležitost"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't tell automatic replies"
+msgstr "skripty Sieve na serveru neumějí rozpoznat automatické odpovědi"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't tell mail sent to you alone"
+msgstr "skripty Sieve na serveru neumějí rozpoznat poštu odeslanou jen vám"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't tell meeting invitations"
+msgstr "skripty Sieve na serveru neumějí rozpoznat pozvánky na schůzky"
 
 #. why a mail server couldn't be used
 #: crates/proto/src/imap/mod.rs
@@ -25961,6 +26333,12 @@ msgid "this message isn't downloaded: open it once you're online, then send it a
 msgstr "tato zpráva není stažená: otevřete ji, až budete online, a pak ji odešlete znovu"
 
 #. what a command says
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "this rule is in your Sieve script \"{script}\" on the server, made in another program: MailCraft shows it and never changes it"
+msgstr "toto pravidlo je ve vašem skriptu Sieve „{script}“ na serveru, vytvořeném v jiném programu: MailCraft ho zobrazuje a nikdy nemění"
+
+#. what a command says
 #: crates/engine/src/cmd/calendar.rs crates/engine/src/cmd/calendar/invitation.rs crates/engine/src/cmd/calendar/selection.rs
 #, fuzzy
 msgid "this series has too many cancelled days"
@@ -26392,6 +26770,18 @@ msgstr "{address}: {error}. Viz Soubor › Informace."
 #, fuzzy
 msgid "{answer}: more ways to answer"
 msgstr "{answer}: další způsoby odpovědi"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "{at} closed the connection without a word"
+msgstr "{at} ukončil spojení bez jediného slova"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "{at} expects an encrypted connection from the start, which ManageSieve doesn't use"
+msgstr "{at} očekává šifrované spojení od začátku, které ManageSieve nepoužívá"
 
 #. interface
 #: crates/ui-egui/src/calendar_view.rs
@@ -28602,392 +28992,3 @@ msgstr "−Řádky"
 #~ msgid "Show a notification when a calendar reminder falls due. Off, none is shown; the reminders themselves stay in the calendar."
 #~ msgstr "Zobrazit oznámení, když nastane čas připomenutí v kalendáři. Pokud je vypnuto, nezobrazí se žádné; samotná připomenutí zůstávají v kalendáři."
 
-#. why a mail server couldn't be used
-#: crates/proto/src/managesieve/mod.rs
-#, fuzzy
-msgid "\"{name}\" can't be used as a script name"
-msgstr "„{name}“ nelze použít jako název skriptu"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "A ManageSieve server greets as soon as it is connected to. This port may expect an encrypted connection from the start (on Dovecot, ssl = yes on the sieve listener), which ManageSieve doesn't use: it starts unencrypted and switches to encryption with STARTTLS. Or a proxy in front of the server waits for something MailCraft doesn't send. Check the Sieve server (Automatic Replies) in Account Settings, or ask the server's administrator."
-msgstr "Server ManageSieve se ozve hned po připojení. Tento port možná očekává šifrované spojení od začátku (v Dovecotu ssl = yes u posluchače sieve), které ManageSieve nepoužívá: začíná nešifrovaně a na šifrování přejde pomocí STARTTLS. Nebo proxy před serverem čeká na něco, co MailCraft neposílá. Zkontrolujte Server Sieve (automatické odpovědi) v Nastavení účtu nebo se obraťte na správce serveru."
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "Check the Sieve server (Automatic Replies) in Account Settings, and that your mail server has ManageSieve switched on."
-msgstr "Zkontrolujte Server Sieve (automatické odpovědi) v Nastavení účtu a zda má váš poštovní server zapnutý ManageSieve."
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "Check the Sieve server (Automatic Replies) in Account Settings: ManageSieve is usually on port 4190 of the incoming mail server."
-msgstr "Zkontrolujte Server Sieve (automatické odpovědi) v Nastavení účtu: ManageSieve bývá na portu 4190 serveru příchozí pošty."
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "MailCraft connected to {at}, but the server said nothing"
-msgstr "MailCraft se připojil k {at}, ale server nic neřekl"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "MailCraft signs in only over an encrypted connection, so it didn't sign in there: your password would cross the network unencrypted. Ask the server's administrator to turn on TLS for ManageSieve."
-msgstr "MailCraft se přihlašuje jen přes šifrované spojení, proto se tam nepřihlásil: vaše heslo by šlo sítí nešifrovaně. Požádejte správce serveru, aby pro ManageSieve zapnul TLS."
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "ManageSieve starts unencrypted and switches to encryption with STARTTLS, so MailCraft doesn't sign in there. On Dovecot, set ssl = no on the sieve listener (the connection is still encrypted, by STARTTLS), or name another port in Account Settings › Sieve server (Automatic Replies)."
-msgstr "ManageSieve začíná nešifrovaně a na šifrování přejde pomocí STARTTLS, proto se tam MailCraft nepřihlásí. V Dovecotu nastavte u posluchače sieve ssl = no (spojení bude dál šifrované, pomocí STARTTLS), nebo zadejte jiný port v Nastavení účtu › Server Sieve (automatické odpovědi)."
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "Nothing was sent to it. Check the Sieve server (Automatic Replies) in Account Settings, or ask the server's administrator about its certificate."
-msgstr "Nic mu nebylo odesláno. Zkontrolujte Server Sieve (automatické odpovědi) v Nastavení účtu nebo se správce serveru zeptejte na jeho certifikát."
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "Sieve scripts are only read from and written to the account's own mail server"
-msgstr "Skripty Sieve se čtou a zapisují jen na vlastním poštovním serveru účtu"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "a POP3 server"
-msgstr "POP3 server"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "a server that encrypts from the first byte"
-msgstr "server, který šifruje od prvního bajtu"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "a web server"
-msgstr "webový server"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "an IMAP server"
-msgstr "IMAP server"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "an SMTP server"
-msgstr "SMTP server"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "an SSH server"
-msgstr "SSH server"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "couldn't make a secure connection to {at}: {reason}"
-msgstr "nepodařilo se navázat zabezpečené spojení s {at}: {reason}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "nothing answers at {at} ({reason})"
-msgstr "na {at} nic neodpovídá ({reason})"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "something answers at {at}, but it isn't a ManageSieve server"
-msgstr "na {at} něco odpovídá, ale není to server ManageSieve"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "something answers at {at}, but it isn't a ManageSieve server: it looks like {what}"
-msgstr "na {at} něco odpovídá, ale není to server ManageSieve: vypadá to jako {what}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "the ManageSieve server at {at} doesn't offer STARTTLS"
-msgstr "server ManageSieve na {at} nenabízí STARTTLS"
-
-#. why a mail server couldn't be used
-#: crates/proto/src/managesieve/mod.rs
-#, fuzzy
-msgid "the script is larger than the {kb} KB MailCraft sends"
-msgstr "skript je větší než {kb} KB, které MailCraft odešle"
-
-#. why a mail server couldn't be used
-#: crates/proto/src/managesieve/mod.rs
-#, fuzzy
-msgid "the server didn't greet like a ManageSieve server"
-msgstr "server nepozdravil jako server ManageSieve"
-
-#. why a mail server couldn't be used
-#: crates/proto/src/managesieve/mod.rs
-#, fuzzy
-msgid "the server didn't send the script"
-msgstr "server skript neposlal"
-
-#. why a mail server couldn't be used
-#: crates/proto/src/managesieve/mod.rs
-#, fuzzy
-msgid "the server sent MailCraft to another server for the Sieve scripts, which it doesn't follow"
-msgstr "server odkázal MailCraft kvůli skriptům Sieve na jiný server, kam MailCraft nepůjde"
-
-#. why a mail server couldn't be used
-#: crates/proto/src/managesieve/mod.rs crates/proto/src/managesieve/parse.rs
-#, fuzzy
-msgid "the server sent something that isn't a ManageSieve response"
-msgstr "server poslal něco, co není odpověď ManageSieve"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "{at} closed the connection without a word"
-msgstr "{at} ukončil spojení bez jediného slova"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "{at} expects an encrypted connection from the start, which ManageSieve doesn't use"
-msgstr "{at} očekává šifrované spojení od začátku, které ManageSieve nepoužívá"
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "Automatic replies: set by your Sieve script \"{name}\", which runs on the server"
-msgstr "Automatické odpovědi: nastavuje je váš skript Sieve „{name}“, který běží na serveru"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "In MailCraft's Sieve script, as it was changed elsewhere"
-msgstr "Ve skriptu Sieve od MailCraftu, jak byl jinde změněn"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "In your Sieve script \"{name}\""
-msgstr "Ve vašem skriptu Sieve „{name}“"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "It also sends automatic replies of its own."
-msgstr "Posílá také vlastní automatické odpovědi."
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "Made in another program: MailCraft shows these rules and never changes them"
-msgstr "Vytvořeno v jiném programu: MailCraft tato pravidla zobrazuje a nikdy je nemění"
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "MailCraft can't keep this account's rules on its server, so they run on this computer: {why}. {advice}"
-msgstr "MailCraft nemůže uchovávat pravidla tohoto účtu na jeho serveru, proto běží na tomto počítači: {why}. {advice}"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "MailCraft can't read the rules of this script."
-msgstr "MailCraft neumí přečíst pravidla tohoto skriptu."
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "MailCraft's Sieve script on the server was changed elsewhere"
-msgstr "skript Sieve od MailCraftu byl na serveru změněn jinde"
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "MailCraft's Sieve script on the server was changed elsewhere, so MailCraft leaves it as it is, and these rules run on this computer. Replace it with MailCraft's to keep them on the server: what was changed in it elsewhere is lost."
-msgstr "Skript Sieve od MailCraftu byl na serveru změněn jinde, proto ho MailCraft nechává, jak je, a tato pravidla běží v tomto počítači. Chcete-li je mít na serveru, nahraďte ho skriptem MailCraftu: co se v něm jinde změnilo, bude ztraceno."
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "None."
-msgstr "Žádná."
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "On the server, changed elsewhere: Replace with MailCraft's would remove it"
-msgstr "Na serveru, změněno jinde: Nahradit skriptem MailCraftu by ho odstranilo"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "On the server, made in another program: MailCraft never changes it"
-msgstr "Na serveru, vytvořeno v jiném programu: MailCraft ho nikdy nemění"
-
-#. command label
-#: crates/engine/src/cmd/sieve_replies.rs
-#, fuzzy
-msgid "Sieve Script to Send"
-msgstr "Skript Sieve k odeslání"
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "This account's server doesn't offer Sieve scripts (ManageSieve), so its rules run on this computer."
-msgstr "Server tohoto účtu nenabízí skripty Sieve (ManageSieve), takže jeho pravidla běží v tomto počítači."
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "This server's Sieve scripts can't file mail into folders, so its rules run on this computer."
-msgstr "Skripty Sieve tohoto serveru neumějí ukládat poštu do složek, takže jeho pravidla běží v tomto počítači."
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "Your Sieve script \"{name}\" runs on the server instead of MailCraft's, so these rules run on this computer. MailCraft never switches your script off."
-msgstr "Na serveru běží místo skriptu MailCraftu váš skript Sieve „{name}“, takže tato pravidla běží v tomto počítači. MailCraft váš skript nikdy nevypne."
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "Your rules are kept on the server"
-msgstr "Vaše pravidla jsou uložena na serveru"
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "Your rules were saved on the server, but another Sieve script of yours runs there, so they run on this computer"
-msgstr "Vaše pravidla byla uložena na server, ale běží tam jiný váš skript Sieve, takže běží v tomto počítači"
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "Your rules weren't changed on the server"
-msgstr "Vaše pravidla na serveru nebyla změněna"
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "another Sieve script of yours runs on the server"
-msgstr "na serveru běží jiný váš skript Sieve"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "it has a part MailCraft can't write as Sieve"
-msgstr "má část, kterou MailCraft neumí zapsat v Sieve"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "it has no conditions, and on the server it would act on every message"
-msgstr "nemá žádné podmínky a na serveru by působila na každou zprávu"
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "it is being written to the server"
-msgstr "právě se zapisuje na server"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "its sizes are larger than the server takes"
-msgstr "její velikosti jsou větší, než server přijme"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the account has no address to look for"
-msgstr "účet nemá adresu, kterou by šlo hledat"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the account's Deleted Items isn't on the server"
-msgstr "složka Odstraněná pošta účtu není na serveru"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't do one of its actions or conditions"
-msgstr "skripty Sieve na serveru neumějí provést jednu z jejích akcí nebo podmínek"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't flag mail for a day"
-msgstr "skripty Sieve na serveru neumějí označit poštu na určitý den"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't look at attachments"
-msgstr "skripty Sieve na serveru neumějí zjišťovat přílohy"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't look at categories"
-msgstr "skripty Sieve na serveru neumějí zjišťovat kategorie"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't look at importance"
-msgstr "skripty Sieve na serveru neumějí zjišťovat důležitost"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't look at sensitivity"
-msgstr "skripty Sieve na serveru neumějí zjišťovat citlivost"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't set categories"
-msgstr "skripty Sieve na serveru neumějí nastavovat kategorie"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't set importance"
-msgstr "skripty Sieve na serveru neumějí nastavovat důležitost"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't tell automatic replies"
-msgstr "skripty Sieve na serveru neumějí rozpoznat automatické odpovědi"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't tell mail sent to you alone"
-msgstr "skripty Sieve na serveru neumějí rozpoznat poštu odeslanou jen vám"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't tell meeting invitations"
-msgstr "skripty Sieve na serveru neumějí rozpoznat pozvánky na schůzky"
-
-#. what a command says
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "this rule is in your Sieve script \"{script}\" on the server, made in another program: MailCraft shows it and never changes it"
-msgstr "toto pravidlo je ve vašem skriptu Sieve „{script}“ na serveru, vytvořeném v jiném programu: MailCraft ho zobrazuje a nikdy nemění"

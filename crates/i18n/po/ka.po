@@ -63,6 +63,12 @@ msgstr "„{line}“ IMAP-ის პასუხი არ არის"
 msgid "\"{line}\" is not an SMTP reply"
 msgstr "„{line}“ SMTP-ის პასუხი არ არის"
 
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "\"{name}\" can't be used as a script name"
+msgstr "„{name}“ სკრიპტის სახელად ვერ გამოდგება"
+
 #. interface
 #: crates/ui-egui/src/dialogs.rs
 #, fuzzy
@@ -456,6 +462,12 @@ msgstr ".pst ფაილის იმპორტი მიმდინარ�
 #, fuzzy
 msgid "A JMAP account's mail can't be snoozed yet."
 msgstr "JMAP ანგარიშის ფოსტის გადადება ჯერ შეუძლებელია."
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "A ManageSieve server greets as soon as it is connected to. This port may expect an encrypted connection from the start (on Dovecot, ssl = yes on the sieve listener), which ManageSieve doesn't use: it starts unencrypted and switches to encryption with STARTTLS. Or a proxy in front of the server waits for something MailCraft doesn't send. Check the Sieve server (Automatic Replies) in Account Settings, or ask the server's administrator."
+msgstr "ManageSieve სერვერი მისალმებას დაკავშირებისთანავე აგზავნის. შესაძლოა ეს პორტი თავიდანვე დაშიფრულ კავშირს ელის (Dovecot-ში ssl = yes sieve listener-ზე), რომელსაც ManageSieve არ იყენებს: ის დაუშიფრავად იწყება და STARTTLS-ით გადადის დაშიფვრაზე. ან სერვერის წინ მდგარი პროქსი ელის რაღაცას, რასაც MailCraft არ აგზავნის. შეამოწმეთ Sieve სერვერი (ავტომატური პასუხები) ანგარიშის პარამეტრებში, ან ჰკითხეთ სერვერის ადმინისტრატორს."
 
 #. interface
 #: crates/ui-egui/src/reading/warnings.rs
@@ -2578,6 +2590,12 @@ msgstr "ავტომატური პასუხები: იკითხ
 #. interface
 #: crates/ui-egui/src/sieve_replies.rs
 #, fuzzy
+msgid "Automatic replies: set by your Sieve script \"{name}\", which runs on the server"
+msgstr "ავტომატური პასუხები: მათ აყენებს თქვენი Sieve-ის სკრიპტი „{name}“, რომელიც სერვერზე მუშაობს"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
 msgid "Automatic replies: the server didn't take your sign-in"
 msgstr "ავტომატური პასუხები: სერვერმა თქვენი შესვლა არ მიიღო"
 
@@ -3439,6 +3457,18 @@ msgstr "ახალი ვერსიების შემოწმება"
 #, fuzzy
 msgid "Check spelling with a local dictionary"
 msgstr "მართლწერის შემოწმება ადგილობრივი ლექსიკონით"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "Check the Sieve server (Automatic Replies) in Account Settings, and that your mail server has ManageSieve switched on."
+msgstr "შეამოწმეთ Sieve სერვერი (ავტომატური პასუხები) ანგარიშის პარამეტრებში და ჩართულია თუ არა ManageSieve თქვენს ფოსტის სერვერზე."
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "Check the Sieve server (Automatic Replies) in Account Settings: ManageSieve is usually on port 4190 of the incoming mail server."
+msgstr "შეამოწმეთ Sieve სერვერი (ავტომატური პასუხები) ანგარიშის პარამეტრებში: ManageSieve ჩვეულებრივ შემომავალი ფოსტის სერვერის 4190 პორტზეა."
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -7680,6 +7710,12 @@ msgstr "იმპორტი… {messages} / {total}"
 msgid "In Junk E-mail, preview an attachment from its menu."
 msgstr "„არასასურველ ფოსტაში“ დანართის წინასწარ სანახავად გამოიყენეთ მისი მენიუ."
 
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "In MailCraft's Sieve script, as it was changed elsewhere"
+msgstr "MailCraft-ის Sieve-ის სკრიპტში, როგორც ის სხვაგან შეიცვალა"
+
 #. what a command says
 #: crates/engine/src/cmd/tasks/status.rs
 #, fuzzy
@@ -7757,6 +7793,12 @@ msgstr "მონიშნულში"
 #, fuzzy
 msgid "In this calendar:"
 msgstr "ამ კალენდარში:"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "In your Sieve script \"{name}\""
+msgstr "თქვენს Sieve-ის სკრიპტში „{name}“"
 
 #. interface
 #: crates/ui-egui/src/import_pst.rs
@@ -7979,6 +8021,12 @@ msgstr "გამცემი:"
 #, fuzzy
 msgid "Issued to"
 msgstr "ვის გაიცა"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "It also sends automatic replies of its own."
+msgstr "ის საკუთარ ავტომატურ პასუხებსაც აგზავნის."
 
 #. interface
 #: crates/ui-egui/src/meeting_dialogs.rs
@@ -8875,6 +8923,12 @@ msgstr "შექმნეს მისმა მონაწილეებმ�
 msgid "Made in another program or on the web, with parts MailCraft can't show"
 msgstr "შექმნილია სხვა პროგრამაში ან ვებში, ნაწილებით, რომლებსაც MailCraft ვერ აჩვენებს"
 
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Made in another program: MailCraft shows these rules and never changes them"
+msgstr "შექმნილია სხვა პროგრამაში: MailCraft ამ წესებს აჩვენებს და არასოდეს ცვლის"
+
 #. android, command label, interface, name, ribbon location
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MainActivity.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Navigation.kt crates/engine/src/cmd/compose.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/mail.rs crates/engine/src/cmd/send_later.rs crates/engine/src/cmd/view.rs crates/engine/src/session.rs crates/ui-egui/src/backstage.rs crates/ui-egui/src/lib.rs
 #, fuzzy
@@ -9050,6 +9104,18 @@ msgid "MailCraft can't keep this account's rules on its server"
 msgstr "MailCraft ვერ ინახავს ამ ანგარიშის წესებს მის სერვერზე"
 
 #. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "MailCraft can't keep this account's rules on its server, so they run on this computer: {why}. {advice}"
+msgstr "MailCraft ვერ შეინახავს ამ ანგარიშის წესებს მის სერვერზე, ამიტომ ისინი ამ კომპიუტერზე სრულდება: {why}. {advice}"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "MailCraft can't read the rules of this script."
+msgstr "MailCraft ამ სკრიპტის წესებს ვერ კითხულობს."
+
+#. interface
 #: crates/ui-egui/src/account_setup/exchange.rs
 #, fuzzy
 msgid "MailCraft can't sign in to this server this way yet (it wants Kerberos). Ask your administrator whether it can take a user name and password over an encrypted connection."
@@ -9060,6 +9126,12 @@ msgstr "MailCraft ამ სერვერზე ამ გზით შეს�
 #, fuzzy
 msgid "MailCraft carries the software below. The Rust libraries of its core are listed with their versions in the source repository."
 msgstr "MailCraft შეიცავს ქვემოთ ჩამოთვლილ პროგრამებს. მისი ბირთვის Rust ბიბლიოთეკები ვერსიებით ჩამოთვლილია წყაროს რეპოზიტორიაში."
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "MailCraft connected to {at}, but the server said nothing"
+msgstr "MailCraft დაუკავშირდა {at}-ს, მაგრამ სერვერმა არაფერი თქვა"
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Accounts.kt
@@ -9223,6 +9295,12 @@ msgstr "MailCraft გასაღებს მისი საიდუმლო
 msgid "MailCraft sends {host} the address this list gave for unsubscribing, which may identify you to it, and nothing else: no cookies, no sign-in. Like any connection, it also shows your internet address."
 msgstr "MailCraft სერვერს {host} უგზავნის მხოლოდ იმ მისამართს, რომელიც ამ სიამ გამოწერის გასაუქმებლად მიუთითა და რომელმაც შეიძლება სიას თქვენი ვინაობა გაუმხილოს, სხვას არაფერს: არც ქუქი-ფაილებს, არც შესვლას. ნებისმიერი კავშირის მსგავსად, ის თქვენს ინტერნეტ-მისამართსაც აჩვენებს."
 
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "MailCraft signs in only over an encrypted connection, so it didn't sign in there: your password would cross the network unencrypted. Ask the server's administrator to turn on TLS for ManageSieve."
+msgstr "MailCraft შედის მხოლოდ დაშიფრული კავშირით, ამიტომ იქ არ შესულა: თქვენი პაროლი ქსელში დაუშიფრავად გაივლიდა. სთხოვეთ სერვერის ადმინისტრატორს ManageSieve-სთვის TLS-ის ჩართვა."
+
 #. interface
 #: crates/ui-egui/src/opening.rs
 #, fuzzy
@@ -9328,10 +9406,22 @@ msgid "MailCraft's Google Desktop registration is not yet configured for this bu
 msgstr "MailCraft-ის Google Desktop რეგისტრაცია ამ ანაწყობში ჯერ არ არის კონფიგურირებული."
 
 #. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "MailCraft's Sieve script on the server was changed elsewhere"
+msgstr "MailCraft-ის Sieve-ის სკრიპტი სერვერზე სხვაგან შეიცვალა"
+
+#. interface
 #: crates/ui-egui/src/auto_replies.rs
 #, fuzzy
 msgid "MailCraft's Sieve script on the server was changed elsewhere since MailCraft wrote it, so MailCraft leaves it as it is. To set your automatic replies here, replace it with MailCraft's: what was changed in it elsewhere is lost."
 msgstr "MailCraft-ის Sieve-ის სკრიპტი სერვერზე მისი ჩაწერის შემდეგ სხვაგან შეიცვალა, ამიტომ MailCraft მას ისე ტოვებს. აქ ავტომატური პასუხების დასაყენებლად ჩაანაცვლეთ ის MailCraft-ის სკრიპტით: რაც მასში სხვაგან შეიცვალა, დაიკარგება."
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "MailCraft's Sieve script on the server was changed elsewhere, so MailCraft leaves it as it is, and these rules run on this computer. Replace it with MailCraft's to keep them on the server: what was changed in it elsewhere is lost."
+msgstr "MailCraft-ის Sieve-ის სკრიპტი სერვერზე სხვაგან შეიცვალა, ამიტომ MailCraft მას ისე ტოვებს და ეს წესები ამ კომპიუტერზე მუშაობს. სერვერზე შესანახად ჩაანაცვლეთ ის MailCraft-ის სკრიპტით: რაც მასში სხვაგან შეიცვალა, დაიკარგება."
 
 #. interface
 #: crates/ui-egui/src/sieve_replies.rs
@@ -9421,6 +9511,12 @@ msgstr "წესების მართვა…"
 #, fuzzy
 msgid "Manage Task"
 msgstr "დავალების მართვა"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "ManageSieve starts unencrypted and switches to encryption with STARTTLS, so MailCraft doesn't sign in there. On Dovecot, set ssl = no on the sieve listener (the connection is still encrypted, by STARTTLS), or name another port in Account Settings › Sieve server (Automatic Replies)."
+msgstr "ManageSieve დაუშიფრავად იწყება და STARTTLS-ით გადადის დაშიფვრაზე, ამიტომ MailCraft იქ არ შედის. Dovecot-ში sieve listener-ზე დააყენეთ ssl = no (კავშირი მაინც დაშიფრული რჩება, STARTTLS-ით), ან მიუთითეთ სხვა პორტი: ანგარიშის პარამეტრები › Sieve სერვერი (ავტომატური პასუხები)."
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AccountScreens.kt
@@ -11216,6 +11312,12 @@ msgstr ""
 msgid "None yet."
 msgstr "ჯერ არაფერი."
 
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "None."
+msgstr "არცერთი."
+
 #. interface, what a command says
 #: crates/engine/src/cmd/tasks/status.rs crates/ui-egui/src/advanced_search.rs crates/ui-egui/src/forms.rs
 #, fuzzy
@@ -11557,6 +11659,12 @@ msgstr "არაფერი გაკეთებულა: ის, რაზ�
 msgid "Nothing was sent to Microsoft, and your password isn't kept."
 msgstr "Microsoft-ს არაფერი გაეგზავნა და თქვენი პაროლი არ ინახება."
 
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "Nothing was sent to it. Check the Sieve server (Automatic Replies) in Account Settings, or ask the server's administrator about its certificate."
+msgstr "მას არაფერი გაეგზავნა. შეამოწმეთ Sieve სერვერი (ავტომატური პასუხები) ანგარიშის პარამეტრებში, ან ჰკითხეთ სერვერის ადმინისტრატორს მის სერტიფიკატზე."
+
 #. interface
 #: crates/ui-egui/src/sending.rs
 #, fuzzy
@@ -11694,6 +11802,18 @@ msgstr "სერვერზე"
 #, fuzzy
 msgid "On the server · Searching…"
 msgstr "სერვერზე · ძიება…"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "On the server, changed elsewhere: Replace with MailCraft's would remove it"
+msgstr "სერვერზე, სხვაგან შეცვლილი: MailCraft-ის სკრიპტით ჩანაცვლება მას წაშლიდა"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "On the server, made in another program: MailCraft never changes it"
+msgstr "სერვერზე, სხვა პროგრამაში შექმნილი: MailCraft მას არასოდეს ცვლის"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -15962,6 +16082,18 @@ msgstr ""
 msgid "Side-by-Side"
 msgstr "გვერდიგვერდ"
 
+#. command label
+#: crates/engine/src/cmd/sieve_replies.rs
+#, fuzzy
+msgid "Sieve Script to Send"
+msgstr "გასაგზავნი Sieve-ის სკრიპტი"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "Sieve scripts are only read from and written to the account's own mail server"
+msgstr "Sieve-ის სკრიპტები მხოლოდ ანგარიშის საკუთარ საფოსტო სერვერზე იკითხება და იწერება"
+
 #. interface
 #: crates/ui-egui/src/account_setup.rs
 #, fuzzy
@@ -19338,6 +19470,12 @@ msgstr "ამ ანგარიშის კალენდრის გამ
 msgid "This account's server doesn't offer Sieve scripts (ManageSieve), so MailCraft can't keep automatic replies there."
 msgstr "ამ ანგარიშის სერვერი Sieve-ის სკრიპტებს არ გვთავაზობს (ManageSieve), ამიტომ MailCraft იქ ავტომატურ პასუხებს ვერ შეინახავს."
 
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "This account's server doesn't offer Sieve scripts (ManageSieve), so its rules run on this computer."
+msgstr "ამ ანგარიშის სერვერი Sieve-ის სკრიპტებს არ გვთავაზობს (ManageSieve), ამიტომ მისი წესები ამ კომპიუტერზე მუშაობს."
+
 #. what a command says
 #: crates/engine/src/cmd/sieve_replies.rs
 #, fuzzy
@@ -20154,6 +20292,12 @@ msgstr "ამ სერვერს მათი მხოლოდ დრო�
 #, fuzzy
 msgid "This server keeps Sieve scripts, but they can't send automatic replies (it has no vacation extension)."
 msgstr "ეს სერვერი Sieve-ის სკრიპტებს ინახავს, მაგრამ მათ ავტომატური პასუხების გაგზავნა არ შეუძლიათ (vacation გაფართოება არ აქვს)."
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "This server's Sieve scripts can't file mail into folders, so its rules run on this computer."
+msgstr "ამ სერვერის Sieve-ის სკრიპტებს ფოსტის საქაღალდეებში შენახვა არ შეუძლიათ, ამიტომ მისი წესები ამ კომპიუტერზე მუშაობს."
 
 #. interface
 #: crates/ui-egui/src/shared_mailboxes.rs
@@ -21834,6 +21978,12 @@ msgid "You're working offline. Turn off Work Offline (Send / Receive) to connect
 msgstr "ოფლაინ მუშაობთ. დასაკავშირებლად გამორთეთ „ოფლაინ მუშაობა“ (გაგზავნა / მიღება)."
 
 #. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your Sieve script \"{name}\" runs on the server instead of MailCraft's, so these rules run on this computer. MailCraft never switches your script off."
+msgstr "სერვერზე MailCraft-ის ნაცვლად თქვენი Sieve-ის სკრიპტი „{name}“ მუშაობს, ამიტომ ეს წესები ამ კომპიუტერზე მუშაობს. MailCraft თქვენს სკრიპტს არასოდეს გამორთავს."
+
+#. interface
 #: crates/ui-egui/src/auto_replies.rs
 #, fuzzy
 msgid "Your Sieve script \"{name}\" runs on the server instead of MailCraft's: these replies are kept there, but aren't sent while it runs. MailCraft never switches your script off."
@@ -22114,6 +22264,24 @@ msgid "Your own name."
 msgstr "თქვენი სახელი."
 
 #. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your rules are kept on the server"
+msgstr "თქვენი წესები სერვერზე ინახება"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your rules were saved on the server, but another Sieve script of yours runs there, so they run on this computer"
+msgstr "თქვენი წესები სერვერზე შეინახა, მაგრამ იქ თქვენი სხვა Sieve-ის სკრიპტი მუშაობს, ამიტომ ისინი ამ კომპიუტერზე მუშაობს"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your rules weren't changed on the server"
+msgstr "თქვენი წესები სერვერზე არ შეცვლილა"
+
+#. interface
 #: crates/ui-egui/src/mail_view.rs
 #, fuzzy
 msgid "Z on top"
@@ -22244,6 +22412,12 @@ msgstr "Microsoft-ის ან Exchange-ის ანგარიში სხ�
 #, fuzzy
 msgid "a Microsoft sign-in is only used with Microsoft's own mail servers: this account names another server"
 msgstr "Microsoft-ით შესვლა მხოლოდ Microsoft-ის საკუთარ საფოსტო სერვერებთან გამოიყენება: ეს ანგარიში სხვა სერვერს ასახელებს"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "a POP3 server"
+msgstr "POP3 სერვერს"
 
 #. what a command says
 #: crates/engine/src/cmd/calendar.rs
@@ -22433,6 +22607,12 @@ msgstr "სერვერზე გასაგზავნად მომლ�
 msgid "a sender address has no e-mail address"
 msgstr "გამგზავნის მისამართს ელფოსტის მისამართი არ აქვს"
 
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "a server that encrypts from the first byte"
+msgstr "სერვერს, რომელიც პირველივე ბაიტიდან შიფრავს"
+
 #. what a command says
 #: crates/engine/src/cmd/account.rs
 #, fuzzy
@@ -22536,6 +22716,12 @@ msgid "a task needs a title"
 msgstr "დავალებას სათაური სჭირდება"
 
 #. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "a web server"
+msgstr "ვებსერვერს"
+
+#. why a mail server couldn't be used
 #: crates/net/src/oauth/custom.rs
 #, fuzzy
 msgid "access was refused on the sign-in page"
@@ -22583,11 +22769,29 @@ msgstr "HTML ხელმოწერა სურათებს მხოლ�
 msgid "an HTML signature shows pictures from their web address: switch it to rich text to add one"
 msgstr "HTML ხელმოწერა სურათებს მათი ვებმისამართიდან აჩვენებს: სურათის დასამატებლად გადართეთ ფორმატირებულ ტექსტზე"
 
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "an IMAP server"
+msgstr "IMAP სერვერს"
+
 #. what a command says
 #: crates/engine/src/digital_signature.rs
 #, fuzzy
 msgid "an S/MIME certificate is trusted through its certification authority and isn't marked Verified"
 msgstr "S/MIME სერტიფიკატი სანდოა თავისი სასერტიფიკაციო ცენტრის მეშვეობით და დადასტურებულად არ მოინიშნება"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "an SMTP server"
+msgstr "SMTP სერვერს"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "an SSH server"
+msgstr "SSH სერვერს"
 
 #. what a command says
 #: crates/engine/src/cmd/account.rs
@@ -22654,6 +22858,12 @@ msgid "and {n} more, not merged now"
 msgid_plural "and {n} more, not merged now"
 msgstr[0] "და კიდევ {n}, ახლა არ შერწყმულა"
 msgstr[1] "და კიდევ {n}, ახლა არ შერწყმულა"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "another Sieve script of yours runs on the server"
+msgstr "სერვერზე თქვენი სხვა Sieve-ის სკრიპტი მუშაობს"
 
 #. what a command says
 #: crates/engine/src/cmd/compose.rs
@@ -22787,6 +22997,12 @@ msgstr "დაკოპირება: {folder}"
 #, fuzzy
 msgid "copy it to {folder} - {who}"
 msgstr "დაკოპირება: {folder} - {who}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "couldn't make a secure connection to {at}: {reason}"
+msgstr "{at}-თან უსაფრთხო კავშირის დამყარება ვერ მოხერხდა: {reason}"
 
 #. why a mail server couldn't be used
 #: crates/net/src/lib.rs
@@ -23171,6 +23387,18 @@ msgstr "სერვერზე მომდევნო დაკავში�
 #. name
 #: crates/engine/src/cmd/rules.rs
 #, fuzzy
+msgid "it has a part MailCraft can't write as Sieve"
+msgstr "მას აქვს ნაწილი, რომლის Sieve-ად ჩაწერაც MailCraft-ს არ შეუძლია"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "it has no conditions, and on the server it would act on every message"
+msgstr "მას პირობები არ აქვს და სერვერზე ყველა წერილზე იმოქმედებდა"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
 msgid "it has two conditions of one kind, and the server would take either of them rather than both"
 msgstr "ერთი სახის ორი პირობა აქვს და სერვერი ორივეს ნაცვლად რომელიმე ერთს მიიღებდა"
 
@@ -23197,6 +23425,12 @@ msgstr "ეს ისეთი სახის სურათია, რომ�
 #, fuzzy
 msgid "it is a kind of picture that can't be shown here (AVIF or HEIC)"
 msgstr "ეს ისეთი სახის სურათია, რომლის ჩვენებაც აქ შეუძლებელია (AVIF ან HEIC)"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "it is being written to the server"
+msgstr "ახლა სერვერზე იწერება"
 
 #. interface
 #: crates/ui-egui/src/reading/images.rs
@@ -23275,6 +23509,12 @@ msgstr "მისი ანგარიში"
 #, fuzzy
 msgid "its name isn't one a certificate can be checked against"
 msgstr "მისი სახელი ისეთი არ არის, რომლითაც სერტიფიკატის შემოწმება შეიძლება"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "its sizes are larger than the server takes"
+msgstr "მისი ზომები აღემატება იმას, რასაც სერვერი იღებს"
 
 #. interface
 #: crates/ui-egui/src/opened_message.rs
@@ -23731,6 +23971,12 @@ msgstr "უცნობია პირველ „გაგზავნა/მ
 msgid "not sent: {why}. Send with \"confirmed\": true to send it anyway, or with \"moveToBcc\": true to move the people outside the organisation to Bcc first"
 msgstr "არ გაიგზავნა: {why}. გაგზავნეთ პარამეტრით \"confirmed\": true, რომ მაინც გაიგზავნოს, ან \"moveToBcc\": true, რომ ორგანიზაციის გარეთ მყოფი ადამიანები ჯერ ფარულ ასლში გადავიდნენ"
 
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "nothing answers at {at} ({reason})"
+msgstr "{at}-ზე არაფერი პასუხობს ({reason})"
+
 #. what a command says
 #: crates/engine/src/cmd/format.rs
 #, fuzzy
@@ -24142,6 +24388,18 @@ msgstr "ზომა არის {min} KB-დან {max} KB-მდე"
 msgid "someone@example.org or @example.org"
 msgstr "someone@example.org ან @example.org"
 
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "something answers at {at}, but it isn't a ManageSieve server"
+msgstr "{at}-ზე რაღაც პასუხობს, მაგრამ ეს ManageSieve სერვერი არ არის"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "something answers at {at}, but it isn't a ManageSieve server: it looks like {what}"
+msgstr "{at}-ზე რაღაც პასუხობს, მაგრამ ეს ManageSieve სერვერი არ არის: ის ჰგავს {what}"
+
 #. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
@@ -24309,11 +24567,23 @@ msgstr ".pst ფაილის წამკითხველი დასრ�
 msgid "the Inbox of this account hasn't been read yet"
 msgstr "ამ ანგარიშის „შემოსულები“ ჯერ არ წაკითხულა"
 
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "the ManageSieve server at {at} doesn't offer STARTTLS"
+msgstr "ManageSieve სერვერი {at}-ზე STARTTLS-ს არ გვთავაზობს"
+
 #. what a command says
 #: crates/engine/src/cmd/keys.rs
 #, fuzzy
 msgid "the OpenPGP key is larger than a Public key is kept"
 msgstr "OpenPGP გასაღები იმაზე დიდია, რაც საჯარო გასაღებისთვის ინახება"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the account has no address to look for"
+msgstr "ანგარიშს მოსაძებნი მისამართი არ აქვს"
 
 #. why a mail server couldn't be used
 #: crates/net/src/sieve.rs crates/net/src/sync.rs
@@ -24356,6 +24626,12 @@ msgstr "ანგარიში აღარ არსებობს"
 #, fuzzy
 msgid "the account {name} is the online archive of is gone"
 msgstr "ანგარიში {name}, რომლის ონლაინ არქივიც ესაა, აღარ არსებობს"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the account's Deleted Items isn't on the server"
+msgstr "ანგარიშის წაშლილი ელემენტები სერვერზე არ არის"
 
 #. why a mail server couldn't be used
 #: crates/net/src/transport.rs
@@ -24769,17 +25045,17 @@ msgstr "ბოლო კალენდრის წაშლა შეუძლ
 msgid "the list shows every account's folder: open one account's folder, or name the folder"
 msgstr "სია აჩვენებს ყველა ანგარიშის საქაღალდეს: გახსენით ერთი ანგარიშის საქაღალდე ან დაასახელეთ საქაღალდე"
 
-#. why a mail server couldn't be used
-#: crates/proto/src/oauthbearer.rs
-#, fuzzy
-msgid "the mail server's name can't be sent with a sign-in"
-msgstr "საფოსტო სერვერის სახელის გაგზავნა შესვლასთან ერთად შეუძლებელია"
-
 #. what a command says
 #: crates/engine/src/cmd/sieve_replies.rs
 #, fuzzy
 msgid "the mail server doesn't know your contacts: replies outside the organisation go to nobody or to everybody"
 msgstr "საფოსტო სერვერმა თქვენი კონტაქტები არ იცის: ორგანიზაციის გარეთ პასუხები არავის ან ყველას მიდის"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/oauthbearer.rs
+#, fuzzy
+msgid "the mail server's name can't be sent with a sign-in"
+msgstr "საფოსტო სერვერის სახელის გაგზავნა შესვლასთან ერთად შეუძლებელია"
 
 #. what a command says
 #: crates/engine/src/cmd/file.rs
@@ -24973,6 +25249,12 @@ msgstr "გაუქმების მისამართი {why}"
 msgid "the same calendar item is named twice; nothing was changed"
 msgstr "კალენდრის ერთი და იგივე ელემენტი ორჯერაა მითითებული; არაფერი შეცვლილა"
 
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "the script is larger than the {kb} KB MailCraft sends"
+msgstr "სკრიპტი აღემატება {kb} KB-ს, რასაც MailCraft აგზავნის"
+
 #. what a command says
 #: crates/engine/src/cmd/mail.rs
 #, fuzzy
@@ -25148,10 +25430,22 @@ msgid "the server didn't end IDLE properly"
 msgstr "სერვერმა IDLE სწორად არ დაასრულა"
 
 #. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "the server didn't greet like a ManageSieve server"
+msgstr "სერვერი ManageSieve სერვერივით არ მოგვესალმა"
+
+#. why a mail server couldn't be used
 #: crates/proto/src/imap/mod.rs
 #, fuzzy
 msgid "the server didn't greet like an IMAP server"
 msgstr "სერვერი IMAP სერვერივით არ მოგვესალმა"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "the server didn't send the script"
+msgstr "სერვერმა სკრიპტი არ გამოგზავნა"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -25298,6 +25592,12 @@ msgid "the server said: {reason}"
 msgstr "სერვერის პასუხი: {reason}"
 
 #. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+#, fuzzy
+msgid "the server sent MailCraft to another server for the Sieve scripts, which it doesn't follow"
+msgstr "სერვერმა MailCraft Sieve-ის სკრიპტებისთვის სხვა სერვერზე გადაამისამართა, რასაც MailCraft არ მიჰყვება"
+
+#. why a mail server couldn't be used
 #: crates/proto/src/line.rs
 #, fuzzy
 msgid "the server sent a line longer than {kb} KB"
@@ -25326,6 +25626,12 @@ msgstr "IDLE რეჟიმში სერვერმა გამოაგ�
 #, fuzzy
 msgid "the server sent nothing"
 msgstr "სერვერმა არაფერი გამოგზავნა"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs crates/proto/src/managesieve/parse.rs
+#, fuzzy
+msgid "the server sent something that isn't a ManageSieve response"
+msgstr "სერვერმა გამოგზავნა რაღაც, რაც ManageSieve-ის პასუხი არ არის"
 
 #. why a mail server couldn't be used
 #: crates/proto/src/imap/idle.rs crates/proto/src/imap/mod.rs crates/proto/src/imap/status.rs crates/proto/src/managesieve/mod.rs
@@ -25368,6 +25674,72 @@ msgstr "სერვერმა პასუხს ზედმეტად დ
 #, fuzzy
 msgid "the server wouldn't send “{subject}” whole, so it can't be forwarded as an attachment"
 msgstr "სერვერმა „{subject}“ მთლიანად არ გამოგზავნა, ამიტომ მისი დანართად გადაგზავნა შეუძლებელია"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't do one of its actions or conditions"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ მისი ერთ-ერთი მოქმედების ან პირობის შესრულება"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't flag mail for a day"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ ფოსტის დღისთვის მონიშვნა"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at attachments"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ დანართების შემოწმება"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at categories"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ კატეგორიების შემოწმება"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at importance"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ მნიშვნელობის შემოწმება"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at sensitivity"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ კონფიდენციალურობის შემოწმება"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't set categories"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ კატეგორიების დაყენება"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't set importance"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ მნიშვნელობის დაყენება"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't tell automatic replies"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ ავტომატური პასუხების გარჩევა"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't tell mail sent to you alone"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ მხოლოდ თქვენთვის გაგზავნილი ფოსტის გარჩევა"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't tell meeting invitations"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ შეხვედრის მოწვევების გარჩევა"
 
 #. why a mail server couldn't be used
 #: crates/proto/src/imap/mod.rs
@@ -25822,6 +26194,12 @@ msgid "this message isn't downloaded: open it once you're online, then send it a
 msgstr "ეს წერილი არ ჩამოტვირთულა: გახსენით, როცა ონლაინ იქნებით, შემდეგ ხელახლა გაგზავნეთ"
 
 #. what a command says
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "this rule is in your Sieve script \"{script}\" on the server, made in another program: MailCraft shows it and never changes it"
+msgstr "ეს წესი თქვენს Sieve-ის სკრიპტშია „{script}“ სერვერზე, რომელიც სხვა პროგრამაშია შექმნილი: MailCraft მას აჩვენებს და არასოდეს ცვლის"
+
+#. what a command says
 #: crates/engine/src/cmd/calendar.rs crates/engine/src/cmd/calendar/invitation.rs crates/engine/src/cmd/calendar/selection.rs
 #, fuzzy
 msgid "this series has too many cancelled days"
@@ -26248,6 +26626,18 @@ msgstr "{address}: {error}. იხილეთ ფაილი › ინფო�
 #, fuzzy
 msgid "{answer}: more ways to answer"
 msgstr "{answer}: პასუხის სხვა გზები"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "{at} closed the connection without a word"
+msgstr "{at}-მ კავშირი უსიტყვოდ დახურა"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+#, fuzzy
+msgid "{at} expects an encrypted connection from the start, which ManageSieve doesn't use"
+msgstr "{at} თავიდანვე დაშიფრულ კავშირს ელის, რომელსაც ManageSieve არ იყენებს"
 
 #. interface
 #: crates/ui-egui/src/calendar_view.rs
@@ -28392,392 +28782,3 @@ msgstr ""
 #~ msgid "{not_sending_yet}: send this message from another account, or save it as a draft"
 #~ msgstr "{not_sending_yet}: ეს წერილი სხვა ანგარიშიდან გაგზავნეთ ან მონახაზად შეინახეთ"
 
-#. why a mail server couldn't be used
-#: crates/proto/src/managesieve/mod.rs
-#, fuzzy
-msgid "\"{name}\" can't be used as a script name"
-msgstr "„{name}“ სკრიპტის სახელად ვერ გამოდგება"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "A ManageSieve server greets as soon as it is connected to. This port may expect an encrypted connection from the start (on Dovecot, ssl = yes on the sieve listener), which ManageSieve doesn't use: it starts unencrypted and switches to encryption with STARTTLS. Or a proxy in front of the server waits for something MailCraft doesn't send. Check the Sieve server (Automatic Replies) in Account Settings, or ask the server's administrator."
-msgstr "ManageSieve სერვერი მისალმებას დაკავშირებისთანავე აგზავნის. შესაძლოა ეს პორტი თავიდანვე დაშიფრულ კავშირს ელის (Dovecot-ში ssl = yes sieve listener-ზე), რომელსაც ManageSieve არ იყენებს: ის დაუშიფრავად იწყება და STARTTLS-ით გადადის დაშიფვრაზე. ან სერვერის წინ მდგარი პროქსი ელის რაღაცას, რასაც MailCraft არ აგზავნის. შეამოწმეთ Sieve სერვერი (ავტომატური პასუხები) ანგარიშის პარამეტრებში, ან ჰკითხეთ სერვერის ადმინისტრატორს."
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "Check the Sieve server (Automatic Replies) in Account Settings, and that your mail server has ManageSieve switched on."
-msgstr "შეამოწმეთ Sieve სერვერი (ავტომატური პასუხები) ანგარიშის პარამეტრებში და ჩართულია თუ არა ManageSieve თქვენს ფოსტის სერვერზე."
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "Check the Sieve server (Automatic Replies) in Account Settings: ManageSieve is usually on port 4190 of the incoming mail server."
-msgstr "შეამოწმეთ Sieve სერვერი (ავტომატური პასუხები) ანგარიშის პარამეტრებში: ManageSieve ჩვეულებრივ შემომავალი ფოსტის სერვერის 4190 პორტზეა."
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "MailCraft connected to {at}, but the server said nothing"
-msgstr "MailCraft დაუკავშირდა {at}-ს, მაგრამ სერვერმა არაფერი თქვა"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "MailCraft signs in only over an encrypted connection, so it didn't sign in there: your password would cross the network unencrypted. Ask the server's administrator to turn on TLS for ManageSieve."
-msgstr "MailCraft შედის მხოლოდ დაშიფრული კავშირით, ამიტომ იქ არ შესულა: თქვენი პაროლი ქსელში დაუშიფრავად გაივლიდა. სთხოვეთ სერვერის ადმინისტრატორს ManageSieve-სთვის TLS-ის ჩართვა."
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "ManageSieve starts unencrypted and switches to encryption with STARTTLS, so MailCraft doesn't sign in there. On Dovecot, set ssl = no on the sieve listener (the connection is still encrypted, by STARTTLS), or name another port in Account Settings › Sieve server (Automatic Replies)."
-msgstr "ManageSieve დაუშიფრავად იწყება და STARTTLS-ით გადადის დაშიფვრაზე, ამიტომ MailCraft იქ არ შედის. Dovecot-ში sieve listener-ზე დააყენეთ ssl = no (კავშირი მაინც დაშიფრული რჩება, STARTTLS-ით), ან მიუთითეთ სხვა პორტი: ანგარიშის პარამეტრები › Sieve სერვერი (ავტომატური პასუხები)."
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "Nothing was sent to it. Check the Sieve server (Automatic Replies) in Account Settings, or ask the server's administrator about its certificate."
-msgstr "მას არაფერი გაეგზავნა. შეამოწმეთ Sieve სერვერი (ავტომატური პასუხები) ანგარიშის პარამეტრებში, ან ჰკითხეთ სერვერის ადმინისტრატორს მის სერტიფიკატზე."
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "Sieve scripts are only read from and written to the account's own mail server"
-msgstr "Sieve-ის სკრიპტები მხოლოდ ანგარიშის საკუთარ საფოსტო სერვერზე იკითხება და იწერება"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "a POP3 server"
-msgstr "POP3 სერვერს"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "a server that encrypts from the first byte"
-msgstr "სერვერს, რომელიც პირველივე ბაიტიდან შიფრავს"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "a web server"
-msgstr "ვებსერვერს"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "an IMAP server"
-msgstr "IMAP სერვერს"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "an SMTP server"
-msgstr "SMTP სერვერს"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "an SSH server"
-msgstr "SSH სერვერს"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "couldn't make a secure connection to {at}: {reason}"
-msgstr "{at}-თან უსაფრთხო კავშირის დამყარება ვერ მოხერხდა: {reason}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "nothing answers at {at} ({reason})"
-msgstr "{at}-ზე არაფერი პასუხობს ({reason})"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "something answers at {at}, but it isn't a ManageSieve server"
-msgstr "{at}-ზე რაღაც პასუხობს, მაგრამ ეს ManageSieve სერვერი არ არის"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "something answers at {at}, but it isn't a ManageSieve server: it looks like {what}"
-msgstr "{at}-ზე რაღაც პასუხობს, მაგრამ ეს ManageSieve სერვერი არ არის: ის ჰგავს {what}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "the ManageSieve server at {at} doesn't offer STARTTLS"
-msgstr "ManageSieve სერვერი {at}-ზე STARTTLS-ს არ გვთავაზობს"
-
-#. why a mail server couldn't be used
-#: crates/proto/src/managesieve/mod.rs
-#, fuzzy
-msgid "the script is larger than the {kb} KB MailCraft sends"
-msgstr "სკრიპტი აღემატება {kb} KB-ს, რასაც MailCraft აგზავნის"
-
-#. why a mail server couldn't be used
-#: crates/proto/src/managesieve/mod.rs
-#, fuzzy
-msgid "the server didn't greet like a ManageSieve server"
-msgstr "სერვერი ManageSieve სერვერივით არ მოგვესალმა"
-
-#. why a mail server couldn't be used
-#: crates/proto/src/managesieve/mod.rs
-#, fuzzy
-msgid "the server didn't send the script"
-msgstr "სერვერმა სკრიპტი არ გამოგზავნა"
-
-#. why a mail server couldn't be used
-#: crates/proto/src/managesieve/mod.rs
-#, fuzzy
-msgid "the server sent MailCraft to another server for the Sieve scripts, which it doesn't follow"
-msgstr "სერვერმა MailCraft Sieve-ის სკრიპტებისთვის სხვა სერვერზე გადაამისამართა, რასაც MailCraft არ მიჰყვება"
-
-#. why a mail server couldn't be used
-#: crates/proto/src/managesieve/mod.rs crates/proto/src/managesieve/parse.rs
-#, fuzzy
-msgid "the server sent something that isn't a ManageSieve response"
-msgstr "სერვერმა გამოგზავნა რაღაც, რაც ManageSieve-ის პასუხი არ არის"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "{at} closed the connection without a word"
-msgstr "{at}-მ კავშირი უსიტყვოდ დახურა"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sieve.rs
-#, fuzzy
-msgid "{at} expects an encrypted connection from the start, which ManageSieve doesn't use"
-msgstr "{at} თავიდანვე დაშიფრულ კავშირს ელის, რომელსაც ManageSieve არ იყენებს"
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "Automatic replies: set by your Sieve script \"{name}\", which runs on the server"
-msgstr "ავტომატური პასუხები: მათ აყენებს თქვენი Sieve-ის სკრიპტი „{name}“, რომელიც სერვერზე მუშაობს"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "In MailCraft's Sieve script, as it was changed elsewhere"
-msgstr "MailCraft-ის Sieve-ის სკრიპტში, როგორც ის სხვაგან შეიცვალა"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "In your Sieve script \"{name}\""
-msgstr "თქვენს Sieve-ის სკრიპტში „{name}“"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "It also sends automatic replies of its own."
-msgstr "ის საკუთარ ავტომატურ პასუხებსაც აგზავნის."
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "Made in another program: MailCraft shows these rules and never changes them"
-msgstr "შექმნილია სხვა პროგრამაში: MailCraft ამ წესებს აჩვენებს და არასოდეს ცვლის"
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "MailCraft can't keep this account's rules on its server, so they run on this computer: {why}. {advice}"
-msgstr "MailCraft ვერ შეინახავს ამ ანგარიშის წესებს მის სერვერზე, ამიტომ ისინი ამ კომპიუტერზე სრულდება: {why}. {advice}"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "MailCraft can't read the rules of this script."
-msgstr "MailCraft ამ სკრიპტის წესებს ვერ კითხულობს."
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "MailCraft's Sieve script on the server was changed elsewhere"
-msgstr "MailCraft-ის Sieve-ის სკრიპტი სერვერზე სხვაგან შეიცვალა"
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "MailCraft's Sieve script on the server was changed elsewhere, so MailCraft leaves it as it is, and these rules run on this computer. Replace it with MailCraft's to keep them on the server: what was changed in it elsewhere is lost."
-msgstr "MailCraft-ის Sieve-ის სკრიპტი სერვერზე სხვაგან შეიცვალა, ამიტომ MailCraft მას ისე ტოვებს და ეს წესები ამ კომპიუტერზე მუშაობს. სერვერზე შესანახად ჩაანაცვლეთ ის MailCraft-ის სკრიპტით: რაც მასში სხვაგან შეიცვალა, დაიკარგება."
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "None."
-msgstr "არცერთი."
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "On the server, changed elsewhere: Replace with MailCraft's would remove it"
-msgstr "სერვერზე, სხვაგან შეცვლილი: MailCraft-ის სკრიპტით ჩანაცვლება მას წაშლიდა"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "On the server, made in another program: MailCraft never changes it"
-msgstr "სერვერზე, სხვა პროგრამაში შექმნილი: MailCraft მას არასოდეს ცვლის"
-
-#. command label
-#: crates/engine/src/cmd/sieve_replies.rs
-#, fuzzy
-msgid "Sieve Script to Send"
-msgstr "გასაგზავნი Sieve-ის სკრიპტი"
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "This account's server doesn't offer Sieve scripts (ManageSieve), so its rules run on this computer."
-msgstr "ამ ანგარიშის სერვერი Sieve-ის სკრიპტებს არ გვთავაზობს (ManageSieve), ამიტომ მისი წესები ამ კომპიუტერზე მუშაობს."
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "This server's Sieve scripts can't file mail into folders, so its rules run on this computer."
-msgstr "ამ სერვერის Sieve-ის სკრიპტებს ფოსტის საქაღალდეებში შენახვა არ შეუძლიათ, ამიტომ მისი წესები ამ კომპიუტერზე მუშაობს."
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "Your Sieve script \"{name}\" runs on the server instead of MailCraft's, so these rules run on this computer. MailCraft never switches your script off."
-msgstr "სერვერზე MailCraft-ის ნაცვლად თქვენი Sieve-ის სკრიპტი „{name}“ მუშაობს, ამიტომ ეს წესები ამ კომპიუტერზე მუშაობს. MailCraft თქვენს სკრიპტს არასოდეს გამორთავს."
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "Your rules are kept on the server"
-msgstr "თქვენი წესები სერვერზე ინახება"
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "Your rules were saved on the server, but another Sieve script of yours runs there, so they run on this computer"
-msgstr "თქვენი წესები სერვერზე შეინახა, მაგრამ იქ თქვენი სხვა Sieve-ის სკრიპტი მუშაობს, ამიტომ ისინი ამ კომპიუტერზე მუშაობს"
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "Your rules weren't changed on the server"
-msgstr "თქვენი წესები სერვერზე არ შეცვლილა"
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "another Sieve script of yours runs on the server"
-msgstr "სერვერზე თქვენი სხვა Sieve-ის სკრიპტი მუშაობს"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "it has a part MailCraft can't write as Sieve"
-msgstr "მას აქვს ნაწილი, რომლის Sieve-ად ჩაწერაც MailCraft-ს არ შეუძლია"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "it has no conditions, and on the server it would act on every message"
-msgstr "მას პირობები არ აქვს და სერვერზე ყველა წერილზე იმოქმედებდა"
-
-#. interface
-#: crates/ui-egui/src/sieve_replies.rs
-#, fuzzy
-msgid "it is being written to the server"
-msgstr "ახლა სერვერზე იწერება"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "its sizes are larger than the server takes"
-msgstr "მისი ზომები აღემატება იმას, რასაც სერვერი იღებს"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the account has no address to look for"
-msgstr "ანგარიშს მოსაძებნი მისამართი არ აქვს"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the account's Deleted Items isn't on the server"
-msgstr "ანგარიშის წაშლილი ელემენტები სერვერზე არ არის"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't do one of its actions or conditions"
-msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ მისი ერთ-ერთი მოქმედების ან პირობის შესრულება"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't flag mail for a day"
-msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ ფოსტის დღისთვის მონიშვნა"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't look at attachments"
-msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ დანართების შემოწმება"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't look at categories"
-msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ კატეგორიების შემოწმება"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't look at importance"
-msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ მნიშვნელობის შემოწმება"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't look at sensitivity"
-msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ კონფიდენციალურობის შემოწმება"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't set categories"
-msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ კატეგორიების დაყენება"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't set importance"
-msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ მნიშვნელობის დაყენება"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't tell automatic replies"
-msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ ავტომატური პასუხების გარჩევა"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't tell mail sent to you alone"
-msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ მხოლოდ თქვენთვის გაგზავნილი ფოსტის გარჩევა"
-
-#. name
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "the server's Sieve scripts can't tell meeting invitations"
-msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ შეხვედრის მოწვევების გარჩევა"
-
-#. what a command says
-#: crates/engine/src/cmd/rules.rs
-#, fuzzy
-msgid "this rule is in your Sieve script \"{script}\" on the server, made in another program: MailCraft shows it and never changes it"
-msgstr "ეს წესი თქვენს Sieve-ის სკრიპტშია „{script}“ სერვერზე, რომელიც სხვა პროგრამაშია შექმნილი: MailCraft მას აჩვენებს და არასოდეს ცვლის"
