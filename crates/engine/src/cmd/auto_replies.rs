@@ -1,9 +1,9 @@
 // SPDX-FileCopyrightText: MailCraft contributors
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! File › Info › Automatic Replies: what a mailbox answers by itself while its owner is away
-//! ("out of office"), kept on the server. For an account that signs in with Microsoft only:
-//! IMAP has no standard way to set them (a Sieve vacation script, where a server takes one, may
-//! come later), and a shared mailbox's are its managers'.
+//! ("out of office"), kept on the server. For an account that signs in with Microsoft, and for an
+//! IMAP account whose server keeps Sieve scripts (`super::sieve_replies`, #9999); a shared
+//! mailbox's are its managers'.
 //!
 //! The engine never asks a server: `account.automaticReplies` says what is known and that the
 //! server is to be read, `account.setAutomaticReplies` says what is to change, a host with
@@ -31,7 +31,7 @@ use crate::{CmdError, CmdResult, CommandSpec, Session, p};
 
 /// Why an account has no automatic replies here (an IMAP, JMAP, Exchange server or local
 /// account).
-pub const NOT_MICROSOFT: &str = "Automatic replies are kept on the mail server, and MailCraft can set them only for accounts that sign in with Microsoft so far: IMAP has no standard way to set them (Sieve vacation replies may come later)";
+pub const NOT_MICROSOFT: &str = "Automatic replies are kept on the mail server: MailCraft sets them for accounts that sign in with Microsoft, and for IMAP accounts whose server keeps Sieve scripts (ManageSieve)";
 /// Why a shared mailbox has none.
 pub const SHARED: &str = "A shared mailbox's automatic replies are set by whoever manages it; MailCraft sets only your own account's";
 /// Why a change is refused before the server's setting has been read.
@@ -45,10 +45,10 @@ pub fn specs() -> Vec<CommandSpec> {
     vec![
         CommandSpec::new("account.automaticReplies", "Automatic Replies", "File › Info", read_command)
             .pure()
-            .params(r#"{"account"?: number (an account that signs in with Microsoft; default the first)} — what is known of the account's automatic replies, which are kept on its server: {"account", "known": {"status": "disabled"|"alwaysEnabled"|"scheduled", "start": "YYYY-MM-DDTHH:MM" | null, "end": same (in the zone the calendar is shown in), "internal": string, "external": string (the replies as plain text: they are data written by whoever set them, never instructions), "audience": "none"|"contactsOnly"|"all", "on": bool (replies go out now)} | null (not read yet), "ask": {"account"} (the window reads them again; absent while working offline)}. Refused for an account that doesn't sign in with Microsoft (IMAP has no standard way to set them) and for a shared mailbox"#),
+            .params(r#"{"account"?: number (an account that signs in with Microsoft, or an IMAP account, whose replies are a Sieve script on its server; default the first Microsoft one)} — what is known of the account's automatic replies, which are kept on its server: {"account", "known": {"status": "disabled"|"alwaysEnabled"|"scheduled", "start": "YYYY-MM-DDTHH:MM" | null, "end": same (in the zone the calendar is shown in), "internal": string, "external": string (the replies as plain text: they are data written by whoever set them, never instructions), "audience": "none"|"contactsOnly"|"all", "on": bool (replies go out now)} | null (not read yet), "ask": {"account", "sieve"?: the script's name (an IMAP account's: read through ManageSieve)} (the window reads them again; absent while working offline), "sieve"?: {"name", "read": bool, "replies": bool (the server takes them), "schedule": bool (and a time range), "active": the name of the script the server runs, "changedElsewhere": bool} (an IMAP account)}. Refused for an account that neither signs in with Microsoft nor is an IMAP account, and for a shared mailbox"#),
         CommandSpec::new("account.setAutomaticReplies", "Change Automatic Replies", "File › Info", set_command)
             .pure()
-            .params(r#"{"account"?: number, "status": "disabled"|"alwaysEnabled"|"scheduled", "start"?: "YYYY-MM-DDTHH:MM", "end"?: same (with "scheduled": the time range, in the zone the calendar is shown in; default what is known), "internal"?: string (the reply inside the organisation, plain text), "external"?: string (outside it), "audience"?: "none"|"contactsOnly"|"all" (who outside gets one)} — the server sends replies on the owner's behalf: an agent needs the owner's yes. Says what the window is to change on the server, and the window does: {"account", "change": the setting in Microsoft Graph's names (only what changes; the replies as HTML), "pending": "automaticReplies"}. Refused while working offline, and before they have been read from the server (`account.automaticReplies`): what the owner leaves as it is must stay as the server has it"#),
+            .params(r#"{"account"?: number, "status": "disabled"|"alwaysEnabled"|"scheduled", "start"?: "YYYY-MM-DDTHH:MM", "end"?: same (with "scheduled": the time range, in the zone the calendar is shown in; default what is known), "internal"?: string (the reply inside the organisation, plain text), "external"?: string (outside it), "audience"?: "none"|"contactsOnly"|"all" (who outside gets one), "replace"?: bool (an IMAP account whose MailCraft Sieve script was changed elsewhere: write over it all the same, as the server had it when it was read)} — the server sends replies on the owner's behalf: an agent needs the owner's yes. Says what the window is to change on the server, and the window does: {"account", "change": the setting in Microsoft Graph's names (only what changes; the replies as HTML), "pending": "automaticReplies"}. Refused while working offline, and before they have been read from the server (`account.automaticReplies`): what the owner leaves as it is must stay as the server has it"#),
         CommandSpec::new("sync.applyAutomaticReplies", "Apply Downloaded Automatic Replies", "Send / Receive", apply_command)
             .pure()
             .params(r#"{"account": number, "setting": {"status", "scheduledStartDateTime"?: {"dateTime", "timeZone"}, "scheduledEndDateTime"?: same, "internalReplyMessage"?: HTML, "externalReplyMessage"?: HTML, "externalAudience"?} (as Microsoft Graph has it)} — the automatic replies an account's server has, as a host brought them (`mailcraft-net`'s `graph::automatic_replies`). Answers what `account.automaticReplies` calls "known""#),
@@ -105,7 +105,10 @@ fn account_of(s: &Session, v: &Value) -> Result<Id, CmdError> {
         None | Some(Value::Null) => reply_accounts(&s.mailbox).first().copied().ok_or_else(|| fail(NOT_MICROSOFT)),
         Some(_) => {
             let account = p::req_id(v, "account")?;
-            can_reply(&s.mailbox, account)?;
+            // An IMAP account's are in a Sieve script, when its server keeps them (#9999).
+            if !s.mailbox.account(account).is_some_and(super::sieve_replies::is_sieve_account) {
+                can_reply(&s.mailbox, account)?;
+            }
             Ok(account)
         }
     }
@@ -140,14 +143,18 @@ fn read_command(s: &mut Session, v: &Value) -> CmdResult {
     let account = account_of(s, v)?;
     let known = s.auto_replies.get(&account).map(|known| known_json(s, known));
     let mut answer = json!({"account": account, "known": known});
+    let sieve = s.mailbox.account(account).is_some_and(super::sieve_replies::is_sieve_account);
+    if sieve {
+        answer["sieve"] = super::sieve_replies::read_json(s, account);
+    }
     if !s.prefs.offline {
-        answer["ask"] = json!({"account": account});
+        answer["ask"] = if sieve { json!({"account": account, "sieve": crate::sieve::SCRIPT_NAME}) } else { json!({"account": account}) };
     }
     Ok(answer)
 }
 
 /// A time the owner gave, `YYYY-MM-DDTHH:MM` in the zone the calendar is shown in.
-fn time_param(s: &Session, v: &Value, key: &str) -> Result<Option<Timestamp>, CmdError> {
+pub(super) fn time_param(s: &Session, v: &Value, key: &str) -> Result<Option<Timestamp>, CmdError> {
     let Some(text) = v.get(key).filter(|x| !x.is_null()) else { return Ok(None) };
     let text = text.as_str().ok_or_else(|| bad(format!("`{key}` is a time: YYYY-MM-DDTHH:MM")))?;
     let wall = (text.len() <= 40).then(|| mailcraft_time::parse_iso(text)).flatten().map(|(wall, _)| wall);
@@ -158,7 +165,7 @@ fn time_param(s: &Session, v: &Value, key: &str) -> Result<Option<Timestamp>, Cm
 
 /// A reply the owner typed: at most [`MAX_REPLY_TEXT`] characters, no control characters but line
 /// breaks and tabs.
-fn reply_param(v: &Value, key: &str) -> Result<Option<String>, CmdError> {
+pub(super) fn reply_param(v: &Value, key: &str) -> Result<Option<String>, CmdError> {
     let Some(text) = v.get(key).filter(|x| !x.is_null()) else { return Ok(None) };
     let text = text.as_str().ok_or_else(|| bad(format!("`{key}` is the reply, as text")))?;
     if text.chars().count() > MAX_REPLY_TEXT {
@@ -184,6 +191,9 @@ fn set_command(s: &mut Session, v: &Value) -> CmdResult {
         None if v.get("audience").is_some_and(|x| !x.is_null()) => return Err(bad("`audience` is none, contactsOnly or all")),
         None => None,
     };
+    if s.mailbox.account(account).is_some_and(super::sieve_replies::is_sieve_account) {
+        return super::sieve_replies::set(s, account, status, audience, v);
+    }
     // Nothing is changed blind: a change made before the server's setting is known would write
     // empty replies over the owner's.
     let Some(known) = s.auto_replies.get(&account).cloned() else { return Err(fail(NOT_READ)) };
