@@ -878,6 +878,12 @@ msgstr "Eine Vorschau zeigt möglicherweise nicht den gesamten Inhalt der Origin
 msgid "A report is written beside your mailbox."
 msgstr "Ein Bericht wird neben Ihrem Postfach gespeichert."
 
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "A rule kept on the server can't show a desktop alert."
+msgstr "Eine auf dem Server gespeicherte Regel kann keine Desktopbenachrichtigung anzeigen."
+
 #. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
@@ -885,10 +891,28 @@ msgid "A rule needs a name, and something to look for."
 msgstr "Eine Regel braucht einen Namen und etwas, wonach gesucht wird."
 
 #. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "A rule needs some Sieve."
+msgstr "Eine Regel braucht etwas Sieve."
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "A rule needs some Sieve: a command, not only comments."
+msgstr "Eine Regel braucht etwas Sieve: einen Befehl, nicht nur Kommentare."
+
+#. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "A rule needs something to do: an action, or a desktop alert."
 msgstr "Eine Regel muss etwas tun: eine Aktion oder eine Desktopbenachrichtigung."
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "A rule of your own Sieve script is kept in that script on the server."
+msgstr "Eine Regel Ihres eigenen Sieve-Skripts wird in diesem Skript auf dem Server gespeichert."
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt
@@ -3403,6 +3427,18 @@ msgid "Change this rule"
 msgstr "Diese Regel ändern"
 
 #. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Change this rule as Sieve text"
+msgstr "Diese Regel als Sieve-Text ändern"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Change this rule as Sieve text: {why}"
+msgstr "Diese Regel als Sieve-Text ändern: {why}"
+
+#. interface
 #: crates/ui-egui/src/reading/signature.rs
 msgid "Changed after it was signed"
 msgstr "Nach der Signatur geändert"
@@ -3602,6 +3638,12 @@ msgstr "Konto wird geprüft…"
 #, fuzzy
 msgid "Checking the address with Microsoft…"
 msgstr "Adresse wird bei Microsoft geprüft…"
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+#, fuzzy
+msgid "Checking the address with the server…"
+msgstr "Adresse wird beim Server geprüft…"
 
 #. interface
 #: crates/ui-egui/src/calendar_sync.rs
@@ -5458,6 +5500,12 @@ msgid "Edit Message"
 msgstr "Nachricht bearbeiten"
 
 #. command label
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "Edit Rule as Sieve"
+msgstr "Regel als Sieve bearbeiten"
+
+#. command label
 #: crates/engine/src/cmd/signature.rs
 #, fuzzy
 msgid "Edit Signature"
@@ -5480,6 +5528,12 @@ msgstr "Aufgabe bearbeiten"
 msgid "Edit Your Sieve Script…"
 msgstr "Ihr Sieve-Skript bearbeiten…"
 
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Edit as Sieve…"
+msgstr "Als Sieve bearbeiten…"
+
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingScreen.kt
 #, fuzzy
@@ -5491,6 +5545,12 @@ msgstr "Entwurf bearbeiten"
 #, fuzzy
 msgid "Edit event"
 msgstr "Termin bearbeiten"
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "Edit rule as Sieve"
+msgstr "Regel als Sieve bearbeiten"
 
 #. interface
 #: crates/ui-egui/src/compose.rs
@@ -8530,6 +8590,12 @@ msgstr "Zeilendifferenz"
 msgid "Line {line} of the rule: {said}"
 msgstr "Zeile {line} der Regel: {said}"
 
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "Line {line} of your script, outside this rule: {what}"
+msgstr "Zeile {line} Ihres Skripts, außerhalb dieser Regel: {what}"
+
 #. what a command says
 #: crates/engine/src/cmd/rules_sieve.rs
 #, fuzzy
@@ -8541,6 +8607,12 @@ msgstr "Zeile {line}, Spalte {column} der Sieve-Regel: Ein Steuerzeichen darf ni
 #, fuzzy
 msgid "Line {line}, column {column} of the Sieve rule: {what}"
 msgstr "Zeile {line}, Spalte {column} der Sieve-Regel: {what}"
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "Line {line}, column {column} of the rule: {what}"
+msgstr "Zeile {line}, Spalte {column} der Regel: {what}"
 
 #. what a command says
 #: crates/engine/src/cmd/sieve_own.rs
@@ -8773,6 +8845,12 @@ msgstr "In einem anderen Programm oder im Web erstellt, mit Teilen, die MailCraf
 #. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
+msgid "Made in another program: MailCraft changes a rule of it only as you edit it, in the rule builder when that loses nothing, else as Sieve text"
+msgstr "In einem anderen Programm erstellt: MailCraft ändert eine Regel darin nur so, wie Sie sie bearbeiten, im Regel-Editor, wenn dabei nichts verloren geht, sonst als Sieve-Text"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
 msgid "Made in another program: MailCraft never changes this rule"
 msgstr "In einem anderen Programm erstellt: MailCraft ändert diese Regel nie"
 
@@ -8781,10 +8859,6 @@ msgstr "In einem anderen Programm erstellt: MailCraft ändert diese Regel nie"
 #, fuzzy
 msgid "Made in another program: MailCraft shows these rules and never changes them"
 msgstr "In einem anderen Programm erstellt: MailCraft zeigt diese Regeln und ändert sie nie"
-
-#, fuzzy
-#~ msgid "Made in another program: MailCraft shows these rules, and changes them only as you edit the script's text"
-#~ msgstr "In einem anderen Programm erstellt: MailCraft zeigt diese Regeln und ändert sie nur so, wie Sie den Text des Skripts bearbeiten"
 
 #. android, command label, interface, name, ribbon location
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MainActivity.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Navigation.kt crates/engine/src/cmd/compose.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/mail.rs crates/engine/src/cmd/send_later.rs crates/engine/src/cmd/view.rs crates/engine/src/session.rs crates/ui-egui/src/backstage.rs crates/ui-egui/src/lib.rs
@@ -11606,9 +11680,11 @@ msgstr "Auf dem Server · Suche läuft…"
 msgid "On the server, changed elsewhere: Replace with MailCraft's would remove it"
 msgstr "Auf dem Server, anderswo geändert: „Durch das von MailCraft ersetzen“ würde es entfernen"
 
+#. interface
+#: crates/ui-egui/src/forms.rs
 #, fuzzy
-#~ msgid "On the server, made in another program: MailCraft never changes it"
-#~ msgstr "Auf dem Server, in einem anderen Programm erstellt: MailCraft ändert sie nie"
+msgid "On the server, made in another program: changed only as you edit it here"
+msgstr "Auf dem Server, in einem anderen Programm erstellt: nur so geändert, wie Sie es hier bearbeiten"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -11748,6 +11824,18 @@ msgstr "Nach text: darf in seiner Zeile nur ein Kommentar folgen."
 #: crates/ui-egui/src/windows.rs
 msgid "Only a meeting you organize has Find a Time"
 msgstr "Nur bei Besprechungen, die Sie organisieren, ist „Zeit finden“ verfügbar."
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "Only a rule kept in the Sieve script on an IMAP account's server can become a Sieve rule; this one has no Sieve."
+msgstr "Nur eine Regel im Sieve-Skript auf dem Server eines IMAP-Kontos kann eine Sieve-Regel werden; diese hat kein Sieve."
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "Only a rule kept on the server can become a Sieve rule; this one is kept on this computer."
+msgstr "Nur eine auf dem Server gespeicherte Regel kann eine Sieve-Regel werden; diese ist auf diesem Computer gespeichert."
 
 #. what a command says
 #: crates/engine/src/cmd/unsubscribe.rs
@@ -12122,6 +12210,12 @@ msgstr "{name} öffnen? {why}"
 #: crates/ui-egui/src/open_shared.rs
 msgid "Opened the calendar of {name}. It is listed under Shared Calendars, on this computer only."
 msgstr "Der Kalender von {name} wurde geöffnet. Er wird nur auf diesem Computer unter „Freigegebene Kalender“ aufgeführt."
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+#, fuzzy
+msgid "Opened with {owner}'s server and password. It needs Full Access to the mailbox, which your organisation's administrator gives. What you change in it goes to it."
+msgstr "Mit dem Server und dem Kennwort von {owner} geöffnet. Dafür ist Vollzugriff auf das Postfach nötig, den der Administrator Ihrer Organisation erteilt. Was Sie darin ändern, wird dorthin übertragen."
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
@@ -13976,6 +14070,12 @@ msgstr "Rechts"
 msgid "Right before or after: {items}"
 msgstr "Direkt davor oder danach: {items}"
 
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "Rule \"{rule}\" of your Sieve script \"{name}\""
+msgstr "Regel „{rule}“ Ihres Sieve-Skripts „{name}“"
+
 #. command label
 #: crates/engine/src/cmd/rules_remote.rs
 #, fuzzy
@@ -14247,6 +14347,12 @@ msgid "Save Signature"
 msgstr "Signatur speichern"
 
 #. command label
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "Save Your Sieve Rule"
+msgstr "Ihre Sieve-Regel speichern"
+
+#. command label
 #: crates/engine/src/cmd/sieve_own.rs
 #, fuzzy
 msgid "Save Your Sieve Script"
@@ -14306,6 +14412,12 @@ msgstr "In Dateien speichern"
 #: crates/ui-egui/src/ribbon.rs
 msgid "Saved Text"
 msgstr "Gespeicherter Text"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Saved in your own Sieve script, in its place: the comment lines above it and the rest of the script stay as they are."
+msgstr "Wird in Ihrem eigenen Sieve-Skript an seiner Stelle gespeichert: die Kommentarzeilen darüber und der Rest des Skripts bleiben, wie sie sind."
 
 #. interface
 #: crates/ui-egui/src/calendar_sync.rs
@@ -17041,10 +17153,22 @@ msgid "The Entire Series"
 msgstr "Die ganze Serie"
 
 #. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "The Sieve of a filter of your webmail's can't have the webmail's own marks in it (BEGIN:FILTER, END:FILTER)."
+msgstr "Das Sieve eines Filters Ihres Webmailers darf dessen eigene Markierungen nicht enthalten (BEGIN:FILTER, END:FILTER)."
+
+#. what a command says
 #: crates/engine/src/cmd/rules_sieve.rs
 #, fuzzy
 msgid "The Sieve rule has a mistake."
 msgstr "Die Sieve-Regel enthält einen Fehler."
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "The Sieve script can't be read."
+msgstr "Das Sieve-Skript kann nicht gelesen werden."
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -18109,6 +18233,18 @@ msgstr "Der Meldedienst funktioniert derzeit nicht. Versuchen Sie es später ern
 msgid "The report service's answer wasn't one MailCraft understands, so the report may have arrived. Try again later, or open it on GitHub."
 msgstr "Die Antwort des Meldedienstes konnte von MailCraft nicht verstanden werden, daher ist der Bericht möglicherweise eingegangen. Versuchen Sie es später erneut oder öffnen Sie ihn auf GitHub."
 
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "The rule builder can't change it: {why}."
+msgstr "Der Regel-Editor kann sie nicht ändern: {why}."
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "The rule builder can't change this rule of your Sieve script: {why}. Change it as Sieve."
+msgstr "Der Regel-Editor kann diese Regel Ihres Sieve-Skripts nicht ändern: {why}. Ändern Sie sie als Sieve."
+
 #. what a command says
 #: crates/engine/src/cmd/rules.rs
 #, fuzzy
@@ -18235,6 +18371,12 @@ msgstr "Der Server hat geantwortet, aber nicht wie ein Exchange-Server. Überpr�
 #, fuzzy
 msgid "The server checked the rule inside MailCraft's whole script: its line numbers count from the top of that script."
 msgstr "Der Server hat die Regel im ganzen Skript von MailCraft geprüft: Seine Zeilennummern zählen vom Anfang dieses Skripts."
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "The server checked the rule inside your whole script: its line numbers count from the top of that script."
+msgstr "Der Server hat die Regel in Ihrem ganzen Skript geprüft: seine Zeilennummern zählen ab dem Anfang dieses Skripts."
 
 #. what a command says
 #: crates/mobile/src/fetch.rs
@@ -18539,6 +18681,12 @@ msgstr "Die Einrichtungsanfrage wurde zu oft von einem Server zum anderen weiter
 #, fuzzy
 msgid "The shared mailbox couldn't be added"
 msgstr "Das freigegebene Postfach konnte nicht hinzugefügt werden"
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+#, fuzzy
+msgid "The shared mailbox couldn't be read."
+msgstr "Das freigegebene Postfach konnte nicht gelesen werden."
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
@@ -19848,6 +19996,24 @@ msgstr "Diese Regel kann hier nicht geändert werden."
 msgid "This rule can't be kept on the server: {why}. It runs on this computer, while MailCraft is open."
 msgstr "Diese Regel kann nicht auf dem Server gespeichert werden: {why}. Sie läuft auf diesem Computer, solange MailCraft geöffnet ist."
 
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "This rule can't be said in Sieve: {why}."
+msgstr "Diese Regel lässt sich nicht in Sieve ausdrücken: {why}."
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "This rule can't be written in your Sieve script: {why}."
+msgstr "Diese Regel kann nicht in Ihr Sieve-Skript geschrieben werden: {why}."
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "This rule has a part the rule builder can't show"
+msgstr "Diese Regel hat einen Teil, den der Regel-Editor nicht anzeigen kann"
+
 #. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
@@ -19855,16 +20021,46 @@ msgid "This rule has a part the rule builder can't show: delete it and create it
 msgstr "Diese Regel hat einen Teil, den der Regel-Assistent nicht anzeigen kann: Löschen Sie sie und erstellen Sie sie neu, um sie zu ändern"
 
 #. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "This rule is a Sieve rule already: change its Sieve as it is."
+msgstr "Diese Regel ist bereits eine Sieve-Regel: ändern Sie ihr Sieve direkt."
+
+#. what a command says
 #: crates/engine/src/cmd/rules_sieve.rs
 #, fuzzy
 msgid "This rule isn't a Sieve rule: change it in the rule builder."
 msgstr "Diese Regel ist keine Sieve-Regel: Ändern Sie sie im Regel-Assistenten."
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "This rule isn't one of your own Sieve script's."
+msgstr "Diese Regel gehört nicht zu Ihrem eigenen Sieve-Skript."
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "This rule will be kept as Sieve text from now on: the rule builder no longer changes it. This is the Sieve MailCraft writes for it now."
+msgstr "Diese Regel wird ab jetzt als Sieve-Text gespeichert: der Regel-Editor ändert sie nicht mehr. Dies ist das Sieve, das MailCraft jetzt für sie schreibt."
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "This rule's Sieve alone, as it is in your script. Save puts your text in its place and leaves the rest of the script as it is, only while the script on the server is still the one you opened."
+msgstr "Nur das Sieve dieser Regel, wie es in Ihrem Skript steht. Speichern setzt Ihren Text an seine Stelle und lässt den Rest des Skripts, wie er ist, nur solange das Skript auf dem Server noch das geöffnete ist."
 
 #. interface
 #: crates/ui-egui/src/sieve_editor.rs
 #, fuzzy
 msgid "This script was written by a webmail ({webmail}). It may overwrite or drop the changes you make here the next time its filters are saved there."
 msgstr "Dieses Skript hat ein Webmail geschrieben ({webmail}). Es kann die Änderungen, die Sie hier vornehmen, überschreiben oder verwerfen, wenn seine Filter dort das nächste Mal gespeichert werden."
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "This script was written by a webmail. It may overwrite or drop the changes you make here the next time its filters are saved there."
+msgstr "Dieses Skript wurde von einem Webmailer geschrieben. Er kann die hier vorgenommenen Änderungen überschreiben oder verwerfen, wenn seine Filter dort das nächste Mal gespeichert werden."
 
 #. what a command says
 #: crates/engine/src/cmd/calendar.rs
@@ -21371,6 +21567,12 @@ msgstr "Eine Notiz zur Antwort schreiben…"
 #. interface
 #: crates/ui-egui/src/sieve_editor.rs
 #, fuzzy
+msgid "Write this text to the server in place of this rule; the rest of your script stays as it is"
+msgstr "Diesen Text anstelle dieser Regel auf den Server schreiben; der Rest Ihres Skripts bleibt, wie er ist"
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
 msgid "Write this text to the server in place of your script; it stays the one that runs"
 msgstr "Diesen Text anstelle Ihres Skripts auf den Server schreiben; es bleibt das, das ausgeführt wird"
 
@@ -21569,6 +21771,12 @@ msgstr "Sie arbeiten offline."
 #: crates/engine/src/sync_driver/free_busy.rs crates/ui-egui/src/send_receive.rs
 msgid "You're working offline. Turn off Work Offline (Send / Receive) to connect."
 msgstr "Sie arbeiten offline. Deaktivieren Sie „Offline arbeiten“ (Senden/Empfangen), um eine Verbindung herzustellen."
+
+#. command label
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "Your Sieve Rule"
+msgstr "Ihre Sieve-Regel"
 
 #. command label
 #: crates/engine/src/cmd/sieve_own.rs
@@ -21902,6 +22110,12 @@ msgstr "Ihre Regeln wurden auf dem Server gespeichert, aber dort läuft ein ande
 #, fuzzy
 msgid "Your rules weren't changed on the server"
 msgstr "Ihre Regeln wurden auf dem Server nicht geändert"
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "Your webmail (RainLoop or SnappyMail) keeps its own copy of this filter's settings, which stay as they are. It may put its version back the next time filters are saved there, and MailCraft changes the filter only as Sieve from now on."
+msgstr "Ihr Webmailer (RainLoop oder SnappyMail) behält eine eigene Kopie der Einstellungen dieses Filters, die unverändert bleiben. Er kann seine Version zurückschreiben, wenn Filter dort das nächste Mal gespeichert werden, und MailCraft ändert den Filter ab jetzt nur als Sieve."
 
 #. what a command says
 #: crates/engine/src/cmd/rules_webmail.rs
@@ -22260,6 +22474,12 @@ msgstr "ein freigegebenes Postfach hat keinen Ordner für zurückgestellte Nachr
 #. what a command says
 #: crates/engine/src/cmd/account.rs
 #, fuzzy
+msgid "a shared mailbox is reached through the server settings of the account it is opened through: change that account's"
+msgstr "ein freigegebenes Postfach wird über die Servereinstellungen des Kontos erreicht, über das es geöffnet ist: Ändern Sie die Einstellungen dieses Kontos"
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
 msgid "a shared mailbox keeps as much mail offline as the account it is opened through: change that account's"
 msgstr "ein freigegebenes Postfach hält so viele E-Mails offline wie das Konto, über das es geöffnet ist: Ändern Sie die Einstellung dieses Kontos"
 
@@ -22377,6 +22597,18 @@ msgid "add at least one recipient"
 msgstr "fügen Sie mindestens einen Empfänger hinzu"
 
 #. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "an Exchange server account needs a server address that can be used to open a shared mailbox"
+msgstr "ein Exchange-Server-Konto braucht eine verwendbare Serveradresse, um ein freigegebenes Postfach zu öffnen"
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "an Exchange server account's server and user name can't be changed while a shared mailbox opened through it has mail here: remove the shared mailbox first"
+msgstr "Server und Benutzername eines Exchange-Server-Kontos können nicht geändert werden, solange E-Mails eines darüber geöffneten freigegebenen Postfachs hier gespeichert sind: Entfernen Sie zuerst das freigegebene Postfach"
+
+#. what a command says
 #: crates/engine/src/cmd/account.rs
 msgid "an Exchange server account's server, address and user name can't be changed once its mail is here: remove it and add the other one"
 msgstr "Server, Adresse und Benutzername eines Exchange-Server-Kontos können nicht mehr geändert werden, sobald dessen E-Mails hier gespeichert sind: Entfernen Sie das Konto und fügen Sie es mit den anderen Angaben erneut hinzu"
@@ -22441,6 +22673,11 @@ msgstr "ein Konto hat höchstens {max} Absenderadressen"
 #, fuzzy
 msgid "an event needs a title"
 msgstr "ein Ereignis braucht einen Titel"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+msgid "an online archive can't open a shared mailbox: name the account it belongs to"
+msgstr ""
 
 #. what a command says
 #: crates/model/src/mailbox.rs
@@ -22988,6 +23225,12 @@ msgid "it has a part MailCraft can't write as Sieve"
 msgstr "sie hat einen Teil, den MailCraft nicht als Sieve schreiben kann"
 
 #. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
+#, fuzzy
+msgid "it has elsif or else branches, which the rule builder can't show"
+msgstr "sie hat elsif- oder else-Zweige, die der Regel-Editor nicht anzeigen kann"
+
+#. name
 #: crates/engine/src/cmd/rules.rs
 #, fuzzy
 msgid "it has no conditions, and on the server it would act on every message"
@@ -22998,6 +23241,12 @@ msgstr "sie hat keine Bedingungen und würde auf dem Server auf jede Nachricht w
 #, fuzzy
 msgid "it has parts MailCraft can't show, which changing it here would lose"
 msgstr "sie hat Teile, die MailCraft nicht anzeigen kann und die beim Ändern hier verloren gingen"
+
+#. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
+#, fuzzy
+msgid "it has parts the rule builder can't show"
+msgstr "sie hat Teile, die der Regel-Editor nicht anzeigen kann"
 
 #. name
 #: crates/engine/src/cmd/rules.rs
@@ -23022,6 +23271,12 @@ msgstr "es ist eine Sieve-Regel: Ihr Sieve wird als Sieve geändert, nicht im Re
 #, fuzzy
 msgid "it is a drawing of a kind that isn't shown (SVG)"
 msgstr "es ist eine Zeichnung eines Typs, der nicht angezeigt wird (SVG)"
+
+#. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
+#, fuzzy
+msgid "it is a filter of your webmail's"
+msgstr "es ist ein Filter Ihres Webmailers"
 
 #. interface
 #: crates/ui-egui/src/reading/images.rs
@@ -23069,6 +23324,12 @@ msgstr "es ist zu groß für die Anzeige"
 #: crates/mobile/src/error.rs
 msgid "it is too long for the platform"
 msgstr "es ist zu lang für die Plattform"
+
+#. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
+#, fuzzy
+msgid "it isn't an if test, which is what the rule builder writes"
+msgstr "es ist kein if-Test, wie ihn der Regel-Editor schreibt"
 
 #. name
 #: crates/engine/src/cmd/rules.rs
@@ -23964,13 +24225,17 @@ msgstr "Wichtigkeit auf {level} setzen"
 msgid "shared mailbox"
 msgstr "freigegebenes Postfach"
 
+#. what a command says, why a command can't run
+#: crates/engine/src/cmd/shared.rs
 #, fuzzy
-#~ msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
-#~ msgstr "freigegebene Postfächer werden unter einem Konto geöffnet, das über Microsoft Graph auf dem neuesten Stand gehalten wird"
+msgid "shared mailboxes open under an account kept in step through Microsoft Graph, or an Exchange server account"
+msgstr "freigegebene Postfächer werden unter einem Konto geöffnet, das über Microsoft Graph auf dem neuesten Stand gehalten wird, oder unter einem Exchange-Server-Konto"
 
+#. what a command says
+#: crates/model/src/mailbox.rs
 #, fuzzy
-#~ msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
-#~ msgstr "freigegebene Postfächer werden unter einem Konto geöffnet, das über Microsoft Graph auf dem neuesten Stand gehalten wird"
+msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph or is an Exchange server account"
+msgstr "freigegebene Postfächer werden unter einem Konto geöffnet, das über Microsoft Graph auf dem neuesten Stand gehalten wird oder ein Exchange-Server-Konto ist"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -24840,6 +25105,18 @@ msgstr "das Ergebnis: {why}"
 #, fuzzy
 msgid "the revocation address {why}"
 msgstr "die Widerrufsadresse {why}"
+
+#. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
+#, fuzzy
+msgid "the rule builder can't write it back as Sieve"
+msgstr "der Regel-Editor kann sie nicht als Sieve zurückschreiben"
+
+#. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
+#, fuzzy
+msgid "the rule builder would write it as other Sieve (for example an address test where it has a header test), which could change what it does"
+msgstr "der Regel-Editor würde sie als anderes Sieve schreiben (etwa einen address-Test statt eines header-Tests), was ändern könnte, was sie tut"
 
 #. what a command says
 #: crates/engine/src/cmd/calendar/selection.rs
@@ -26441,6 +26718,11 @@ msgstr "{name} hat diese Besprechung zugesagt."
 #, fuzzy
 msgid "{name} answered this invitation."
 msgstr "{name} hat diese Einladung beantwortet."
+
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+msgid "{name} can't be both an online archive and a shared mailbox"
+msgstr ""
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ShareLoad.kt
@@ -28053,6 +28335,22 @@ msgstr "−Bin"
 msgid "−Lines"
 msgstr "−Zeilen"
 
+#, fuzzy
+#~ msgid "Made in another program: MailCraft shows these rules, and changes them only as you edit the script's text"
+#~ msgstr "In einem anderen Programm erstellt: MailCraft zeigt diese Regeln und ändert sie nur so, wie Sie den Text des Skripts bearbeiten"
+
+#, fuzzy
+#~ msgid "On the server, made in another program: MailCraft never changes it"
+#~ msgstr "Auf dem Server, in einem anderen Programm erstellt: MailCraft ändert sie nie"
+
+#, fuzzy
+#~ msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
+#~ msgstr "freigegebene Postfächer werden unter einem Konto geöffnet, das über Microsoft Graph auf dem neuesten Stand gehalten wird"
+
+#, fuzzy
+#~ msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
+#~ msgstr "freigegebene Postfächer werden unter einem Konto geöffnet, das über Microsoft Graph auf dem neuesten Stand gehalten wird"
+
 #~ msgid "Automatic replies are kept on the mail server, and MailCraft can set them only for accounts that sign in with Microsoft so far: IMAP has no standard way to set them (Sieve vacation replies may come later)"
 #~ msgstr "Automatische Antworten werden auf dem Mailserver gespeichert. MailCraft kann sie derzeit nur für Konten einrichten, bei denen die Anmeldung über Microsoft erfolgt: Für IMAP gibt es keine standardisierte Möglichkeit, sie einzurichten (Sieve-Abwesenheitsantworten könnten später hinzukommen)"
 
@@ -28505,300 +28803,3 @@ msgstr "−Zeilen"
 #~ msgid "A Sieve rule: its Sieve is changed under Advanced…"
 #~ msgstr "Eine Sieve-Regel: Ihr Sieve wird unter „Erweitert…“ geändert"
 
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "A rule kept on the server can't show a desktop alert."
-msgstr "Eine auf dem Server gespeicherte Regel kann keine Desktopbenachrichtigung anzeigen."
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "A rule needs some Sieve."
-msgstr "Eine Regel braucht etwas Sieve."
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "A rule needs some Sieve: a command, not only comments."
-msgstr "Eine Regel braucht etwas Sieve: einen Befehl, nicht nur Kommentare."
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "A rule of your own Sieve script is kept in that script on the server."
-msgstr "Eine Regel Ihres eigenen Sieve-Skripts wird in diesem Skript auf dem Server gespeichert."
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "Change this rule as Sieve text"
-msgstr "Diese Regel als Sieve-Text ändern"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "Change this rule as Sieve text: {why}"
-msgstr "Diese Regel als Sieve-Text ändern: {why}"
-
-#. command label
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "Edit Rule as Sieve"
-msgstr "Regel als Sieve bearbeiten"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "Edit as Sieve…"
-msgstr "Als Sieve bearbeiten…"
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "Edit rule as Sieve"
-msgstr "Regel als Sieve bearbeiten"
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "Line {line} of your script, outside this rule: {what}"
-msgstr "Zeile {line} Ihres Skripts, außerhalb dieser Regel: {what}"
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "Line {line}, column {column} of the rule: {what}"
-msgstr "Zeile {line}, Spalte {column} der Regel: {what}"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "Made in another program: MailCraft changes a rule of it only as you edit it, in the rule builder when that loses nothing, else as Sieve text"
-msgstr "In einem anderen Programm erstellt: MailCraft ändert eine Regel darin nur so, wie Sie sie bearbeiten, im Regel-Editor, wenn dabei nichts verloren geht, sonst als Sieve-Text"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "On the server, made in another program: changed only as you edit it here"
-msgstr "Auf dem Server, in einem anderen Programm erstellt: nur so geändert, wie Sie es hier bearbeiten"
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "Only a rule kept in the Sieve script on an IMAP account's server can become a Sieve rule; this one has no Sieve."
-msgstr "Nur eine Regel im Sieve-Skript auf dem Server eines IMAP-Kontos kann eine Sieve-Regel werden; diese hat kein Sieve."
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "Only a rule kept on the server can become a Sieve rule; this one is kept on this computer."
-msgstr "Nur eine auf dem Server gespeicherte Regel kann eine Sieve-Regel werden; diese ist auf diesem Computer gespeichert."
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "Rule \"{rule}\" of your Sieve script \"{name}\""
-msgstr "Regel „{rule}“ Ihres Sieve-Skripts „{name}“"
-
-#. command label
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "Save Your Sieve Rule"
-msgstr "Ihre Sieve-Regel speichern"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "Saved in your own Sieve script, in its place: the comment lines above it and the rest of the script stay as they are."
-msgstr "Wird in Ihrem eigenen Sieve-Skript an seiner Stelle gespeichert: die Kommentarzeilen darüber und der Rest des Skripts bleiben, wie sie sind."
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "The Sieve of a filter of your webmail's can't have the webmail's own marks in it (BEGIN:FILTER, END:FILTER)."
-msgstr "Das Sieve eines Filters Ihres Webmailers darf dessen eigene Markierungen nicht enthalten (BEGIN:FILTER, END:FILTER)."
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "The Sieve script can't be read."
-msgstr "Das Sieve-Skript kann nicht gelesen werden."
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "The rule builder can't change it: {why}."
-msgstr "Der Regel-Editor kann sie nicht ändern: {why}."
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "The rule builder can't change this rule of your Sieve script: {why}. Change it as Sieve."
-msgstr "Der Regel-Editor kann diese Regel Ihres Sieve-Skripts nicht ändern: {why}. Ändern Sie sie als Sieve."
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "The server checked the rule inside your whole script: its line numbers count from the top of that script."
-msgstr "Der Server hat die Regel in Ihrem ganzen Skript geprüft: seine Zeilennummern zählen ab dem Anfang dieses Skripts."
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "This rule can't be said in Sieve: {why}."
-msgstr "Diese Regel lässt sich nicht in Sieve ausdrücken: {why}."
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "This rule can't be written in your Sieve script: {why}."
-msgstr "Diese Regel kann nicht in Ihr Sieve-Skript geschrieben werden: {why}."
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "This rule has a part the rule builder can't show"
-msgstr "Diese Regel hat einen Teil, den der Regel-Editor nicht anzeigen kann"
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "This rule is a Sieve rule already: change its Sieve as it is."
-msgstr "Diese Regel ist bereits eine Sieve-Regel: ändern Sie ihr Sieve direkt."
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "This rule isn't one of your own Sieve script's."
-msgstr "Diese Regel gehört nicht zu Ihrem eigenen Sieve-Skript."
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "This rule will be kept as Sieve text from now on: the rule builder no longer changes it. This is the Sieve MailCraft writes for it now."
-msgstr "Diese Regel wird ab jetzt als Sieve-Text gespeichert: der Regel-Editor ändert sie nicht mehr. Dies ist das Sieve, das MailCraft jetzt für sie schreibt."
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "This rule's Sieve alone, as it is in your script. Save puts your text in its place and leaves the rest of the script as it is, only while the script on the server is still the one you opened."
-msgstr "Nur das Sieve dieser Regel, wie es in Ihrem Skript steht. Speichern setzt Ihren Text an seine Stelle und lässt den Rest des Skripts, wie er ist, nur solange das Skript auf dem Server noch das geöffnete ist."
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "This script was written by a webmail. It may overwrite or drop the changes you make here the next time its filters are saved there."
-msgstr "Dieses Skript wurde von einem Webmailer geschrieben. Er kann die hier vorgenommenen Änderungen überschreiben oder verwerfen, wenn seine Filter dort das nächste Mal gespeichert werden."
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "Write this text to the server in place of this rule; the rest of your script stays as it is"
-msgstr "Diesen Text anstelle dieser Regel auf den Server schreiben; der Rest Ihres Skripts bleibt, wie er ist"
-
-#. command label
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "Your Sieve Rule"
-msgstr "Ihre Sieve-Regel"
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "Your webmail (RainLoop or SnappyMail) keeps its own copy of this filter's settings, which stay as they are. It may put its version back the next time filters are saved there, and MailCraft changes the filter only as Sieve from now on."
-msgstr "Ihr Webmailer (RainLoop oder SnappyMail) behält eine eigene Kopie der Einstellungen dieses Filters, die unverändert bleiben. Er kann seine Version zurückschreiben, wenn Filter dort das nächste Mal gespeichert werden, und MailCraft ändert den Filter ab jetzt nur als Sieve."
-
-#. name
-#: crates/engine/src/cmd/sieve_elsewhere.rs
-#, fuzzy
-msgid "it has elsif or else branches, which the rule builder can't show"
-msgstr "sie hat elsif- oder else-Zweige, die der Regel-Editor nicht anzeigen kann"
-
-#. name
-#: crates/engine/src/cmd/sieve_elsewhere.rs
-#, fuzzy
-msgid "it has parts the rule builder can't show"
-msgstr "sie hat Teile, die der Regel-Editor nicht anzeigen kann"
-
-#. name
-#: crates/engine/src/cmd/sieve_elsewhere.rs
-#, fuzzy
-msgid "it is a filter of your webmail's"
-msgstr "es ist ein Filter Ihres Webmailers"
-
-#. name
-#: crates/engine/src/cmd/sieve_elsewhere.rs
-#, fuzzy
-msgid "it isn't an if test, which is what the rule builder writes"
-msgstr "es ist kein if-Test, wie ihn der Regel-Editor schreibt"
-
-#. name
-#: crates/engine/src/cmd/sieve_elsewhere.rs
-#, fuzzy
-msgid "the rule builder can't write it back as Sieve"
-msgstr "der Regel-Editor kann sie nicht als Sieve zurückschreiben"
-
-#. name
-#: crates/engine/src/cmd/sieve_elsewhere.rs
-#, fuzzy
-msgid "the rule builder would write it as other Sieve (for example an address test where it has a header test), which could change what it does"
-msgstr "der Regel-Editor würde sie als anderes Sieve schreiben (etwa einen address-Test statt eines header-Tests), was ändern könnte, was sie tut"
-
-#. interface
-#: crates/ui-egui/src/dialogs.rs
-#, fuzzy
-msgid "Checking the address with the server…"
-msgstr "Adresse wird beim Server geprüft…"
-
-#. interface
-#: crates/ui-egui/src/dialogs.rs
-#, fuzzy
-msgid "Opened with {owner}'s server and password. It needs Full Access to the mailbox, which your organisation's administrator gives. What you change in it goes to it."
-msgstr "Mit dem Server und dem Kennwort von {owner} geöffnet. Dafür ist Vollzugriff auf das Postfach nötig, den der Administrator Ihrer Organisation erteilt. Was Sie darin ändern, wird dorthin übertragen."
-
-#. interface
-#: crates/ui-egui/src/ews_mail.rs
-#, fuzzy
-msgid "The shared mailbox couldn't be read."
-msgstr "Das freigegebene Postfach konnte nicht gelesen werden."
-
-#. what a command says
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
-msgid "a shared mailbox is reached through the server settings of the account it is opened through: change that account's"
-msgstr "ein freigegebenes Postfach wird über die Servereinstellungen des Kontos erreicht, über das es geöffnet ist: Ändern Sie die Einstellungen dieses Kontos"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "an Exchange server account needs a server address that can be used to open a shared mailbox"
-msgstr "ein Exchange-Server-Konto braucht eine verwendbare Serveradresse, um ein freigegebenes Postfach zu öffnen"
-
-#. what a command says
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
-msgid "an Exchange server account's server and user name can't be changed while a shared mailbox opened through it has mail here: remove the shared mailbox first"
-msgstr "Server und Benutzername eines Exchange-Server-Kontos können nicht geändert werden, solange E-Mails eines darüber geöffneten freigegebenen Postfachs hier gespeichert sind: Entfernen Sie zuerst das freigegebene Postfach"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-msgid "an online archive can't open a shared mailbox: name the account it belongs to"
-msgstr ""
-
-#. what a command says, why a command can't run
-#: crates/engine/src/cmd/shared.rs
-#, fuzzy
-msgid "shared mailboxes open under an account kept in step through Microsoft Graph, or an Exchange server account"
-msgstr "freigegebene Postfächer werden unter einem Konto geöffnet, das über Microsoft Graph auf dem neuesten Stand gehalten wird, oder unter einem Exchange-Server-Konto"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph or is an Exchange server account"
-msgstr "freigegebene Postfächer werden unter einem Konto geöffnet, das über Microsoft Graph auf dem neuesten Stand gehalten wird oder ein Exchange-Server-Konto ist"
-
-#. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
-msgid "{name} can't be both an online archive and a shared mailbox"
-msgstr ""

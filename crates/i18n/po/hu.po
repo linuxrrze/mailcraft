@@ -930,6 +930,12 @@ msgstr "Az előnézetben előfordulhat, hogy az eredeti fájl egyes részei nem 
 msgid "A report is written beside your mailbox."
 msgstr "A postafiókád mellett van egy jelentés."
 
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "A rule kept on the server can't show a desktop alert."
+msgstr "A kiszolgálón tárolt szabály nem jeleníthet meg asztali értesítést."
+
 #. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
@@ -937,10 +943,28 @@ msgid "A rule needs a name, and something to look for."
 msgstr "Egy szabálynak kell egy név, és valami, amit keresnünk kell."
 
 #. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "A rule needs some Sieve."
+msgstr "A szabálynak kell némi Sieve."
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "A rule needs some Sieve: a command, not only comments."
+msgstr "A szabálynak kell némi Sieve: egy parancs, nem csak megjegyzések."
+
+#. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "A rule needs something to do: an action, or a desktop alert."
 msgstr "A szabálynak tennie kell valamit: egy műveletet vagy egy asztali értesítést."
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "A rule of your own Sieve script is kept in that script on the server."
+msgstr "A saját Sieve-szkriptje szabálya abban a szkriptben marad a kiszolgálón."
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt
@@ -3567,6 +3591,18 @@ msgid "Change this rule"
 msgstr "A szabály módosítása"
 
 #. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Change this rule as Sieve text"
+msgstr "A szabály módosítása Sieve-szövegként"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Change this rule as Sieve text: {why}"
+msgstr "A szabály módosítása Sieve-szövegként: {why}"
+
+#. interface
 #: crates/ui-egui/src/reading/signature.rs
 #, fuzzy
 msgid "Changed after it was signed"
@@ -3779,6 +3815,12 @@ msgstr "A fiók ellenőrzése…"
 #, fuzzy
 msgid "Checking the address with Microsoft…"
 msgstr "A cím ellenőrzése a Microsoft-al…"
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+#, fuzzy
+msgid "Checking the address with the server…"
+msgstr "A cím ellenőrzése a kiszolgálón…"
 
 #. interface
 #: crates/ui-egui/src/calendar_sync.rs
@@ -5733,6 +5775,12 @@ msgid "Edit Message"
 msgstr "Üzenet szerkesztése"
 
 #. command label
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "Edit Rule as Sieve"
+msgstr "Szabály szerkesztése Sieve-ként"
+
+#. command label
 #: crates/engine/src/cmd/signature.rs
 #, fuzzy
 msgid "Edit Signature"
@@ -5756,6 +5804,12 @@ msgstr "Feladat szerkesztése"
 msgid "Edit Your Sieve Script…"
 msgstr "Saját Sieve-szkript szerkesztése…"
 
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Edit as Sieve…"
+msgstr "Szerkesztés Sieve-ként…"
+
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingScreen.kt
 #, fuzzy
@@ -5767,6 +5821,12 @@ msgstr "Piszkozat szerkesztése"
 #, fuzzy
 msgid "Edit event"
 msgstr "Esemény szerkesztése"
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "Edit rule as Sieve"
+msgstr "Szabály szerkesztése Sieve-ként"
 
 #. interface
 #: crates/ui-egui/src/compose.rs
@@ -9032,6 +9092,12 @@ msgstr "Sorok különbsége"
 msgid "Line {line} of the rule: {said}"
 msgstr "A szabály {line}. sora: {said}"
 
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "Line {line} of your script, outside this rule: {what}"
+msgstr "A szkript {line}. sora, ezen a szabályon kívül: {what}"
+
 #. what a command says
 #: crates/engine/src/cmd/rules_sieve.rs
 #, fuzzy
@@ -9043,6 +9109,12 @@ msgstr "A Sieve-szabály {line}. sora, {column}. oszlopa: vezérlőkarakter nem 
 #, fuzzy
 msgid "Line {line}, column {column} of the Sieve rule: {what}"
 msgstr "A Sieve-szabály {line}. sora, {column}. oszlopa: {what}"
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "Line {line}, column {column} of the rule: {what}"
+msgstr "A szabály {line}. sora, {column}. oszlopa: {what}"
 
 #. what a command says
 #: crates/engine/src/cmd/sieve_own.rs
@@ -9293,6 +9365,12 @@ msgstr "Készült egy másik program vagy a weben, alkatrészek MailCraft nem mu
 #. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
+msgid "Made in another program: MailCraft changes a rule of it only as you edit it, in the rule builder when that loses nothing, else as Sieve text"
+msgstr "Más programban készült: a MailCraft csak úgy módosítja egy szabályát, ahogy Ön szerkeszti, a szabályszerkesztőben, ha semmi sem vész el, egyébként Sieve-szövegként"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
 msgid "Made in another program: MailCraft never changes this rule"
 msgstr "Más programban készült: a MailCraft soha nem módosítja ezt a szabályt"
 
@@ -9301,10 +9379,6 @@ msgstr "Más programban készült: a MailCraft soha nem módosítja ezt a szabá
 #, fuzzy
 msgid "Made in another program: MailCraft shows these rules and never changes them"
 msgstr "Másik programban készült: a MailCraft megjeleníti ezeket a szabályokat, de soha nem módosítja őket"
-
-#, fuzzy
-#~ msgid "Made in another program: MailCraft shows these rules, and changes them only as you edit the script's text"
-#~ msgstr "Más programban készült: a MailCraft megjeleníti ezeket a szabályokat, és csak úgy módosítja, ahogy Ön a szkript szövegét szerkeszti"
 
 #. android, command label, interface, name, ribbon location
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MainActivity.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Navigation.kt crates/engine/src/cmd/compose.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/mail.rs crates/engine/src/cmd/send_later.rs crates/engine/src/cmd/view.rs crates/engine/src/session.rs crates/ui-egui/src/backstage.rs crates/ui-egui/src/lib.rs
@@ -12296,9 +12370,11 @@ msgstr "A szerveren keresgélünk…"
 msgid "On the server, changed elsewhere: Replace with MailCraft's would remove it"
 msgstr "A szerveren, máshol módosítva: a Csere a MailCraft szkriptjére eltávolítaná"
 
+#. interface
+#: crates/ui-egui/src/forms.rs
 #, fuzzy
-#~ msgid "On the server, made in another program: MailCraft never changes it"
-#~ msgstr "A szerveren, másik programban készült: a MailCraft soha nem módosítja"
+msgid "On the server, made in another program: changed only as you edit it here"
+msgstr "A kiszolgálón, más programban készült: csak úgy változik, ahogy itt szerkeszti"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -12443,6 +12519,18 @@ msgstr "A text: után a sorában csak megjegyzés állhat."
 #, fuzzy
 msgid "Only a meeting you organize has Find a Time"
 msgstr "Csak egy találkozót szervezel, ahol találsz egy időt."
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "Only a rule kept in the Sieve script on an IMAP account's server can become a Sieve rule; this one has no Sieve."
+msgstr "Csak egy IMAP-fiók kiszolgálójának Sieve-szkriptjében tárolt szabály lehet Sieve-szabály; ennek nincs Sieve-je."
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "Only a rule kept on the server can become a Sieve rule; this one is kept on this computer."
+msgstr "Csak a kiszolgálón tárolt szabály lehet Sieve-szabály; ez ezen a számítógépen van."
 
 #. what a command says
 #: crates/engine/src/cmd/unsubscribe.rs
@@ -12843,6 +12931,12 @@ msgstr "Megnyitja ezt: „{name}”? {why}"
 #, fuzzy
 msgid "Opened the calendar of {name}. It is listed under Shared Calendars, on this computer only."
 msgstr "Megnyitotta a {name} naptárát, és csak ezen a számítógépen van a Shared Calendars alatt."
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+#, fuzzy
+msgid "Opened with {owner}'s server and password. It needs Full Access to the mailbox, which your organisation's administrator gives. What you change in it goes to it."
+msgstr "Megnyitva {owner} kiszolgálójával és jelszavával. Teljes hozzáférést igényel a postafiókhoz, amelyet a szervezet rendszergazdája ad meg. Amit benne módosít, az oda kerül."
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
@@ -14819,6 +14913,12 @@ msgstr "Jobbra"
 msgid "Right before or after: {items}"
 msgstr "Közvetlenül a következő előtt vagy után: {items}"
 
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "Rule \"{rule}\" of your Sieve script \"{name}\""
+msgstr "„{rule}” szabály a(z) „{name}” Sieve-szkriptből"
+
 #. command label
 #: crates/engine/src/cmd/rules_remote.rs
 #, fuzzy
@@ -15094,6 +15194,12 @@ msgid "Save Signature"
 msgstr "Aláírás mentése"
 
 #. command label
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "Save Your Sieve Rule"
+msgstr "Sieve-szabály mentése"
+
+#. command label
 #: crates/engine/src/cmd/sieve_own.rs
 #, fuzzy
 msgid "Save Your Sieve Script"
@@ -15158,6 +15264,12 @@ msgstr "Mentés a Fájlokba"
 #, fuzzy
 msgid "Saved Text"
 msgstr "Mentett szöveg"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Saved in your own Sieve script, in its place: the comment lines above it and the rest of the script stay as they are."
+msgstr "A saját Sieve-szkriptjébe kerül, a helyére: a fölötte lévő megjegyzéssorok és a szkript többi része változatlan marad."
 
 #. interface
 #: crates/ui-egui/src/calendar_sync.rs
@@ -18043,10 +18155,22 @@ msgid "The Entire Series"
 msgstr "Az egész sorozat"
 
 #. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "The Sieve of a filter of your webmail's can't have the webmail's own marks in it (BEGIN:FILTER, END:FILTER)."
+msgstr "A webmail egy szűrőjének Sieve-je nem tartalmazhatja a webmail saját jelöléseit (BEGIN:FILTER, END:FILTER)."
+
+#. what a command says
 #: crates/engine/src/cmd/rules_sieve.rs
 #, fuzzy
 msgid "The Sieve rule has a mistake."
 msgstr "A Sieve-szabályban hiba van."
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "The Sieve script can't be read."
+msgstr "A Sieve-szkript nem olvasható."
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -19182,6 +19306,18 @@ msgstr "A riport nem működik, próbáld meg később, vagy nyisd ki GitHub-on.
 msgid "The report service's answer wasn't one MailCraft understands, so the report may have arrived. Try again later, or open it on GitHub."
 msgstr "A jelentés nem MailCraft által értett válasz volt, tehát a jelentés talán megérkezett. Próbálja meg később, vagy nyissa ki a GitHub."
 
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "The rule builder can't change it: {why}."
+msgstr "A szabályszerkesztő nem tudja módosítani: {why}."
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "The rule builder can't change this rule of your Sieve script: {why}. Change it as Sieve."
+msgstr "A szabályszerkesztő nem tudja módosítani a Sieve-szkript e szabályát: {why}. Módosítsa Sieve-ként."
+
 #. what a command says
 #: crates/engine/src/cmd/rules.rs
 #, fuzzy
@@ -19313,6 +19449,12 @@ msgstr "A kiszolgáló válaszolt, de nem úgy, mint egy Exchange szerver. Ellen
 #, fuzzy
 msgid "The server checked the rule inside MailCraft's whole script: its line numbers count from the top of that script."
 msgstr "A kiszolgáló a szabályt a MailCraft teljes szkriptjében ellenőrizte: a sorszámai a szkript elejétől számítanak."
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "The server checked the rule inside your whole script: its line numbers count from the top of that script."
+msgstr "A kiszolgáló a teljes szkriptben ellenőrizte a szabályt: a sorszámok a szkript elejétől számítanak."
 
 #. what a command says
 #: crates/mobile/src/fetch.rs
@@ -19643,6 +19785,12 @@ msgstr "A beállítást egyik szerverről a másikra túl sokszor küldték el. 
 #, fuzzy
 msgid "The shared mailbox couldn't be added"
 msgstr "A megosztott postafiókát nem sikerült hozzáadni."
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+#, fuzzy
+msgid "The shared mailbox couldn't be read."
+msgstr "A megosztott postafiókot nem sikerült beolvasni."
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
@@ -21019,6 +21167,24 @@ msgstr "Ez a szabály itt nem módosítható."
 msgid "This rule can't be kept on the server: {why}. It runs on this computer, while MailCraft is open."
 msgstr "Ez a szabály nem tartható a szerveren: {why}. Ezen a számítógépen fut, amíg MailCraft nyitva van."
 
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "This rule can't be said in Sieve: {why}."
+msgstr "Ez a szabály nem fejezhető ki Sieve-ben: {why}."
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "This rule can't be written in your Sieve script: {why}."
+msgstr "Ez a szabály nem írható a Sieve-szkriptjébe: {why}."
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "This rule has a part the rule builder can't show"
+msgstr "A szabálynak van olyan része, amelyet a szabályszerkesztő nem tud megjeleníteni"
+
 #. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
@@ -21026,16 +21192,46 @@ msgid "This rule has a part the rule builder can't show: delete it and create it
 msgstr "Ennek a szabálynak van olyan része, amelyet a szabályszerkesztő nem tud megjeleníteni: a módosításhoz törölje és hozza létre újra"
 
 #. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "This rule is a Sieve rule already: change its Sieve as it is."
+msgstr "Ez a szabály már Sieve-szabály: a Sieve-jét módosítsa közvetlenül."
+
+#. what a command says
 #: crates/engine/src/cmd/rules_sieve.rs
 #, fuzzy
 msgid "This rule isn't a Sieve rule: change it in the rule builder."
 msgstr "Ez a szabály nem Sieve-szabály: a szabályszerkesztőben módosítsa."
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "This rule isn't one of your own Sieve script's."
+msgstr "Ez a szabály nem a saját Sieve-szkriptjéé."
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "This rule will be kept as Sieve text from now on: the rule builder no longer changes it. This is the Sieve MailCraft writes for it now."
+msgstr "Ezt a szabályt mostantól Sieve-szövegként tároljuk: a szabályszerkesztő már nem módosítja. Ez az a Sieve, amelyet a MailCraft most ír hozzá."
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "This rule's Sieve alone, as it is in your script. Save puts your text in its place and leaves the rest of the script as it is, only while the script on the server is still the one you opened."
+msgstr "Csak ennek a szabálynak a Sieve-je, ahogy a szkriptben van. A Mentés a szövegét a helyére teszi, a szkript többi részét változatlanul hagyja, de csak amíg a kiszolgálón lévő szkript még az, amelyet megnyitott."
 
 #. interface
 #: crates/ui-egui/src/sieve_editor.rs
 #, fuzzy
 msgid "This script was written by a webmail ({webmail}). It may overwrite or drop the changes you make here the next time its filters are saved there."
 msgstr "Ezt a szkriptet egy webmail írta ({webmail}). Felülírhatja vagy elvetheti az itt végzett módosításokat, amikor legközelebb ott menti a szűrőit."
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "This script was written by a webmail. It may overwrite or drop the changes you make here the next time its filters are saved there."
+msgstr "Ezt a szkriptet egy webmail írta. A szűrői következő mentésekor felülírhatja vagy elvetheti az itt végzett módosításokat."
 
 #. what a command says
 #: crates/engine/src/cmd/calendar.rs
@@ -22610,6 +22806,12 @@ msgstr "Jegyzet írása a válaszhoz…"
 #. interface
 #: crates/ui-egui/src/sieve_editor.rs
 #, fuzzy
+msgid "Write this text to the server in place of this rule; the rest of your script stays as it is"
+msgstr "A szöveg kiírása a kiszolgálóra e szabály helyett; a szkript többi része változatlan marad"
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
 msgid "Write this text to the server in place of your script; it stays the one that runs"
 msgstr "Ennek a szövegnek a kiírása a kiszolgálóra a szkript helyére; továbbra is ez fut"
 
@@ -22816,6 +23018,12 @@ msgstr "Offline módban dolgozik."
 #, fuzzy
 msgid "You're working offline. Turn off Work Offline (Send / Receive) to connect."
 msgstr "Kapcsold ki a munka offline (Küld / Fogadja) kapcsolódni."
+
+#. command label
+#: crates/engine/src/cmd/sieve_blocks.rs
+#, fuzzy
+msgid "Your Sieve Rule"
+msgstr "Az Ön Sieve-szabálya"
 
 #. command label
 #: crates/engine/src/cmd/sieve_own.rs
@@ -23170,6 +23378,12 @@ msgstr "A szabályai a szerverre kerültek, de ott egy másik Sieve-szkriptje fu
 #, fuzzy
 msgid "Your rules weren't changed on the server"
 msgstr "A szabályai nem változtak meg a szerveren"
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+#, fuzzy
+msgid "Your webmail (RainLoop or SnappyMail) keeps its own copy of this filter's settings, which stay as they are. It may put its version back the next time filters are saved there, and MailCraft changes the filter only as Sieve from now on."
+msgstr "A webmail (RainLoop vagy SnappyMail) saját másolatot tart a szűrő beállításairól, amelyek változatlanok maradnak. A szűrők következő mentésekor visszaállíthatja a saját változatát, és a MailCraft mostantól csak Sieve-ként módosítja a szűrőt."
 
 #. what a command says
 #: crates/engine/src/cmd/rules_webmail.rs
@@ -23546,6 +23760,12 @@ msgstr "egy megosztott postafiókban nincs Snoozed mappa"
 #. what a command says
 #: crates/engine/src/cmd/account.rs
 #, fuzzy
+msgid "a shared mailbox is reached through the server settings of the account it is opened through: change that account's"
+msgstr "a megosztott postafiók a megnyitásához használt fiók szerverbeállításain keresztül érhető el. Módosítsa annak a fióknak a beállításait."
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
 msgid "a shared mailbox keeps as much mail offline as the account it is opened through: change that account's"
 msgstr "a megosztott postafiók a megnyitásához használt fiók beállítása szerint tárol leveleket kapcsolat nélküli használatra. Módosítsa annak a fióknak a beállítását."
 
@@ -23664,6 +23884,18 @@ msgid "add at least one recipient"
 msgstr "legalább egy címzett hozzáadása"
 
 #. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "an Exchange server account needs a server address that can be used to open a shared mailbox"
+msgstr "a megosztott postafiók megnyitásához az Exchange szerverfióknak használható szervercímre van szüksége"
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "an Exchange server account's server and user name can't be changed while a shared mailbox opened through it has mail here: remove the shared mailbox first"
+msgstr "az Exchange szerverfiók szervere és felhasználóneve nem módosítható, amíg egy rajta keresztül megnyitott megosztott postafiók levelezése itt van: először távolítsa el a megosztott postafiókot"
+
+#. what a command says
 #: crates/engine/src/cmd/account.rs
 #, fuzzy
 msgid "an Exchange server account's server, address and user name can't be changed once its mail is here: remove it and add the other one"
@@ -23734,6 +23966,11 @@ msgstr "egy fióknak legfeljebb {max} feladócíme lehet"
 #, fuzzy
 msgid "an event needs a title"
 msgstr "egy eseménynek címre van szüksége"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+msgid "an online archive can't open a shared mailbox: name the account it belongs to"
+msgstr ""
 
 #. what a command says
 #: crates/model/src/mailbox.rs
@@ -24309,6 +24546,12 @@ msgid "it has a part MailCraft can't write as Sieve"
 msgstr "van egy része, amelyet a MailCraft nem tud Sieve-ben megírni"
 
 #. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
+#, fuzzy
+msgid "it has elsif or else branches, which the rule builder can't show"
+msgstr "elsif vagy else ágai vannak, amelyeket a szabályszerkesztő nem tud megjeleníteni"
+
+#. name
 #: crates/engine/src/cmd/rules.rs
 #, fuzzy
 msgid "it has no conditions, and on the server it would act on every message"
@@ -24319,6 +24562,12 @@ msgstr "nincsenek feltételei, és a szerveren minden üzenetre hatna"
 #, fuzzy
 msgid "it has parts MailCraft can't show, which changing it here would lose"
 msgstr "olyan részei vannak, amelyeket a MailCraft nem tud megjeleníteni, és itt módosítva elvesznének"
+
+#. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
+#, fuzzy
+msgid "it has parts the rule builder can't show"
+msgstr "vannak részei, amelyeket a szabályszerkesztő nem tud megjeleníteni"
 
 #. name
 #: crates/engine/src/cmd/rules.rs
@@ -24343,6 +24592,12 @@ msgstr "ez egy Sieve-szabály: a Sieve-kódja Sieve-ként módosítható, nem a 
 #, fuzzy
 msgid "it is a drawing of a kind that isn't shown (SVG)"
 msgstr "Ez egy olyan rajz, amely nem jelenik meg (SVG)"
+
+#. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
+#, fuzzy
+msgid "it is a filter of your webmail's"
+msgstr "ez a webmail egyik szűrője"
 
 #. interface
 #: crates/ui-egui/src/reading/images.rs
@@ -24391,6 +24646,12 @@ msgstr "Túl nagy ahhoz, hogy megmutassam"
 #, fuzzy
 msgid "it is too long for the platform"
 msgstr "túl hosszú a platformnak"
+
+#. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
+#, fuzzy
+msgid "it isn't an if test, which is what the rule builder writes"
+msgstr "nem if-feltétel, pedig a szabályszerkesztő ilyet ír"
 
 #. name
 #: crates/engine/src/cmd/rules.rs
@@ -25324,13 +25585,17 @@ msgstr "fontosság beállítása: {level}"
 msgid "shared mailbox"
 msgstr "megosztott postafiók"
 
+#. what a command says, why a command can't run
+#: crates/engine/src/cmd/shared.rs
 #, fuzzy
-#~ msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
-#~ msgstr "megosztott postafiókok nyithatók egy Microsoft Graph-on keresztül vezetett fiók alatt"
+msgid "shared mailboxes open under an account kept in step through Microsoft Graph, or an Exchange server account"
+msgstr "megosztott postafiókok egy Microsoft Graph-on keresztül vezetett fiók vagy egy Exchange szerverfiók alatt nyithatók"
 
+#. what a command says
+#: crates/model/src/mailbox.rs
 #, fuzzy
-#~ msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
-#~ msgstr "megosztott postafiókok nyitnak egy fiók alatt, amely lépést tart a Microsoft Graph"
+msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph or is an Exchange server account"
+msgstr "megosztott postafiókok olyan fiók alatt nyithatók, amelyet Microsoft Graph-on keresztül vezetnek, vagy amely Exchange szerverfiók"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -26242,6 +26507,18 @@ msgstr "az eredmény {why}"
 #, fuzzy
 msgid "the revocation address {why}"
 msgstr "a visszavonási cím {why}"
+
+#. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
+#, fuzzy
+msgid "the rule builder can't write it back as Sieve"
+msgstr "a szabályszerkesztő nem tudja visszaírni Sieve-ként"
+
+#. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
+#, fuzzy
+msgid "the rule builder would write it as other Sieve (for example an address test where it has a header test), which could change what it does"
+msgstr "a szabályszerkesztő más Sieve-ként írná (például address-feltétellel header-feltétel helyett), ami megváltoztathatná, mit csinál"
 
 #. what a command says
 #: crates/engine/src/cmd/calendar/selection.rs
@@ -27907,6 +28184,11 @@ msgstr "{name} elfogadta ezt a találkozót."
 #, fuzzy
 msgid "{name} answered this invitation."
 msgstr "{name} válaszolt erre a meghívásra."
+
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+msgid "{name} can't be both an online archive and a shared mailbox"
+msgstr ""
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ShareLoad.kt
@@ -29605,6 +29887,22 @@ msgid "−Lines"
 msgstr "−Sorok"
 
 #, fuzzy
+#~ msgid "Made in another program: MailCraft shows these rules, and changes them only as you edit the script's text"
+#~ msgstr "Más programban készült: a MailCraft megjeleníti ezeket a szabályokat, és csak úgy módosítja, ahogy Ön a szkript szövegét szerkeszti"
+
+#, fuzzy
+#~ msgid "On the server, made in another program: MailCraft never changes it"
+#~ msgstr "A szerveren, másik programban készült: a MailCraft soha nem módosítja"
+
+#, fuzzy
+#~ msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
+#~ msgstr "megosztott postafiókok nyithatók egy Microsoft Graph-on keresztül vezetett fiók alatt"
+
+#, fuzzy
+#~ msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
+#~ msgstr "megosztott postafiókok nyitnak egy fiók alatt, amely lépést tart a Microsoft Graph"
+
+#, fuzzy
 #~ msgid "Automatic replies are kept on the mail server, and MailCraft can set them only for accounts that sign in with Microsoft so far: IMAP has no standard way to set them (Sieve vacation replies may come later)"
 #~ msgstr "Automatikus válaszok a postaszerveren maradnak, és a MailCraft csak olyan fiókokra tudja beállítani őket, amelyek eddig a Microsoftnál jelentkeztek: IMAP nem tudja a szokásos módon beállítani azokat (a Sieve nyaralási válaszok később is bekövetkezhetnek)"
 
@@ -29908,300 +30206,3 @@ msgstr "−Sorok"
 #~ msgid "A Sieve rule: its Sieve is changed under Advanced…"
 #~ msgstr "Sieve-szabály: a Sieve-kódja a Speciális… alatt módosítható"
 
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "A rule kept on the server can't show a desktop alert."
-msgstr "A kiszolgálón tárolt szabály nem jeleníthet meg asztali értesítést."
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "A rule needs some Sieve."
-msgstr "A szabálynak kell némi Sieve."
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "A rule needs some Sieve: a command, not only comments."
-msgstr "A szabálynak kell némi Sieve: egy parancs, nem csak megjegyzések."
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "A rule of your own Sieve script is kept in that script on the server."
-msgstr "A saját Sieve-szkriptje szabálya abban a szkriptben marad a kiszolgálón."
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "Change this rule as Sieve text"
-msgstr "A szabály módosítása Sieve-szövegként"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "Change this rule as Sieve text: {why}"
-msgstr "A szabály módosítása Sieve-szövegként: {why}"
-
-#. command label
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "Edit Rule as Sieve"
-msgstr "Szabály szerkesztése Sieve-ként"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "Edit as Sieve…"
-msgstr "Szerkesztés Sieve-ként…"
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "Edit rule as Sieve"
-msgstr "Szabály szerkesztése Sieve-ként"
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "Line {line} of your script, outside this rule: {what}"
-msgstr "A szkript {line}. sora, ezen a szabályon kívül: {what}"
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "Line {line}, column {column} of the rule: {what}"
-msgstr "A szabály {line}. sora, {column}. oszlopa: {what}"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "Made in another program: MailCraft changes a rule of it only as you edit it, in the rule builder when that loses nothing, else as Sieve text"
-msgstr "Más programban készült: a MailCraft csak úgy módosítja egy szabályát, ahogy Ön szerkeszti, a szabályszerkesztőben, ha semmi sem vész el, egyébként Sieve-szövegként"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "On the server, made in another program: changed only as you edit it here"
-msgstr "A kiszolgálón, más programban készült: csak úgy változik, ahogy itt szerkeszti"
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "Only a rule kept in the Sieve script on an IMAP account's server can become a Sieve rule; this one has no Sieve."
-msgstr "Csak egy IMAP-fiók kiszolgálójának Sieve-szkriptjében tárolt szabály lehet Sieve-szabály; ennek nincs Sieve-je."
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "Only a rule kept on the server can become a Sieve rule; this one is kept on this computer."
-msgstr "Csak a kiszolgálón tárolt szabály lehet Sieve-szabály; ez ezen a számítógépen van."
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "Rule \"{rule}\" of your Sieve script \"{name}\""
-msgstr "„{rule}” szabály a(z) „{name}” Sieve-szkriptből"
-
-#. command label
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "Save Your Sieve Rule"
-msgstr "Sieve-szabály mentése"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "Saved in your own Sieve script, in its place: the comment lines above it and the rest of the script stay as they are."
-msgstr "A saját Sieve-szkriptjébe kerül, a helyére: a fölötte lévő megjegyzéssorok és a szkript többi része változatlan marad."
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "The Sieve of a filter of your webmail's can't have the webmail's own marks in it (BEGIN:FILTER, END:FILTER)."
-msgstr "A webmail egy szűrőjének Sieve-je nem tartalmazhatja a webmail saját jelöléseit (BEGIN:FILTER, END:FILTER)."
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "The Sieve script can't be read."
-msgstr "A Sieve-szkript nem olvasható."
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "The rule builder can't change it: {why}."
-msgstr "A szabályszerkesztő nem tudja módosítani: {why}."
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "The rule builder can't change this rule of your Sieve script: {why}. Change it as Sieve."
-msgstr "A szabályszerkesztő nem tudja módosítani a Sieve-szkript e szabályát: {why}. Módosítsa Sieve-ként."
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "The server checked the rule inside your whole script: its line numbers count from the top of that script."
-msgstr "A kiszolgáló a teljes szkriptben ellenőrizte a szabályt: a sorszámok a szkript elejétől számítanak."
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "This rule can't be said in Sieve: {why}."
-msgstr "Ez a szabály nem fejezhető ki Sieve-ben: {why}."
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "This rule can't be written in your Sieve script: {why}."
-msgstr "Ez a szabály nem írható a Sieve-szkriptjébe: {why}."
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "This rule has a part the rule builder can't show"
-msgstr "A szabálynak van olyan része, amelyet a szabályszerkesztő nem tud megjeleníteni"
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "This rule is a Sieve rule already: change its Sieve as it is."
-msgstr "Ez a szabály már Sieve-szabály: a Sieve-jét módosítsa közvetlenül."
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "This rule isn't one of your own Sieve script's."
-msgstr "Ez a szabály nem a saját Sieve-szkriptjéé."
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "This rule will be kept as Sieve text from now on: the rule builder no longer changes it. This is the Sieve MailCraft writes for it now."
-msgstr "Ezt a szabályt mostantól Sieve-szövegként tároljuk: a szabályszerkesztő már nem módosítja. Ez az a Sieve, amelyet a MailCraft most ír hozzá."
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "This rule's Sieve alone, as it is in your script. Save puts your text in its place and leaves the rest of the script as it is, only while the script on the server is still the one you opened."
-msgstr "Csak ennek a szabálynak a Sieve-je, ahogy a szkriptben van. A Mentés a szövegét a helyére teszi, a szkript többi részét változatlanul hagyja, de csak amíg a kiszolgálón lévő szkript még az, amelyet megnyitott."
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "This script was written by a webmail. It may overwrite or drop the changes you make here the next time its filters are saved there."
-msgstr "Ezt a szkriptet egy webmail írta. A szűrői következő mentésekor felülírhatja vagy elvetheti az itt végzett módosításokat."
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "Write this text to the server in place of this rule; the rest of your script stays as it is"
-msgstr "A szöveg kiírása a kiszolgálóra e szabály helyett; a szkript többi része változatlan marad"
-
-#. command label
-#: crates/engine/src/cmd/sieve_blocks.rs
-#, fuzzy
-msgid "Your Sieve Rule"
-msgstr "Az Ön Sieve-szabálya"
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-#, fuzzy
-msgid "Your webmail (RainLoop or SnappyMail) keeps its own copy of this filter's settings, which stay as they are. It may put its version back the next time filters are saved there, and MailCraft changes the filter only as Sieve from now on."
-msgstr "A webmail (RainLoop vagy SnappyMail) saját másolatot tart a szűrő beállításairól, amelyek változatlanok maradnak. A szűrők következő mentésekor visszaállíthatja a saját változatát, és a MailCraft mostantól csak Sieve-ként módosítja a szűrőt."
-
-#. name
-#: crates/engine/src/cmd/sieve_elsewhere.rs
-#, fuzzy
-msgid "it has elsif or else branches, which the rule builder can't show"
-msgstr "elsif vagy else ágai vannak, amelyeket a szabályszerkesztő nem tud megjeleníteni"
-
-#. name
-#: crates/engine/src/cmd/sieve_elsewhere.rs
-#, fuzzy
-msgid "it has parts the rule builder can't show"
-msgstr "vannak részei, amelyeket a szabályszerkesztő nem tud megjeleníteni"
-
-#. name
-#: crates/engine/src/cmd/sieve_elsewhere.rs
-#, fuzzy
-msgid "it is a filter of your webmail's"
-msgstr "ez a webmail egyik szűrője"
-
-#. name
-#: crates/engine/src/cmd/sieve_elsewhere.rs
-#, fuzzy
-msgid "it isn't an if test, which is what the rule builder writes"
-msgstr "nem if-feltétel, pedig a szabályszerkesztő ilyet ír"
-
-#. name
-#: crates/engine/src/cmd/sieve_elsewhere.rs
-#, fuzzy
-msgid "the rule builder can't write it back as Sieve"
-msgstr "a szabályszerkesztő nem tudja visszaírni Sieve-ként"
-
-#. name
-#: crates/engine/src/cmd/sieve_elsewhere.rs
-#, fuzzy
-msgid "the rule builder would write it as other Sieve (for example an address test where it has a header test), which could change what it does"
-msgstr "a szabályszerkesztő más Sieve-ként írná (például address-feltétellel header-feltétel helyett), ami megváltoztathatná, mit csinál"
-
-#. interface
-#: crates/ui-egui/src/dialogs.rs
-#, fuzzy
-msgid "Checking the address with the server…"
-msgstr "A cím ellenőrzése a kiszolgálón…"
-
-#. interface
-#: crates/ui-egui/src/dialogs.rs
-#, fuzzy
-msgid "Opened with {owner}'s server and password. It needs Full Access to the mailbox, which your organisation's administrator gives. What you change in it goes to it."
-msgstr "Megnyitva {owner} kiszolgálójával és jelszavával. Teljes hozzáférést igényel a postafiókhoz, amelyet a szervezet rendszergazdája ad meg. Amit benne módosít, az oda kerül."
-
-#. interface
-#: crates/ui-egui/src/ews_mail.rs
-#, fuzzy
-msgid "The shared mailbox couldn't be read."
-msgstr "A megosztott postafiókot nem sikerült beolvasni."
-
-#. what a command says
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
-msgid "a shared mailbox is reached through the server settings of the account it is opened through: change that account's"
-msgstr "a megosztott postafiók a megnyitásához használt fiók szerverbeállításain keresztül érhető el. Módosítsa annak a fióknak a beállításait."
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "an Exchange server account needs a server address that can be used to open a shared mailbox"
-msgstr "a megosztott postafiók megnyitásához az Exchange szerverfióknak használható szervercímre van szüksége"
-
-#. what a command says
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
-msgid "an Exchange server account's server and user name can't be changed while a shared mailbox opened through it has mail here: remove the shared mailbox first"
-msgstr "az Exchange szerverfiók szervere és felhasználóneve nem módosítható, amíg egy rajta keresztül megnyitott megosztott postafiók levelezése itt van: először távolítsa el a megosztott postafiókot"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-msgid "an online archive can't open a shared mailbox: name the account it belongs to"
-msgstr ""
-
-#. what a command says, why a command can't run
-#: crates/engine/src/cmd/shared.rs
-#, fuzzy
-msgid "shared mailboxes open under an account kept in step through Microsoft Graph, or an Exchange server account"
-msgstr "megosztott postafiókok egy Microsoft Graph-on keresztül vezetett fiók vagy egy Exchange szerverfiók alatt nyithatók"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph or is an Exchange server account"
-msgstr "megosztott postafiókok olyan fiók alatt nyithatók, amelyet Microsoft Graph-on keresztül vezetnek, vagy amely Exchange szerverfiók"
-
-#. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
-msgid "{name} can't be both an online archive and a shared mailbox"
-msgstr ""

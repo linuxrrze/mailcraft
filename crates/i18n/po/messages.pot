@@ -773,14 +773,34 @@ msgstr ""
 msgid "A report is written beside your mailbox."
 msgstr ""
 
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+msgid "A rule kept on the server can't show a desktop alert."
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/forms.rs
 msgid "A rule needs a name, and something to look for."
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/sieve_editor.rs
+msgid "A rule needs some Sieve."
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+msgid "A rule needs some Sieve: a command, not only comments."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/forms.rs
 msgid "A rule needs something to do: an action, or a desktop alert."
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+msgid "A rule of your own Sieve script is kept in that script on the server."
 msgstr ""
 
 #. android
@@ -2966,6 +2986,16 @@ msgid "Change this rule"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/forms.rs
+msgid "Change this rule as Sieve text"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+msgid "Change this rule as Sieve text: {why}"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/reading/signature.rs
 msgid "Changed after it was signed"
 msgstr ""
@@ -3140,6 +3170,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/dialogs.rs
 msgid "Checking the address with Microsoft…"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+msgid "Checking the address with the server…"
 msgstr ""
 
 #. interface
@@ -4769,6 +4804,11 @@ msgid "Edit Message"
 msgstr ""
 
 #. command label
+#: crates/engine/src/cmd/sieve_blocks.rs
+msgid "Edit Rule as Sieve"
+msgstr ""
+
+#. command label
 #: crates/engine/src/cmd/signature.rs
 msgid "Edit Signature"
 msgstr ""
@@ -4788,6 +4828,11 @@ msgstr ""
 msgid "Edit Your Sieve Script…"
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/forms.rs
+msgid "Edit as Sieve…"
+msgstr ""
+
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingScreen.kt
 msgid "Edit draft"
@@ -4796,6 +4841,11 @@ msgstr ""
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt
 msgid "Edit event"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+msgid "Edit rule as Sieve"
 msgstr ""
 
 #. interface
@@ -7504,6 +7554,11 @@ msgstr ""
 msgid "Line {line} of the rule: {said}"
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+msgid "Line {line} of your script, outside this rule: {what}"
+msgstr ""
+
 #. what a command says
 #: crates/engine/src/cmd/rules_sieve.rs
 msgid "Line {line}, column {column} of the Sieve rule: a control character can't be in it."
@@ -7512,6 +7567,11 @@ msgstr ""
 #. what a command says
 #: crates/engine/src/cmd/rules_sieve.rs
 msgid "Line {line}, column {column} of the Sieve rule: {what}"
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+msgid "Line {line}, column {column} of the rule: {what}"
 msgstr ""
 
 #. what a command says
@@ -7717,6 +7777,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/forms.rs
 msgid "Made in another program or on the web, with parts MailCraft can't show"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+msgid "Made in another program: MailCraft changes a rule of it only as you edit it, in the rule builder when that loses nothing, else as Sieve text"
 msgstr ""
 
 #. interface
@@ -10208,6 +10273,11 @@ msgstr ""
 
 #. interface
 #: crates/ui-egui/src/forms.rs
+msgid "On the server, made in another program: changed only as you edit it here"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/forms.rs
 msgid "On the server, still as it was: your change waits for permission (File › Info)"
 msgstr ""
 
@@ -10324,6 +10394,16 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/windows.rs
 msgid "Only a meeting you organize has Find a Time"
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+msgid "Only a rule kept in the Sieve script on an IMAP account's server can become a Sieve rule; this one has no Sieve."
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+msgid "Only a rule kept on the server can become a Sieve rule; this one is kept on this computer."
 msgstr ""
 
 #. what a command says
@@ -10656,6 +10736,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/open_shared.rs
 msgid "Opened the calendar of {name}. It is listed under Shared Calendars, on this computer only."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+msgid "Opened with {owner}'s server and password. It needs Full Access to the mailbox, which your organisation's administrator gives. What you change in it goes to it."
 msgstr ""
 
 #. interface
@@ -12291,6 +12376,11 @@ msgstr ""
 msgid "Right before or after: {items}"
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+msgid "Rule \"{rule}\" of your Sieve script \"{name}\""
+msgstr ""
+
 #. command label
 #: crates/engine/src/cmd/rules_remote.rs
 msgid "Rule Changes to Send"
@@ -12515,6 +12605,11 @@ msgid "Save Signature"
 msgstr ""
 
 #. command label
+#: crates/engine/src/cmd/sieve_blocks.rs
+msgid "Save Your Sieve Rule"
+msgstr ""
+
+#. command label
 #: crates/engine/src/cmd/sieve_own.rs
 msgid "Save Your Sieve Script"
 msgstr ""
@@ -12567,6 +12662,11 @@ msgstr ""
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
 msgid "Saved Text"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+msgid "Saved in your own Sieve script, in its place: the comment lines above it and the rest of the script stay as they are."
 msgstr ""
 
 #. interface
@@ -14968,8 +15068,18 @@ msgid "The Entire Series"
 msgstr ""
 
 #. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+msgid "The Sieve of a filter of your webmail's can't have the webmail's own marks in it (BEGIN:FILTER, END:FILTER)."
+msgstr ""
+
+#. what a command says
 #: crates/engine/src/cmd/rules_sieve.rs
 msgid "The Sieve rule has a mistake."
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+msgid "The Sieve script can't be read."
 msgstr ""
 
 #. interface
@@ -15914,6 +16024,16 @@ msgstr ""
 msgid "The report service's answer wasn't one MailCraft understands, so the report may have arrived. Try again later, or open it on GitHub."
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+msgid "The rule builder can't change it: {why}."
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+msgid "The rule builder can't change this rule of your Sieve script: {why}. Change it as Sieve."
+msgstr ""
+
 #. what a command says
 #: crates/engine/src/cmd/rules.rs
 msgid "The rules leave a shared mailbox's mail alone: its rules are its own."
@@ -16022,6 +16142,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/sieve_editor.rs
 msgid "The server checked the rule inside MailCraft's whole script: its line numbers count from the top of that script."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+msgid "The server checked the rule inside your whole script: its line numbers count from the top of that script."
 msgstr ""
 
 #. what a command says
@@ -16299,6 +16424,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/dialogs.rs
 msgid "The shared mailbox couldn't be added"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+msgid "The shared mailbox couldn't be read."
 msgstr ""
 
 #. interface
@@ -17451,9 +17581,29 @@ msgstr ""
 msgid "This rule can't be kept on the server: {why}. It runs on this computer, while MailCraft is open."
 msgstr ""
 
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+msgid "This rule can't be said in Sieve: {why}."
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+msgid "This rule can't be written in your Sieve script: {why}."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+msgid "This rule has a part the rule builder can't show"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/forms.rs
 msgid "This rule has a part the rule builder can't show: delete it and create it again to change it"
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+msgid "This rule is a Sieve rule already: change its Sieve as it is."
 msgstr ""
 
 #. what a command says
@@ -17461,9 +17611,29 @@ msgstr ""
 msgid "This rule isn't a Sieve rule: change it in the rule builder."
 msgstr ""
 
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+msgid "This rule isn't one of your own Sieve script's."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+msgid "This rule will be kept as Sieve text from now on: the rule builder no longer changes it. This is the Sieve MailCraft writes for it now."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+msgid "This rule's Sieve alone, as it is in your script. Save puts your text in its place and leaves the rest of the script as it is, only while the script on the server is still the one you opened."
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/sieve_editor.rs
 msgid "This script was written by a webmail ({webmail}). It may overwrite or drop the changes you make here the next time its filters are saved there."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+msgid "This script was written by a webmail. It may overwrite or drop the changes you make here the next time its filters are saved there."
 msgstr ""
 
 #. what a command says
@@ -18763,6 +18933,11 @@ msgstr ""
 
 #. interface
 #: crates/ui-egui/src/sieve_editor.rs
+msgid "Write this text to the server in place of this rule; the rest of your script stays as it is"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
 msgid "Write this text to the server in place of your script; it stays the one that runs"
 msgstr ""
 
@@ -18934,6 +19109,11 @@ msgstr ""
 #. interface, what a command says
 #: crates/engine/src/sync_driver/free_busy.rs crates/ui-egui/src/send_receive.rs
 msgid "You're working offline. Turn off Work Offline (Send / Receive) to connect."
+msgstr ""
+
+#. command label
+#: crates/engine/src/cmd/sieve_blocks.rs
+msgid "Your Sieve Rule"
 msgstr ""
 
 #. command label
@@ -19229,6 +19409,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/sieve_replies.rs
 msgid "Your rules weren't changed on the server"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/sieve_editor.rs
+msgid "Your webmail (RainLoop or SnappyMail) keeps its own copy of this filter's settings, which stay as they are. It may put its version back the next time filters are saved there, and MailCraft changes the filter only as Sieve from now on."
 msgstr ""
 
 #. what a command says
@@ -19543,6 +19728,11 @@ msgstr ""
 
 #. what a command says
 #: crates/engine/src/cmd/account.rs
+msgid "a shared mailbox is reached through the server settings of the account it is opened through: change that account's"
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
 msgid "a shared mailbox keeps as much mail offline as the account it is opened through: change that account's"
 msgstr ""
 
@@ -19642,6 +19832,16 @@ msgid "add at least one recipient"
 msgstr ""
 
 #. what a command says
+#: crates/model/src/mailbox.rs
+msgid "an Exchange server account needs a server address that can be used to open a shared mailbox"
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+msgid "an Exchange server account's server and user name can't be changed while a shared mailbox opened through it has mail here: remove the shared mailbox first"
+msgstr ""
+
+#. what a command says
 #: crates/engine/src/cmd/account.rs
 msgid "an Exchange server account's server, address and user name can't be changed once its mail is here: remove it and add the other one"
 msgstr ""
@@ -19699,6 +19899,11 @@ msgstr ""
 #. what a command says
 #: crates/engine/src/cmd/calendar.rs
 msgid "an event needs a title"
+msgstr ""
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+msgid "an online archive can't open a shared mailbox: name the account it belongs to"
 msgstr ""
 
 #. what a command says
@@ -20182,6 +20387,11 @@ msgid "it has a part MailCraft can't write as Sieve"
 msgstr ""
 
 #. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
+msgid "it has elsif or else branches, which the rule builder can't show"
+msgstr ""
+
+#. name
 #: crates/engine/src/cmd/rules.rs
 msgid "it has no conditions, and on the server it would act on every message"
 msgstr ""
@@ -20189,6 +20399,11 @@ msgstr ""
 #. name
 #: crates/engine/src/cmd/rules.rs
 msgid "it has parts MailCraft can't show, which changing it here would lose"
+msgstr ""
+
+#. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
+msgid "it has parts the rule builder can't show"
 msgstr ""
 
 #. name
@@ -20209,6 +20424,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/reading/images.rs
 msgid "it is a drawing of a kind that isn't shown (SVG)"
+msgstr ""
+
+#. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
+msgid "it is a filter of your webmail's"
 msgstr ""
 
 #. interface
@@ -20249,6 +20469,11 @@ msgstr ""
 #. what a command says
 #: crates/mobile/src/error.rs
 msgid "it is too long for the platform"
+msgstr ""
+
+#. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
+msgid "it isn't an if test, which is what the rule builder writes"
 msgstr ""
 
 #. name
@@ -21030,6 +21255,16 @@ msgstr ""
 msgid "shared mailbox"
 msgstr ""
 
+#. what a command says, why a command can't run
+#: crates/engine/src/cmd/shared.rs
+msgid "shared mailboxes open under an account kept in step through Microsoft Graph, or an Exchange server account"
+msgstr ""
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph or is an Exchange server account"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/forms.rs
 msgid "show a desktop alert"
@@ -21788,6 +22023,16 @@ msgstr ""
 #. why a mail server couldn't be used
 #: crates/net/src/oauth/custom.rs
 msgid "the revocation address {why}"
+msgstr ""
+
+#. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
+msgid "the rule builder can't write it back as Sieve"
+msgstr ""
+
+#. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
+msgid "the rule builder would write it as other Sieve (for example an address test where it has a header test), which could change what it does"
 msgstr ""
 
 #. what a command says
@@ -23179,6 +23424,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/reading/invitation.rs
 msgid "{name} answered this invitation."
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+msgid "{name} can't be both an online archive and a shared mailbox"
 msgstr ""
 
 #. android
@@ -24638,252 +24888,3 @@ msgstr ""
 msgid "−Lines"
 msgstr ""
 
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-msgid "A rule kept on the server can't show a desktop alert."
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-msgid "A rule needs some Sieve."
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-msgid "A rule needs some Sieve: a command, not only comments."
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-msgid "A rule of your own Sieve script is kept in that script on the server."
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-msgid "Change this rule as Sieve text"
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-msgid "Change this rule as Sieve text: {why}"
-msgstr ""
-
-#. command label
-#: crates/engine/src/cmd/sieve_blocks.rs
-msgid "Edit Rule as Sieve"
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-msgid "Edit as Sieve…"
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-msgid "Edit rule as Sieve"
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-msgid "Line {line} of your script, outside this rule: {what}"
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-msgid "Line {line}, column {column} of the rule: {what}"
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-msgid "Made in another program: MailCraft changes a rule of it only as you edit it, in the rule builder when that loses nothing, else as Sieve text"
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-msgid "On the server, made in another program: changed only as you edit it here"
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-msgid "Only a rule kept in the Sieve script on an IMAP account's server can become a Sieve rule; this one has no Sieve."
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-msgid "Only a rule kept on the server can become a Sieve rule; this one is kept on this computer."
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-msgid "Rule \"{rule}\" of your Sieve script \"{name}\""
-msgstr ""
-
-#. command label
-#: crates/engine/src/cmd/sieve_blocks.rs
-msgid "Save Your Sieve Rule"
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-msgid "Saved in your own Sieve script, in its place: the comment lines above it and the rest of the script stay as they are."
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-msgid "The Sieve of a filter of your webmail's can't have the webmail's own marks in it (BEGIN:FILTER, END:FILTER)."
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-msgid "The Sieve script can't be read."
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-msgid "The rule builder can't change it: {why}."
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-msgid "The rule builder can't change this rule of your Sieve script: {why}. Change it as Sieve."
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-msgid "The server checked the rule inside your whole script: its line numbers count from the top of that script."
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-msgid "This rule can't be said in Sieve: {why}."
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-msgid "This rule can't be written in your Sieve script: {why}."
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-msgid "This rule has a part the rule builder can't show"
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-msgid "This rule is a Sieve rule already: change its Sieve as it is."
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/sieve_blocks.rs
-msgid "This rule isn't one of your own Sieve script's."
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-msgid "This rule will be kept as Sieve text from now on: the rule builder no longer changes it. This is the Sieve MailCraft writes for it now."
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-msgid "This rule's Sieve alone, as it is in your script. Save puts your text in its place and leaves the rest of the script as it is, only while the script on the server is still the one you opened."
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-msgid "This script was written by a webmail. It may overwrite or drop the changes you make here the next time its filters are saved there."
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-msgid "Write this text to the server in place of this rule; the rest of your script stays as it is"
-msgstr ""
-
-#. command label
-#: crates/engine/src/cmd/sieve_blocks.rs
-msgid "Your Sieve Rule"
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/sieve_editor.rs
-msgid "Your webmail (RainLoop or SnappyMail) keeps its own copy of this filter's settings, which stay as they are. It may put its version back the next time filters are saved there, and MailCraft changes the filter only as Sieve from now on."
-msgstr ""
-
-#. name
-#: crates/engine/src/cmd/sieve_elsewhere.rs
-msgid "it has elsif or else branches, which the rule builder can't show"
-msgstr ""
-
-#. name
-#: crates/engine/src/cmd/sieve_elsewhere.rs
-msgid "it has parts the rule builder can't show"
-msgstr ""
-
-#. name
-#: crates/engine/src/cmd/sieve_elsewhere.rs
-msgid "it is a filter of your webmail's"
-msgstr ""
-
-#. name
-#: crates/engine/src/cmd/sieve_elsewhere.rs
-msgid "it isn't an if test, which is what the rule builder writes"
-msgstr ""
-
-#. name
-#: crates/engine/src/cmd/sieve_elsewhere.rs
-msgid "the rule builder can't write it back as Sieve"
-msgstr ""
-
-#. name
-#: crates/engine/src/cmd/sieve_elsewhere.rs
-msgid "the rule builder would write it as other Sieve (for example an address test where it has a header test), which could change what it does"
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/dialogs.rs
-msgid "Checking the address with the server…"
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/dialogs.rs
-msgid "Opened with {owner}'s server and password. It needs Full Access to the mailbox, which your organisation's administrator gives. What you change in it goes to it."
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/ews_mail.rs
-msgid "The shared mailbox couldn't be read."
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/account.rs
-msgid "a shared mailbox is reached through the server settings of the account it is opened through: change that account's"
-msgstr ""
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-msgid "an Exchange server account needs a server address that can be used to open a shared mailbox"
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/account.rs
-msgid "an Exchange server account's server and user name can't be changed while a shared mailbox opened through it has mail here: remove the shared mailbox first"
-msgstr ""
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-msgid "an online archive can't open a shared mailbox: name the account it belongs to"
-msgstr ""
-
-#. what a command says, why a command can't run
-#: crates/engine/src/cmd/shared.rs
-msgid "shared mailboxes open under an account kept in step through Microsoft Graph, or an Exchange server account"
-msgstr ""
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph or is an Exchange server account"
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
-msgid "{name} can't be both an online archive and a shared mailbox"
-msgstr ""
