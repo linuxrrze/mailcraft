@@ -500,6 +500,13 @@ impl<E: HttpExchange> Run<'_, E> {
     }
 }
 
+/// What a run says when it is asked for the online archive of a shared mailbox, which is never
+/// read (#1818, #482).
+pub const ARCHIVE_OF_SHARED: &str = "A shared mailbox's online archive isn't opened";
+
+/// What a run says when the server won't open the shared mailbox it was asked for.
+pub const SHARED_NOT_OPENED: &str = "The server won't open the shared mailbox: it isn't there, or you have no access to it";
+
 pub(crate) fn base(request: &EwsMailRequest) -> EwsMailResult {
     EwsMailResult { account: request.account, email: request.email.clone(), url: request.url.clone(), ..EwsMailResult::default() }
 }
@@ -515,6 +522,12 @@ pub async fn sync_mail<E: HttpExchange>(
     emit: &mut dyn FnMut(EwsMailResult),
 ) {
     // (The request says whether it is a run of the mailbox or of its online archive, #1818.)
+    // A run of an online archive is its owner's own archive; a shared mailbox's (#482) is never
+    // read here: Outlook shows one only for a mailbox that is auto-mapped, which MailCraft doesn't
+    // do. A request that says both is refused before anything is asked of the server.
+    if request.archive && !request.mailbox.is_empty() {
+        return emit(failed_run(request, ARCHIVE_OF_SHARED));
+    }
     let store = if request.archive { Store::Archive } else { Store::Primary };
     sync_store(store, client, exchange, request, cancel, wait, emit).await;
 }
@@ -535,6 +548,16 @@ pub(crate) async fn sync_store<E: HttpExchange>(
     if let Err(stop) = run.all(request, &mut out, emit).await {
         match stop {
             Asked::Stop(why) => out.stop(why),
+            // A shared mailbox the server won't open (#482): there is none at that address
+            // (`ErrorNonExistentMailbox`), or the caller has no rights to it, which Exchange says
+            // as `ErrorItemNotFound` (or `ErrorAccessDenied`, or a folder it lacks) so as not to
+            // tell who has a mailbox. Said plainly, as the owner needs to know which.
+            Asked::Code(
+                ResponseCode::ItemNotFound | ResponseCode::AccessDenied | ResponseCode::FolderNotFound | ResponseCode::NonExistentMailbox,
+            ) if !request.mailbox.is_empty() => {
+                out.incomplete = true;
+                out.line(SHARED_NOT_OPENED);
+            }
             Asked::Code(_) | Asked::Bad | Asked::Lost | Asked::Unreadable => {
                 out.incomplete = true;
                 out.line("The server's answer couldn't be used");
@@ -553,9 +576,11 @@ pub(crate) async fn sync_store<E: HttpExchange>(
         log::warn!("ews mail: {} folders hold a change that can't be taken in; they are left where they were", out.blocked.len());
     }
     log::debug!("ews mail: the run is over (clean: {}, stopped: {}, busy: {})", out.clean(), out.stopped, out.busy_for.is_some());
-    // Whether the mailbox has an online archive (#1818): asked of the mailbox only, and not after
-    // a run that was stopped, turned down or told to wait. Never worth failing the run for.
-    let ask = request.probe_archive && store == Store::Primary && !out.stopped && !out.auth_refused && out.busy_for.is_none();
+    // Whether the mailbox has an online archive (#1818): asked of the mailbox only, not of a shared
+    // mailbox opened through it (#482: its archive is never read, [`sync_mail`]), and not after a
+    // run that was stopped, turned down or told to wait. Never worth failing the run for.
+    let ask =
+        request.probe_archive && request.mailbox.is_empty() && store == Store::Primary && !out.stopped && !out.auth_refused && out.busy_for.is_none();
     let archive = match ask {
         true => Some(match run.probe().await {
             ArchiveProbe::Present => ArchiveSeen::Present,
@@ -632,7 +657,9 @@ impl<E: HttpExchange> Run<'_, E> {
         match self.store {
             Store::Primary if specials.inbox.is_none() => {
                 out.incomplete = true;
-                out.line("Couldn't find the Inbox on the server");
+                // (A shared mailbox whose Inbox alone the server won't show is one it won't open, as
+                // when it refuses the whole request: said the same way.)
+                out.line(if request.mailbox.is_empty() { "Couldn't find the Inbox on the server" } else { SHARED_NOT_OPENED });
             }
             // (An archive without its top is none the server gives now: nothing more is asked.)
             Store::Archive if specials.root.is_none() => {
@@ -689,6 +716,13 @@ impl<E: HttpExchange> Run<'_, E> {
             let state = states.get(folder.as_str()).copied().unwrap_or_default();
             match self.folder(request, folder, state, (number, folders), emit).await {
                 Ok(true) => failed_in_a_row = 0,
+                // A shared mailbox's Inbox that was found and then isn't read: the server won't open
+                // the mailbox after all (its rights were taken away in between, which Exchange says
+                // as `ErrorFolderNotFound` too), so the run isn't whole.
+                Ok(false) if !request.mailbox.is_empty() && specials.inbox.as_deref() == Some(folder.as_str()) => {
+                    out.incomplete = true;
+                    out.line(SHARED_NOT_OPENED);
+                }
                 // (A folder the server doesn't have: the folder list takes it away.)
                 Ok(false) => {}
                 Err(Asked::Stop(stop)) => return Err(Asked::Stop(stop)),

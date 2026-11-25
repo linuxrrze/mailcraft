@@ -86,7 +86,8 @@ fn archive_holder(s: &Session, v: &Value) -> Result<Id, CmdError> {
     let a = s.mailbox.account(id).ok_or_else(|| failed!("no account with id {id}", id))?;
     let owner = if a.is_archive() { s.mailbox.archive_owner(id).map(|o| o.id) } else { Some(id) };
     owner
-        .filter(|o| s.mailbox.account(*o).is_some_and(|o| o.kind == AccountKind::Exchange && o.ews.is_some()))
+        // (Not a shared mailbox, #482: its online archive is never shown, [`ews_mail_request`].)
+        .filter(|o| s.mailbox.account(*o).is_some_and(|o| o.kind == AccountKind::Exchange && o.ews.is_some() && !o.is_shared()))
         .ok_or_else(|| failed!("{name} isn't an Exchange server account", name = a.name))
 }
 
@@ -146,13 +147,35 @@ pub fn has_address_list(mb: &Mailbox, account: Id) -> bool {
     ews_account(mb, account).is_ok()
 }
 
-/// The account `account` and the server it is reached at, when it is an Exchange server account
-/// whose server settings may be used ([`EwsServer::problem`]: a mailbox file can say anything).
+/// The account `account` and the server settings its requests go with, when it is an Exchange
+/// server account whose settings may be used ([`EwsServer::problem`]: a mailbox file can say
+/// anything).
+///
 /// An online archive is reached at its owner's server, with its owner's sign-in (#1818).
+///
+/// A shared mailbox opened through an Exchange server account (#482) goes with its owner's
+/// settings as they are now, and with no others: the password it signs in with is the owner's, so
+/// it goes only to the server the owner chose. When the owner's can't be used (or the owner is
+/// gone) it is refused, whatever its own copy says; that copy is only where its own sync state is
+/// kept ([`own_state`]).
+///
+/// An account that says it is both (a file may say anything) is refused: a run is of one
+/// mailbox's own folders or of its owner's archive, never of a shared mailbox's archive.
 fn ews_account(mb: &Mailbox, account: Id) -> Result<(&Account, &EwsServer), CmdError> {
     let a = mb.account(account).ok_or_else(|| failed!("no account with id {id}", id = account))?;
     if a.kind != AccountKind::Exchange {
         return Err(failed!("{name} isn't an Exchange server account", name = a.name));
+    }
+    if a.is_archive() && a.is_shared() {
+        return Err(failed!("{name} can't be both an online archive and a shared mailbox", name = a.name));
+    }
+    if a.is_shared() {
+        let owner = mb
+            .ews_owner_of(account)
+            .ok_or_else(|| failed!("{name} is a shared mailbox whose account is gone: remove it and add it again", name = a.name))?;
+        let server = owner.ews.as_ref().filter(|server| server.problem().is_none());
+        let server = server.ok_or_else(|| failed!("{name} has no Exchange server address that can be used", name = owner.name))?;
+        return Ok((a, server));
     }
     let holder = if a.is_archive() {
         mb.archive_owner(account).ok_or_else(|| failed!("the account {name} is the online archive of is gone", name = a.name))?
@@ -164,16 +187,32 @@ fn ews_account(mb: &Mailbox, account: Id) -> Result<(&Account, &EwsServer), CmdE
     Ok((a, server))
 }
 
+/// Where `account`'s own sync state is: its own server settings' (for a shared mailbox, its copy
+/// of its owner's, which holds nothing else that is used).
+fn own_state(mb: &Mailbox, account: Id) -> Option<&EwsServer> {
+    mb.account(account).and_then(|a| a.ews.as_ref())
+}
+
+/// Where the server is for `account`, the name it signs in with and the certificate it trusts,
+/// from `server` as [`ews_account`] gave it: a shared mailbox (#482) signs in as its owner does
+/// ([`Account::sign_in_name`]), never with its own address.
+fn connection(mb: &Mailbox, a: &Account, server: &EwsServer) -> (String, String, String) {
+    let username = mb.ews_owner_of(a.id).map_or_else(|| server.username.clone(), Account::sign_in_name);
+    (server.url.clone(), username, server.trusted.clone())
+}
+
 /// The request for `account` with what every run says: where the server is, whose mailbox it is.
 fn base(s: &Session, account: Id) -> Result<EwsMailRequest, CmdError> {
     let (a, server) = ews_account(&s.mailbox, account)?;
+    let (url, username, trusted) = connection(&s.mailbox, a, server);
     Ok(EwsMailRequest {
         account,
         email: a.email.clone(),
-        url: server.url.clone(),
-        username: server.username.clone(),
-        trusted: server.trusted.clone(),
+        url,
+        username,
+        trusted,
         archive: a.is_archive(),
+        mailbox: a.shared_mailbox().unwrap_or_default(),
         ..Default::default()
     })
 }
@@ -193,8 +232,9 @@ fn base(s: &Session, account: Id) -> Result<EwsMailRequest, CmdError> {
 pub fn ews_mail_request(s: &Session, account: Id, light: bool) -> Result<EwsMailRequest, CmdError> {
     let mut request = base(s, account)?;
     let mb = &s.mailbox;
-    // (Where the account's own folder list goes on from: an archive's is its own, #1818.)
-    let own = mb.account(account).and_then(|a| a.ews.clone()).unwrap_or_default();
+    // (Where the account's own folder list goes on from: an archive's is its own, #1818, and a
+    // shared mailbox's its own copy's, #482.)
+    let own = own_state(mb, account).cloned().unwrap_or_default();
     let listed = mb.folders.iter().any(|f| f.account == account && f.server.is_some());
     let server_id = |folder: Id| mb.folder(folder).filter(|f| f.account == account).and_then(|f| f.server.as_ref()).map(|server| server.id.clone());
     let inbox = mb.folder_of_kind(account, FolderKind::Inbox).and_then(server_id);
@@ -219,7 +259,11 @@ pub fn ews_mail_request(s: &Session, account: Id, light: bool) -> Result<EwsMail
     // kept in Exchange Online: such an archive is never shown, so nothing is asked about it. Once
     // the owner asked to show it, a light run asks too, until the server has answered (#1834
     // review: a host, or an agent, may only ever ask for light runs).
-    request.probe_archive = (request.list_folders || own.archive_recheck) && !request.archive && !own.archive_hidden && !own.cloud_archive;
+    // Never of a shared mailbox (#482): Outlook shows a shared mailbox's online archive only when
+    // the mailbox is auto-mapped, which MailCraft doesn't do, so its archive is neither asked
+    // about nor read.
+    request.probe_archive =
+        (request.list_folders || own.archive_recheck) && !request.archive && request.mailbox.is_empty() && !own.archive_hidden && !own.cloud_archive;
     let wanted = |id: &str| match &request.scope {
         EwsScope::All => true,
         EwsScope::Light { also } => inbox.as_deref() == Some(id) || also.iter().any(|a| a == id),
@@ -293,15 +337,8 @@ pub fn ews_fetch_request(s: &Session, account: Id, message: Option<Id>, most: us
             .filter(|id| ews_down::is_id(id))
             .collect(),
     };
-    Ok(EwsFetchRequest {
-        account,
-        email: a.email.clone(),
-        url: server.url.clone(),
-        username: server.username.clone(),
-        trusted: server.trusted.clone(),
-        ids,
-        background: message.is_none(),
-    })
+    let (url, username, trusted) = connection(&s.mailbox, a, server);
+    Ok(EwsFetchRequest { account, email: a.email.clone(), url, username, trusted, ids, background: message.is_none() })
 }
 
 /// The names `texts` to look up in the address list of the account the message being written goes
@@ -330,14 +367,9 @@ pub fn ews_resolve_request_for(s: &Session, account: Id, texts: &[String]) -> Re
             asked.push(text);
         }
     }
-    Ok(EwsResolveRequest {
-        account,
-        email: a.email.clone(),
-        url: server.url.clone(),
-        username: server.username.clone(),
-        trusted: server.trusted.clone(),
-        texts: asked,
-    })
+    // (A shared mailbox's address list is its owner's server's, asked as the owner.)
+    let (url, username, trusted) = connection(&s.mailbox, a, server);
+    Ok(EwsResolveRequest { account, email: a.email.clone(), url, username, trusted, texts: asked })
 }
 
 fn fetch_request(s: &mut Session, v: &Value) -> CmdResult {
@@ -369,7 +401,7 @@ fn receiving(mb: &Mailbox, account: Id, email: &str, url: &str) -> Result<String
     if !email.is_empty() && !a.email.trim().eq_ignore_ascii_case(email.trim()) {
         return Err(failed!("this Send/Receive was for another account, not for {name}", name = a.name));
     }
-    if !url.is_empty() && server.url.trim() != url.trim() {
+    if !url.is_empty() && connection(mb, a, server).0.trim() != url.trim() {
         return Err(failed!("this Send/Receive was for the server {name} named before", name = a.name));
     }
     Ok(a.name.clone())
@@ -409,7 +441,10 @@ fn apply_ews_news(s: &mut Session, result: EwsMailResult) -> CmdResult {
 /// owner hid it); one the server said twice in a row is not there goes, with what was held of it
 /// (nothing of it is kept on the computer anyway). Whether the mailbox changed.
 fn take_archive(s: &mut Session, owner: Id, seen: ArchiveSeen) -> bool {
-    let Some(server) = s.mailbox.account(owner).filter(|a| !a.is_archive()).and_then(|a| a.ews.clone()) else { return false };
+    // (Neither an archive nor a shared mailbox has one: a result may say anything, #482.)
+    let Some(server) = s.mailbox.account(owner).filter(|a| !a.is_archive() && !a.is_shared()).and_then(|a| a.ews.clone()) else {
+        return false;
+    };
     let have = s.mailbox.archive_of(owner).map(|a| a.id);
     // An answer settles what the owner's Show Online Archive asked (#1834 review).
     let mut settled = false;
@@ -732,3 +767,7 @@ pub(crate) mod up_tests;
 #[cfg(test)]
 #[path = "ews_well_known_tests.rs"]
 mod well_known_tests;
+
+#[cfg(test)]
+#[path = "shared_archive_tests.rs"]
+mod shared_archive_tests;
