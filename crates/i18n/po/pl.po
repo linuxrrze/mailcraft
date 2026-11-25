@@ -25414,17 +25414,13 @@ msgstr "ustaw ważność na {level}"
 msgid "shared mailbox"
 msgstr "skrzynka współdzielona"
 
-#. what a command says, why a command can't run
-#: crates/engine/src/cmd/shared.rs
 #, fuzzy
-msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
-msgstr "udostępnione skrzynki pocztowe otwierają się na koncie synchronizowanym przez Microsoft Graph"
+#~ msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
+#~ msgstr "udostępnione skrzynki pocztowe otwierają się na koncie synchronizowanym przez Microsoft Graph"
 
-#. what a command says
-#: crates/model/src/mailbox.rs
 #, fuzzy
-msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
-msgstr "udostępnione skrzynki pocztowe otwierają się na koncie, które jest synchronizowane przez Microsoft Graph"
+#~ msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
+#~ msgstr "udostępnione skrzynki pocztowe otwierają się na koncie, które jest synchronizowane przez Microsoft Graph"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -28108,7 +28104,7 @@ msgid "{name} is a command; a test belongs here."
 msgstr "{name} to polecenie; tu powinien być test."
 
 #. what a command says
-#: crates/engine/src/cmd/graph_mail.rs
+#: crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/graph_mail.rs
 #, fuzzy
 msgid "{name} is a shared mailbox whose account is gone: remove it and add it again"
 msgstr "{name} to udostępniona skrzynka pocztowa, której konta już nie ma: usuń ją i dodaj ponownie"
@@ -30336,3 +30332,61 @@ msgstr "kreator reguł nie potrafi zapisać jej z powrotem jako Sieve"
 #, fuzzy
 msgid "the rule builder would write it as other Sieve (for example an address test where it has a header test), which could change what it does"
 msgstr "kreator reguł zapisałby ją jako inny Sieve (na przykład test address zamiast testu header), co mogłoby zmienić jej działanie"
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+#, fuzzy
+msgid "Checking the address with the server…"
+msgstr "Sprawdzanie adresu na serwerze…"
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+#, fuzzy
+msgid "Opened with {owner}'s server and password. It needs Full Access to the mailbox, which your organisation's administrator gives. What you change in it goes to it."
+msgstr "Otwarto przy użyciu serwera i hasła użytkownika {owner}. Wymaga to pełnego dostępu do skrzynki pocztowej, który nadaje administrator Twojej organizacji. To, co w niej zmienisz, trafia do niej."
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+#, fuzzy
+msgid "The shared mailbox couldn't be read."
+msgstr "Nie można odczytać udostępnionej skrzynki pocztowej."
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "a shared mailbox is reached through the server settings of the account it is opened through: change that account's"
+msgstr "udostępniona skrzynka pocztowa jest osiągana przez ustawienia serwera konta, przez które jest otwarta: zmień ustawienia tego konta"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "an Exchange server account needs a server address that can be used to open a shared mailbox"
+msgstr "konto serwera Exchange potrzebuje adresu serwera, którego można użyć, aby otworzyć udostępnioną skrzynkę pocztową"
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "an Exchange server account's server and user name can't be changed while a shared mailbox opened through it has mail here: remove the shared mailbox first"
+msgstr "serwera i nazwy użytkownika konta serwera Exchange nie można zmienić, dopóki poczta udostępnionej skrzynki pocztowej otwartej przez to konto jest tutaj: najpierw usuń udostępnioną skrzynkę pocztową"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+msgid "an online archive can't open a shared mailbox: name the account it belongs to"
+msgstr ""
+
+#. what a command says, why a command can't run
+#: crates/engine/src/cmd/shared.rs
+#, fuzzy
+msgid "shared mailboxes open under an account kept in step through Microsoft Graph, or an Exchange server account"
+msgstr "udostępnione skrzynki pocztowe otwierają się na koncie synchronizowanym przez Microsoft Graph lub na koncie serwera Exchange"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph or is an Exchange server account"
+msgstr "udostępnione skrzynki pocztowe otwierają się na koncie, które jest synchronizowane przez Microsoft Graph lub jest kontem serwera Exchange"
+
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+msgid "{name} can't be both an online archive and a shared mailbox"
+msgstr ""

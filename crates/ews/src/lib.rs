@@ -108,6 +108,8 @@ pub mod standin_ntlm;
 pub mod standin_write;
 
 #[cfg(test)]
+mod archive_shared_tests;
+#[cfg(test)]
 mod archive_tests;
 #[cfg(test)]
 mod delete_check_tests;

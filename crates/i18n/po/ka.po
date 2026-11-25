@@ -25248,17 +25248,13 @@ msgstr "მნიშვნელობის დაყენება: {level}"
 msgid "shared mailbox"
 msgstr "საერთო საფოსტო ყუთი"
 
-#. what a command says, why a command can't run
-#: crates/engine/src/cmd/shared.rs
 #, fuzzy
-msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
-msgstr "საერთო საფოსტო ყუთები იხსნება Microsoft Graph-ით სინქრონიზებული ანგარიშით"
+#~ msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
+#~ msgstr "საერთო საფოსტო ყუთები იხსნება Microsoft Graph-ით სინქრონიზებული ანგარიშით"
 
-#. what a command says
-#: crates/model/src/mailbox.rs
 #, fuzzy
-msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
-msgstr "საერთო საფოსტო ყუთები იხსნება ანგარიშით, რომელიც Microsoft Graph-ით სინქრონიზდება"
+#~ msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
+#~ msgstr "საერთო საფოსტო ყუთები იხსნება ანგარიშით, რომელიც Microsoft Graph-ით სინქრონიზდება"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -27932,7 +27928,7 @@ msgid "{name} is a command; a test belongs here."
 msgstr "{name} ბრძანებაა; აქ ტესტი უნდა იყოს."
 
 #. what a command says
-#: crates/engine/src/cmd/graph_mail.rs
+#: crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/graph_mail.rs
 #, fuzzy
 msgid "{name} is a shared mailbox whose account is gone: remove it and add it again"
 msgstr "{name} საერთო საფოსტო ყუთია, რომლის ანგარიშიც აღარ არსებობს: წაშალეთ და ხელახლა დაამატეთ"
@@ -30071,3 +30067,61 @@ msgstr "წესების რედაქტორს მისი Sieve-ა
 #, fuzzy
 msgid "the rule builder would write it as other Sieve (for example an address test where it has a header test), which could change what it does"
 msgstr "წესების რედაქტორი მას სხვა Sieve-ად ჩაწერდა (მაგალითად address შემოწმებად header-ის ნაცვლად), რამაც შეიძლება შეცვალოს მისი მოქმედება"
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+#, fuzzy
+msgid "Checking the address with the server…"
+msgstr "მისამართის შემოწმება სერვერთან…"
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+#, fuzzy
+msgid "Opened with {owner}'s server and password. It needs Full Access to the mailbox, which your organisation's administrator gives. What you change in it goes to it."
+msgstr "გაიხსნა ანგარიშის {owner} სერვერითა და პაროლით. მას საფოსტო ყუთზე სრული წვდომა (Full Access) სჭირდება, რომელსაც თქვენი ორგანიზაციის ადმინისტრატორი იძლევა. რასაც მასში შეცვლით, იქვე აისახება."
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+#, fuzzy
+msgid "The shared mailbox couldn't be read."
+msgstr "საერთო საფოსტო ყუთის წაკითხვა ვერ მოხერხდა."
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "a shared mailbox is reached through the server settings of the account it is opened through: change that account's"
+msgstr "საერთო საფოსტო ყუთთან წვდომა ხდება იმ ანგარიშის სერვერის პარამეტრებით, რომლითაც ის იხსნება: შეცვალეთ იმ ანგარიშისა"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "an Exchange server account needs a server address that can be used to open a shared mailbox"
+msgstr "Exchange სერვერის ანგარიშს სჭირდება სერვერის მისამართი, რომლითაც საერთო საფოსტო ყუთის გახსნა შეიძლება"
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "an Exchange server account's server and user name can't be changed while a shared mailbox opened through it has mail here: remove the shared mailbox first"
+msgstr "Exchange სერვერის ანგარიშის სერვერისა და მომხმარებლის სახელის შეცვლა შეუძლებელია, სანამ მისით გახსნილი საერთო საფოსტო ყუთის ფოსტა აქაა: ჯერ საერთო საფოსტო ყუთი წაშალეთ"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+msgid "an online archive can't open a shared mailbox: name the account it belongs to"
+msgstr ""
+
+#. what a command says, why a command can't run
+#: crates/engine/src/cmd/shared.rs
+#, fuzzy
+msgid "shared mailboxes open under an account kept in step through Microsoft Graph, or an Exchange server account"
+msgstr "საერთო საფოსტო ყუთები იხსნება Microsoft Graph-ით სინქრონიზებული ანგარიშით ან Exchange სერვერის ანგარიშით"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph or is an Exchange server account"
+msgstr "საერთო საფოსტო ყუთები იხსნება ანგარიშით, რომელიც Microsoft Graph-ით სინქრონიზდება ან Exchange სერვერის ანგარიშია"
+
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+msgid "{name} can't be both an online archive and a shared mailbox"
+msgstr ""

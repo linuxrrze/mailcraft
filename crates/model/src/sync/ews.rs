@@ -186,6 +186,12 @@ pub struct EwsMailRequest {
     /// ([`EwsMailResult::archive`]). Only in a run of the mailbox itself.
     #[serde(skip_serializing_if = "is_false")]
     pub probe_archive: bool,
+    /// The address of the shared mailbox the run is for (#482), when the account is one opened
+    /// through an Exchange server account: the server is the owner's, the sign-in is the owner's, and
+    /// every distinguished folder the run names (the Inbox, the top of the mail, Drafts, Sent Items)
+    /// is this mailbox's. Empty for an account's own mailbox. Never logged.
+    #[serde(skip_serializing_if = "String::is_empty")]
+    pub mailbox: String,
 }
 
 /// What asking the server about an online archive found (#1818).

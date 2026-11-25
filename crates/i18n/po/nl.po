@@ -24710,17 +24710,13 @@ msgstr "belang instellen op {level}"
 msgid "shared mailbox"
 msgstr "gedeeld postvak"
 
-#. what a command says, why a command can't run
-#: crates/engine/src/cmd/shared.rs
 #, fuzzy
-msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
-msgstr "gedeelde postvakken worden geopend onder een via Microsoft Graph bijgehouden account"
+#~ msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
+#~ msgstr "gedeelde postvakken worden geopend onder een via Microsoft Graph bijgehouden account"
 
-#. what a command says
-#: crates/model/src/mailbox.rs
 #, fuzzy
-msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
-msgstr "gedeelde postvakken worden geopend onder een account dat via Microsoft Graph wordt bijgehouden"
+#~ msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
+#~ msgstr "gedeelde postvakken worden geopend onder een account dat via Microsoft Graph wordt bijgehouden"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -27392,7 +27388,7 @@ msgid "{name} is a command; a test belongs here."
 msgstr "{name} is een opdracht; hier hoort een test."
 
 #. what a command says
-#: crates/engine/src/cmd/graph_mail.rs
+#: crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/graph_mail.rs
 #, fuzzy
 msgid "{name} is a shared mailbox whose account is gone: remove it and add it again"
 msgstr "{name} is een gedeeld postvak waarvan het account is verdwenen: verwijder het en voeg het opnieuw toe"
@@ -29699,3 +29695,61 @@ msgstr "de regelbouwer kan hem niet als Sieve terugschrijven"
 #, fuzzy
 msgid "the rule builder would write it as other Sieve (for example an address test where it has a header test), which could change what it does"
 msgstr "de regelbouwer zou hem als andere Sieve schrijven (bijvoorbeeld een address-test waar hij een header-test heeft), wat kan veranderen wat hij doet"
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+#, fuzzy
+msgid "Checking the address with the server…"
+msgstr "Bezig het adres bij de server te controleren…"
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+#, fuzzy
+msgid "Opened with {owner}'s server and password. It needs Full Access to the mailbox, which your organisation's administrator gives. What you change in it goes to it."
+msgstr "Geopend met de server en het wachtwoord van {owner}. Er is Volledige toegang tot het postvak nodig, die de beheerder van uw organisatie verleent. Wat u erin wijzigt, gaat ernaartoe."
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+#, fuzzy
+msgid "The shared mailbox couldn't be read."
+msgstr "Het gedeelde postvak kon niet worden gelezen."
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "a shared mailbox is reached through the server settings of the account it is opened through: change that account's"
+msgstr "een gedeeld postvak wordt bereikt via de serverinstellingen van het account waarmee het is geopend: wijzig die van dat account"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "an Exchange server account needs a server address that can be used to open a shared mailbox"
+msgstr "een Exchange-serveraccount heeft een serveradres nodig dat kan worden gebruikt om een gedeeld postvak te openen"
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "an Exchange server account's server and user name can't be changed while a shared mailbox opened through it has mail here: remove the shared mailbox first"
+msgstr "de server en de gebruikersnaam van een Exchange-serveraccount kunnen niet worden gewijzigd zolang de e-mail van een gedeeld postvak dat ermee is geopend hier is: verwijder eerst het gedeelde postvak"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+msgid "an online archive can't open a shared mailbox: name the account it belongs to"
+msgstr ""
+
+#. what a command says, why a command can't run
+#: crates/engine/src/cmd/shared.rs
+#, fuzzy
+msgid "shared mailboxes open under an account kept in step through Microsoft Graph, or an Exchange server account"
+msgstr "gedeelde postvakken worden geopend onder een via Microsoft Graph bijgehouden account of onder een Exchange-serveraccount"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph or is an Exchange server account"
+msgstr "gedeelde postvakken worden geopend onder een account dat via Microsoft Graph wordt bijgehouden of een Exchange-serveraccount is"
+
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+msgid "{name} can't be both an online archive and a shared mailbox"
+msgstr ""
