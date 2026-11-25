@@ -1239,7 +1239,7 @@ msgid "Add Reminder…"
 msgstr "添加提醒…"
 
 #. interface
-#: crates/ui-egui/src/forms.rs
+#: crates/ui-egui/src/forms/rules_editors.rs
 #, fuzzy
 msgid "Add Rule"
 msgstr "添加规则"
@@ -3524,7 +3524,7 @@ msgid "Change email address"
 msgstr "更改电子邮件地址"
 
 #. interface
-#: crates/ui-egui/src/forms.rs
+#: crates/ui-egui/src/forms/rules_editors.rs
 #, fuzzy
 msgid "Change rule"
 msgstr "更改规则"
@@ -11053,6 +11053,12 @@ msgstr "新建邮箱"
 msgid "New Meeting"
 msgstr "新建会议"
 
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "New Rule…"
+msgstr "新规则…"
+
 #. command label
 #: crates/engine/src/cmd/rules_sieve.rs
 #, fuzzy
@@ -11132,7 +11138,7 @@ msgid "New messages"
 msgstr "新邮件"
 
 #. interface
-#: crates/ui-egui/src/forms.rs
+#: crates/ui-egui/src/forms/rules_editors.rs
 #, fuzzy
 msgid "New rule"
 msgstr "新规则"
@@ -14975,7 +14981,7 @@ msgid "Saturday"
 msgstr "星期六"
 
 #. android, interface
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/SettingsPages.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt crates/ui-egui/src/account_setup.rs crates/ui-egui/src/dialogs.rs crates/ui-egui/src/forms.rs crates/ui-egui/src/sieve_editor.rs crates/ui-egui/src/signatures.rs
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/SettingsPages.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt crates/ui-egui/src/account_setup.rs crates/ui-egui/src/dialogs.rs crates/ui-egui/src/forms.rs crates/ui-egui/src/forms/rules_editors.rs crates/ui-egui/src/sieve_editor.rs crates/ui-egui/src/signatures.rs
 #, fuzzy
 msgid "Save"
 msgstr "保存"
