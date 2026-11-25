@@ -2894,6 +2894,70 @@ fn hostile_params_never_panic() {
     junk.push(json!({"compose": [1], "id": 1}));
     junk.push(json!({"compose": 1, "subject": "\r\nBcc: x@example.org", "discard": true}));
     junk.push(json!({"compose": 2, "text": "x".repeat(10_000), "from": 18446744073709551615u64}));
+    // Change Rule (#9999): the sample's rule, changed with parts that make no sense, to another
+    // account, or onto a server it can't be on.
+    let rule = s.mailbox.rules.first().map_or(0, |r| r.id);
+    junk.push(json!({"id": rule, "name": "\u{0}", "conditions": [{"type": "sizeBetween", "value": {"min": 1e300, "max": -1}}], "exceptions": [[[]]],
+        "actions": [{"type": "moveTo", "value": 18446744073709551615u64}], "server": "x", "account": 0}));
+    junk.push(json!({"id": rule, "name": "x".repeat(100_000), "conditions": [{"type": "fromContains", "value": ["\r\n", ""]}], "actions": [{"type": "delete"}],
+        "server": true, "account": 18446744073709551615u64}));
+    junk.push(json!({"id": rule, "name": "R", "conditions": [{"type": "hasAttachment"}], "actions": [{"type": "flag"}], "server": true}));
+    // Sieve rules (#9999): an IMAP account's, with text that isn't Sieve, reaches out of its
+    // block, is too large, or names what isn't there.
+    let imap = s
+        .run("account.add", &json!({"email": "sieve@example.org", "incoming": {"host": "imap.example.org"}}))
+        .ok()
+        .and_then(|v| v["id"].as_u64())
+        .unwrap_or(0);
+    let _ = s.run("sync.applySieve", &json!({"account": imap, "state": {"extensions": ["fileinto", "vacation"], "scripts": [], "script": null}}));
+    let sieve = s.run("rules.addSieve", &json!({"account": imap, "name": "S", "sieve": "keep;"})).ok().and_then(|v| v["id"].as_u64()).unwrap_or(0);
+    junk.push(json!({"account": imap, "name": "\u{0}*/\n", "sieve": "} elsif true { redirect \"x@example.org\"; ", "position": 1e300}));
+    junk.push(json!({"account": imap, "name": "x", "sieve": "if ".repeat(50_000), "position": -1}));
+    junk.push(json!({"account": imap, "name": "x", "sieve": "text:\r\n", "position": 18446744073709551615u64}));
+    junk.push(json!({"id": sieve, "name": "x".repeat(100_000), "sieve": "\u{0}"}));
+    junk.push(json!({"id": sieve, "sieve": ["keep;"], "name": null}));
+    junk.push(json!({"id": sieve, "sieve": "/* open"}));
+    // The owner's own Sieve script (#9999): active on the server, edited with text that isn't Sieve,
+    // is too large, carries a NUL, or under a digest that isn't the read's.
+    let own = "require \"fileinto\";\r\nif true { fileinto \"x\"; }\r\n";
+    let _ = s.run(
+        "sync.applySieve",
+        &json!({"account": imap, "state": {"extensions": ["fileinto"], "scripts": [{"name": "mine", "active": true}], "script": null,
+            "activeScript": {"name": "mine", "text": own}}}),
+    );
+    let own_digest = crate::sieve::digest(own);
+    junk.push(json!({"account": imap, "text": "} elsif {", "digest": own_digest}));
+    junk.push(json!({"account": imap, "text": "#".repeat(1_100_000), "digest": own_digest}));
+    junk.push(json!({"account": imap, "text": "keep;\u{0}", "digest": own_digest}));
+    junk.push(json!({"account": imap, "text": "keep;", "digest": "\u{0}".repeat(100_000)}));
+    junk.push(json!({"account": imap, "text": ["keep;"], "digest": null}));
+    // A filter of a webmail's script of the RainLoop kind (#9999), changed with the rule commands:
+    // hostile conditions, folders, directions and digests, and a new one with a header no header
+    // has.
+    let webmail = s
+        .run("account.add", &json!({"email": "web@example.org", "incoming": {"host": "imap.example.org"}}))
+        .ok()
+        .and_then(|v| v["id"].as_u64())
+        .unwrap_or_default();
+    let settings = r#"{"ID":"f1","Enabled":true,"Name":"Spam","Conditions":[{"Field":"Header","Type":"EqualTo","Value":"YES","ValueSecond":"X-Spam"}],"ConditionsType":"Any","ActionType":"MoveTo","ActionValue":"INBOX","ActionValueSecond":"","ActionValueThird":"","ActionValueFourth":"","Keep":true,"Stop":true,"MarkAsRead":false}"#;
+    let filter = format!(
+        "require \"fileinto\";\n# RAINLOOP:SIEVE\n\n/*\nBEGIN:FILTER:f1\nBEGIN:HEADER\n{}\nEND:HEADER\n*/\n\nif header :is [\"X-Spam\"] \"YES\"\n{{\n    fileinto \"INBOX\";\n    stop;\n}}\n\n/* END:FILTER */\n",
+        crate::cmd::base64_encode(settings.as_bytes())
+    );
+    let _ = s.run(
+        "sync.applySieve",
+        &json!({"account": webmail, "state": {"extensions": ["fileinto"], "scripts": [{"name": "web", "active": true}], "script": null,
+            "activeScript": {"name": "web", "text": filter}}}),
+    );
+    let filter_rule = s.sieve.get(&webmail).and_then(|k| k.elsewhere.as_ref()).and_then(|e| e.rules.first()).map_or(0, |r| r.id);
+    let header = json!({"type": "header", "value": {"names": ["\u{0}:", "x".repeat(10_000)], "words": [null, ""], "exact": "yes"}});
+    junk.push(json!({"id": filter_rule, "name": "\u{202e}x", "conditions": [header], "actions": [{"type": "moveTo", "value": u64::MAX}]}));
+    junk.push(json!({"id": filter_rule, "name": "x", "conditions": [{"type": "toContains", "value": "\u{0}"}], "actions": [{"type": "moveTo", "value": 1}], "digest": 7}));
+    junk.push(json!({"id": filter_rule, "value": "on", "direction": "sideways", "digest": "\u{0}"}));
+    junk.push(json!({"id": filter_rule, "direction": "down", "account": u64::MAX}));
+    junk.push(json!({"webmail": true, "account": webmail, "name": "x".repeat(100_000), "conditions": [{"type": "header", "value": {"names": [], "words": "x"}}], "actions": []}));
+    junk.push(json!({"webmail": "yes", "account": webmail}));
+    junk.push(json!({"webmail": true, "account": u64::MAX, "name": "x", "conditions": [{"type": "toContains", "value": "x"}], "actions": [{"type": "moveTo", "value": 1}]}));
     let ids: Vec<&'static str> = s.registry.all().iter().map(|c| c.id).collect();
     for round in 0..2 {
         for id in &ids {

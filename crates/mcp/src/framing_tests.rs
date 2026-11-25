@@ -901,6 +901,10 @@ const WRITTEN_PARAMS: &[&str] = &[
     // A Sieve script's text, and the extensions its server names (`sync.applySieve`, host only, #9999).
     "script",
     "extensions",
+    // A Sieve rule's text, the agent's own (`rules.addSieve`, `rules.editSieve`, #9999).
+    "sieve",
+    // The words a header condition of a webmail's filter looks for (#9999).
+    "words",
     "query",
     "text",
     "html",

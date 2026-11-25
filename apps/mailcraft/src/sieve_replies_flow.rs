@@ -242,6 +242,33 @@ fn a_rule_kept_on_the_server_goes_into_mailcrafts_script_after_the_replies() {
 }
 
 #[test]
+fn a_rule_changed_is_written_again_in_its_place_and_one_sieve_cant_say_leaves_the_script() {
+    let fake = Fake::sieve(world());
+    let (mut app, account) = window(&fake);
+    read(&mut app, account);
+    let rule = lists_rule(&mut app, account);
+    let lists = app.session.mailbox.rules.iter().find(|r| r.id == rule).and_then(|r| r.actions.first().cloned());
+    let Some(mailcraft_model::Action::MoveTo(lists)) = lists else { panic!("the rule moves mail") };
+    app.poll_sieve();
+    // Change Rule: other words, the same folder; the script on the server has them under its id.
+    let changed = json!({"id": rule, "name": "Digests", "account": account, "conditions": [{"type": "subjectContains", "value": "digest"}],
+        "actions": [{"type": "moveTo", "value": lists}]});
+    assert_eq!(app.execute("rules.edit", changed).unwrap()["keep"], "server");
+    app.poll_sieve();
+    let text = fake.world().script(SCRIPT_NAME).unwrap().to_string();
+    assert!(text.contains(&format!("# rule {rule}\r\nif header :contains \"subject\" [\"digest\"]")), "{text}");
+    assert!(!text.contains("\"list\""), "{text}");
+    assert!(app.session.mailbox.rules.iter().find(|r| r.id == rule).unwrap().on_server());
+    // A part Sieve can't say: it runs here, and leaves the script.
+    let here = json!({"id": rule, "name": "Digests", "conditions": [{"type": "hasAttachment"}], "actions": [{"type": "moveTo", "value": lists}]});
+    assert_eq!(app.execute("rules.edit", here).unwrap()["keep"], "here");
+    app.poll_sieve();
+    let after = fake.world().script(SCRIPT_NAME).unwrap().to_string();
+    assert!(!after.contains("# rule"), "{after}");
+    assert!(!app.session.mailbox.rules.iter().find(|r| r.id == rule).unwrap().on_server());
+}
+
+#[test]
 fn rules_run_here_while_the_owners_own_script_runs_on_the_server() {
     let fake = Fake::sieve(SieveWorld { scripts: vec![("roundcube".into(), "keep;".into())], active: Some("roundcube".into()), ..world() });
     let (mut app, account) = window(&fake);
@@ -270,4 +297,222 @@ fn the_owners_own_scripts_rules_are_shown_and_never_written() {
     let world = fake.world();
     assert_eq!(world.script("roundcube"), Some(theirs));
     assert!(!world.heard("PUTSCRIPT") && !world.heard("SETACTIVE"));
+}
+
+#[test]
+fn a_sieve_rule_goes_into_mailcrafts_script_with_its_require_and_a_refusal_leaves_the_server_as_it_was() {
+    let fake = Fake::sieve(SieveWorld { refuse_scripts_with: Some("refuse-me".into()), ..world() });
+    let (mut app, account) = window(&fake);
+    read(&mut app, account);
+    let made = app
+        .execute("rules.addSieve", json!({"account": account, "name": "Too big", "sieve": "if size :over 9M {\n  reject \"too big\";\n} # end"}))
+        .unwrap();
+    let rule = made["id"].as_u64().unwrap();
+    app.poll_sieve();
+    let text = fake.world().script(SCRIPT_NAME).unwrap().to_string();
+    assert!(text.contains("require [\"reject\"];\r\n"), "{text}");
+    assert!(
+        text.ends_with(&format!("# rule {rule}\r\n# Sieve rule: Too big\r\nif size :over 9M {{\r\n  reject \"too big\";\r\n}} # end\r\n")),
+        "{text}"
+    );
+    assert_eq!(fake.world().active.as_deref(), Some(SCRIPT_NAME));
+    assert!(app.session.mailbox.rules.iter().find(|r| r.id == rule).unwrap().on_server());
+    // The server refuses the next script: what it has stays, and the window says why.
+    app.execute("rules.editSieve", json!({"id": rule, "sieve": "if header :contains \"subject\" \"refuse-me\" { discard; }"})).unwrap();
+    app.poll_sieve();
+    assert_eq!(fake.world().script(SCRIPT_NAME), Some(text.as_str()));
+    assert!(app.sieve_line(account).contains("unknown command"), "{}", app.sieve_line(account));
+}
+
+#[test]
+fn the_editors_check_reaches_the_server_and_brings_its_words_back_unwritten() {
+    use mailcraft_ui_egui::sieve_replies::ServerCheck;
+    let fake = Fake::sieve(SieveWorld {
+        refuse_scripts_with: Some("bogus".into()),
+        refusal: "line 4: error: unknown command 'bogus'.\r\nerror: validation failed.".into(),
+        ..world()
+    });
+    let (mut app, account) = window(&fake);
+    let ticket = app.sieve_check_start(account, "require \"fileinto\";\r\nkeep;\r\n\r\nbogus;\r\n".into()).unwrap();
+    let answer = app.sieve_check_answer(ticket).expect("the host answered at once");
+    assert_eq!(answer.checked, Some(ServerCheck::Errors("line 4: error: unknown command 'bogus'.\nerror: validation failed.".into())));
+    let ticket = app.sieve_check_start(account, "keep;\r\n".into()).unwrap();
+    assert_eq!(app.sieve_check_answer(ticket).unwrap().checked, Some(ServerCheck::Fine));
+    // Asked once each, and nothing kept on the server.
+    let world = fake.world();
+    assert_eq!(world.log.iter().filter(|l| l.starts_with("CHECKSCRIPT")).count(), 2);
+    assert!(world.scripts.is_empty() && !world.heard("PUTSCRIPT"));
+}
+
+/// The owner's own script, as a webmail wrote it: CRLF, comments, an extension MailCraft doesn't
+/// know (which the fake server offers).
+const OWN: &str = "# rule:[Lists]\r\nrequire [\"fileinto\", \"x-unknown\"];\r\n/* kept as is */\r\nif header :contains \"subject\" \"[list]\" {\r\n  fileinto \"INBOX/Lists\";\r\n}\r\n";
+
+fn own_world() -> SieveWorld {
+    SieveWorld {
+        extensions: "fileinto vacation x-unknown".into(),
+        scripts: vec![("roundcube".into(), OWN.into())],
+        active: Some("roundcube".into()),
+        ..world()
+    }
+}
+
+#[test]
+fn the_owners_own_script_is_written_back_as_typed_and_stays_active() {
+    let fake = Fake::sieve(own_world());
+    let (mut app, account) = window(&fake);
+    read(&mut app, account);
+    let got = app.execute("sieve.ownScript", json!({"account": account})).unwrap();
+    assert_eq!(got["script"]["text"], OWN);
+    let edited = OWN.replace("INBOX/Lists", "INBOX/Old lists");
+    app.execute("sieve.putOwnScript", json!({"account": account, "text": edited, "digest": got["script"]["digest"]})).unwrap();
+    app.poll_sieve();
+    {
+        let world = fake.world();
+        assert_eq!(world.script("roundcube").map(str::as_bytes), Some(edited.as_bytes()));
+        assert_eq!(world.active.as_deref(), Some("roundcube"));
+        assert_eq!(world.script(SCRIPT_NAME), None);
+        assert!(!world.heard("SETACTIVE") && !world.heard("DELETESCRIPT") && !world.heard("RENAMESCRIPT"));
+    }
+    assert_eq!(app.status_msg.as_ref().map(|(s, _)| s.as_str()), Some("Your Sieve script is saved on the server"));
+    // Read again with the write: the rules shown follow the new text; MailCraft's digest is untouched.
+    assert_eq!(app.execute("sieve.ownScript", json!({"account": account})).unwrap()["script"]["text"], edited.as_str());
+    assert_eq!(app.session.mailbox.account(account).unwrap().sieve_written, "");
+}
+
+#[test]
+fn the_owners_own_script_changed_on_the_server_meanwhile_is_left_as_it_is() {
+    let fake = Fake::sieve(own_world());
+    let (mut app, account) = window(&fake);
+    read(&mut app, account);
+    let digest_read = digest(OWN);
+    // Changed in webmail after MailCraft read it.
+    let webmail = format!("{OWN}# rule:[Later]\r\nif size :over 1M {{ discard; }}\r\n");
+    {
+        let mut world = fake.world();
+        world.scripts = vec![("roundcube".into(), webmail.clone())];
+    }
+    app.execute("sieve.putOwnScript", json!({"account": account, "text": "keep;\r\n", "digest": digest_read})).unwrap();
+    app.poll_sieve();
+    assert_eq!(fake.world().script("roundcube"), Some(webmail.as_str()));
+    let said = app.status_msg.as_ref().map(|(s, _)| s.clone()).unwrap_or_default();
+    assert!(said.contains("changed on the server since you opened it"), "{said}");
+    // What the server has now is what is known, and the stale digest is refused at once.
+    assert_eq!(app.execute("sieve.ownScript", json!({"account": account})).unwrap()["script"]["text"], webmail.as_str());
+    assert!(app.execute("sieve.putOwnScript", json!({"account": account, "text": "keep;\r\n", "digest": digest_read})).is_err());
+    assert!(!fake.world().heard("PUTSCRIPT"));
+}
+
+/// A filter's settings in a script of a webmail of the RainLoop kind: its comment, base64 in lines
+/// of 74, as that webmail writes it (synthetic).
+fn filter_header(id: &str, json: &str) -> String {
+    let b64 = mailcraft_engine::cmd::base64_encode(json.as_bytes());
+    let lines: Vec<String> = b64.as_bytes().chunks(74).map(|c| String::from_utf8(c.to_vec()).unwrap()).collect();
+    format!("/*\nBEGIN:FILTER:{id}\nBEGIN:HEADER\n{}\nEND:HEADER\n*/", lines.join("\n"))
+}
+
+const SPAM_FILTER: &str = r#"{"ID":"0000017000590660000","Enabled":true,"Name":"Spam","Conditions":[{"Field":"Header","Type":"EqualTo","Value":"YES","ValueSecond":"X-Spam-Flag"}],"ConditionsType":"Any","ActionType":"MoveTo","ActionValue":"Junk","ActionValueSecond":"","ActionValueThird":"","ActionValueFourth":"","Keep":true,"Stop":true,"MarkAsRead":false}"#;
+const LIST_FILTER: &str = r#"{"ID":"6orktqi8w2n5v0c3b7x1z9q4m8k2j6hd","Enabled":true,"Name":"ML-list","Conditions":[{"Field":"Recipient","Type":"Contains","Value":"list@lists.example.org","ValueSecond":""}],"ConditionsType":"Any","ActionType":"MoveTo","ActionValue":"Mailing-Lists/list","ActionValueSecond":"","ActionValueThird":"","ActionValueFourth":"","Keep":true,"Stop":true,"MarkAsRead":false}"#;
+const WEBMAIL_HEAD: &str =
+    "require [\"fileinto\",\"body\"];\n\n# This is SnappyMail sieve script.\n# Please don't change anything here.\n# RAINLOOP:SIEVE\n\n";
+
+fn spam_filter() -> String {
+    format!(
+        "{}\n\nif header :is [\"X-Spam-Flag\"] \"YES\"\n{{\n    fileinto \"Junk\";\n    stop;\n}}\n\n/* END:FILTER */",
+        filter_header("0000017000590660000", SPAM_FILTER)
+    )
+}
+
+fn list_filter() -> String {
+    let sieve = "if header :contains [\"To\", \"CC\"] \"list@lists.example.org\"\n{\n    fileinto \"Mailing-Lists/list\";\n    stop;\n}";
+    format!("{}\n\n{sieve}\n\n/* END:FILTER */", filter_header("6orktqi8w2n5v0c3b7x1z9q4m8k2j6hd", LIST_FILTER))
+}
+
+fn webmail_script() -> String {
+    format!("{WEBMAIL_HEAD}{}\n\n{}\n", spam_filter(), list_filter())
+}
+
+/// A window whose account has the folders Junk and Mailing-Lists/list, and whose server runs the
+/// webmail's script `snappymail`, read: the window, the account, Junk, and the filters' rule ids.
+fn webmail_window(fake: &FakeSieve) -> (MailApp, Id, Id, Vec<Id>) {
+    let (mut app, account) = window(fake);
+    let inbox = app.session.mailbox.folder_of_kind(account, mailcraft_model::FolderKind::Inbox).unwrap();
+    app.session.mailbox.folder_mut(inbox).unwrap().remote = "INBOX".into();
+    let junk = app.execute("folder.new", json!({"name": "Junk", "parent": inbox})).unwrap()["id"].as_u64().unwrap();
+    app.session.mailbox.folder_mut(junk).unwrap().remote = "Junk".into();
+    let list = app.execute("folder.new", json!({"name": "list", "parent": inbox})).unwrap()["id"].as_u64().unwrap();
+    app.session.mailbox.folder_mut(list).unwrap().remote = "Mailing-Lists/list".into();
+    read(&mut app, account);
+    let rules: Vec<Id> = app.session.sieve[&account].elsewhere.as_ref().unwrap().rules.iter().map(|r| r.id).collect();
+    (app, account, junk, rules)
+}
+
+fn webmail_world() -> SieveWorld {
+    SieveWorld {
+        extensions: "fileinto body vacation".into(),
+        scripts: vec![("snappymail".into(), webmail_script())],
+        active: Some("snappymail".into()),
+        ..world()
+    }
+}
+
+#[test]
+fn a_webmails_filter_is_changed_in_its_own_shape_and_the_rest_of_the_script_stays() {
+    let fake = Fake::sieve(webmail_world());
+    let (mut app, account, junk, rules) = webmail_window(&fake);
+    assert_eq!(rules.len(), 2);
+    let change = json!({"id": rules[1], "name": "Lists", "conditions": [{"type": "toContains", "value": "list@lists.example.org"}],
+        "actions": [{"type": "moveTo", "value": junk}], "stop": true});
+    app.execute("rules.edit", change).unwrap();
+    app.poll_sieve();
+    let json = LIST_FILTER.replace("\"ML-list\"", "\"Lists\"").replace("\"Mailing-Lists/list\"", "\"Junk\"");
+    let changed = list_filter()
+        .replace(&filter_header("6orktqi8w2n5v0c3b7x1z9q4m8k2j6hd", LIST_FILTER), &filter_header("6orktqi8w2n5v0c3b7x1z9q4m8k2j6hd", &json))
+        .replace("fileinto \"Mailing-Lists/list\"", "fileinto \"Junk\"");
+    let expected = format!("{WEBMAIL_HEAD}{}\n\n{changed}\n", spam_filter());
+    {
+        let world = fake.world();
+        assert_eq!(world.script("snappymail").map(str::as_bytes), Some(expected.as_bytes()));
+        assert_eq!(world.active.as_deref(), Some("snappymail"));
+        assert_eq!(world.script(SCRIPT_NAME), None);
+        assert!(!world.heard("SETACTIVE") && !world.heard("DELETESCRIPT") && !world.heard("RENAMESCRIPT"));
+    }
+    assert_eq!(app.status_msg.as_ref().map(|(s, _)| s.as_str()), Some("Your Sieve script is saved on the server"));
+    // Read again with the write: the rule shown follows; MailCraft's own digest is untouched.
+    let shown = app.session.sieve[&account].elsewhere.clone().unwrap();
+    assert_eq!(shown.text, expected);
+    assert_eq!(shown.rules[1].name, "Lists");
+    assert_eq!(app.session.mailbox.account(account).unwrap().sieve_written, "");
+
+    // Switched off, then deleted: each written the same way.
+    app.execute("rules.enable", json!({"id": shown.rules[0].id, "value": false})).unwrap();
+    app.poll_sieve();
+    let off = fake.world().script("snappymail").map(str::to_string).unwrap_or_default();
+    // Its settings say so, its Sieve is left out, its comments stay (not seen yet: `off_block`).
+    let spam_off = filter_header("0000017000590660000", &SPAM_FILTER.replace("\"Enabled\":true", "\"Enabled\":false"));
+    assert_eq!(off, format!("{WEBMAIL_HEAD}{spam_off}\n\n/* END:FILTER */\n\n{changed}\n"));
+    let rules: Vec<Id> = app.session.sieve[&account].elsewhere.as_ref().unwrap().rules.iter().map(|r| r.id).collect();
+    app.execute("rules.remove", json!({"id": rules[0]})).unwrap();
+    app.poll_sieve();
+    assert_eq!(fake.world().script("snappymail"), Some(format!("{WEBMAIL_HEAD}{changed}\n").as_str()));
+}
+
+#[test]
+fn a_webmails_filter_changed_on_the_server_meanwhile_is_left_as_it_is() {
+    let fake = Fake::sieve(webmail_world());
+    let (mut app, _, junk, rules) = webmail_window(&fake);
+    // Changed in webmail after MailCraft read it.
+    let webmail = webmail_script().replace("list@lists.example.org", "other@lists.example.org");
+    {
+        let mut world = fake.world();
+        world.scripts = vec![("snappymail".into(), webmail.clone())];
+    }
+    let change = json!({"id": rules[0], "name": "Junk mail", "conditions": [{"type": "toContains", "value": "x@example.org"}],
+        "actions": [{"type": "moveTo", "value": junk}]});
+    app.execute("rules.edit", change).unwrap();
+    app.poll_sieve();
+    assert_eq!(fake.world().script("snappymail"), Some(webmail.as_str()));
+    let said = app.status_msg.as_ref().map(|(s, _)| s.clone()).unwrap_or_default();
+    assert!(said.contains("changed on the server since you opened it"), "{said}");
+    assert!(!fake.world().heard("PUTSCRIPT"));
 }

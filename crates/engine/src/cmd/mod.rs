@@ -164,14 +164,22 @@ mod reply_to_first_tests;
 mod resend_reply_to_tests;
 pub mod rules;
 #[cfg(test)]
+mod rules_edit_tests;
+#[cfg(test)]
 mod rules_holds_tests;
 #[cfg(test)]
 mod rules_parts_tests;
 pub mod rules_remote;
 #[cfg(test)]
 mod rules_remote_tests;
+pub mod rules_sieve;
+#[cfg(test)]
+mod rules_sieve_tests;
 #[cfg(test)]
 mod rules_waiting_tests;
+pub mod rules_webmail;
+#[cfg(test)]
+mod rules_webmail_tests;
 #[cfg(test)]
 mod search_scope_tests;
 pub mod search_server;
@@ -186,6 +194,9 @@ pub mod shared;
 pub mod sieve_elsewhere;
 #[cfg(test)]
 mod sieve_elsewhere_tests;
+pub mod sieve_own;
+#[cfg(test)]
+mod sieve_own_tests;
 pub mod sieve_replies;
 #[cfg(test)]
 mod sieve_replies_tests;
@@ -265,6 +276,7 @@ pub fn registry() -> Registry {
     v.extend(notes::specs());
     v.extend(rules::specs());
     v.extend(rules_remote::specs());
+    v.extend(rules_sieve::specs());
     v.extend(junk::specs());
     v.extend(unsubscribe::specs());
     v.extend(keys::specs());
@@ -273,6 +285,7 @@ pub fn registry() -> Registry {
     v.extend(account::specs());
     v.extend(auto_replies::specs());
     v.extend(sieve_replies::specs());
+    v.extend(sieve_own::specs());
     v.extend(offline::specs());
     v.extend(device_limits::specs());
     v.extend(send_receive::specs());

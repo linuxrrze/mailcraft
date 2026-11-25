@@ -32,7 +32,7 @@ use std::time::Duration;
 use mailcraft_i18n::{Arg, Text, said};
 use mailcraft_model::{Account, Security, Server};
 use mailcraft_proto::ProtoError;
-use mailcraft_proto::managesieve::{ManageSieve, ScriptEntry};
+use mailcraft_proto::managesieve::{ManageSieve, ScriptCheck, ScriptEntry};
 
 use crate::transport::{self, Patience, Service, Stream};
 use crate::{NetError, not_signed_in};
@@ -381,6 +381,166 @@ pub(crate) fn write_with(
         Ok(written)
     };
     run().map_err(|e: SieveError| e.without(secret))
+}
+
+/// The owner's own script to write back ([`write_own`]).
+#[derive(Clone, Copy)]
+pub struct OwnChange<'a> {
+    /// Its name on the server.
+    pub name: &'a str,
+    /// Its new text, written exactly as it is.
+    pub text: &'a str,
+    /// The SHA-256 digest ([`digest`]) of its text as it was read when the owner began to change it.
+    pub read: &'a str,
+}
+
+/// What [`write_own`] did.
+#[derive(Clone, PartialEq, Eq)]
+pub enum OwnWritten {
+    /// Written (or already so), and the active script as it was. `warnings`: what the server had
+    /// to say of it, if anything.
+    Done { warnings: Option<String> },
+    /// The server's script isn't the one read any more: changed (`now`), removed (`None`), or no
+    /// longer the active one. Nothing was written.
+    Changed { now: Option<String> },
+    /// The server says it has no room for it (HAVESPACE: over the owner's quota or its largest
+    /// script). Nothing was written.
+    NoSpace,
+    /// Larger than MailCraft sends ([`mailcraft_proto::managesieve::MAX_SCRIPT`]). Nothing was written.
+    TooLarge,
+}
+
+/// The text of scripts stays out of debug output.
+impl std::fmt::Debug for OwnWritten {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            OwnWritten::Done { warnings } => f.debug_struct("Done").field("warnings", &warnings.is_some()).finish(),
+            OwnWritten::Changed { now } => f.debug_struct("Changed").field("now", &now.as_ref().map(String::len)).finish(),
+            OwnWritten::NoSpace => f.write_str("NoSpace"),
+            OwnWritten::TooLarge => f.write_str("TooLarge"),
+        }
+    }
+}
+
+/// Write the owner's own active script back as `change` gives it (PUTSCRIPT under its own name),
+/// only while the server's is still the one read (its digest is `change.read`) and still the
+/// active one, and while the server has room for it (HAVESPACE). Nothing else is done: no other
+/// script is made active, and none is renamed, switched off or deleted. (ManageSieve has no
+/// compare-and-swap of its own: the script is read again just before it is written.)
+pub fn write_own(account: &Account, server: &Server, secret: &str, change: &OwnChange<'_>) -> Result<OwnWritten, SieveError> {
+    write_own_with(account, server, secret, change, &Patience::default(), None)
+}
+
+/// [`write_own`], waiting as `patience` says, and giving up once `cancel` is set.
+pub(crate) fn write_own_with(
+    account: &Account,
+    server: &Server,
+    secret: &str,
+    change: &OwnChange<'_>,
+    patience: &Patience,
+    cancel: Option<&AtomicBool>,
+) -> Result<OwnWritten, SieveError> {
+    if change.text.len() > mailcraft_proto::managesieve::MAX_SCRIPT {
+        return Ok(OwnWritten::TooLarge);
+    }
+    let run = || {
+        let mut sieve = open(account, server, secret, patience, cancel)?;
+        let scripts = sieve.list_scripts()?;
+        let active = scripts.iter().any(|s| s.active && s.name == change.name);
+        let now = if scripts.iter().any(|s| s.name == change.name) { sieve.get_script(change.name)? } else { None };
+        let same = now.as_deref().is_some_and(|text| digest(text).eq_ignore_ascii_case(change.read));
+        if !active || !same {
+            let _ = sieve.logout();
+            return Ok(OwnWritten::Changed { now });
+        }
+        if now.as_deref() == Some(change.text) {
+            let _ = sieve.logout();
+            return Ok(OwnWritten::Done { warnings: None });
+        }
+        match sieve.have_space(change.name, change.text.len()) {
+            Ok(true) => {}
+            Ok(false) => {
+                let _ = sieve.logout();
+                return Ok(OwnWritten::NoSpace);
+            }
+            // (A server that doesn't know HAVESPACE says so: PUTSCRIPT then says whether there is
+            // room.)
+            Err(ProtoError::Rejected(_)) => {}
+            Err(e) => return Err(e.into()),
+        }
+        // (A script written in the place of the active one stays the active one, RFC 5804 §2.6.)
+        let warnings = sieve.put_script(change.name, change.text)?;
+        let _ = sieve.logout();
+        Ok(OwnWritten::Done { warnings })
+    };
+    run().map_err(|e: SieveError| e.without(secret))
+}
+
+/// What the server said of a script it was asked to check ([`check`]).
+#[derive(Clone, PartialEq, Eq)]
+pub enum Checked {
+    /// Nothing wrong.
+    Fine,
+    /// Nothing wrong, but the server has something to say: its words.
+    Warnings(String),
+    /// The server refused it: its words, line breaks kept, capped
+    /// ([`mailcraft_proto::managesieve::MAX_CHECK_TEXT`]), without control characters or secrets.
+    Errors(String),
+    /// The server is from before RFC 5804 and has no CHECKSCRIPT: it checks a script only when it
+    /// is written.
+    NotOffered,
+}
+
+/// What the server said may quote the script: only its size reaches debug output.
+impl std::fmt::Debug for Checked {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Checked::Fine => f.write_str("Fine"),
+            Checked::Warnings(text) => write!(f, "Warnings({} bytes)", text.len()),
+            Checked::Errors(text) => write!(f, "Errors({} bytes)", text.len()),
+            Checked::NotOffered => f.write_str("NotOffered"),
+        }
+    }
+}
+
+/// Have the server check `script` without keeping it (CHECKSCRIPT, RFC 5804 §2.12): the same
+/// server, encryption and sign-in as [`read`] and [`write`], and nothing on the server changes.
+pub fn check(account: &Account, server: &Server, secret: &str, script: &str) -> Result<Checked, SieveError> {
+    check_with(account, server, secret, script, &Patience::default(), None)
+}
+
+/// [`check`], waiting as `patience` says, and giving up once `cancel` is set.
+pub(crate) fn check_with(
+    account: &Account,
+    server: &Server,
+    secret: &str,
+    script: &str,
+    patience: &Patience,
+    cancel: Option<&AtomicBool>,
+) -> Result<Checked, SieveError> {
+    let run = || {
+        let mut sieve = open(account, server, secret, patience, cancel)?;
+        // (A server of RFC 5804 says its VERSION; one from before it has no CHECKSCRIPT.)
+        if sieve.capabilities().version.is_none() {
+            let _ = sieve.logout();
+            return Ok(Checked::NotOffered);
+        }
+        let checked = match sieve.check_script(script)? {
+            ScriptCheck::Fine => Checked::Fine,
+            ScriptCheck::Warnings(text) => Checked::Warnings(text),
+            ScriptCheck::Errors(text) => Checked::Errors(text),
+        };
+        let _ = sieve.logout();
+        Ok(checked)
+    };
+    // (The server's words could repeat the secret: it is blanked out of them too.)
+    let hide = |text: String| if secret.is_empty() { text } else { text.replace(secret, "***") };
+    match run() {
+        Ok(Checked::Warnings(text)) => Ok(Checked::Warnings(hide(text))),
+        Ok(Checked::Errors(text)) => Ok(Checked::Errors(hide(text))),
+        Ok(other) => Ok(other),
+        Err(e) => Err(SieveError::without(e, secret)),
+    }
 }
 
 /// Leave the server with no active script, if `name` is the active one: MailCraft's own script

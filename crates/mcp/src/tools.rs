@@ -297,6 +297,8 @@ pub(crate) const NAMING_PARAMS: &[&str] = &[
     "authorizeUrl",
     "tokenUrl",
     "revokeUrl",
+    // The digest of a script as `sieve.ownScript` read it (#9999).
+    "digest",
 ];
 
 /// `v` with every string under one of [`NAMING_PARAMS`] that is one whole frame, as

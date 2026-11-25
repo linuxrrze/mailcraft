@@ -67,6 +67,12 @@ pub mod send_warnings;
 pub mod sender_warnings;
 mod session;
 pub mod sieve;
+pub mod sieve_check;
+#[cfg(test)]
+mod sieve_check_tests;
+pub mod sieve_rainloop;
+#[cfg(test)]
+mod sieve_rainloop_tests;
 #[cfg(test)]
 mod sieve_tests;
 #[cfg(not(target_arch = "wasm32"))]

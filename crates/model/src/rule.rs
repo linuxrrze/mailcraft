@@ -22,6 +22,9 @@ use crate::{Address, FlagStatus, Id, Importance, Message, ModelError, Sensitivit
 /// Most words one condition looks for, any of which is enough.
 pub const MAX_WORDS_EACH: usize = 20;
 
+/// Most bytes of a Sieve rule's text ([`Rule::sieve`]).
+pub const MAX_SIEVE_RULE: usize = 64 * 1024;
+
 /// Most characters of a word a condition looks for: a longer one is refused, not cut, since a
 /// part of it is found in more mail (#566).
 pub const MAX_WORD: usize = 200;
@@ -104,6 +107,20 @@ pub enum Condition {
         from: Option<Date>,
         #[serde(skip_serializing_if = "Option::is_none")]
         to: Option<Date>,
+    },
+    /// A header line named one of `names` contains one of the words, or with `exact` is one of
+    /// them (letters A to Z in either case, the line's value trimmed): Outlook's "with specific
+    /// words in the message header", narrowed to the lines named, as a Sieve `header :contains`
+    /// or `header :is` test of a script made elsewhere says it (#9999). Only read from such a
+    /// script: no command makes one, and a server it can't be said to refuses it. Here, it can't be
+    /// told of a message whose header lines are kept outside memory.
+    Header {
+        #[serde(with = "words")]
+        names: Vec<String>,
+        #[serde(with = "words")]
+        words: Vec<String>,
+        #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+        exact: bool,
     },
 }
 
@@ -199,6 +216,15 @@ impl Condition {
             Condition::AutomaticReply => m.is_automatic_reply(),
             Condition::Category(names) => names.iter().any(|c| m.has_category(c)),
             Condition::Flagged => m.flag == FlagStatus::Flagged,
+            Condition::Header { names, words, exact } => {
+                let lines = m.all_headers();
+                let values = || lines.iter().filter(|(n, _)| names.iter().any(|w| n.trim().eq_ignore_ascii_case(w.trim()))).map(|(_, v)| v.trim());
+                if *exact {
+                    words.iter().any(|w| values().any(|v| v.eq_ignore_ascii_case(w.trim())))
+                } else {
+                    any(words, &|t| values().any(|v| contains_ci(v, t)))
+                }
+            }
             Condition::ReceivedBetween { from, to } => {
                 let at = if m.received != 0 { m.received } else { m.date };
                 let day = how.zone.wall(at).date;
@@ -238,6 +264,8 @@ impl Condition {
             Condition::AutomaticReply => "is an automatic reply".into(),
             Condition::Category(c) => format!("category is {}", words(c)),
             Condition::Flagged => "is flagged".into(),
+            Condition::Header { names, words: w, exact: false } => format!("message header {} contains {}", words(names), words(w)),
+            Condition::Header { names, words: w, exact: true } => format!("message header {} is exactly {}", words(names), words(w)),
             Condition::ReceivedBetween { from, to } => match (from, to) {
                 (Some(f), Some(t)) => format!("received from {} to {}", f.iso(), t.iso()),
                 (Some(f), None) => format!("received on or after {}", f.iso()),
@@ -335,6 +363,8 @@ impl Condition {
             | Condition::ToOrCcMe
             | Condition::NotToMe => m.headers_cut || (m.unfetched && m.to.iter().chain(&m.cc).any(|a| a.email.trim().is_empty())),
             Condition::Category(_) => m.headers_cut || m.categories_cut,
+            // Nor a line kept outside memory with the message's header block.
+            Condition::Header { .. } => m.unfetched || m.incomplete || m.headers_cut || !m.header_block.is_loaded(),
             // Nor the end of a subject its server's list left out.
             Condition::SubjectContains(_) => m.unfetched && m.headers_cut,
             // A calendar part kept on disk and not brought in (one too large to be read) doesn't
@@ -675,6 +705,17 @@ pub struct Rule {
     /// it is taken as this one) or don't (and it is sent again).
     #[serde(skip_serializing_if = "is_false")]
     pub unanswered: bool,
+    /// A Sieve rule (#9999): one block of Sieve the owner (or an agent, with the owner's yes)
+    /// wrote, kept in MailCraft's script on its IMAP account's server, where it runs. It has no
+    /// conditions or actions of its own, and never matches here. At most [`MAX_SIEVE_RULE`]
+    /// bytes. Empty for any other rule. (A version from before Sieve rules reads such a rule as
+    /// one without conditions, which matches nothing.)
+    #[serde(skip_serializing_if = "String::is_empty")]
+    pub sieve: String,
+    /// What a later version wrote on a rule that this one doesn't know, kept as it was so that
+    /// saving here doesn't lose it.
+    #[serde(flatten, skip_serializing_if = "serde_json::Map::is_empty")]
+    pub other: serde_json::Map<String, serde_json::Value>,
 }
 
 impl Rule {
@@ -697,6 +738,10 @@ impl Rule {
     /// conditions hold or can't be told and no exception known here holds: it may apply, as its
     /// server ran it, and stop them (#566).
     pub fn undecided_in(&self, m: &Message, how: &Matching<'_>) -> bool {
+        // A Sieve rule runs on the server alone: nothing of it is known here.
+        if self.is_sieve() {
+            return false;
+        }
         let open = |c: &Condition| c.untold_in(m, how) && !c.holds_in(m, how);
         let spares = |c: &Condition| !c.untold_in(m, how) && c.matches_in(m, how);
         if !self.known() {
@@ -711,7 +756,7 @@ impl Rule {
 
     /// Whether it is on and its conditions hold, exceptions aside.
     fn reaches(&self, m: &Message, how: &Matching<'_>) -> bool {
-        self.enabled && self.known() && !self.conditions.is_empty() && self.conditions.iter().all(|c| c.holds_in(m, how))
+        self.enabled && self.known() && !self.is_sieve() && !self.conditions.is_empty() && self.conditions.iter().all(|c| c.holds_in(m, how))
     }
 
     /// `When from contains "x" and has an attachment, except if it is flagged: flag it, mark it
@@ -722,6 +767,9 @@ impl Rule {
 
     /// [`Rule::describe`] for a rule that reads addresses alone.
     pub fn describe_as(&self, addresses_only: bool) -> String {
+        if self.is_sieve() {
+            return "A Sieve rule, run on the server".into();
+        }
         let when = self.conditions.iter().map(|c| c.describe_as(addresses_only)).collect::<Vec<_>>().join(" and ");
         let except = self.exceptions.iter().map(|c| c.describe_as(addresses_only)).collect::<Vec<_>>().join(" or ");
         let mut then: Vec<String> = self.actions.iter().map(Action::describe).collect();
@@ -817,6 +865,11 @@ impl Rule {
     /// Whether the server doesn't let it be changed or deleted.
     pub fn read_only(&self) -> bool {
         self.server.as_ref().is_some_and(|s| s.read_only)
+    }
+
+    /// Whether it is a Sieve rule ([`Rule::sieve`]): Sieve written by hand, run on its server alone.
+    pub fn is_sieve(&self) -> bool {
+        !self.sieve.is_empty()
     }
 
     /// Whether it was switched on or off, or moved, here since the server last had it.

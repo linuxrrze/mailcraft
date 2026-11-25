@@ -224,6 +224,13 @@ const ROWS: &[(&str, &str, Setup)] = &[
     ("sync.offline", "{}", Setup::None),
     ("sync.waitBeforeSending", r#"{"seconds": 10}"#, Setup::None),
     ("rules.add", r#"{"name": "x"}"#, Setup::None),
+    ("rules.edit", r#"{"id": $rule}"#, Setup::None),
+    // (The sample has no account whose server keeps Sieve: asked about, and refused as the command refuses it.)
+    ("rules.addSieve", r#"{"account": $account, "name": "x", "sieve": "keep;"}"#, Setup::None),
+    ("rules.editSieve", r#"{"id": $rule, "name": "x"}"#, Setup::None),
+    // (Nor a script of the owner's own on such a server: asked about, and refused as the command refuses it.)
+    ("sieve.ownScript", r#"{"account": $account}"#, Setup::None),
+    ("sieve.putOwnScript", r#"{"account": $account, "text": "keep;", "digest": "00"}"#, Setup::None),
     ("rules.remove", r#"{"id": $rule}"#, Setup::None),
     ("rules.enable", r#"{"id": $rule}"#, Setup::None),
     ("rules.list", "{}", Setup::None),

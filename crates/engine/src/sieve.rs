@@ -15,6 +15,8 @@
 //! that has another shape, or was changed elsewhere, is not taken for MailCraft's own (the host
 //! compares its digest with the one kept, `mailcraft_model::SieveKept`).
 
+use std::ops::Range;
+
 use mailcraft_model::auto_replies::{AutoReplyStatus, ExternalAudience};
 use mailcraft_time::{DateTime, Timestamp};
 
@@ -107,41 +109,126 @@ pub fn as_written(text: &str) -> String {
 /// The tokens of a script (RFC 5228 §8.1), or `None` for one that isn't Sieve, or is larger than
 /// [`MAX_SCRIPT`] or has more than [`MAX_TOKENS`]. Line breaks inside strings come back as `\n`.
 pub fn tokens(script: &str) -> Option<Vec<Tok>> {
-    if script.len() > MAX_SCRIPT {
-        return None;
+    Some(lex(script)?.toks.into_iter().map(|(t, _)| t).collect())
+}
+
+/// A comment of a script, where it is: its bytes, from its `#` or `/*` to the end of its line
+/// (the line break not included) or past its `*/`.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct Comment {
+    pub at: Range<usize>,
+    /// A `/* … */` one (else a `#` one).
+    pub bracketed: bool,
+}
+
+impl Comment {
+    /// What it says, without its `#` or `/*` and `*/`: a part of `script`, the text it was read
+    /// from (empty for another text).
+    pub fn text<'a>(&self, script: &'a str) -> &'a str {
+        let inner = if self.bracketed {
+            self.at.start.checked_add(2).zip(self.at.end.checked_sub(2)).filter(|(a, b)| a <= b)
+        } else {
+            self.at.start.checked_add(1).map(|a| (a, self.at.end)).filter(|(a, b)| a <= b)
+        };
+        inner.and_then(|(a, b)| script.get(a..b)).unwrap_or_default()
     }
-    let mut out = Vec::new();
+}
+
+/// A script's tokens with where each is (its bytes), and its comments, in order.
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+pub struct Lexed {
+    pub toks: Vec<(Tok, Range<usize>)>,
+    pub comments: Vec<Comment>,
+}
+
+/// [`tokens`] with where each is, and the comments between them (counted with the tokens towards
+/// [`MAX_TOKENS`]).
+pub fn lex(script: &str) -> Option<Lexed> {
+    lex_or_why(script).ok()
+}
+
+/// Why a script couldn't be read into tokens ([`lex_or_why`]).
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum LexFault {
+    /// Larger than [`MAX_SCRIPT`].
+    TooLarge,
+    /// More than [`MAX_TOKENS`] tokens and comments.
+    TooMany,
+    /// A `/*` with no `*/`.
+    Comment,
+    /// A `"` with no closing one.
+    String,
+    /// A `text:` block with no line that is a lone `.`.
+    Text,
+    /// Something other than spaces and a comment after `text:` on its line.
+    TextStart,
+    /// A `:` that no name follows.
+    Tag,
+    /// A number larger than 2⁶⁴ − 1 (with its K, M or G).
+    Number,
+    /// A character that begins no token.
+    Char,
+}
+
+/// Where a script stopped being Sieve, and why: `at` is the bytes of what is wrong (the opening
+/// `"`, `/*` or `text:` of what isn't closed), on character boundaries.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct LexError {
+    pub at: Range<usize>,
+    pub fault: LexFault,
+}
+
+/// [`lex`], saying where and why a script that isn't Sieve stops being it.
+pub fn lex_or_why(script: &str) -> Result<Lexed, LexError> {
+    if script.len() > MAX_SCRIPT {
+        return Err(LexError { at: 0..0, fault: LexFault::TooLarge });
+    }
+    let mut out = Lexed::default();
     let mut rest = script;
+    let at = |rest: &str| script.len().saturating_sub(rest.len());
     loop {
-        if out.len() > MAX_TOKENS {
-            return None;
-        }
         rest = rest.trim_start_matches([' ', '\t', '\r', '\n']);
-        let Some(c) = rest.chars().next() else { return Some(out) };
+        let start = at(rest);
+        if out.toks.len().saturating_add(out.comments.len()) > MAX_TOKENS {
+            return Err(LexError { at: start..start, fault: LexFault::TooMany });
+        }
+        let Some(c) = rest.chars().next() else { return Ok(out) };
+        let one = start..start.saturating_add(c.len_utf8());
+        let fail = |fault: LexFault, len: usize| LexError { at: start..start.saturating_add(len), fault };
+        let char_fault = LexError { at: one.clone(), fault: LexFault::Char };
         match c {
-            '#' => rest = rest.find('\n').and_then(|at| rest.get(at..)).unwrap_or(""),
+            '#' => {
+                let line = rest.find('\n').unwrap_or(rest.len());
+                let line = if rest.get(..line).is_some_and(|l| l.ends_with('\r')) { line.saturating_sub(1) } else { line };
+                rest = rest.get(line..).ok_or(char_fault)?;
+                out.comments.push(Comment { at: start..at(rest), bracketed: false });
+                continue;
+            }
             '/' if rest.starts_with("/*") => {
-                let end = rest.get(2..)?.find("*/")?;
-                rest = rest.get(end.checked_add(4)?..)?;
+                let end = rest.get(2..).and_then(|r| r.find("*/")).ok_or(fail(LexFault::Comment, 2))?;
+                rest = end.checked_add(4).and_then(|e| rest.get(e..)).ok_or(fail(LexFault::Comment, 2))?;
+                out.comments.push(Comment { at: start..at(rest), bracketed: true });
+                continue;
             }
             '[' | ']' | '(' | ')' | '{' | '}' | ',' | ';' => {
-                out.push(Tok::Punct(c));
-                rest = rest.get(1..)?;
+                rest = rest.get(1..).ok_or(char_fault)?;
+                out.toks.push((Tok::Punct(c), start..at(rest)));
             }
             '"' => {
-                let (value, after) = quoted_value(rest.get(1..)?)?;
-                out.push(Tok::Str(value));
+                let (value, after) = rest.get(1..).and_then(quoted_value).ok_or(fail(LexFault::String, 1))?;
                 rest = after;
+                out.toks.push((Tok::Str(value), start..at(rest)));
             }
             ':' => {
-                let word = identifier(rest.get(1..)?)?;
-                rest = rest.get(word.len().checked_add(1)?..)?;
-                out.push(Tok::Tag(word.to_ascii_lowercase()));
+                let word = rest.get(1..).and_then(identifier).ok_or(fail(LexFault::Tag, 1))?;
+                rest = word.len().checked_add(1).and_then(|e| rest.get(e..)).ok_or(fail(LexFault::Tag, 1))?;
+                out.toks.push((Tok::Tag(word.to_ascii_lowercase()), start..at(rest)));
             }
             '0'..='9' => {
                 let digits = rest.bytes().take_while(u8::is_ascii_digit).count();
-                let mut n: u64 = rest.get(..digits)?.parse().ok()?;
-                rest = rest.get(digits..)?;
+                let number = fail(LexFault::Number, digits);
+                let mut n: u64 = rest.get(..digits).and_then(|d| d.parse().ok()).ok_or(number.clone())?;
+                rest = rest.get(digits..).ok_or(number.clone())?;
                 let scale = match rest.chars().next() {
                     Some('K' | 'k') => 1 << 10,
                     Some('M' | 'm') => 1 << 20,
@@ -149,20 +236,20 @@ pub fn tokens(script: &str) -> Option<Vec<Tok>> {
                     _ => 1,
                 };
                 if scale > 1 {
-                    n = n.checked_mul(scale)?;
-                    rest = rest.get(1..)?;
+                    n = n.checked_mul(scale).ok_or(fail(LexFault::Number, digits.saturating_add(1)))?;
+                    rest = rest.get(1..).ok_or(number)?;
                 }
-                out.push(Tok::Num(n));
+                out.toks.push((Tok::Num(n), start..at(rest)));
             }
             _ => {
-                let word = identifier(rest)?;
-                rest = rest.get(word.len()..)?;
+                let word = identifier(rest).ok_or(char_fault)?;
+                rest = rest.get(word.len()..).ok_or(fail(LexFault::Char, word.len()))?;
                 if word.eq_ignore_ascii_case("text") && rest.starts_with(':') {
-                    let (value, after) = text_block(rest.get(1..)?)?;
-                    out.push(Tok::Str(value));
+                    let (value, after) = text_block(rest.get(1..).unwrap_or_default()).map_err(|fault| fail(fault, 5))?;
                     rest = after;
+                    out.toks.push((Tok::Str(value), start..at(rest)));
                 } else {
-                    out.push(Tok::Ident(word.to_ascii_lowercase()));
+                    out.toks.push((Tok::Ident(word.to_ascii_lowercase()), start..at(rest)));
                 }
             }
         }
@@ -197,21 +284,22 @@ fn quoted_value(s: &str) -> Option<(String, &str)> {
 
 /// A `text:` block from just after its colon: the lines up to the one that is a lone `.`, with a
 /// line's leading dot of two taken out (RFC 5228 §2.4.2), and what follows it.
-fn text_block(s: &str) -> Option<(String, &str)> {
+fn text_block(s: &str) -> Result<(String, &str), LexFault> {
     // Spaces, and a comment, may follow `text:` on its line.
-    let line_end = s.find('\n')?;
-    let first = s.get(..line_end)?.trim_matches([' ', '\t', '\r']);
+    let line_end = s.find('\n').ok_or(LexFault::Text)?;
+    let first = s.get(..line_end).unwrap_or_default().trim_matches([' ', '\t', '\r']);
     if !(first.is_empty() || first.starts_with('#')) {
-        return None;
+        return Err(LexFault::TextStart);
     }
-    let mut rest = s.get(line_end.checked_add(1)?..)?;
+    let mut rest = line_end.checked_add(1).and_then(|e| s.get(e..)).ok_or(LexFault::Text)?;
     let mut value = String::new();
     loop {
-        let end = rest.find('\n')?;
-        let line = rest.get(..end)?.strip_suffix('\r').unwrap_or(rest.get(..end)?);
-        rest = rest.get(end.checked_add(1)?..)?;
+        let end = rest.find('\n').ok_or(LexFault::Text)?;
+        let whole = rest.get(..end).ok_or(LexFault::Text)?;
+        let line = whole.strip_suffix('\r').unwrap_or(whole);
+        rest = end.checked_add(1).and_then(|e| rest.get(e..)).ok_or(LexFault::Text)?;
         if line == "." {
-            return Some((value, rest));
+            return Ok((value, rest));
         }
         value.push_str(line.strip_prefix('.').filter(|_| line.starts_with("..")).unwrap_or(line));
         value.push('\n');
@@ -250,12 +338,53 @@ fn utc(at: Timestamp) -> String {
 }
 
 /// A rule of the owner's as one block of the script ([`crate::cmd::sieve_rules`]): its id (said
-/// in a comment above it), its Sieve, and the extensions it needs.
+/// in a comment above it), its Sieve, ending with a line break, and the extensions it needs. A
+/// Sieve rule's name is said in a comment of its own too (`name`), so that another program
+/// showing the script shows it; empty for the other rules.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct RuleScript {
     pub id: mailcraft_model::Id,
     pub text: String,
-    pub requires: Vec<&'static str>,
+    pub requires: Vec<String>,
+    pub name: String,
+}
+
+/// The longest name said in a rule's comment, in characters.
+const MAX_COMMENT_NAME: usize = 200;
+
+/// `name` as a `#` comment's text can hold it (#9999): one line, with no control or format
+/// character, no line or paragraph separator, and no `*/` (should the comment ever be read as a
+/// bracketed one), at most [`MAX_COMMENT_NAME`] characters.
+pub fn comment_name(name: &str) -> String {
+    let kept: String = name
+        .chars()
+        .map(|c| if c.is_whitespace() { ' ' } else { c })
+        .filter(|c| !c.is_control() && !mailcraft_names::is_format(*c))
+        .take(MAX_COMMENT_NAME)
+        .collect();
+    // ("* /" makes no new "*/": the space parts what it joins.)
+    kept.replace("*/", "* /").trim().to_string()
+}
+
+/// `text` with every line break CRLF, as a script has them, and ending with one: a `#` comment on
+/// its last line then ends there, and can't take in what follows it.
+pub fn crlf_lines(text: &str) -> String {
+    let mut out = String::with_capacity(text.len().saturating_add(2));
+    let mut chars = text.chars().peekable();
+    while let Some(c) = chars.next() {
+        match c {
+            '\r' => {
+                chars.next_if_eq(&'\n');
+                out.push_str("\r\n");
+            }
+            '\n' => out.push_str("\r\n"),
+            c => out.push(c),
+        }
+    }
+    if !out.ends_with("\r\n") {
+        out.push_str("\r\n");
+    }
+    out
 }
 
 /// The extensions a script MailCraft writes may need, in the order its `require` names them.
@@ -274,14 +403,22 @@ pub fn script(vacation: &Vacation, owner: &Owner, rules: &[RuleScript]) -> Strin
     let mut out = format!("{HEADER}\r\n");
     let scheduled = vacation.status == AutoReplyStatus::Scheduled && vacation.start.is_some() && vacation.end.is_some();
     let replies = vacation.status != AutoReplyStatus::Disabled;
-    let needed: Vec<&str> = EXTENSIONS
+    let wanted = |e: &str| rules.iter().any(|r| r.requires.iter().any(|x| x == e));
+    let mut needed: Vec<&str> = EXTENSIONS
         .into_iter()
         .filter(|e| match *e {
-            "vacation" => replies,
-            "date" | "relational" => replies && scheduled,
-            other => rules.iter().any(|r| r.requires.contains(&other)),
+            "vacation" => replies || wanted(e),
+            "date" | "relational" => (replies && scheduled) || wanted(e),
+            other => wanted(other),
         })
         .collect();
+    // Then what a Sieve rule needs besides, each once, in the order the rules first need it: one
+    // `require` for the whole script (RFC 5228 §3.2), before any other command.
+    for e in rules.iter().flat_map(|r| &r.requires) {
+        if !needed.contains(&e.as_str()) {
+            needed.push(e);
+        }
+    }
     if !needed.is_empty() {
         let names: Vec<String> = needed.iter().map(|e| quoted(e)).collect();
         out.push_str(&format!("require [{}];\r\n", names.join(", ")));
@@ -292,11 +429,25 @@ pub fn script(vacation: &Vacation, owner: &Owner, rules: &[RuleScript]) -> Strin
         out.push_str("# Automatic replies are off.\r\n");
     }
     for rule in rules {
-        out.push_str(&format!("# rule {}\r\n", rule.id));
-        out.push_str(&rule.text);
+        out.push_str(&rule_section(rule));
     }
     out
 }
+
+/// A rule's part of the script: the comment with its id, the one with a Sieve rule's name, then
+/// its Sieve, ending with a line break.
+pub fn rule_section(rule: &RuleScript) -> String {
+    let mut out = format!("# rule {}\r\n", rule.id);
+    let name = comment_name(&rule.name);
+    if !name.is_empty() {
+        out.push_str(&format!("# {RULE_NAME}{name}\r\n"));
+    }
+    out.push_str(&crlf_lines(&rule.text));
+    out
+}
+
+/// What the comment naming a Sieve rule starts with, after its `# `.
+const RULE_NAME: &str = "Sieve rule: ";
 
 /// The replies, to go first in the script.
 fn vacation_section(vacation: &Vacation, owner: &Owner, scheduled: bool) -> String {
@@ -342,7 +493,12 @@ pub fn read_vacation(script: &str) -> Option<Vacation> {
     if !script.starts_with(HEADER) {
         return None;
     }
-    let tokens = tokens(script)?;
+    // The replies' section alone: it ends where the first rule begins (`# rule <id>`), and a
+    // Sieve rule after it may have a `vacation` of its own (#9999).
+    let lexed = lex(script)?;
+    let rules_from =
+        lexed.comments.iter().find(|c| !c.bracketed && c.text(script).trim_start().starts_with("rule ")).map_or(usize::MAX, |c| c.at.start);
+    let tokens: Vec<Tok> = lexed.toks.into_iter().take_while(|(_, at)| at.start < rules_from).map(|(t, _)| t).collect();
     let mut vacation = Vacation {
         status: AutoReplyStatus::Disabled,
         start: None,
