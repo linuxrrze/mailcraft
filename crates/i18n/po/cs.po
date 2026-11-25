@@ -13924,7 +13924,7 @@ msgid "Replace with"
 msgstr "Nahradit čím"
 
 #. interface
-#: crates/ui-egui/src/auto_replies.rs
+#: crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "Replace with MailCraft's"
 msgstr "Nahradit skriptem MailCraftu"
@@ -23297,7 +23297,7 @@ msgid "it deletes for good"
 msgstr "odstraňuje natrvalo"
 
 #. interface
-#: crates/ui-egui/src/rule_sync.rs
+#: crates/ui-egui/src/rule_sync.rs crates/ui-egui/src/sieve_replies.rs
 #, fuzzy
 msgid "it goes to the server at the next connection"
 msgstr "odejde na server při dalším připojení"
@@ -28763,3 +28763,231 @@ msgstr "{at} ukončil spojení bez jediného slova"
 #, fuzzy
 msgid "{at} expects an encrypted connection from the start, which ManageSieve doesn't use"
 msgstr "{at} očekává šifrované spojení od začátku, které ManageSieve nepoužívá"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Automatic replies: set by your Sieve script \"{name}\", which runs on the server"
+msgstr "Automatické odpovědi: nastavuje je váš skript Sieve „{name}“, který běží na serveru"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "In MailCraft's Sieve script, as it was changed elsewhere"
+msgstr "Ve skriptu Sieve od MailCraftu, jak byl jinde změněn"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "In your Sieve script \"{name}\""
+msgstr "Ve vašem skriptu Sieve „{name}“"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "It also sends automatic replies of its own."
+msgstr "Posílá také vlastní automatické odpovědi."
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Made in another program: MailCraft shows these rules and never changes them"
+msgstr "Vytvořeno v jiném programu: MailCraft tato pravidla zobrazuje a nikdy je nemění"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "MailCraft can't keep this account's rules on its server, so they run on this computer: {why}. {advice}"
+msgstr "MailCraft nemůže uchovávat pravidla tohoto účtu na jeho serveru, proto běží na tomto počítači: {why}. {advice}"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "MailCraft can't read the rules of this script."
+msgstr "MailCraft neumí přečíst pravidla tohoto skriptu."
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "MailCraft's Sieve script on the server was changed elsewhere"
+msgstr "skript Sieve od MailCraftu byl na serveru změněn jinde"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "MailCraft's Sieve script on the server was changed elsewhere, so MailCraft leaves it as it is, and these rules run on this computer. Replace it with MailCraft's to keep them on the server: what was changed in it elsewhere is lost."
+msgstr "Skript Sieve od MailCraftu byl na serveru změněn jinde, proto ho MailCraft nechává, jak je, a tato pravidla běží v tomto počítači. Chcete-li je mít na serveru, nahraďte ho skriptem MailCraftu: co se v něm jinde změnilo, bude ztraceno."
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "None."
+msgstr "Žádná."
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "On the server, changed elsewhere: Replace with MailCraft's would remove it"
+msgstr "Na serveru, změněno jinde: Nahradit skriptem MailCraftu by ho odstranilo"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "On the server, made in another program: MailCraft never changes it"
+msgstr "Na serveru, vytvořeno v jiném programu: MailCraft ho nikdy nemění"
+
+#. command label
+#: crates/engine/src/cmd/sieve_replies.rs
+#, fuzzy
+msgid "Sieve Script to Send"
+msgstr "Skript Sieve k odeslání"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "This account's server doesn't offer Sieve scripts (ManageSieve), so its rules run on this computer."
+msgstr "Server tohoto účtu nenabízí skripty Sieve (ManageSieve), takže jeho pravidla běží v tomto počítači."
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "This server's Sieve scripts can't file mail into folders, so its rules run on this computer."
+msgstr "Skripty Sieve tohoto serveru neumějí ukládat poštu do složek, takže jeho pravidla běží v tomto počítači."
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your Sieve script \"{name}\" runs on the server instead of MailCraft's, so these rules run on this computer. MailCraft never switches your script off."
+msgstr "Na serveru běží místo skriptu MailCraftu váš skript Sieve „{name}“, takže tato pravidla běží v tomto počítači. MailCraft váš skript nikdy nevypne."
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your rules are kept on the server"
+msgstr "Vaše pravidla jsou uložena na serveru"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your rules were saved on the server, but another Sieve script of yours runs there, so they run on this computer"
+msgstr "Vaše pravidla byla uložena na server, ale běží tam jiný váš skript Sieve, takže běží v tomto počítači"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your rules weren't changed on the server"
+msgstr "Vaše pravidla na serveru nebyla změněna"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "another Sieve script of yours runs on the server"
+msgstr "na serveru běží jiný váš skript Sieve"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "it has a part MailCraft can't write as Sieve"
+msgstr "má část, kterou MailCraft neumí zapsat v Sieve"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "it has no conditions, and on the server it would act on every message"
+msgstr "nemá žádné podmínky a na serveru by působila na každou zprávu"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "it is being written to the server"
+msgstr "právě se zapisuje na server"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "its sizes are larger than the server takes"
+msgstr "její velikosti jsou větší, než server přijme"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the account has no address to look for"
+msgstr "účet nemá adresu, kterou by šlo hledat"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the account's Deleted Items isn't on the server"
+msgstr "složka Odstraněná pošta účtu není na serveru"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't do one of its actions or conditions"
+msgstr "skripty Sieve na serveru neumějí provést jednu z jejích akcí nebo podmínek"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't flag mail for a day"
+msgstr "skripty Sieve na serveru neumějí označit poštu na určitý den"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at attachments"
+msgstr "skripty Sieve na serveru neumějí zjišťovat přílohy"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at categories"
+msgstr "skripty Sieve na serveru neumějí zjišťovat kategorie"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at importance"
+msgstr "skripty Sieve na serveru neumějí zjišťovat důležitost"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at sensitivity"
+msgstr "skripty Sieve na serveru neumějí zjišťovat citlivost"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't set categories"
+msgstr "skripty Sieve na serveru neumějí nastavovat kategorie"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't set importance"
+msgstr "skripty Sieve na serveru neumějí nastavovat důležitost"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't tell automatic replies"
+msgstr "skripty Sieve na serveru neumějí rozpoznat automatické odpovědi"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't tell mail sent to you alone"
+msgstr "skripty Sieve na serveru neumějí rozpoznat poštu odeslanou jen vám"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't tell meeting invitations"
+msgstr "skripty Sieve na serveru neumějí rozpoznat pozvánky na schůzky"
+
+#. what a command says
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "this rule is in your Sieve script \"{script}\" on the server, made in another program: MailCraft shows it and never changes it"
+msgstr "toto pravidlo je ve vašem skriptu Sieve „{script}“ na serveru, vytvořeném v jiném programu: MailCraft ho zobrazuje a nikdy nemění"

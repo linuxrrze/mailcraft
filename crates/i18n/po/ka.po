@@ -13857,7 +13857,7 @@ msgid "Replace with"
 msgstr "ჩანაცვლება ამით"
 
 #. interface
-#: crates/ui-egui/src/auto_replies.rs
+#: crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "Replace with MailCraft's"
 msgstr "MailCraft-ის სკრიპტით ჩანაცვლება"
@@ -23163,7 +23163,7 @@ msgid "it deletes for good"
 msgstr "სამუდამოდ შლის"
 
 #. interface
-#: crates/ui-egui/src/rule_sync.rs
+#: crates/ui-egui/src/rule_sync.rs crates/ui-egui/src/sieve_replies.rs
 #, fuzzy
 msgid "it goes to the server at the next connection"
 msgstr "სერვერზე მომდევნო დაკავშირებისას გადავა"
@@ -28553,3 +28553,231 @@ msgstr "{at}-მ კავშირი უსიტყვოდ დახურ�
 #, fuzzy
 msgid "{at} expects an encrypted connection from the start, which ManageSieve doesn't use"
 msgstr "{at} თავიდანვე დაშიფრულ კავშირს ელის, რომელსაც ManageSieve არ იყენებს"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Automatic replies: set by your Sieve script \"{name}\", which runs on the server"
+msgstr "ავტომატური პასუხები: მათ აყენებს თქვენი Sieve-ის სკრიპტი „{name}“, რომელიც სერვერზე მუშაობს"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "In MailCraft's Sieve script, as it was changed elsewhere"
+msgstr "MailCraft-ის Sieve-ის სკრიპტში, როგორც ის სხვაგან შეიცვალა"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "In your Sieve script \"{name}\""
+msgstr "თქვენს Sieve-ის სკრიპტში „{name}“"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "It also sends automatic replies of its own."
+msgstr "ის საკუთარ ავტომატურ პასუხებსაც აგზავნის."
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Made in another program: MailCraft shows these rules and never changes them"
+msgstr "შექმნილია სხვა პროგრამაში: MailCraft ამ წესებს აჩვენებს და არასოდეს ცვლის"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "MailCraft can't keep this account's rules on its server, so they run on this computer: {why}. {advice}"
+msgstr "MailCraft ვერ შეინახავს ამ ანგარიშის წესებს მის სერვერზე, ამიტომ ისინი ამ კომპიუტერზე სრულდება: {why}. {advice}"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "MailCraft can't read the rules of this script."
+msgstr "MailCraft ამ სკრიპტის წესებს ვერ კითხულობს."
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "MailCraft's Sieve script on the server was changed elsewhere"
+msgstr "MailCraft-ის Sieve-ის სკრიპტი სერვერზე სხვაგან შეიცვალა"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "MailCraft's Sieve script on the server was changed elsewhere, so MailCraft leaves it as it is, and these rules run on this computer. Replace it with MailCraft's to keep them on the server: what was changed in it elsewhere is lost."
+msgstr "MailCraft-ის Sieve-ის სკრიპტი სერვერზე სხვაგან შეიცვალა, ამიტომ MailCraft მას ისე ტოვებს და ეს წესები ამ კომპიუტერზე მუშაობს. სერვერზე შესანახად ჩაანაცვლეთ ის MailCraft-ის სკრიპტით: რაც მასში სხვაგან შეიცვალა, დაიკარგება."
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "None."
+msgstr "არცერთი."
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "On the server, changed elsewhere: Replace with MailCraft's would remove it"
+msgstr "სერვერზე, სხვაგან შეცვლილი: MailCraft-ის სკრიპტით ჩანაცვლება მას წაშლიდა"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "On the server, made in another program: MailCraft never changes it"
+msgstr "სერვერზე, სხვა პროგრამაში შექმნილი: MailCraft მას არასოდეს ცვლის"
+
+#. command label
+#: crates/engine/src/cmd/sieve_replies.rs
+#, fuzzy
+msgid "Sieve Script to Send"
+msgstr "გასაგზავნი Sieve-ის სკრიპტი"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "This account's server doesn't offer Sieve scripts (ManageSieve), so its rules run on this computer."
+msgstr "ამ ანგარიშის სერვერი Sieve-ის სკრიპტებს არ გვთავაზობს (ManageSieve), ამიტომ მისი წესები ამ კომპიუტერზე მუშაობს."
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "This server's Sieve scripts can't file mail into folders, so its rules run on this computer."
+msgstr "ამ სერვერის Sieve-ის სკრიპტებს ფოსტის საქაღალდეებში შენახვა არ შეუძლიათ, ამიტომ მისი წესები ამ კომპიუტერზე მუშაობს."
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your Sieve script \"{name}\" runs on the server instead of MailCraft's, so these rules run on this computer. MailCraft never switches your script off."
+msgstr "სერვერზე MailCraft-ის ნაცვლად თქვენი Sieve-ის სკრიპტი „{name}“ მუშაობს, ამიტომ ეს წესები ამ კომპიუტერზე მუშაობს. MailCraft თქვენს სკრიპტს არასოდეს გამორთავს."
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your rules are kept on the server"
+msgstr "თქვენი წესები სერვერზე ინახება"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your rules were saved on the server, but another Sieve script of yours runs there, so they run on this computer"
+msgstr "თქვენი წესები სერვერზე შეინახა, მაგრამ იქ თქვენი სხვა Sieve-ის სკრიპტი მუშაობს, ამიტომ ისინი ამ კომპიუტერზე მუშაობს"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your rules weren't changed on the server"
+msgstr "თქვენი წესები სერვერზე არ შეცვლილა"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "another Sieve script of yours runs on the server"
+msgstr "სერვერზე თქვენი სხვა Sieve-ის სკრიპტი მუშაობს"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "it has a part MailCraft can't write as Sieve"
+msgstr "მას აქვს ნაწილი, რომლის Sieve-ად ჩაწერაც MailCraft-ს არ შეუძლია"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "it has no conditions, and on the server it would act on every message"
+msgstr "მას პირობები არ აქვს და სერვერზე ყველა წერილზე იმოქმედებდა"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "it is being written to the server"
+msgstr "ახლა სერვერზე იწერება"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "its sizes are larger than the server takes"
+msgstr "მისი ზომები აღემატება იმას, რასაც სერვერი იღებს"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the account has no address to look for"
+msgstr "ანგარიშს მოსაძებნი მისამართი არ აქვს"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the account's Deleted Items isn't on the server"
+msgstr "ანგარიშის წაშლილი ელემენტები სერვერზე არ არის"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't do one of its actions or conditions"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ მისი ერთ-ერთი მოქმედების ან პირობის შესრულება"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't flag mail for a day"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ ფოსტის დღისთვის მონიშვნა"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at attachments"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ დანართების შემოწმება"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at categories"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ კატეგორიების შემოწმება"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at importance"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ მნიშვნელობის შემოწმება"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at sensitivity"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ კონფიდენციალურობის შემოწმება"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't set categories"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ კატეგორიების დაყენება"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't set importance"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ მნიშვნელობის დაყენება"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't tell automatic replies"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ ავტომატური პასუხების გარჩევა"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't tell mail sent to you alone"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ მხოლოდ თქვენთვის გაგზავნილი ფოსტის გარჩევა"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't tell meeting invitations"
+msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ შეხვედრის მოწვევების გარჩევა"
+
+#. what a command says
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "this rule is in your Sieve script \"{script}\" on the server, made in another program: MailCraft shows it and never changes it"
+msgstr "ეს წესი თქვენს Sieve-ის სკრიპტშია „{script}“ სერვერზე, რომელიც სხვა პროგრამაშია შექმნილი: MailCraft მას აჩვენებს და არასოდეს ცვლის"

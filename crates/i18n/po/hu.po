@@ -13898,7 +13898,7 @@ msgid "Replace with"
 msgstr "Csere:"
 
 #. interface
-#: crates/ui-egui/src/auto_replies.rs
+#: crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "Replace with MailCraft's"
 msgstr "Csere a MailCraft szkriptjére"
@@ -23239,7 +23239,7 @@ msgid "it deletes for good"
 msgstr "jóra töröl"
 
 #. interface
-#: crates/ui-egui/src/rule_sync.rs
+#: crates/ui-egui/src/rule_sync.rs crates/ui-egui/src/sieve_replies.rs
 #, fuzzy
 msgid "it goes to the server at the next connection"
 msgstr "a következő kapcsolatnál a kiszolgálóhoz kerül"
@@ -28633,3 +28633,231 @@ msgstr "a(z) {at} szó nélkül bontotta a kapcsolatot"
 #, fuzzy
 msgid "{at} expects an encrypted connection from the start, which ManageSieve doesn't use"
 msgstr "a(z) {at} kezdettől titkosított kapcsolatot vár, amit a ManageSieve nem használ"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Automatic replies: set by your Sieve script \"{name}\", which runs on the server"
+msgstr "Automatikus válaszok: az Ön „{name}” Sieve-szkriptje állítja be őket, amely a szerveren fut"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "In MailCraft's Sieve script, as it was changed elsewhere"
+msgstr "A MailCraft Sieve-szkriptjében, ahogy máshol módosították"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "In your Sieve script \"{name}\""
+msgstr "Az Ön „{name}” Sieve-szkriptjében"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "It also sends automatic replies of its own."
+msgstr "Saját automatikus válaszokat is küld."
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Made in another program: MailCraft shows these rules and never changes them"
+msgstr "Másik programban készült: a MailCraft megjeleníti ezeket a szabályokat, de soha nem módosítja őket"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "MailCraft can't keep this account's rules on its server, so they run on this computer: {why}. {advice}"
+msgstr "A MailCraft nem tudja ennek a fióknak a szabályait a kiszolgálóján tárolni, ezért ezen a számítógépen futnak: {why}. {advice}"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "MailCraft can't read the rules of this script."
+msgstr "A MailCraft nem tudja beolvasni a szkript szabályait."
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "MailCraft's Sieve script on the server was changed elsewhere"
+msgstr "a MailCraft Sieve-szkriptjét a szerveren máshol módosították"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "MailCraft's Sieve script on the server was changed elsewhere, so MailCraft leaves it as it is, and these rules run on this computer. Replace it with MailCraft's to keep them on the server: what was changed in it elsewhere is lost."
+msgstr "A MailCraft Sieve-szkriptjét a szerveren máshol módosították, ezért a MailCraft változatlanul hagyja, és ezek a szabályok ezen a számítógépen futnak. Cserélje le a MailCraft szkriptjére, hogy a szerveren legyenek: ami máshol változott benne, elvész."
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "None."
+msgstr "Nincs."
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "On the server, changed elsewhere: Replace with MailCraft's would remove it"
+msgstr "A szerveren, máshol módosítva: a Csere a MailCraft szkriptjére eltávolítaná"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "On the server, made in another program: MailCraft never changes it"
+msgstr "A szerveren, másik programban készült: a MailCraft soha nem módosítja"
+
+#. command label
+#: crates/engine/src/cmd/sieve_replies.rs
+#, fuzzy
+msgid "Sieve Script to Send"
+msgstr "Elküldendő Sieve-szkript"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "This account's server doesn't offer Sieve scripts (ManageSieve), so its rules run on this computer."
+msgstr "A fiók szervere nem kínál Sieve-szkripteket (ManageSieve), ezért a szabályai ezen a számítógépen futnak."
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "This server's Sieve scripts can't file mail into folders, so its rules run on this computer."
+msgstr "A szerver Sieve-szkriptjei nem tudnak leveleket mappákba tenni, ezért a szabályai ezen a számítógépen futnak."
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your Sieve script \"{name}\" runs on the server instead of MailCraft's, so these rules run on this computer. MailCraft never switches your script off."
+msgstr "A szerveren a MailCraft helyett az Ön „{name}” Sieve-szkriptje fut, ezért ezek a szabályok ezen a számítógépen futnak. A MailCraft soha nem kapcsolja ki az Ön szkriptjét."
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your rules are kept on the server"
+msgstr "A szabályai a szerveren vannak"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your rules were saved on the server, but another Sieve script of yours runs there, so they run on this computer"
+msgstr "A szabályai a szerverre kerültek, de ott egy másik Sieve-szkriptje fut, ezért ezen a számítógépen futnak"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "Your rules weren't changed on the server"
+msgstr "A szabályai nem változtak meg a szerveren"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "another Sieve script of yours runs on the server"
+msgstr "a szerveren egy másik Sieve-szkriptje fut"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "it has a part MailCraft can't write as Sieve"
+msgstr "van egy része, amelyet a MailCraft nem tud Sieve-ben megírni"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "it has no conditions, and on the server it would act on every message"
+msgstr "nincsenek feltételei, és a szerveren minden üzenetre hatna"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+#, fuzzy
+msgid "it is being written to the server"
+msgstr "éppen a szerverre íródik"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "its sizes are larger than the server takes"
+msgstr "a méretei nagyobbak, mint amit a szerver elfogad"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the account has no address to look for"
+msgstr "a fióknak nincs címe, amelyet keresni lehetne"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the account's Deleted Items isn't on the server"
+msgstr "a fiók Törölt elemek mappája nincs a szerveren"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't do one of its actions or conditions"
+msgstr "a szerver Sieve-szkriptjei nem tudnak végrehajtani egyik műveletét vagy feltételét"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't flag mail for a day"
+msgstr "a szerver Sieve-szkriptjei nem tudnak egy napra megjelölni a leveleket"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at attachments"
+msgstr "a szerver Sieve-szkriptjei nem tudnak mellékleteket vizsgálni"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at categories"
+msgstr "a szerver Sieve-szkriptjei nem tudnak kategóriákat vizsgálni"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at importance"
+msgstr "a szerver Sieve-szkriptjei nem tudnak fontosságot vizsgálni"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't look at sensitivity"
+msgstr "a szerver Sieve-szkriptjei nem tudnak bizalmasságot vizsgálni"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't set categories"
+msgstr "a szerver Sieve-szkriptjei nem tudnak kategóriákat beállítani"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't set importance"
+msgstr "a szerver Sieve-szkriptjei nem tudnak fontosságot beállítani"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't tell automatic replies"
+msgstr "a szerver Sieve-szkriptjei nem tudnak felismerni az automatikus válaszokat"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't tell mail sent to you alone"
+msgstr "a szerver Sieve-szkriptjei nem tudnak felismerni a csak Önnek küldött leveleket"
+
+#. name
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "the server's Sieve scripts can't tell meeting invitations"
+msgstr "a szerver Sieve-szkriptjei nem tudnak felismerni a értekezlet-meghívásokat"
+
+#. what a command says
+#: crates/engine/src/cmd/rules.rs
+#, fuzzy
+msgid "this rule is in your Sieve script \"{script}\" on the server, made in another program: MailCraft shows it and never changes it"
+msgstr "ez a szabály az Ön „{script}” Sieve-szkriptjében van a szerveren, amely másik programban készült: a MailCraft megjeleníti, de soha nem módosítja"

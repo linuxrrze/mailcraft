@@ -183,9 +183,15 @@ pub mod senders;
 #[cfg(test)]
 mod senders_tests;
 pub mod shared;
+pub mod sieve_elsewhere;
+#[cfg(test)]
+mod sieve_elsewhere_tests;
 pub mod sieve_replies;
 #[cfg(test)]
 mod sieve_replies_tests;
+pub mod sieve_rules;
+#[cfg(test)]
+mod sieve_rules_tests;
 pub mod signature;
 #[cfg(test)]
 mod signature_tests;
