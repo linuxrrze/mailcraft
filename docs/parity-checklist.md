@@ -26,7 +26,7 @@
 | Calendar | 21 | 0 | 26 |
 | Appointment | 20 | 0 | 20 |
 | Meeting | 5 | 0 | 5 |
-| People | 11 | 0 | 16 |
+| People | 12 | 0 | 17 |
 | Tasks | 16 | 0 | 18 |
 | Help | 5 | 0 | 5 |
 

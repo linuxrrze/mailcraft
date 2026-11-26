@@ -939,6 +939,7 @@ const WRITTEN_PARAMS: &[&str] = &[
     "mime",
     "expected",
     "changeKey",
+    "delta",
     "etag",
     "lastModified",
     "contactHomes",
