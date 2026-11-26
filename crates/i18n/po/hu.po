@@ -22355,6 +22355,12 @@ msgstr "Várva a jóváhagyás váratlanul leállt"
 msgid "Waiting for the system's credential store…"
 msgstr "Várakozás a rendszer hitelesítőadat-tárolójára…"
 
+#. what a command says
+#: crates/engine/src/cmd/contacts_remote.rs
+#, fuzzy
+msgid "Waiting for your permission to change this account's contacts on its server: File › Info › Ask again"
+msgstr "Várakozás az engedélyére a fiók névjegyeinek módosításához a kiszolgálóján: Fájl › Információ › Újbóli engedélykérés"
+
 #. interface
 #: crates/ui-egui/src/credits.rs
 #, fuzzy

@@ -22436,6 +22436,12 @@ msgstr "Oczekiwanie na zatwierdzenie nieoczekiwanie się zakończyło"
 msgid "Waiting for the system's credential store…"
 msgstr "Oczekiwanie na magazyn poświadczeń systemu…"
 
+#. what a command says
+#: crates/engine/src/cmd/contacts_remote.rs
+#, fuzzy
+msgid "Waiting for your permission to change this account's contacts on its server: File › Info › Ask again"
+msgstr "Oczekiwanie na Twoją zgodę na zmianę kontaktów tego konta na jego serwerze: Plik › Informacje › Zapytaj ponownie"
+
 #. interface
 #: crates/ui-egui/src/credits.rs
 #, fuzzy

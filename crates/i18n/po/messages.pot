@@ -18548,6 +18548,11 @@ msgstr ""
 msgid "Waiting for the system's credential store…"
 msgstr ""
 
+#. what a command says
+#: crates/engine/src/cmd/contacts_remote.rs
+msgid "Waiting for your permission to change this account's contacts on its server: File › Info › Ask again"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/credits.rs
 msgid "Want to be one? Sign up in #11"

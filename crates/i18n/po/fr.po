@@ -22270,6 +22270,12 @@ msgstr "L'attente de l'approbation s'est arrêtée de façon inattendue"
 msgid "Waiting for the system's credential store…"
 msgstr "En attente du magasin d'informations d'identification du système…"
 
+#. what a command says
+#: crates/engine/src/cmd/contacts_remote.rs
+#, fuzzy
+msgid "Waiting for your permission to change this account's contacts on its server: File › Info › Ask again"
+msgstr "En attente de votre autorisation pour modifier les contacts de ce compte sur son serveur : Fichier › Informations › Redemander"
+
 #. interface
 #: crates/ui-egui/src/credits.rs
 #, fuzzy

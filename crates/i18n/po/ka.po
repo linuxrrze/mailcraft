@@ -22282,6 +22282,12 @@ msgstr "დამტკიცების მოლოდინი მოულ�
 msgid "Waiting for the system's credential store…"
 msgstr "სისტემის ავტორიზაციის მონაცემების საცავის მოლოდინი…"
 
+#. what a command says
+#: crates/engine/src/cmd/contacts_remote.rs
+#, fuzzy
+msgid "Waiting for your permission to change this account's contacts on its server: File › Info › Ask again"
+msgstr "ველოდებით თქვენს ნებართვას ამ ანგარიშის კონტაქტების მის სერვერზე შესაცვლელად: ფაილი › ინფორმაცია › ხელახლა მოთხოვნა"
+
 #. interface
 #: crates/ui-egui/src/credits.rs
 #, fuzzy
