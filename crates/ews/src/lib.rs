@@ -54,6 +54,9 @@ pub mod availability;
 pub mod basic;
 #[deny(missing_docs)]
 #[cfg_attr(not(test), deny(clippy::indexing_slicing, clippy::arithmetic_side_effects))]
+pub mod categories;
+#[deny(missing_docs)]
+#[cfg_attr(not(test), deny(clippy::indexing_slicing, clippy::arithmetic_side_effects))]
 pub mod changes;
 #[deny(missing_docs)]
 #[cfg_attr(not(test), deny(clippy::indexing_slicing, clippy::arithmetic_side_effects))]
@@ -122,6 +125,8 @@ pub mod standin_write;
 
 #[cfg(test)]
 mod availability_tests;
+#[cfg(test)]
+mod categories_tests;
 #[cfg(test)]
 mod delete_check_tests;
 #[cfg(test)]
