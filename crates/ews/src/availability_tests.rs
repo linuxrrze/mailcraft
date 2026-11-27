@@ -6,6 +6,9 @@
 use mailcraft_model::ShowAs;
 use mailcraft_model::remote::{FreeBusyAsk, MAX_SCHEDULES};
 
+use mailcraft_time::Weekday;
+
+use crate::availability::working_hours;
 use crate::reply::Reply;
 use crate::soap::{MESSAGES, SOAP, TYPES};
 use crate::standin::{AUTHORIZATION, StandIn, block_on};
@@ -197,4 +200,88 @@ fn a_long_question_is_cut_to_what_the_server_answers() {
     let answer = block_on(client().availability(&standin, &question)).unwrap().unwrap();
     assert_eq!(answer.to, DAY + 42 * 86_400);
     assert_eq!(answer.people.first().map(|p| p.busy.len()), Some(4), "the meeting two days on too");
+}
+
+/// An answer about the owner alone, with the working hours `hours` (a `WorkingHours` element).
+fn with_hours(hours: &str) -> Reply {
+    reply(&format!(
+        "<m:FreeBusyResponseArray><m:FreeBusyResponse><m:ResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode>\
+         </m:ResponseMessage><m:FreeBusyView><t:FreeBusyViewType>FreeBusy</t:FreeBusyViewType>{hours}</m:FreeBusyView></m:FreeBusyResponse>\
+         </m:FreeBusyResponseArray>"
+    ))
+}
+
+fn change(bias: i32, time: &str, order: u8, month: u8, day: &str) -> String {
+    format!(
+        "<t:Bias>{bias}</t:Bias><t:Time>{time}</t:Time><t:DayOrder>{order}</t:DayOrder><t:Month>{month}</t:Month><t:DayOfWeek>{day}</t:DayOfWeek>"
+    )
+}
+
+fn hours_in(zone: &str, days: &str, start: u16, end: u16) -> String {
+    format!(
+        "<t:WorkingHours><t:TimeZone>{zone}</t:TimeZone><t:WorkingPeriodArray><t:WorkingPeriod><t:DayOfWeek>{days}</t:DayOfWeek>\
+         <t:StartTimeInMinutes>{start}</t:StartTimeInMinutes><t:EndTimeInMinutes>{end}</t:EndTimeInMinutes></t:WorkingPeriod></t:WorkingPeriodArray></t:WorkingHours>"
+    )
+}
+
+/// Central Europe: an hour east, two in summer, from the last Sunday of March at 02:00 to the
+/// last Sunday of October at 03:00 (2026: the 29th of March and the 25th of October).
+fn central_europe() -> String {
+    format!(
+        "<t:Bias>-60</t:Bias><t:StandardTime>{}</t:StandardTime><t:DaylightTime>{}</t:DaylightTime>",
+        change(0, "03:00:00", 5, 10, "Sunday"),
+        change(-60, "02:00:00", 5, 3, "Sunday")
+    )
+}
+
+fn at(text: &str) -> i64 {
+    mailcraft_time::iso_to_timestamp(text, 0).unwrap()
+}
+
+/// The owner's working hours come with the zone's offset at the time they are read, the change
+/// to and from daylight time falling where the zone's rules put it.
+#[test]
+fn working_hours_come_with_the_offset_their_zone_has_then() {
+    let answer = with_hours(&hours_in(&central_europe(), "Monday Tuesday Wednesday Thursday Friday", 480, 1020));
+    let hours = working_hours(&answer, at("2026-07-01T12:00:00Z")).unwrap();
+    assert_eq!(hours.days, [Weekday::Mon, Weekday::Tue, Weekday::Wed, Weekday::Thu, Weekday::Fri]);
+    assert_eq!((hours.start, hours.end, hours.offset), (480, 1020, 120));
+    let offset = |when: &str| working_hours(&answer, at(when)).unwrap().offset;
+    assert_eq!(offset("2026-12-01T12:00:00Z"), 60);
+    // 02:00 by winter's clock on the 29th of March is 01:00 UTC.
+    assert_eq!((offset("2026-03-29T00:59:59Z"), offset("2026-03-29T01:00:00Z")), (60, 120));
+    // 03:00 by summer's clock on the 25th of October is 01:00 UTC.
+    assert_eq!((offset("2026-10-25T00:59:59Z"), offset("2026-10-25T01:00:00Z")), (120, 60));
+}
+
+/// South of the equator daylight time runs over the new year: Sydney is ten hours east, eleven
+/// from the first Sunday of October to the first Sunday of April.
+#[test]
+fn daylight_time_over_the_new_year_is_read_too() {
+    let sydney = format!(
+        "<t:Bias>-600</t:Bias><t:StandardTime>{}</t:StandardTime><t:DaylightTime>{}</t:DaylightTime>",
+        change(0, "03:00:00", 1, 4, "Sunday"),
+        change(-60, "02:00:00", 1, 10, "Sunday")
+    );
+    let answer = with_hours(&hours_in(&sydney, "Weekday", 540, 1050));
+    let offset = |when: &str| working_hours(&answer, at(when)).unwrap().offset;
+    assert_eq!((offset("2026-01-15T00:00:00Z"), offset("2026-07-15T00:00:00Z")), (660, 600));
+    assert_eq!(working_hours(&answer, at("2026-07-15T00:00:00Z")).unwrap().days.len(), 5, "Weekday is Monday to Friday");
+}
+
+/// A zone that names no changes is its bias alone; hours that aren't hours are no hours.
+#[test]
+fn a_zone_without_changes_and_hours_that_arent_hours() {
+    let plain = hours_in("<t:Bias>300</t:Bias>", "Monday", 480, 1020);
+    assert_eq!(working_hours(&with_hours(&plain), at("2026-07-01T12:00:00Z")).unwrap().offset, -300);
+    for wrong in [
+        hours_in("<t:Bias>0</t:Bias>", "Monday", 1020, 480),
+        hours_in("<t:Bias>0</t:Bias>", "Someday", 480, 1020),
+        hours_in("<t:Bias>0</t:Bias>", "Monday", 480, 2000),
+        hours_in("<t:Bias>99999</t:Bias>", "Monday", 480, 1020),
+        hours_in("<t:Bias>lots</t:Bias>", "Monday", 480, 1020),
+    ] {
+        assert_eq!(working_hours(&with_hours(&wrong), 0), None, "{wrong}");
+    }
+    assert_eq!(working_hours(&with_hours(""), 0), None, "none said");
 }

@@ -14,7 +14,7 @@
 
 use mailcraft_model::ShowAs;
 use mailcraft_model::remote::{BusyTime, FreeBusy, FreeBusyAsk, MAX_BUSY, PersonSchedule};
-use mailcraft_time::{DateTime, Timestamp};
+use mailcraft_time::{Date, DateTime, Timestamp, Weekday};
 
 use crate::error::{Error, ResponseClass, ResponseCode};
 use crate::reply::Reply;
@@ -187,4 +187,99 @@ fn utc_zone() -> Element {
             .child(Element::new("t:DayOfWeek").text("Sunday"))
     };
     Element::new("t:TimeZone").child(Element::new("t:Bias").text("0")).child(change("t:StandardTime")).child(change("t:DaylightTime"))
+}
+
+/// The working hours the owner has set in the mailbox, from an answer about the owner alone
+/// (`FreeBusyView/WorkingHours` of its first response): the days and the hours of its first
+/// working period, and the offset its zone has at `at`. `None` when the answer has none, or
+/// what it has isn't working hours (no day, an end before the start, hours past the day).
+pub fn working_hours(reply: &Reply, at: Timestamp) -> Option<mailcraft_model::sync::EwsWorkingHours> {
+    let responses = reply.availability().ok()?;
+    let (message, response) = responses.first()?;
+    if message.class() == ResponseClass::Error {
+        return None;
+    }
+    let hours = response.child("FreeBusyView")?.child_in(TYPES, "WorkingHours")?;
+    let offset = zone_offset(hours.child_in(TYPES, "TimeZone")?, at)?;
+    let period = hours.child_in(TYPES, "WorkingPeriodArray")?.children.iter().find(|period| period.is(TYPES, "WorkingPeriod"))?;
+    let minutes = |name: &str| period.child_in(TYPES, name)?.text.trim().parse::<u16>().ok();
+    let (start, end) = (minutes("StartTimeInMinutes")?, minutes("EndTimeInMinutes")?);
+    let days = week_days(&period.child_in(TYPES, "DayOfWeek")?.text);
+    (!days.is_empty() && start < end && end <= 24 * 60).then_some(mailcraft_model::sync::EwsWorkingHours { days, start, end, offset })
+}
+
+/// The days a `DayOfWeek` list names (`Monday Tuesday`), with the schema's `Day`, `Weekday` and
+/// `WeekendDay` as the days they stand for; each once, in the week's order.
+fn week_days(text: &str) -> Vec<Weekday> {
+    use Weekday::{Fri, Mon, Sat, Sun, Thu, Tue, Wed};
+    const WEEK: [Weekday; 7] = [Mon, Tue, Wed, Thu, Fri, Sat, Sun];
+    let mut named = [false; 7];
+    for word in text.split([' ', ',', ';']).take(32) {
+        let days: &[usize] = match word.trim() {
+            "Monday" => &[0],
+            "Tuesday" => &[1],
+            "Wednesday" => &[2],
+            "Thursday" => &[3],
+            "Friday" => &[4],
+            "Saturday" => &[5],
+            "Sunday" => &[6],
+            "Weekday" => &[0, 1, 2, 3, 4],
+            "WeekendDay" => &[5, 6],
+            "Day" => &[0, 1, 2, 3, 4, 5, 6],
+            _ => &[],
+        };
+        for at in days {
+            if let Some(slot) = named.get_mut(*at) {
+                *slot = true;
+            }
+        }
+    }
+    WEEK.iter().zip(named).filter(|(_, on)| *on).map(|(day, _)| *day).collect()
+}
+
+/// The offset from UTC (minutes east) that a `SerializableTimeZone` has at `at`: its `Bias` (UTC
+/// is the wall clock plus the bias), and the standard or daylight time's own bias on top, as the
+/// changes between them fall in that year (the `DayOrder`th `DayOfWeek` of the `Month`, 5 being
+/// the last, at `Time` of the clock that is ending). A zone without changes (no month for either)
+/// has its bias alone. `None` for what doesn't read, or an offset of more than a day.
+fn zone_offset(zone: &Node, at: Timestamp) -> Option<i32> {
+    let number = |node: &Node, name: &str| -> Option<i32> { node.child_in(TYPES, name)?.text.trim().parse::<i32>().ok() };
+    let bias = number(zone, "Bias")?;
+    let change = |name: &str| zone.child_in(TYPES, name).map(|node| (node, number(node, "Bias").unwrap_or(0)));
+    let (standard, daylight) = (change("StandardTime"), change("DaylightTime"));
+    let offset = |extra: i32| bias.checked_add(extra).and_then(i32::checked_neg).filter(|offset| offset.abs() <= 24 * 60);
+    let (Some((standard, standard_bias)), Some((daylight, daylight_bias))) = (standard, daylight) else { return offset(0) };
+    let standard_offset = offset(standard_bias)?;
+    let daylight_offset = offset(daylight_bias)?;
+    let year = DateTime::from_timestamp(at, standard_offset).date.year;
+    // Each change, at the clock that is ending: daylight time begins by standard time's clock.
+    let (Some(to_daylight), Some(to_standard)) = (change_at(daylight, year, standard_offset), change_at(standard, year, daylight_offset)) else {
+        return Some(standard_offset);
+    };
+    let daylight_now = if to_daylight < to_standard {
+        at >= to_daylight && at < to_standard
+    } else {
+        // (South of the equator: daylight time runs over the new year.)
+        !(at >= to_standard && at < to_daylight)
+    };
+    Some(if daylight_now { daylight_offset } else { standard_offset })
+}
+
+/// When the change `rule` falls in `year`, by a clock `offset` minutes east of UTC. `None` for a
+/// rule without a month (no change) or one that doesn't read.
+fn change_at(rule: &Node, year: i32, offset: i32) -> Option<Timestamp> {
+    let text = |name: &str| rule.child_in(TYPES, name).map_or("", |node| node.text.trim());
+    let month: u8 = text("Month").parse().ok().filter(|month| (1..=12).contains(month))?;
+    let order: u8 = text("DayOrder").parse().ok().filter(|order| (1..=5).contains(order))?;
+    let weekday = week_days(text("DayOfWeek")).into_iter().next()?;
+    let mut clock = text("Time").split(':').map(|part| part.parse::<u8>().ok());
+    let (hour, minute, second) = (clock.next().flatten()?, clock.next().flatten().unwrap_or(0), clock.next().flatten().unwrap_or(0));
+    let first = Date::new(year, month, 1)?;
+    let ahead = i64::from(weekday.index()).saturating_sub(i64::from(first.weekday().index())).rem_euclid(7);
+    let mut day = first.add_days(ahead.saturating_add(i64::from(order.saturating_sub(1)).saturating_mul(7)));
+    // The fifth is the last: a month with four of that day has it on the fourth.
+    while day.month != month {
+        day = day.add_days(-7);
+    }
+    Some(DateTime::new(day, hour, minute, second)?.to_timestamp(offset))
 }
