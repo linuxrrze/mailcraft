@@ -1,0 +1,1 @@
+- With an Exchange server account, the categories set in the mailbox come down with their colours. ([#252](https://github.com/GITHUB_REPOSITORY/issues/252))

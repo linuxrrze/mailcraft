@@ -21,8 +21,8 @@ use std::sync::atomic::AtomicBool;
 
 use mailcraft_model::CalendarOwner;
 use mailcraft_model::remote::{
-    CalendarsDownload, ContactOutcome, ContactsDownload, ContactsUploaded, EventOutcome, EventResult, EventsDownload, EventsUploaded,
-    RemoteAddressBook, RemoteCalendar, RemoteContact, RemoteEvent, RemoteEventKind,
+    CalendarsDownload, CategoriesDownload, ContactOutcome, ContactsDownload, ContactsUploaded, EventOutcome, EventResult, EventsDownload,
+    EventsUploaded, RemoteAddressBook, RemoteCalendar, RemoteContact, RemoteEvent, RemoteEventKind,
 };
 use mailcraft_model::remote_tasks::{RemoteTask, RemoteTaskList, TaskOpKind, TaskOutcome, TaskResult, TasksDownload, TasksUploaded};
 
@@ -150,6 +150,14 @@ impl<E: HttpExchange> Run<'_, E> {
         // own calendar (not a read of the days on screen, nor a shared mailbox's).
         if request.calendars && mailbox.is_none() && !request.background {
             out.working_hours = self.working_hours(&request.email).await;
+            // And the mailbox's own categories with their colours (never worth failing for).
+            match self.ask(&crate::categories::get_category_list(), &|reply| crate::categories::read_category_list(reply)).await {
+                Ok(categories) => {
+                    out.categories = Some(CategoriesDownload { account: request.account, email: request.email.clone(), categories, complete: true });
+                }
+                Err(Asked::Stop(stop)) => return Err(Asked::Stop(stop)),
+                Err(_) => log::debug!("ews: the mailbox's categories couldn't be had"),
+            }
         }
         if request.contacts {
             match self.read_contacts(request.account, &request.email, mailbox, None).await {

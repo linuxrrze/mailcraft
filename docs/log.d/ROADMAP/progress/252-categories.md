@@ -1,0 +1,1 @@
+| 2026-11-27 | #252: an Exchange server account's own list of categories and their colours (the calendar folder's `CategoryList`, `GetUserConfiguration`, [MS-OXOCFG]) comes down with each Send/Receive of the calendar, read only; `XmlData` is read to 1 MB |

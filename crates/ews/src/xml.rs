@@ -48,6 +48,10 @@ pub const MAX_MIME_TEXT: usize = 16 * 1024 * 1024;
 /// has, which grows with the folder (a compressed list of the items it has told of): a large
 /// folder's runs to some tens of kilobytes.
 pub const MAX_SYNC_STATE: usize = 1024 * 1024;
+/// Longest text kept of an `XmlData` (bytes): a configuration item's document in base64 (the
+/// mailbox's list of categories, which keeps a few attributes for each and runs to tens of
+/// kilobytes in a mailbox that has many).
+pub const MAX_XML_DATA: usize = 1024 * 1024;
 /// What an element costs besides its name, attributes and text: the size of a node and the
 /// allocator's share of the block that holds it in its parent's `children`. (The vectors of a
 /// node are shrunk to fit when it is closed, so that a vector's spare room is no further cost.)
@@ -295,6 +299,7 @@ impl Walk {
         let cap = match open.node.name.as_str() {
             "MimeContent" => MAX_MIME_TEXT,
             "SyncState" => MAX_SYNC_STATE,
+            "XmlData" => MAX_XML_DATA,
             _ => MAX_TEXT,
         };
         if open.node.text.len().saturating_add(text.len()) > cap {
