@@ -1,0 +1,1 @@
+| 2026-11-27 | #252: an Exchange server account's calendar read keeps going past a calendar that can't be read, puts the default calendar first, keeps a list past its cap from taking calendars away, and no longer makes the mail run incomplete or a failed read count as a fresh one (#962 review) |
