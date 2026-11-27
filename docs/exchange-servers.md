@@ -18,6 +18,12 @@ in every folder request; it is listed under Shared Calendars or with the account
 lets the owner into the shared folder it is given but not list that mailbox's other folders, so a
 shared calendar or book is read as its default folder there.
 
+Find a Time asks the server when the people invited are busy, for a meeting in the account's
+calendar (`GetUserAvailability`, [MS-OXWSGTAV]): their addresses and the day go to the server, with
+the password the Send/Receive was given; what comes back is when each person's time is taken and
+how (busy, tentative, out of office, working elsewhere), never by what. Somebody the server can't
+look up says so in their row.
+
 ## Calendar acceptance on a hosted EWS mailbox
 
 On Linux, the EWS directory runner discovered the default calendar over HTTPS and created a
@@ -80,6 +86,7 @@ This does not close every window. If MailCraft is killed, or the computer loses 
 - A shared mailbox's other calendars and address books are not found on Grommunio, which refuses `FindFolder` on that mailbox's top: only the default calendar and address book of a person whose folder is shared are read.
 - A recurring series is read as the occurrences the server gives and the master when its rule can be said here; whether Exchange Server and Grommunio agree on the series' time zone over a daylight-saving change has not been tried.
 - Changing a shared calendar's or address book's items needs the same editing rights Grommunio's `grant` names; only reading was tried there.
+- Find a Time's free and busy times have been tried against the strict stand-in alone, not yet against Exchange Server or Grommunio.
 
 ## Exchange Server 2019
 

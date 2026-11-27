@@ -32,9 +32,9 @@
 //! changed here since the server last said. No server id and no sync state is logged.
 
 use mailcraft_model::sync::{
-    ArchiveSeen, ChangeOutcome, EwsFetchRequest, EwsFolderState, EwsMailRequest, EwsMailResult, EwsResolveRequest, EwsScope, FolderChange,
-    FolderChangeDone, GraphFetchResult, MAX_DRAFTS, MAX_EWS_STATE_BYTES, MAX_EWS_STATES, MAX_FOLDER_CHANGES, MAX_MESSAGE_CHANGES, MAX_RESOLVE_TEXT,
-    MAX_RESOLVE_TEXTS, MessageOutcome, SendOutcome, SyncPhase, one_line,
+    ArchiveSeen, ChangeOutcome, EwsFetchRequest, EwsFolderState, EwsFreeBusyRequest, EwsMailRequest, EwsMailResult, EwsResolveRequest, EwsScope,
+    FolderChange, FolderChangeDone, GraphFetchResult, MAX_DRAFTS, MAX_EWS_STATE_BYTES, MAX_EWS_STATES, MAX_FOLDER_CHANGES, MAX_MESSAGE_CHANGES,
+    MAX_RESOLVE_TEXT, MAX_RESOLVE_TEXTS, MessageOutcome, SendOutcome, SyncPhase, one_line,
 };
 use mailcraft_model::{Account, AccountKind, EwsServer, FolderKind, Id, Mailbox};
 use serde_json::{Value, json};
@@ -379,6 +379,26 @@ pub fn ews_resolve_request_for(s: &Session, account: Id, texts: &[String]) -> Re
     // (A shared mailbox's address list is its owner's server's, asked as the owner.)
     let (url, username, trusted) = connection(&s.mailbox, a, server);
     Ok(EwsResolveRequest { account, email: a.email.clone(), url, username, trusted, texts: asked })
+}
+
+/// What the server of the Exchange server account `account` is asked about other people's time
+/// (Find a Time): `ask` as `calendar.freeBusy` worked it out, tidied (addresses that are addresses,
+/// each once, a few at most). Nothing but the addresses and the stretch goes to the server.
+pub fn ews_free_busy_request(s: &Session, account: Id, ask: &mailcraft_model::remote::FreeBusyAsk) -> Result<EwsFreeBusyRequest, CmdError> {
+    let (a, server) = ews_account(&s.mailbox, account)?;
+    let mut ask = ask.clone();
+    ask.tidy();
+    if ask.people.is_empty() {
+        return Err(fail("nobody with an address is asked about"));
+    }
+    Ok(EwsFreeBusyRequest {
+        account,
+        email: a.email.clone(),
+        url: server.url.clone(),
+        username: server.username.clone(),
+        trusted: server.trusted.clone(),
+        ask,
+    })
 }
 
 fn fetch_request(s: &mut Session, v: &Value) -> CmdResult {

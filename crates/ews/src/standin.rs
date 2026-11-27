@@ -257,6 +257,10 @@ pub struct State {
     pub versions: Vec<String>,
     /// The organisation's address list, for `ResolveNames` (#1262).
     pub directory: Vec<crate::standin_directory::Person>,
+    /// The people whose free and busy time `GetUserAvailability` tells (Find a Time).
+    pub schedules: Vec<crate::standin_availability::Schedule>,
+    /// How many `GetUserAvailability` questions were answered.
+    pub availability_asked: u32,
 }
 
 impl Default for State {
@@ -358,6 +362,8 @@ impl Default for State {
             omits_recipients: false,
             versions: Vec::new(),
             directory: Vec::new(),
+            schedules: Vec::new(),
+            availability_asked: 0,
         }
     }
 }
@@ -599,6 +605,7 @@ impl State {
             "SyncFolderItems" => self.sync_items(operation),
             "GetItem" => self.get_item(operation),
             "ResolveNames" => self.resolve_names(operation),
+            "GetUserAvailabilityRequest" => self.get_user_availability(operation),
             name if crate::standin_write::HANDLED.contains(&name) => {
                 self.writes.push(name.to_owned());
                 self.write(name, operation)
@@ -863,7 +870,7 @@ impl State {
     }
 }
 
-fn envelope(body: &str) -> String {
+pub(crate) fn envelope(body: &str) -> String {
     format!(
         "<?xml version=\"1.0\" encoding=\"utf-8\"?><s:Envelope xmlns:s=\"{SOAP}\"><s:Header>\
          <h:ServerVersionInfo MajorVersion=\"15\" MinorVersion=\"20\" MajorBuildNumber=\"9000\" MinorBuildNumber=\"10\" Version=\"V2018_01_08\" xmlns:h=\"{TYPES}\"/>\

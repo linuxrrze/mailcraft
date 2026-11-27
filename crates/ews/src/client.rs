@@ -153,6 +153,16 @@ impl Client {
         lookup.answer(&self.call(exchange, &lookup.element()).await?)
     }
 
+    /// When the people of `ask` are busy (Find a Time): `GetUserAvailability`, which reads and
+    /// changes nothing.
+    pub async fn availability<E: HttpExchange>(
+        &self,
+        exchange: &E,
+        ask: &crate::availability::GetUserAvailability,
+    ) -> Result<mailcraft_model::remote::FreeBusy, Error> {
+        ask.answer(&self.call(exchange, &ask.element()).await?)
+    }
+
     /// Tests the account: the Inbox can be had. It is `GetFolder` of the Inbox by its
     /// distinguished name, and nothing is changed by it.
     pub async fn check<E: HttpExchange>(&self, exchange: &E) -> Result<FolderInfo, Error> {

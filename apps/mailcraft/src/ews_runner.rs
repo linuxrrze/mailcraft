@@ -45,18 +45,19 @@ use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 
 use mailcraft_ews::{
-    AuthError, Candidate, Client, HttpExchange, HttpRequest, HttpResponse, NtlmCredentials, RecipientKind, ResolveNames, Scheme, Secret,
-    TransportError, auth, ntlm,
+    AuthError, Candidate, Client, GetUserAvailability, HttpExchange, HttpRequest, HttpResponse, NtlmCredentials, RecipientKind, ResolveNames, Scheme,
+    Secret, TransportError, auth, ntlm,
 };
 use mailcraft_model::sync::{
-    DirectoryKind, DirectoryPerson, EwsDirectoryRequest, EwsDirectoryResult, EwsFetchRequest, EwsMailRequest, EwsMailResult, EwsResolveRequest,
-    EwsResolveResult, EwsResolved, GraphFetchResult, MAX_RESOLVE_PEOPLE, MAX_RESOLVE_TEXTS, SyncPhase, Timings,
+    DirectoryKind, DirectoryPerson, EwsDirectoryRequest, EwsDirectoryResult, EwsFetchRequest, EwsFreeBusyRequest, EwsMailRequest, EwsMailResult,
+    EwsResolveRequest, EwsResolveResult, EwsResolved, GraphFetchResult, MAX_RESOLVE_PEOPLE, MAX_RESOLVE_TEXTS, SyncPhase, Timings,
 };
 use mailcraft_net::https::Connection;
 use mailcraft_net::{CertificateProblem, NetError};
 use mailcraft_ui_egui::check_names::EwsResolveJob;
 use mailcraft_ui_egui::ews_calendar::EwsCalendarJob;
 use mailcraft_ui_egui::ews_mail::{EwsFetchJob, EwsJob};
+use mailcraft_ui_egui::scheduling::{EwsFreeBusyJob, FreeBusyResult};
 
 /// What the run says when the secure connection could not be had for a reason the owner can't
 /// answer (an expired certificate, one for another server): in words with nothing of the certificate.
@@ -620,6 +621,83 @@ pub(crate) fn run_calendar(job: EwsCalendarJob, wake: &egui::Context) -> Receive
         log::error!("couldn't start reading the calendar of an Exchange server account: {e}");
     }
     rx
+}
+
+/// Asks an Exchange server account's server when other people are busy (Find a Time), on a thread
+/// of its own: one `GetUserAvailability`, which reads and changes nothing.
+pub(crate) fn run_free_busy(job: EwsFreeBusyJob, wake: &egui::Context) -> Receiver<FreeBusyResult> {
+    let (tx, rx) = std::sync::mpsc::channel();
+    let wake = wake.clone();
+    let spawned = std::thread::Builder::new().name("exchange free/busy".into()).spawn(move || {
+        let EwsFreeBusyJob { request, secret } = job;
+        let _ = tx.send(run_free_busy_with(&request, &secret));
+        wake.request_repaint();
+    });
+    if let Err(e) = spawned {
+        log::error!("couldn't start asking an Exchange server when people are busy: {e}");
+    }
+    rx
+}
+
+/// [`run_free_busy`] on this thread. A busy server is asked once more after its wait; what goes
+/// wrong otherwise is said in words that name neither the server nor anybody.
+pub(crate) fn run_free_busy_with(request: &EwsFreeBusyRequest, password: &str) -> FreeBusyResult {
+    let mut out = FreeBusyResult { account: request.account, ..Default::default() };
+    let Some(question) = GetUserAvailability::new(&request.ask) else {
+        out.error = "Nobody with an address was asked about".to_owned();
+        return out;
+    };
+    let client = match client(&request.url, &request.username, &request.email, password) {
+        Ok(client) => client,
+        Err(why) => {
+            out.error = why.to_owned();
+            return out;
+        }
+    };
+    let transport = Transport::new(&request.trusted).with_ntlm(ntlm_key(&request.username, &request.email, password));
+    let never = AtomicBool::new(false);
+    let mut tries = 0u8;
+    let answer = loop {
+        tries = tries.saturating_add(1);
+        match crate::block_on::block_on(client.availability(&transport, &question)) {
+            Err(mailcraft_ews::Error::Busy { back_off_ms }) if tries < 2 => {
+                if !wait(&never, back_off_ms.min(MOST_RESOLVE_WAIT_MS)) {
+                    break Err(mailcraft_ews::Error::Busy { back_off_ms });
+                }
+            }
+            answer => break answer,
+        }
+    };
+    match answer {
+        Ok(schedule) => out.schedule = Some(schedule),
+        Err(error) => {
+            out.password_refused = matches!(error, mailcraft_ews::Error::Unauthorized) && transport.auth_problem().is_none();
+            out.error = free_busy_words(&error, transport.problem().as_ref(), transport.auth_problem());
+        }
+    }
+    out
+}
+
+/// Why the server couldn't say when people are busy, in words for the owner.
+fn free_busy_words(error: &mailcraft_ews::Error, problem: Option<&CertificateProblem>, auth: Option<AuthProblem>) -> String {
+    use mailcraft_ews::Error;
+    const LINE: &str = "Couldn't see when people are free";
+    if let Some(auth) = auth {
+        return format!("{LINE}: {}", auth.words());
+    }
+    if let Some(problem) = problem {
+        return format!("{LINE}: {problem}");
+    }
+    let why = match error {
+        Error::Unauthorized => "the server turned the password down",
+        Error::Busy { .. } => "the server is busy; try again in a moment",
+        Error::Blocked(_) | Error::Forbidden => "the server doesn't allow it",
+        Error::Transport(TransportError::Unreachable) => "the server can't be reached",
+        Error::Transport(_) => "the connection to the server failed",
+        Error::Server(_) => "the server refused",
+        _ => "the server's answer can't be read",
+    };
+    format!("{LINE}: {why}")
 }
 
 /// How long a busy server is waited for before a name is asked again, at most.

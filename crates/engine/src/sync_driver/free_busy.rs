@@ -10,7 +10,7 @@
 
 use mailcraft_i18n::Lang;
 use mailcraft_model::remote::{FreeBusy, FreeBusyAsk, MAX_SCHEDULES};
-use mailcraft_model::{Account, Address, Id, OAuthProvider, ShowAs};
+use mailcraft_model::{Account, AccountKind, Address, Id, OAuthProvider, ShowAs};
 use mailcraft_time::{Date, DateTime};
 use serde_json::{Value, json};
 
@@ -191,8 +191,9 @@ impl Session {
     pub fn free_busy_account(&self, calendar: Id, reachable: bool, lang: Lang) -> Result<Account, String> {
         let mailbox = &self.mailbox;
         let keeper = mailbox.calendar(calendar).and_then(|c| crate::cmd::remote::keeper(mailbox, &c.origin));
-        let microsoft = |a: &&Account| a.oauth.as_ref().is_some_and(|o| o.provider == OAuthProvider::Microsoft);
-        let Some(account) = keeper.filter(microsoft) else {
+        // Microsoft's (Graph's `getSchedule`) or an Exchange server's (`GetUserAvailability`).
+        let asks = |a: &&Account| a.kind == AccountKind::Exchange || a.oauth.as_ref().is_some_and(|o| o.provider == OAuthProvider::Microsoft);
+        let Some(account) = keeper.filter(asks) else {
             return Err(said!(
                 "This meeting's calendar is kept on this computer, which can't tell when other people are busy: only your own calendar is shown."
             )

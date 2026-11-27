@@ -177,3 +177,49 @@ fn a_stand_in_answer_is_taken_in_like_the_hosts() {
     assert!(s.free_busy_stand_in(calendar, &["nobody".into()], day(), &said, &facts(None), 3.0).unwrap_err().contains("Nobody"));
     assert!(s.free_busy_stand_in(calendar, &people(), day(), &json!(5), &facts(None), 3.0).is_err());
 }
+
+/// An Exchange server account's calendar is asked about too (`GetUserAvailability`): the look
+/// puts the question to that account, and the request for its server carries the server's address,
+/// the certificate the owner trusts and the question tidied, nothing else.
+#[test]
+fn an_exchange_server_accounts_calendar_is_asked_about() {
+    let mut s = Session::at(crate::sample::mailbox(NOW, 0), NOW, 0);
+    let url = "https://mail.example.org/EWS/Exchange.asmx";
+    let added = s.run("account.add", &json!({"email": "ada@example.org", "kind": "exchange", "ews": {"url": url, "username": "CORP\\ada"}})).unwrap();
+    let account = added["id"].as_u64().unwrap();
+    let calendar = s.mailbox.calendars[0].id;
+    s.mailbox.calendars[0].origin.account = account;
+    s.mailbox.account_mut(account).unwrap().ews.as_mut().unwrap().trusted = "ab".repeat(32);
+
+    let (look, ask) = s.free_busy_look(calendar, &people(), day(), &facts(None), 0.0);
+    assert!(look.note.is_empty(), "{}", look.note);
+    let ask = ask.expect("due at first");
+    assert_eq!(ask.account.id, account);
+    let question = ask.ask.unwrap();
+    assert_eq!((question.from, question.to), (MIDNIGHT, MIDNIGHT + 86_400));
+
+    let request = crate::cmd::ews_mail::ews_free_busy_request(&s, account, &question).unwrap();
+    assert_eq!(
+        (request.account, request.url.as_str(), request.username.as_str(), request.trusted.as_str()),
+        (account, url, "CORP\\ada", "ab".repeat(32).as_str())
+    );
+    assert_eq!(request.ask.people, ["maya@lumen.example", "tomas@lumen.example"]);
+    // Nobody with an address is no question.
+    let nobody = mailcraft_model::remote::FreeBusyAsk { people: vec!["nobody".into()], ..question };
+    assert!(crate::cmd::ews_mail::ews_free_busy_request(&s, account, &nobody).is_err());
+
+    // The answer is taken in as Microsoft's is.
+    let schedule = FreeBusy {
+        from: MIDNIGHT,
+        to: MIDNIGHT + 86_400,
+        people: vec![PersonSchedule {
+            email: "maya@lumen.example".into(),
+            busy: vec![BusyTime { start: MIDNIGHT + 9 * 3600, end: MIDNIGHT + 10 * 3600, show_as: ShowAs::OutOfOffice }],
+            error: String::new(),
+        }],
+    };
+    s.free_busy_answered(&ask.key, 1.0, &FreeBusyCame { schedule: Some(&schedule), ..Default::default() }, Lang::English);
+    let (look, _) = s.free_busy_look(calendar, &people(), day(), &facts(None), 2.0);
+    let maya = look.people.iter().find(|(email, _)| email == "maya@lumen.example").map(|(_, day)| day.busy.clone());
+    assert_eq!(maya, Some(vec![(9 * 60, 10 * 60, ShowAs::OutOfOffice)]));
+}

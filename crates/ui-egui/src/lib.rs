@@ -471,6 +471,11 @@ pub struct Services {
     /// went to (`mailcraft_ews::sync_directory` with a calendar-only request, #1274). Absent where
     /// no host does: the calendar is then read at Send/Receive only ([`ews_calendar`]).
     pub ews_calendar: Option<Box<dyn Fn(ews_calendar::EwsCalendarJob) -> Receiver<mailcraft_model::sync::EwsDirectoryResult>>>,
+    /// The same host: ask an Exchange server account's server when other people are busy (Find a
+    /// Time: `mailcraft_ews::Client::availability`, one `GetUserAvailability`), on a background
+    /// thread, waking the UI with the answer, as `free_busy` asks Microsoft's. Absent where no host
+    /// does: Find a Time then shows the owner's own calendar alone ([`scheduling`]).
+    pub ews_free_busy: Option<Box<dyn Fn(scheduling::EwsFreeBusyJob) -> Receiver<scheduling::FreeBusyResult>>>,
     /// Desktop: set an Exchange server account up on a background thread (#252, E7), once the owner
     /// has pressed Connect and not before: find the server unless its address is given, ask the
     /// owner (through the job's answers) before the sign-in goes to a host outside the domain, and
