@@ -241,6 +241,10 @@ pub struct EwsDirectoryResult {
     /// The working hours the owner has set in the mailbox, when the run asked and the server said.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub working_hours: Option<EwsWorkingHours>,
+    /// The mailbox's own list of categories and their colours, when the run asked and the server
+    /// said.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub categories: Option<crate::remote::CategoriesDownload>,
 }
 
 /// The working hours of a mailbox as an Exchange server says them (`WorkingHours`, [MS-OXWSGTAV]):

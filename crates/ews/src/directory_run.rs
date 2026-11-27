@@ -21,8 +21,8 @@ use std::sync::atomic::AtomicBool;
 
 use mailcraft_model::CalendarOwner;
 use mailcraft_model::remote::{
-    CalendarsDownload, ContactOutcome, ContactsDownload, ContactsUploaded, EventOutcome, EventResult, EventsDownload, EventsUploaded,
-    RemoteAddressBook, RemoteCalendar, RemoteContact, RemoteEvent, RemoteEventKind,
+    CalendarsDownload, CategoriesDownload, ContactOutcome, ContactsDownload, ContactsUploaded, EventOutcome, EventResult, EventsDownload,
+    EventsUploaded, RemoteAddressBook, RemoteCalendar, RemoteContact, RemoteEvent, RemoteEventKind,
 };
 use mailcraft_model::remote_tasks::{RemoteTask, RemoteTaskList, TaskOpKind, TaskOutcome, TaskResult, TasksDownload, TasksUploaded};
 
@@ -152,6 +152,14 @@ impl<E: HttpExchange> Run<'_, E> {
         // own calendar (not a read of the days on screen, nor a shared mailbox's).
         if request.calendars && mailbox.is_none() && !request.background {
             out.working_hours = self.working_hours(&request.email).await;
+            // And the mailbox's own categories with their colours (never worth failing for).
+            match self.ask(&crate::categories::get_category_list(), &|reply| crate::categories::read_category_list(reply)).await {
+                Ok(categories) => {
+                    out.categories = Some(CategoriesDownload { account: request.account, email: request.email.clone(), categories, complete: true });
+                }
+                Err(Asked::Stop(stop)) => return Err(Asked::Stop(stop)),
+                Err(_) => log::debug!("ews: the mailbox's categories couldn't be had"),
+            }
         }
         if request.contacts {
             match self.read_contacts(request.account, &request.email, mailbox, None).await {
@@ -679,8 +687,18 @@ impl<E: HttpExchange> Run<'_, E> {
                         mailcraft_model::Response::Declined => Answer::Decline,
                         mailcraft_model::Response::None => Answer::Tentative,
                     };
-                    let element = directory::meeting_answer(answer, &op.remote, &op.comment, op.send);
-                    self.ask_once(&element, &|reply| directory::answered(reply)).await.map(|()| (op.remote.clone(), String::new()))
+                    let proposed = op.proposed.map(|time| (time.start, time.end));
+                    let element = directory::meeting_answer(answer, &op.remote, &op.comment, op.send, proposed);
+                    match self.ask_once(&element, &|reply| directory::answered(reply)).await {
+                        // A server older than Exchange 2013 has no place for a proposed time: the
+                        // answer isn't sent without it, and that is said.
+                        Err(Asked::Code(ResponseCode::SchemaValidation | ResponseCode::InvalidRequest)) if proposed.is_some() => {
+                            outcome.result = EventResult::Refused;
+                            outcome.error = "the server can't take a proposed time; answer again without proposing one".to_owned();
+                            return outcome;
+                        }
+                        other => other.map(|()| (op.remote.clone(), String::new())),
+                    }
                 }
             }
             mailcraft_model::remote::EventChangeKind::Forward => {

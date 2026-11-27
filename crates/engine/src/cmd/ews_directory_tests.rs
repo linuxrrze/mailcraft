@@ -278,3 +278,23 @@ fn the_mailboxs_working_hours_shade_the_calendar() {
     assert_eq!(hours.days, [Mon, Tue, Wed, Thu, Fri]);
     assert_eq!((hours.start, hours.end), (480, 1_020), "09:00 to 18:00 an hour east is 08:00 to 17:00 UTC");
 }
+
+/// The mailbox's own categories that an Exchange server lists come with their colours.
+#[test]
+fn the_mailboxs_categories_come_in_the_servers_colours() {
+    let (mut s, account) = session();
+    let travel = mailcraft_model::outlook_colors::outlook_color("preset7");
+    let result = EwsDirectoryResult {
+        account,
+        email: ME.into(),
+        categories: Some(mailcraft_model::remote::CategoriesDownload {
+            account,
+            email: ME.into(),
+            categories: vec![mailcraft_model::Category { name: "Travel".into(), color: travel }],
+            complete: true,
+        }),
+        ..Default::default()
+    };
+    apply_ews_directory(&mut s, &result).unwrap();
+    assert_eq!(s.mailbox.category("Travel").map(|c| c.color), Some(travel));
+}

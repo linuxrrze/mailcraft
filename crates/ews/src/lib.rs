@@ -56,6 +56,9 @@ pub mod availability;
 pub mod basic;
 #[deny(missing_docs)]
 #[cfg_attr(not(test), deny(clippy::indexing_slicing, clippy::arithmetic_side_effects))]
+pub mod categories;
+#[deny(missing_docs)]
+#[cfg_attr(not(test), deny(clippy::indexing_slicing, clippy::arithmetic_side_effects))]
 pub mod changes;
 #[deny(missing_docs)]
 #[cfg_attr(not(test), deny(clippy::indexing_slicing, clippy::arithmetic_side_effects))]
@@ -114,6 +117,8 @@ pub mod standin_autodiscover;
 #[cfg(any(test, feature = "stand-in"))]
 pub mod standin_availability;
 #[cfg(any(test, feature = "stand-in"))]
+pub mod standin_config;
+#[cfg(any(test, feature = "stand-in"))]
 pub mod standin_directory;
 #[cfg(any(test, feature = "stand-in"))]
 pub mod standin_mail;
@@ -128,6 +133,8 @@ mod archive_shared_tests;
 mod archive_tests;
 #[cfg(test)]
 mod availability_tests;
+#[cfg(test)]
+mod categories_tests;
 #[cfg(test)]
 mod delete_check_tests;
 #[cfg(test)]

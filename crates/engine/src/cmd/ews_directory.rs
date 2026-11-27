@@ -216,6 +216,12 @@ pub fn apply_ews_directory(s: &mut Session, result: &EwsDirectoryResult) -> CmdR
         let applied = super::tasks_remote::apply_task_outcomes(&mut s.mailbox, outcomes)?;
         counts["tasks"] = json!(applied.added + applied.updated);
     }
+    // The mailbox's own categories, in the server's colours.
+    if let Some(categories) = &result.categories
+        && let Err(e) = super::remote::apply_categories(s, categories)
+    {
+        said.push(e.to_string());
+    }
     // The working hours the owner has set in the mailbox: what shades the calendar's work time,
     // as a Microsoft account's mailbox settings do (unless the owner keeps hours of their own).
     if let Some(hours) = &result.working_hours {
