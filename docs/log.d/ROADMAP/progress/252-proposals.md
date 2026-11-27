@@ -1,0 +1,1 @@
+| 2026-11-27 | #252: a time proposed with a tentative answer or a decline goes to an Exchange server (`ProposedStart`, `ProposedEnd`); it was dropped, and the answer went without it. A server older than Exchange 2013 that can't take one refuses the answer, and that is said |

@@ -364,12 +364,12 @@ fn an_events_elements_follow_the_schemas_order() {
 /// the note; one that is sent goes with a copy kept.
 #[test]
 fn an_answer_not_sent_is_saved_without_its_note() {
-    let quiet = meeting_answer(Answer::Accept, "meeting-1", "See you", false).write();
+    let quiet = meeting_answer(Answer::Accept, "meeting-1", "See you", false, None).write();
     assert!(quiet.contains("MessageDisposition=\"SaveOnly\""), "{quiet}");
     assert!(quiet.contains("Id=\"deleteditems\""), "{quiet}");
     assert!(!quiet.contains("See you"), "{quiet}");
 
-    let sent = meeting_answer(Answer::Decline, "meeting-1", "See you", true).write();
+    let sent = meeting_answer(Answer::Decline, "meeting-1", "See you", true, None).write();
     assert!(sent.contains("MessageDisposition=\"SendAndSaveCopy\""), "{sent}");
     assert!(sent.contains("<t:DeclineItem><t:Body BodyType=\"Text\">See you</t:Body>"), "{sent}");
     assert!(!sent.contains("SavedItemFolderId"), "{sent}");
@@ -404,4 +404,26 @@ fn the_next_page_starts_past_every_item_listed() {
     // A page that lists nothing ends the walk.
     let empty = ItemsPage { next: Some(20), ..Default::default() };
     assert_eq!(empty.next_offset(10), None);
+}
+
+/// A time the owner proposes goes with a tentative answer or a decline that is sent, after the
+/// item answered ([MS-OXWSMTGS]); never with an acceptance, nor with an answer that isn't sent.
+#[test]
+fn a_proposed_time_goes_with_an_answer_that_is_sent() {
+    let proposed = Some((1_791_968_400, 1_791_972_000));
+    let sent = meeting_answer(Answer::Tentative, "meeting-1", "", true, proposed).write();
+    assert!(
+        sent.contains(
+            "<t:ReferenceItemId Id=\"meeting-1\"/><t:ProposedStart>2026-10-14T09:00:00Z</t:ProposedStart><t:ProposedEnd>2026-10-14T10:00:00Z</t:ProposedEnd>"
+        ),
+        "{sent}"
+    );
+    assert!(meeting_answer(Answer::Decline, "meeting-1", "", true, proposed).write().contains("<t:ProposedStart>"));
+    for quiet in [
+        meeting_answer(Answer::Accept, "meeting-1", "", true, proposed).write(),
+        meeting_answer(Answer::Tentative, "meeting-1", "", false, proposed).write(),
+        meeting_answer(Answer::Tentative, "meeting-1", "", true, Some((10, 10))).write(),
+    ] {
+        assert!(!quiet.contains("Proposed"), "{quiet}");
+    }
 }

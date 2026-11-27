@@ -712,8 +712,18 @@ impl<E: HttpExchange> Run<'_, E> {
                         mailcraft_model::Response::Declined => Answer::Decline,
                         mailcraft_model::Response::None => Answer::Tentative,
                     };
-                    let element = directory::meeting_answer(answer, &op.remote, &op.comment, op.send);
-                    self.ask_once(&element, &|reply| directory::answered(reply)).await.map(|()| (op.remote.clone(), String::new()))
+                    let proposed = op.proposed.map(|time| (time.start, time.end));
+                    let element = directory::meeting_answer(answer, &op.remote, &op.comment, op.send, proposed);
+                    match self.ask_once(&element, &|reply| directory::answered(reply)).await {
+                        // A server older than Exchange 2013 has no place for a proposed time: the
+                        // answer isn't sent without it, and that is said.
+                        Err(Asked::Code(ResponseCode::SchemaValidation | ResponseCode::InvalidRequest)) if proposed.is_some() => {
+                            outcome.result = EventResult::Refused;
+                            outcome.error = "the server can't take a proposed time; answer again without proposing one".to_owned();
+                            return outcome;
+                        }
+                        other => other.map(|()| (op.remote.clone(), String::new())),
+                    }
                 }
             }
             mailcraft_model::remote::EventChangeKind::Forward => {

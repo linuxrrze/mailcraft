@@ -799,6 +799,47 @@ fn a_send_receive_brings_the_owners_working_hours_and_a_calendar_read_doesnt() {
     }
 }
 
+/// A server that refuses every `CreateItem` as not fitting its schema, as one older than Exchange
+/// 2013 refuses a proposed time.
+struct NoProposals;
+
+impl crate::http::HttpExchange for NoProposals {
+    fn exchange(&self, request: &crate::http::HttpRequest) -> impl Future<Output = Result<crate::http::HttpResponse, crate::http::TransportError>> {
+        assert!(String::from_utf8_lossy(request.body()).contains("<t:ProposedStart>"));
+        let body = crate::standin::response(
+            "CreateItem",
+            "<m:CreateItemResponseMessage ResponseClass=\"Error\"><m:ResponseCode>ErrorSchemaValidation</m:ResponseCode></m:CreateItemResponseMessage>",
+        );
+        ready(Ok(crate::http::HttpResponse::new(200, body.into_bytes())))
+    }
+}
+
+/// An answer with a proposed time that the server can't take isn't sent without it: it is refused,
+/// and the owner is told to answer again without one.
+#[test]
+fn an_answer_whose_proposal_the_server_cant_take_is_refused_and_said() {
+    let client = crate::Client::new("http://127.0.0.1/EWS/Exchange.asmx", crate::Secret::new("test")).unwrap();
+    let request = mailcraft_model::sync::EwsDirectoryRequest {
+        changes: Some(mailcraft_model::remote::EventsUpload {
+            ops: vec![EventOp {
+                kind: EventChangeKind::Respond,
+                remote: "meeting-1".into(),
+                response: mailcraft_model::Response::Tentative,
+                send: true,
+                proposed: Some(EventTime { start: OCCURRENCE, end: OCCURRENCE + 3_600, all_day: false }),
+                ..Default::default()
+            }],
+            ..Default::default()
+        }),
+        ..Default::default()
+    };
+    let cancel = std::sync::atomic::AtomicBool::new(false);
+    let result = crate::standin::block_on(sync_directory(&client, &NoProposals, &request, &cancel, &mut |_| true)).unwrap();
+    let outcome = &result.uploaded.unwrap().outcomes[0];
+    assert_eq!(outcome.result, mailcraft_model::remote::EventResult::Refused);
+    assert_eq!(outcome.error, "the server can't take a proposed time; answer again without proposing one");
+}
+
 /// Outlook shows neither a hidden calendar folder (`PidTagAttributeHidden`, one the mailbox keeps
 /// for itself or for a program) nor a calendar in Deleted Items, at any depth; nor does the
 /// account's list of calendars. Another calendar beside the default one is there.
