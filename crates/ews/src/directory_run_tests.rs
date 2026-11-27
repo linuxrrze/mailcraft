@@ -261,3 +261,169 @@ fn shared_folders_alone_cannot_replace_the_account_directory() {
     assert!(!result.calendars.unwrap().complete);
     assert!(!result.contacts.unwrap().complete);
 }
+
+/// A server with calendar folders as told: `GetFolder` gives the default one (`main`),
+/// `FindFolder` lists `listed` in that order, and `FindItem` in the folder `broken` is refused
+/// (`ErrorInternalServerError`, no busy server) while any other is an empty folder.
+struct Calendars {
+    listed: Vec<String>,
+    broken: &'static str,
+}
+
+impl crate::http::HttpExchange for Calendars {
+    fn exchange(&self, request: &crate::http::HttpRequest) -> impl Future<Output = Result<crate::http::HttpResponse, crate::http::TransportError>> {
+        let body = String::from_utf8_lossy(request.body()).into_owned();
+        let folder = |id: &str| {
+            format!(
+                "<t:CalendarFolder><t:FolderId Id=\"{id}\" ChangeKey=\"k\"/><t:FolderClass>IPF.Appointment</t:FolderClass>\
+                 <t:DisplayName>Calendar {id}</t:DisplayName></t:CalendarFolder>"
+            )
+        };
+        let answer = if body.contains("<m:GetFolder") {
+            crate::standin::response(
+                "GetFolder",
+                &format!(
+                    "<m:GetFolderResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode><m:Folders>{}</m:Folders></m:GetFolderResponseMessage>",
+                    folder("main")
+                ),
+            )
+        } else if body.contains("<m:FindFolder") {
+            let all: String = self.listed.iter().map(|id| folder(id)).collect();
+            crate::standin::response(
+                "FindFolder",
+                &format!(
+                    "<m:FindFolderResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode>\
+                     <m:RootFolder IndexedPagingOffset=\"{n}\" TotalItemsInView=\"{n}\" IncludesLastItemInRange=\"true\"><t:Folders>{all}</t:Folders></m:RootFolder>\
+                     </m:FindFolderResponseMessage>",
+                    n = self.listed.len()
+                ),
+            )
+        } else if body.contains(&format!("Id=\"{}\"", self.broken)) {
+            crate::standin::response(
+                "FindItem",
+                "<m:FindItemResponseMessage ResponseClass=\"Error\"><m:ResponseCode>ErrorInternalServerError</m:ResponseCode></m:FindItemResponseMessage>",
+            )
+        } else {
+            crate::standin::response(
+                "FindItem",
+                "<m:FindItemResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode>\
+                 <m:RootFolder IndexedPagingOffset=\"0\" TotalItemsInView=\"0\" IncludesLastItemInRange=\"true\"><t:Items/></m:RootFolder></m:FindItemResponseMessage>",
+            )
+        };
+        ready(Ok(crate::http::HttpResponse::new(200, answer.into_bytes())))
+    }
+}
+
+fn read_calendars_of(server: &Calendars, shared: &[&str]) -> mailcraft_model::sync::EwsDirectoryResult {
+    let client = crate::Client::new("http://127.0.0.1/EWS/Exchange.asmx", crate::Secret::new("test")).unwrap();
+    let request = mailcraft_model::sync::EwsDirectoryRequest {
+        account: 1,
+        email: "ada@example.org".into(),
+        url: "http://127.0.0.1/EWS/Exchange.asmx".into(),
+        calendars: true,
+        from: 1_791_000_000,
+        to: 1_793_000_000,
+        shared: shared
+            .iter()
+            .map(|address| mailcraft_model::sync::EwsSharedMailbox { address: (*address).into(), calendar: true, ..Default::default() })
+            .collect(),
+        ..Default::default()
+    };
+    let cancel = std::sync::atomic::AtomicBool::new(false);
+    crate::standin::block_on(sync_directory(&client, server, &request, &cancel, &mut |_| true)).unwrap()
+}
+
+/// A calendar whose events can't be read is passed over (#962 review): the others are read, it
+/// stays in the list (so nothing of it is taken away here), the list isn't whole, and it is said.
+#[test]
+fn a_calendar_that_cant_be_read_is_passed_over_and_the_others_are_read() {
+    let server = Calendars { listed: vec!["main".into(), "broken".into(), "team".into()], broken: "broken" };
+    let result = read_calendars_of(&server, &[]);
+    let list = result.calendars.as_ref().expect("a list");
+    assert_eq!(list.calendars.len(), 3, "the one that failed is still listed");
+    assert!(!list.complete, "a list with a calendar not read takes nothing away");
+    assert_eq!(result.events.len(), 2, "the main calendar's events and the team's");
+    assert!(result.events.iter().all(|download| download.calendar != "broken"));
+    assert_eq!(result.errors, ["Couldn't read one of the calendars from the server"]);
+}
+
+/// The default calendar is read first wherever the listing puts it, so the cap on how many are
+/// read never cuts it (#962 review): a list without its main calendar would be refused whole.
+#[test]
+fn the_default_calendar_comes_first_whatever_the_listing() {
+    let most = mailcraft_model::remote::MAX_REMOTE_CALENDARS;
+    let mut listed: Vec<String> = (0..most + 20).map(|n| format!("c{n}")).collect();
+    listed.insert(most + 10, "main".into());
+    let result = read_calendars_of(&Calendars { listed, broken: "none" }, &[]);
+    let list = result.calendars.as_ref().expect("a list");
+    assert!(list.calendars.first().is_some_and(|c| c.main), "the main one first");
+    assert_eq!(list.calendars.iter().filter(|c| c.main).count(), 1);
+    assert_eq!(list.calendars.len(), most);
+    assert!(!list.complete, "more than are read");
+}
+
+/// Shared calendars put with the account's own past the cap make a list that isn't whole
+/// (#962 review): the calendars cut from it are not taken away here.
+#[test]
+fn shared_calendars_past_the_cap_make_the_list_not_whole() {
+    let listed: Vec<String> = std::iter::once("main".to_owned()).chain((0..60).map(|n| format!("c{n}"))).collect();
+    let result = read_calendars_of(&Calendars { listed, broken: "none" }, &["team@example.org"]);
+    let list = result.calendars.as_ref().expect("a list");
+    assert!(list.calendars.len() > mailcraft_model::remote::MAX_REMOTE_CALENDARS);
+    assert!(!list.complete);
+    assert!(result.errors.is_empty(), "{:?}", result.errors);
+}
+
+/// The stand-in, with every calendar view refused.
+struct NoCalendarView(crate::standin::StandIn);
+
+impl crate::http::HttpExchange for NoCalendarView {
+    fn exchange(&self, request: &crate::http::HttpRequest) -> impl Future<Output = Result<crate::http::HttpResponse, crate::http::TransportError>> {
+        let refused = String::from_utf8_lossy(request.body()).contains("<m:CalendarView");
+        let answer = refused.then(|| {
+            crate::standin::response(
+                "FindItem",
+                "<m:FindItemResponseMessage ResponseClass=\"Error\"><m:ResponseCode>ErrorInternalServerError</m:ResponseCode></m:FindItemResponseMessage>",
+            )
+        });
+        let delegated = self.0.exchange(request);
+        async move {
+            match answer {
+                Some(body) => Ok(crate::http::HttpResponse::new(200, body.into_bytes())),
+                None => delegated.await,
+            }
+        }
+    }
+}
+
+/// A calendar that couldn't be read leaves the mail whole (#962 review): the run's last piece may
+/// still take away what the server no longer has, and the piece with the calendar says it failed,
+/// so that it isn't taken for one read just now.
+#[test]
+fn a_calendar_that_failed_leaves_the_mail_whole_and_says_so_in_its_piece() {
+    let standin = NoCalendarView(crate::standin::StandIn::new());
+    let client = crate::Client::new("https://mail.example.org/EWS/Exchange.asmx", crate::Secret::new(crate::standin::AUTHORIZATION)).unwrap();
+    let request = mailcraft_model::sync::EwsMailRequest {
+        email: "ada@example.org".into(),
+        url: "https://mail.example.org/EWS/Exchange.asmx".into(),
+        list_folders: true,
+        directory: Some(Box::new(mailcraft_model::sync::EwsDirectoryRequest {
+            account: 1,
+            email: "ada@example.org".into(),
+            url: "https://mail.example.org/EWS/Exchange.asmx".into(),
+            calendars: true,
+            from: 1_791_000_000,
+            to: 1_793_000_000,
+            ..Default::default()
+        })),
+        ..Default::default()
+    };
+    let cancel = std::sync::atomic::AtomicBool::new(false);
+    let mut pieces = Vec::new();
+    crate::standin::block_on(crate::sync_mail(&client, &standin, &request, &cancel, &mut |_| true, &mut |piece| pieces.push(piece))).unwrap();
+    let directory = pieces.iter().find_map(|piece| piece.directory.as_deref()).expect("the calendar's piece");
+    assert_eq!(directory.errors, ["Couldn't read one of the calendars from the server"]);
+    let last = pieces.last().expect("a last piece");
+    assert!(last.whole, "the mail was read whole");
+    assert!(last.errors.iter().any(|line| line.contains("calendars")), "the run says it too: {:?}", last.errors);
+}

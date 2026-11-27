@@ -131,9 +131,12 @@ impl<E: HttpExchange> Run<'_, E> {
         // The account's own calendars, books and to-dos.
         if request.calendars {
             match self.read_calendars(request, mailbox, None, false).await {
-                Ok((list, events)) => {
+                Ok((list, events, failed)) => {
                     out.calendars = Some(list);
                     out.events.extend(events);
+                    if failed > 0 {
+                        out.errors.push(calendars_failed(failed));
+                    }
                 }
                 Err(Asked::Stop(stop)) => return Err(Asked::Stop(stop)),
                 Err(_) => out.errors.push("Couldn't read the calendars from the server".to_owned()),
@@ -161,10 +164,18 @@ impl<E: HttpExchange> Run<'_, E> {
             }
             if shared.calendar {
                 match self.read_calendars(request, Some(address), Some(address), true).await {
-                    Ok((mut list, events)) => {
+                    Ok((mut list, events, failed)) => {
+                        if failed > 0 {
+                            out.errors.push("Couldn't read a calendar that was shared with the account".to_owned());
+                        }
                         if let Some(own) = out.calendars.as_mut() {
                             own.complete &= list.complete;
                             own.calendars.append(&mut list.calendars);
+                            // More than are kept: those past the cap aren't listed, and a list that
+                            // isn't whole takes nothing away.
+                            if own.calendars.len() > mailcraft_model::remote::MAX_REMOTE_CALENDARS {
+                                own.complete = false;
+                            }
                         } else {
                             // Shared folders alone never describe the whole account.
                             list.complete = false;
@@ -256,9 +267,10 @@ impl<E: HttpExchange> Run<'_, E> {
             }
             offset = offset.saturating_add(u32::try_from(before).unwrap_or(u32::MAX));
         }
-        if let Some(default) = &default
-            && !all.iter().any(|folder| folder.id == default.id)
-        {
+        // The default folder first, wherever the listing put it: what is read is cut to a number of
+        // folders, and the default one is never the one cut.
+        if let Some(default) = &default {
+            all.retain(|folder| folder.id != default.id);
             all.insert(0, default.clone());
         }
         Ok((default, all, complete))
@@ -270,8 +282,10 @@ impl<E: HttpExchange> Run<'_, E> {
         mailbox: Option<&str>,
         owner_address: Option<&str>,
         shared: bool,
-    ) -> Result<(CalendarsDownload, Vec<EventsDownload>), Asked> {
+    ) -> Result<(CalendarsDownload, Vec<EventsDownload>, usize), Asked> {
         let (default, folders, complete) = self.directory_folders(Kind::Calendar, mailbox).await?;
+        // How many calendars' events couldn't be read.
+        let mut failed = 0usize;
         let mut list = CalendarsDownload {
             account: request.account,
             email: request.email.clone(),
@@ -301,9 +315,21 @@ impl<E: HttpExchange> Run<'_, E> {
                 main: !shared && main,
                 ..Default::default()
             });
-            let from = request.from.max(1);
+            // (As the request has it, before 1970 too: only a window that doesn't move forward is
+            // given one second.)
+            let from = request.from;
             let to = request.to.max(from.saturating_add(1));
-            let (mut download, complete) = self.read_events(folder, &remote_id, from, to, shared).await?;
+            // A calendar whose events can't be read is passed over: it stays in the list (and its
+            // events here as they were), the list says it isn't whole, and the others are read.
+            let (mut download, complete) = match self.read_events(folder, &remote_id, from, to, shared).await {
+                Ok(read) => read,
+                Err(Asked::Stop(stop)) => return Err(Asked::Stop(stop)),
+                Err(_) => {
+                    list.complete = false;
+                    failed = failed.saturating_add(1);
+                    continue;
+                }
+            };
             if !complete {
                 list.complete = false;
             }
@@ -313,7 +339,7 @@ impl<E: HttpExchange> Run<'_, E> {
             download.has_options = true;
             events.push(download);
         }
-        Ok((list, events))
+        Ok((list, events, failed))
     }
 
     async fn read_events(&mut self, folder: &FolderInfo, remote_id: &str, from: i64, to: i64, plain: bool) -> Result<(EventsDownload, bool), Asked> {
@@ -726,6 +752,15 @@ impl<E: HttpExchange> Run<'_, E> {
             }
         }
         outcome
+    }
+}
+
+/// What is said of calendars whose events couldn't be read.
+fn calendars_failed(failed: usize) -> String {
+    if failed == 1 {
+        "Couldn't read one of the calendars from the server".to_owned()
+    } else {
+        format!("Couldn't read {failed} of the calendars from the server")
     }
 }
 
