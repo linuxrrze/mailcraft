@@ -1,0 +1,1 @@
+| 2026-11-27 | #252: an Exchange server account's working hours (`GetUserAvailability`'s `WorkingHours` of the owner, with each Send/Receive of the calendar) shade the calendar as a Microsoft mailbox's do; their zone's offset is worked out from its standard and daylight rules |

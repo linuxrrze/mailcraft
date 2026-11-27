@@ -767,6 +767,38 @@ fn a_to_do_deleted_names_itself_in_the_outcome() {
     }
 }
 
+/// A Send/Receive of the account's own calendar asks for the owner's working hours (the stand-in's
+/// are Monday to Friday, 08:00 to 17:00 UTC); a read of the days on screen doesn't ask.
+#[test]
+fn a_send_receive_brings_the_owners_working_hours_and_a_calendar_read_doesnt() {
+    for background in [false, true] {
+        let standin = crate::standin::StandIn::new();
+        standin.state().schedules = vec![crate::standin_availability::Schedule { email: "ada@example.org".into(), ..Default::default() }];
+        let client = crate::Client::new("http://127.0.0.1/EWS/Exchange.asmx", crate::Secret::new(crate::standin::AUTHORIZATION)).unwrap();
+        let request = mailcraft_model::sync::EwsDirectoryRequest {
+            account: 1,
+            email: "ada@example.org".into(),
+            url: "http://127.0.0.1/EWS/Exchange.asmx".into(),
+            calendars: true,
+            from: 1_791_000_000,
+            to: 1_793_000_000,
+            background,
+            ..Default::default()
+        };
+        let cancel = std::sync::atomic::AtomicBool::new(false);
+        let result = crate::standin::block_on(sync_directory(&client, &standin, &request, &cancel, &mut |_| true)).unwrap();
+        assert!(result.errors.is_empty(), "{:?}", result.errors);
+        if background {
+            assert_eq!(result.working_hours, None);
+            assert_eq!(standin.state().availability_asked, 0);
+        } else {
+            use mailcraft_time::Weekday::{Fri, Mon, Thu, Tue, Wed};
+            let hours = result.working_hours.expect("the hours");
+            assert_eq!((hours.days, hours.start, hours.end, hours.offset), (vec![Mon, Tue, Wed, Thu, Fri], 480, 1020, 0));
+        }
+    }
+}
+
 /// Outlook shows neither a hidden calendar folder (`PidTagAttributeHidden`, one the mailbox keeps
 /// for itself or for a program) nor a calendar in Deleted Items, at any depth; nor does the
 /// account's list of calendars. Another calendar beside the default one is there.
