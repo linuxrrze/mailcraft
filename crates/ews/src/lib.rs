@@ -32,6 +32,10 @@
 //!   over an [`HttpExchange`] and hand the run back in pieces. A [`Store`] says whether the
 //!   folders are the mailbox's or its personal archive's (#1818); [`probe_archive`] asks whether
 //!   there is an archive.
+//! - [`directory`], [`directory_run`]: calendars, address books and to-do lists: `FindFolder`,
+//!   `FindItem` (with a `CalendarView` for the days on screen), `CreateItem`, `UpdateItem` and
+//!   `DeleteItem` for appointments, contacts and to-dos, and the same folders of a mailbox another
+//!   person shared with the owner ([`sync_directory`]).
 //!
 //! Everything a server sends is hostile: nothing indexes into what came over the wire, and a
 //! server's ids stay behind types whose `Debug` shows nothing ([`FolderId`], [`Secret`]).
@@ -58,6 +62,12 @@ pub mod client;
 pub mod compose;
 #[cfg_attr(not(test), deny(clippy::indexing_slicing, clippy::arithmetic_side_effects))]
 mod delete_check;
+#[deny(missing_docs)]
+#[cfg_attr(not(test), deny(clippy::indexing_slicing, clippy::arithmetic_side_effects))]
+pub mod directory;
+#[deny(missing_docs)]
+#[cfg_attr(not(test), deny(clippy::indexing_slicing, clippy::arithmetic_side_effects))]
+pub mod directory_run;
 #[deny(missing_docs)]
 #[cfg_attr(not(test), deny(clippy::indexing_slicing, clippy::arithmetic_side_effects))]
 pub mod error;
@@ -140,6 +150,8 @@ pub use basic::CredentialError;
 pub use changes::{DeleteMode, ItemUpdate};
 pub use client::Client;
 pub use compose::Unsendable;
+pub use directory::{Answer as MeetingAnswer, FindItems, Item as DirectoryItem, Kind as DirectoryKind};
+pub use directory_run::sync_directory;
 pub use error::{Error, PolicyReason, ResponseClass, ResponseCode};
 pub use folder::{DistinguishedFolder, FolderId, FolderInfo, GetFolder, Store};
 pub use hierarchy::{HierarchyPage, SyncFolderHierarchy};

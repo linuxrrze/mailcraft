@@ -553,6 +553,8 @@ impl<H: HttpExchange> Run<'_, H> {
                     email: self.request.email.clone(),
                     complete,
                     contacts,
+                    // (A JMAP account's books come down as contacts folders, not as Exchange's books.)
+                    books: Vec::new(),
                     folder: Some(place.folder(book)),
                     // (Read whole, what isn't listed is gone anyway.)
                     gone: if complete { Vec::new() } else { gone.iter().cloned().chain(elsewhere).collect() },
