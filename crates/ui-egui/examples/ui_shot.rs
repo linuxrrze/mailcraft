@@ -728,7 +728,7 @@ fn main() {
                     mailcraft_model::Address::new("South Building", "south-rooms@lumen.example"),
                 ]
             } else {
-                (1..=4).map(|n| mailcraft_model::Address::new(&format!("Room 1.0{n}"), &format!("room-10{n}@lumen.example"))).collect()
+                (1..=4).map(|n| mailcraft_model::Address::new(format!("Room 1.0{n}"), format!("room-10{n}@lumen.example"))).collect()
             };
             let _ = tx.send(mailcraft_model::sync::EwsRoomsResult { account: request.account, list: request.list, found, ..Default::default() });
             rx

@@ -44,7 +44,7 @@ fn app() -> (MailApp, u64) {
         let found = if job.request.list.is_empty() {
             vec![Address::new("North Building", "north-rooms@lumen.example"), Address::new("South Building", "south-rooms@lumen.example")]
         } else {
-            (1..=4).map(|n| Address::new(&format!("Room 1.0{n}"), &format!("room-10{n}@lumen.example"))).collect()
+            (1..=4).map(|n| Address::new(format!("Room 1.0{n}"), format!("room-10{n}@lumen.example"))).collect()
         };
         let _ = tx.send(mailcraft_model::sync::EwsRoomsResult { account: job.request.account, list: job.request.list, found, ..Default::default() });
         rx
