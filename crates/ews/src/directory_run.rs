@@ -728,7 +728,9 @@ impl<E: HttpExchange> Run<'_, E> {
     }
 
     async fn push_task(&mut self, op: &mailcraft_model::remote_tasks::TaskOp) -> TaskOutcome {
-        let mut outcome = TaskOutcome { kind: op.kind, task: op.task, patch: op.patch.clone(), ..Default::default() };
+        // (Named by the to-do's id from the start: a deletion done, or found done already, is
+        // taken off the list of those waiting by it.)
+        let mut outcome = TaskOutcome { kind: op.kind, task: op.task, patch: op.patch.clone(), id: op.id.clone(), ..Default::default() };
         if op.id.is_empty() && op.kind != TaskOpKind::Create {
             outcome.result = TaskResult::Refused;
             outcome.error = "the server's copy of this to-do is not known here".to_owned();
