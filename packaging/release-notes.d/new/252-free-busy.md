@@ -1,0 +1,1 @@
+- Find a Time shows when the people invited are busy for a meeting in an Exchange server account's calendar too: busy, tentative, out of office or working elsewhere, never what their time is taken by, asked of the account's own server with the password of its Send/Receive. ([#252](https://github.com/GITHUB_REPOSITORY/issues/252))

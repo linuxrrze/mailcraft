@@ -102,6 +102,22 @@ impl Reply {
     }
 }
 
+impl Reply {
+    /// The answers of `GetUserAvailability` ([MS-OXWSGTAV]), which has no `ResponseMessages`: each
+    /// `FreeBusyResponse` of its `FreeBusyResponseArray`, with the `ResponseMessage` it carries, in
+    /// the order the mailboxes were asked for. One without a message it can be read by is left out.
+    pub fn availability(&self) -> Result<Vec<(Message<'_>, &Node)>, Error> {
+        let response = self.body.child_in(MESSAGES, "GetUserAvailabilityResponse").ok_or(Error::Unexpected)?;
+        let Some(all) = response.child_in(MESSAGES, "FreeBusyResponseArray") else { return Ok(Vec::new()) };
+        Ok(all
+            .children
+            .iter()
+            .filter(|child| child.is(MESSAGES, "FreeBusyResponse"))
+            .filter_map(|one| Some((Message::read(one.child_in(MESSAGES, "ResponseMessage")?).ok()?, one)))
+            .collect())
+    }
+}
+
 impl<'n> Message<'n> {
     fn read(node: &'n Node) -> Result<Self, Error> {
         let class = node.attribute("ResponseClass").and_then(ResponseClass::from_name).ok_or(Error::Unexpected)?;

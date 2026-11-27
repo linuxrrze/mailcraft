@@ -48,6 +48,15 @@ const EDGE_W: f32 = 7.0;
 /// ([`Services::free_busy`](crate::Services::free_busy)).
 pub use mailcraft_host::calendar::{FreeBusyRequest, FreeBusyResult};
 
+/// What the host is asked for an Exchange server account
+/// ([`Services::ews_free_busy`](crate::Services::ews_free_busy)): the question, and the password it
+/// goes with.
+pub struct EwsFreeBusyJob {
+    pub request: mailcraft_model::sync::EwsFreeBusyRequest,
+    /// As for a run ([`crate::ews_mail::EwsJob::secret`]). Never logged.
+    pub secret: String,
+}
+
 /// One person's day, whose time is looked at, and what Find a Time gets when it looks: the
 /// engine's ([`mailcraft_engine::sync_driver::free_busy`]).
 pub(crate) use mailcraft_engine::sync_driver::free_busy::{Day, Key, Look, address_key};
@@ -86,7 +95,9 @@ impl MailApp {
     /// What the host is asked about, as the engine's rules want it said.
     fn free_busy_facts<'a>(&self, in_flight: Option<&'a Key>) -> mailcraft_engine::sync_driver::free_busy::FreeBusyFacts<'a> {
         mailcraft_engine::sync_driver::free_busy::FreeBusyFacts {
-            reachable: self.services.free_busy.is_some(),
+            // (Microsoft's or an Exchange server's: which of the two the account needs is seen to
+            // when the question is put.)
+            reachable: self.services.free_busy.is_some() || self.services.ews_free_busy.is_some(),
             busy: self.job_busy(),
             in_flight,
             lang: crate::i18n::current(),
@@ -99,6 +110,9 @@ impl MailApp {
         let facts = self.free_busy_facts(in_flight.as_ref());
         let (mut look, to_ask) = self.session.free_busy_look(calendar, people, day, &facts, now);
         let Some(ToAsk { account, key, ask }) = to_ask else { return look };
+        if account.kind == mailcraft_model::AccountKind::Exchange {
+            return self.ews_free_busy_ask(look, key, ask, now);
+        }
         let Some(oauth) = account.oauth.clone() else { return look };
         let access = self.graph_tokens.get(&account.id).filter(|t| t.fresh(mailcraft_time::now())).map(|t| t.access.clone()).unwrap_or_default();
         let kept = self.tokens.get(&account.id).map(|t| t.refresh.clone()).filter(|r| !r.is_empty());
@@ -120,6 +134,34 @@ impl MailApp {
         let error = failed.unwrap_or_default();
         self.session.free_busy_noted(key, now, error.clone());
         (look.pending, look.note) = (started, error);
+        look
+    }
+
+    /// [`free_busy_at`](Self::free_busy_at) for an Exchange server account: the question goes to its
+    /// server with the password at hand (nothing is asked for: a Send/Receive asks for it first).
+    fn ews_free_busy_ask(&mut self, mut look: Look, key: Key, ask: Result<mailcraft_model::remote::FreeBusyAsk, String>, now: f64) -> Look {
+        let account = key.account;
+        let request =
+            ask.and_then(|ask| mailcraft_engine::cmd::ews_mail::ews_free_busy_request(&self.session, account, &ask).map_err(|e| e.to_string()));
+        let started = match (request, self.ews_secret(account), &self.services.ews_free_busy) {
+            (Ok(mut request), Some(secret), Some(host)) => {
+                // A certificate a file trusts counts once the owner has confirmed the file (AU3-02).
+                if self.unconfirmed {
+                    request.trusted.clear();
+                }
+                self.free_busy.rx = Some((key.clone(), self.session.openings(), host(EwsFreeBusyJob { request, secret })));
+                self.free_busy.asked = self.free_busy.asked.saturating_add(1);
+                Ok(())
+            }
+            (Err(why), ..) => Err(why),
+            (_, None, _) => Err(tl!("Sign in with Send/Receive to see when other people are busy.").to_string()),
+            (.., None) => {
+                Err(tl!("This build can't ask the Exchange server when other people are busy: only your own calendar is shown.").to_string())
+            }
+        };
+        let error = started.as_ref().err().cloned().unwrap_or_default();
+        self.session.free_busy_noted(key, now, error.clone());
+        (look.pending, look.note) = (started.is_ok(), error);
         look
     }
 
@@ -147,6 +189,9 @@ impl MailApp {
         let account = key.account;
         if result.token_refused {
             self.graph_tokens.remove(&account);
+        }
+        if result.password_refused {
+            self.ews_password_refused(account);
         }
         if let Some(tokens) = result.tokens
             && !self.signed_in_as_other(account, &tokens)
@@ -997,3 +1042,7 @@ mod tests {
         assert_eq!((address_key("maya"), address_key("")), (None, None));
     }
 }
+
+#[cfg(test)]
+#[path = "ews_free_busy_tests.rs"]
+mod ews_free_busy_tests;

@@ -19135,6 +19135,11 @@ msgid "This build can't ask a server when other people are busy: only your own c
 msgstr "Cette version ne peut pas demander à un serveur quand les autres personnes sont occupées : seul votre propre calendrier est affiché."
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "This build can't ask the Exchange server when other people are busy: only your own calendar is shown."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/lib.rs crates/ui-egui/src/sending.rs crates/ui-egui/src/shared_mailboxes.rs
 #, fuzzy
 msgid "This build can't connect to Microsoft"
@@ -23311,6 +23316,11 @@ msgstr "aucun dossier {folder}"
 #, fuzzy
 msgid "nobody else is invited to this appointment"
 msgstr "personne d'autre n'est invité à ce rendez-vous"
+
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+msgid "nobody with an address is asked about"
+msgstr ""
 
 #. what a command says
 #: crates/engine/src/cmd/followup.rs

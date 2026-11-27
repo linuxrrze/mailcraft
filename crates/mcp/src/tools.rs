@@ -247,6 +247,8 @@ pub(crate) const NAMING_PARAMS: &[&str] = &[
     "categories",
     "account",
     "calendar",
+    // The id of an address book of `people.addressBooks` (#252).
+    "addressBook",
     "rule",
     "list",
     "name",

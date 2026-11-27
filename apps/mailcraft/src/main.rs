@@ -47,6 +47,8 @@ mod diagnostics;
 #[cfg(test)]
 mod diagnostics_problem_tests;
 #[cfg(test)]
+mod ews_free_busy_flow;
+#[cfg(test)]
 mod ews_mail_flow;
 #[cfg(test)]
 mod ews_resolve_flow;
@@ -1104,8 +1106,8 @@ fn services(
     let check_ctx = ctx.clone();
     let approval_ctx = ctx.clone();
     let fetch_ctx = ctx.clone();
-    let (ews_ctx, ews_fetch_ctx, ews_setup_ctx, ews_resolve_ctx, ews_calendar_ctx) =
-        (ctx.clone(), ctx.clone(), ctx.clone(), ctx.clone(), ctx.clone());
+    let (ews_ctx, ews_fetch_ctx, ews_setup_ctx, ews_resolve_ctx, ews_calendar_ctx, ews_free_busy_ctx) =
+        (ctx.clone(), ctx.clone(), ctx.clone(), ctx.clone(), ctx.clone(), ctx.clone());
     let search_ctx = ctx.clone();
     let tasks_ctx = ctx.clone();
     let rules_ctx = ctx.clone();
@@ -1216,6 +1218,8 @@ fn services(
         ews_fetch: Some(Box::new(move |job| ews_runner::run_fetch(job, &ews_fetch_ctx))),
         // Its calendar alone, for the days the owner went to (#1274).
         ews_calendar: Some(Box::new(move |job| ews_runner::run_calendar(job, &ews_calendar_ctx))),
+        // Other people's free and busy time, for Find a Time.
+        ews_free_busy: Some(Box::new(move |job| ews_runner::run_free_busy(job, &ews_free_busy_ctx))),
         ews_setup: Some(Box::new(move |job| ews_setup::run_setup(job, &ews_setup_ctx))),
         // Names looked up in its address list, on the owner's Check Names (#1262).
         ews_resolve: Some(Box::new(move |job| ews_runner::run_resolve(job, &ews_resolve_ctx))),
