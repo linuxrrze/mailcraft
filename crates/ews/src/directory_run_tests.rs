@@ -544,3 +544,75 @@ fn a_day_the_servers_series_hasnt_is_gone() {
     assert_eq!(outcome.result, mailcraft_model::remote::EventResult::Gone);
     assert!(server.asked.lock().unwrap().iter().all(|body| !body.contains("<m:DeleteItem") && !body.contains("<m:UpdateItem")));
 }
+
+/// A server that makes every item it is asked to, writing each request down.
+struct Making {
+    asked: Mutex<Vec<String>>,
+}
+
+impl crate::http::HttpExchange for Making {
+    fn exchange(&self, request: &crate::http::HttpRequest) -> impl Future<Output = Result<crate::http::HttpResponse, crate::http::TransportError>> {
+        let body = String::from_utf8_lossy(request.body()).into_owned();
+        let operation = if body.contains("<m:CreateItem") { "CreateItem" } else { "UpdateItem" };
+        self.asked.lock().unwrap_or_else(|poisoned| poisoned.into_inner()).push(body);
+        let answer = crate::standin::response(
+            operation,
+            &format!(
+                "<m:{operation}ResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode><m:Items>\
+                 <t:CalendarItem><t:ItemId Id=\"made-1\" ChangeKey=\"k\"/></t:CalendarItem></m:Items></m:{operation}ResponseMessage>"
+            ),
+        );
+        ready(Ok(crate::http::HttpResponse::new(200, answer.into_bytes())))
+    }
+}
+
+/// The request that makes a weekly stand-up, with the calendar's zone `zone`.
+fn made_in(zone: &str) -> String {
+    let server = Making { asked: Mutex::new(Vec::new()) };
+    let client = crate::Client::new("http://127.0.0.1/EWS/Exchange.asmx", crate::Secret::new("test")).unwrap();
+    let request = mailcraft_model::sync::EwsDirectoryRequest {
+        account: 1,
+        email: "ada@example.org".into(),
+        url: "http://127.0.0.1/EWS/Exchange.asmx".into(),
+        changes: Some(mailcraft_model::remote::EventsUpload {
+            ops: vec![EventOp {
+                kind: EventChangeKind::Create,
+                event: 3,
+                fields: EventFields {
+                    title: Some("Stand-up".into()),
+                    time: Some(EventTime { start: OCCURRENCE, end: OCCURRENCE + 900, all_day: false }),
+                    ..Default::default()
+                },
+                ..Default::default()
+            }],
+            zone: zone.into(),
+            ..Default::default()
+        }),
+        ..Default::default()
+    };
+    let cancel = std::sync::atomic::AtomicBool::new(false);
+    let result = crate::standin::block_on(sync_directory(&client, &server, &request, &cancel, &mut |_| true)).unwrap();
+    assert_eq!(result.uploaded.unwrap().outcomes[0].result, mailcraft_model::remote::EventResult::Done);
+    server.asked.lock().unwrap().iter().find(|body| body.contains("<m:CreateItem")).cloned().expect("made")
+}
+
+/// Exchange takes a zone by the name Windows has for it, and refuses one of the IANA database:
+/// a calendar in `Europe/Berlin` makes its events in `W. Europe Standard Time`, so that a series
+/// made here repeats by Berlin's clock across a daylight-saving change.
+#[test]
+fn an_event_is_made_in_its_zone_by_the_name_windows_has_for_it() {
+    let made = made_in("Europe/Berlin");
+    assert!(made.contains("<t:StartTimeZone Id=\"W. Europe Standard Time\"/>"), "{made}");
+    assert!(made.contains("<t:EndTimeZone Id=\"W. Europe Standard Time\"/>"), "{made}");
+    assert!(!made.contains("Europe/Berlin"), "{made}");
+    // Named the Windows way already: as it is.
+    assert!(made_in("Eastern Standard Time").contains("<t:StartTimeZone Id=\"Eastern Standard Time\"/>"));
+}
+
+/// A zone that has no Windows name (or is no zone at all) is left out rather than sent and
+/// refused: the times go as the instants they are.
+#[test]
+fn a_zone_windows_has_no_name_for_is_left_out() {
+    let made = made_in("Nowhere/Atlantis");
+    assert!(!made.contains("StartTimeZone") && !made.contains("Atlantis"), "{made}");
+}

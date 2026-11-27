@@ -526,6 +526,8 @@ impl<E: HttpExchange> Run<'_, E> {
 
     async fn push_event(&mut self, op: &mailcraft_model::remote::EventOp, zone: &str, email: &str) -> EventOutcome {
         let zone = op.fields.zones.as_ref().map(|zones| zones.start.as_str()).filter(|zone| !zone.trim().is_empty()).unwrap_or(zone);
+        let zone = windows_zone(zone);
+        let zone = zone.as_str();
         let mut outcome = EventOutcome { op: op.clone(), ..Default::default() };
         // One occurrence of a series that has no name of its own here: the server is asked which
         // of its items it is, and the change goes to that one.
@@ -926,6 +928,17 @@ fn settle(mut outcome: EventOutcome, result: Result<(String, String), Asked>) ->
         }
     }
     outcome
+}
+
+/// The time zone an event's times are said in, by the name Exchange takes in `StartTimeZone`
+/// and `EndTimeZone` (the one Windows has: `W. Europe Standard Time`; Exchange refuses a name of
+/// the IANA database, `Europe/Berlin`). `zone` is the event's own, or the calendar's; empty for
+/// this computer's. Nothing for a zone Windows has no name for: the times then go as the instants
+/// they are, and a series repeats by UTC's clock there.
+fn windows_zone(zone: &str) -> String {
+    let zone = zone.trim();
+    let named = if zone.is_empty() { Some(mailcraft_time::Zone::system()) } else { mailcraft_time::Zone::named(zone) };
+    named.and_then(mailcraft_time::Zone::windows_name).map(str::to_owned).unwrap_or_default()
 }
 
 #[cfg(test)]
