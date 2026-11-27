@@ -962,7 +962,7 @@ impl EventFields {
             for attendee in list {
                 let Some(address) = person(attendee.address).filter(|address| !address.email.is_empty()) else { continue };
                 if invited.len() < MAX_ATTENDEES && !invited.iter().any(|have| have.address.email.eq_ignore_ascii_case(&address.email)) {
-                    invited.push(Attendee { address, optional: attendee.optional, response: Response::None });
+                    invited.push(Attendee { address, optional: attendee.optional, response: Response::None, resource: attendee.resource });
                 }
             }
             invited
@@ -1982,7 +1982,12 @@ mod tests {
                 title: "Review".into(),
                 start: 120,
                 end: 150,
-                attendees: vec![Attendee { address: Address::new("Bo", "bo@example.org"), optional: true, response: Response::Accepted }],
+                attendees: vec![Attendee {
+                    address: Address::new("Bo", "bo@example.org"),
+                    optional: true,
+                    response: Response::Accepted,
+                    resource: false,
+                }],
                 kind: RemoteEventKind::Exception,
                 ..Default::default()
             }],

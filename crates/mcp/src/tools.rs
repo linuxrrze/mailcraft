@@ -279,6 +279,8 @@ pub(crate) const NAMING_PARAMS: &[&str] = &[
     "trusted",
     "attendees",
     "optional",
+    // The rooms booked for a meeting (Room Finder), by address as `attendees` are.
+    "rooms",
     "people",
     "displayName",
     "username",

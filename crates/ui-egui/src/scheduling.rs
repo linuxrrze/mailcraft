@@ -237,6 +237,8 @@ pub(crate) struct Meeting {
     pub event: Option<Id>,
     pub required: Vec<Address>,
     pub optional: Vec<Address>,
+    /// The rooms booked (Room Finder).
+    pub rooms: Vec<Address>,
     /// The day the grid shows: the one the meeting starts on.
     pub day: Date,
     /// When it starts and ends; `None` while the fields don't say.
@@ -285,7 +287,17 @@ pub(crate) struct View {
     /// The owner's own day, as of a state of the mailbox: its number, the day, the event that is
     /// left out, and the stretches.
     own: Option<(u64, Date, Option<Id>, Vec<(u32, u32, ShowAs)>)>,
+    /// The list of rooms chosen in Room Finder, by its address.
+    pub room_list: String,
     pub drawn: Drawn,
+}
+
+/// What came of the page being shown: the meeting's band moved or stretched to a start and an
+/// end, or a room booked in Room Finder.
+#[derive(Clone, Debug, Default, PartialEq)]
+pub(crate) struct Shown {
+    pub moved: Option<(DateTime, DateTime)>,
+    pub booked: Option<Address>,
 }
 
 /// A row of the grid.
@@ -293,7 +305,7 @@ struct Row {
     name: String,
     /// What the tooltip says under the name.
     detail: String,
-    /// Whose it is: 0 everybody, 1 the organizer, 2 required, 3 optional.
+    /// Whose it is: 0 everybody, 1 the organizer, 2 required, 3 optional, 4 a room booked.
     kind: u8,
     /// What is known of the day; `None` where nothing is.
     day: Option<Day>,
@@ -413,14 +425,15 @@ fn name_of(app: &MailApp, who: &Address, look_up: bool) -> String {
 }
 
 /// Who a meeting is for: the owner whose calendar it is in, and the people invited (2 for one
-/// who is required, 3 for one who is optional), each once and never the owner.
+/// who is required, 3 for one who is optional) and the rooms booked (4), each once and never the
+/// owner.
 fn people_of(app: &MailApp, meeting: &Meeting) -> (Address, Vec<(u8, Address)>) {
     let mailbox = &app.session.mailbox;
     let keeper = mailbox.calendar(meeting.calendar).and_then(|c| mailcraft_engine::cmd::remote::keeper(mailbox, &c.origin));
     let owner = keeper.or(mailbox.default_account()).map(|a| a.address()).unwrap_or_default();
     let mut seen: Vec<String> = address_key(&owner.email).into_iter().collect();
     let mut invited: Vec<(u8, Address)> = Vec::new();
-    for (kind, list) in [(2u8, &meeting.required), (3u8, &meeting.optional)] {
+    for (kind, list) in [(2u8, &meeting.required), (3u8, &meeting.optional), (4u8, &meeting.rooms)] {
         for who in list.iter().take(MAX_ROWS) {
             let key = address_key(&who.email).unwrap_or_else(|| who.email.trim().to_lowercase());
             if !key.is_empty() && !seen.contains(&key) {
@@ -442,12 +455,20 @@ pub(crate) fn stand_in(app: &mut MailApp, meeting: &Meeting, schedule: &Value) -
 
 /// Lay the page out in `height` points of `ui`, for the window numbered `window`. When the
 /// meeting's band was moved or stretched, the start and end it has now are answered.
-pub(crate) fn show(app: &mut MailApp, ui: &mut Ui, view: &mut View, meeting: &Meeting, window: u64, height: f32) -> Option<(DateTime, DateTime)> {
+pub(crate) fn show(app: &mut MailApp, ui: &mut Ui, view: &mut View, meeting: &Meeting, window: u64, height: f32) -> Shown {
     let t = Tokens::get(ui.ctx());
     let twelve = app.session.prefs.twelve_hour;
     let midnight = DateTime::at_midnight(meeting.day);
     let (owner, invited) = people_of(app, meeting);
-    let asked: Vec<String> = invited.iter().filter_map(|(_, who)| address_key(&who.email)).collect();
+    let mut asked: Vec<String> = invited.iter().filter_map(|(_, who)| address_key(&who.email)).collect();
+    // The rooms of the list chosen in Room Finder are asked about with everybody, as far as one
+    // question takes them.
+    let most = mailcraft_model::remote::MAX_SCHEDULES;
+    for room in crate::room_finder::candidates(app, meeting, &view.room_list, most.saturating_sub(asked.len())) {
+        if !asked.contains(&room) {
+            asked.push(room);
+        }
+    }
     let look = app.free_busy(meeting.calendar, &asked, meeting.day);
     // The owner's own day, looked up once for a state of the mailbox.
     let rev = app.session.rev();
@@ -468,7 +489,11 @@ pub(crate) fn show(app: &mut MailApp, ui: &mut Ui, view: &mut View, meeting: &Me
     let nothing = if look.pending { tl!("Asking the server…") } else { tl!("No information") };
     for (kind, who) in &invited {
         let found = address_key(&who.email).and_then(|key| look.people.iter().find(|(email, _)| *email == key)).map(|(_, day)| day.clone());
-        let role = if *kind == 2 { tl!("Required") } else { tl!("Optional") };
+        let role = match kind {
+            2 => tl!("Required"),
+            3 => tl!("Optional"),
+            _ => tl!("Room"),
+        };
         let (day, why) = match found {
             Some(day) if day.unknown.is_empty() => (Some(day), String::new()),
             Some(day) => (None, day.unknown),
@@ -647,6 +672,9 @@ pub(crate) fn show(app: &mut MailApp, ui: &mut Ui, view: &mut View, meeting: &Me
                     2 => {
                         below.circle_filled(mark, 4.5, t.icon);
                     }
+                    4 => {
+                        below.rect_filled(Rect::from_center_size(mark, vec2(9.0, 9.0)), 1.5, t.icon);
+                    }
                     _ => {
                         below.circle_stroke(mark, 4.0, Stroke::new(1.2, t.text_dim));
                     }
@@ -709,7 +737,8 @@ pub(crate) fn show(app: &mut MailApp, ui: &mut Ui, view: &mut View, meeting: &Me
             .truncate(),
         );
     }
-    moved.map(|(start, end)| (midnight.add_minutes(start), midnight.add_minutes(end)))
+    let booked = crate::room_finder::strip(app, ui, meeting, &mut view.room_list, &look, span);
+    Shown { moved: moved.map(|(start, end)| (midnight.add_minutes(start), midnight.add_minutes(end))), booked }
 }
 
 #[cfg(test)]
@@ -940,6 +969,7 @@ mod tests {
             event: None,
             required: vec![Address::new("Maya Okafor", "maya@lumen.example"), Address::new("", "bob")],
             optional: vec![Address::new("", "avery@mail.example"), Address::new("", "Maya@lumen.example")],
+            rooms: Vec::new(),
             day: day.add_days(2),
             span: None,
             all_day: false,

@@ -164,8 +164,8 @@ fn a_download_becomes_events_in_a_calendar_of_the_accounts_own() {
         description: "Agenda:\n1. Numbers".into(),
         organizer: Some(Address::new("Bo Marsh", "bo@example.org")),
         attendees: vec![
-            Attendee { address: Address::new("Ada Lovelace", "ADA@example.org"), optional: false, response: Response::None },
-            Attendee { address: Address::new("Cy", "cy@example.org"), optional: true, response: Response::Tentative },
+            Attendee { address: Address::new("Ada Lovelace", "ADA@example.org"), optional: false, response: Response::None, resource: false },
+            Attendee { address: Address::new("Cy", "cy@example.org"), optional: true, response: Response::Tentative, resource: false },
         ],
         response: Response::Accepted,
         show_as: ShowAs::Tentative,
@@ -213,8 +213,8 @@ fn a_download_becomes_events_in_a_calendar_of_the_accounts_own() {
             organizer: Some(Address::new("Bo Marsh", "bo@example.org")),
             // What the owner answered is said of the owner.
             attendees: vec![
-                Attendee { address: Address::new("Ada Lovelace", "ADA@example.org"), optional: false, response: Response::Accepted },
-                Attendee { address: Address::new("Cy", "cy@example.org"), optional: true, response: Response::Tentative },
+                Attendee { address: Address::new("Ada Lovelace", "ADA@example.org"), optional: false, response: Response::Accepted, resource: false },
+                Attendee { address: Address::new("Cy", "cy@example.org"), optional: true, response: Response::Tentative, resource: false },
             ],
             reminder_minutes: Some(15),
             show_as: ShowAs::Tentative,
@@ -2364,7 +2364,7 @@ fn nobody_is_written_to_unless_the_owner_says_so() {
     push_done(&mut s, account);
 
     // Who answered what comes with every download, and is nothing to send back.
-    let answered = |response: Response| Attendee { address: Address::new("Bo", "bo@example.org"), optional: false, response };
+    let answered = |response: Response| Attendee { address: Address::new("Bo", "bo@example.org"), optional: false, response, resource: false };
     let mut now = RemoteEvent {
         organizer: Some(Address::new("Ada", "ada@example.org")),
         attendees: vec![answered(Response::Declined)],

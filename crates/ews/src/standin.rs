@@ -239,6 +239,8 @@ pub struct State {
     pub availability_asked: u32,
     /// The calendar folder's `CategoryList` as its `XmlData` (base64); `None`: the mailbox has none.
     pub category_list: Option<String>,
+    /// The organisation's lists of rooms, for `GetRoomLists` and `GetRooms`.
+    pub room_lists: Vec<crate::standin_rooms::RoomList>,
 }
 
 impl Default for State {
@@ -339,6 +341,7 @@ impl Default for State {
             schedules: Vec::new(),
             availability_asked: 0,
             category_list: None,
+            room_lists: Vec::new(),
         }
     }
 }
@@ -548,6 +551,8 @@ impl State {
             "ResolveNames" => self.resolve_names(operation),
             "GetUserAvailabilityRequest" => self.get_user_availability(operation),
             "GetUserConfiguration" => self.get_user_configuration(operation),
+            "GetRoomLists" => self.get_room_lists(operation),
+            "GetRooms" => self.get_rooms(operation),
             name if crate::standin_write::HANDLED.contains(&name) => {
                 self.writes.push(name.to_owned());
                 self.write(name, operation)

@@ -907,3 +907,23 @@ fn one_occurrence_shows_on_its_own_day_and_is_saved_as_that_one() {
         assert_eq!((f.scope, f.apart, f.command().1), (None, 0, json!({"id": id})), "{p}");
     }
 }
+
+/// A room booked in Room Finder goes on the meeting's rooms (once), is where the meeting is held
+/// when no place is named yet, and is sent as one of its rooms.
+#[test]
+fn a_room_booked_is_a_room_of_the_meeting_and_its_place() {
+    let s = session();
+    let mut f = EventForm::new(&s, &json!({"title": "Planning", "attendees": "cy@example.org"}), true);
+    let room = Address::new("Room 1.01", "room-101@example.org");
+    f.book_room(&room);
+    f.book_room(&Address::new("", "ROOM-101@example.org"));
+    assert_eq!(f.location, "Room 1.01");
+    f.book_room(&Address::new("Room 1.02", "room-102@example.org"));
+    assert_eq!(f.location, "Room 1.01", "a place named stays");
+    let (command, params) = f.command();
+    assert_eq!(command, "calendar.newMeeting");
+    let rooms = Address::parse_list(params["rooms"].as_str().unwrap());
+    let emails: Vec<&str> = rooms.iter().map(|a| a.email.as_str()).collect();
+    assert_eq!(emails, ["room-101@example.org", "room-102@example.org"]);
+    assert_eq!(f.meeting().rooms.len(), 2);
+}

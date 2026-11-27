@@ -98,6 +98,9 @@ pub mod reply;
 pub mod resolve;
 #[deny(missing_docs)]
 #[cfg_attr(not(test), deny(clippy::indexing_slicing, clippy::arithmetic_side_effects))]
+pub mod rooms;
+#[deny(missing_docs)]
+#[cfg_attr(not(test), deny(clippy::indexing_slicing, clippy::arithmetic_side_effects))]
 pub mod run;
 #[deny(missing_docs)]
 #[cfg_attr(not(test), deny(clippy::indexing_slicing, clippy::arithmetic_side_effects))]
@@ -123,6 +126,8 @@ pub mod standin_mail;
 #[cfg(any(test, feature = "stand-in"))]
 pub mod standin_ntlm;
 #[cfg(any(test, feature = "stand-in"))]
+pub mod standin_rooms;
+#[cfg(any(test, feature = "stand-in"))]
 pub mod standin_write;
 
 #[cfg(test)]
@@ -145,6 +150,8 @@ mod own_folders_tests;
 mod recipients_cut_tests;
 #[cfg(test)]
 mod resolve_tests;
+#[cfg(test)]
+mod rooms_tests;
 #[cfg(test)]
 mod tests;
 #[cfg(test)]

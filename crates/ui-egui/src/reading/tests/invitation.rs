@@ -1087,7 +1087,12 @@ fn a_message_that_proposes_another_time_offers_to_take_it_up() {
         start: at(15, 10),
         end: at(15, 11),
         organizer: Some(Address::new("Avery Quinn", OWNER)),
-        attendees: vec![Attendee { address: Address::new("Bo Marsh", "bo@example.org"), optional: false, response: Response::Tentative }],
+        attendees: vec![Attendee {
+            address: Address::new("Bo Marsh", "bo@example.org"),
+            optional: false,
+            response: Response::Tentative,
+            resource: false,
+        }],
         ..Default::default()
     };
     let planning = app.session.mailbox.add_event(planning).unwrap();

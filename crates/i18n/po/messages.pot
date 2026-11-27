@@ -1823,6 +1823,16 @@ msgid "Asking about other people's time stopped unexpectedly"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking for the rooms stopped unexpectedly"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking the server for the rooms…"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/scheduling.rs
 msgid "Asking the server when everybody is free…"
 msgstr ""
@@ -1835,6 +1845,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/account_setup/exchange.rs
 msgid "Asking your domain's DNS…"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking…"
 msgstr ""
 
 #. android
@@ -2256,6 +2271,16 @@ msgstr ""
 msgid "Bold"
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Book"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Booked"
+msgstr ""
+
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
 msgid "Bookmark"
@@ -2296,8 +2321,8 @@ msgstr ""
 msgid "Bullets"
 msgstr ""
 
-#. name
-#: crates/model/src/calendar.rs
+#. interface, name
+#: crates/model/src/calendar.rs crates/ui-egui/src/room_finder.rs
 msgid "Busy"
 msgstr ""
 
@@ -2895,6 +2920,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/account_setup.rs
 msgid "Choose Google sign-in, or select Use an app password instead."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Choose a building…"
 msgstr ""
 
 #. interface
@@ -5369,8 +5399,8 @@ msgid_plural "Found {n} folders"
 msgstr[0] ""
 msgstr[1] ""
 
-#. name
-#: crates/model/src/calendar.rs
+#. interface, name
+#: crates/model/src/calendar.rs crates/ui-egui/src/room_finder.rs
 msgid "Free"
 msgstr ""
 
@@ -8942,7 +8972,7 @@ msgid "No folders match"
 msgstr ""
 
 #. interface
-#: crates/ui-egui/src/scheduling.rs
+#: crates/ui-egui/src/room_finder.rs crates/ui-egui/src/scheduling.rs
 msgid "No information"
 msgstr ""
 
@@ -11653,6 +11683,21 @@ msgstr ""
 msgid "Right before or after: {items}"
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "Room"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Room Finder"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+msgid "Rooms"
+msgstr ""
+
 #. command label
 #: crates/engine/src/cmd/rules_remote.rs
 msgid "Rule Changes to Send"
@@ -13267,6 +13312,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/auto_replies.rs
 msgid "Sign in with Send/Receive first, then change your automatic replies."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Sign in with Send/Receive to see the rooms."
 msgstr ""
 
 #. interface
@@ -15092,6 +15142,11 @@ msgid "The one this build came with"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "The organisation has no lists of rooms."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/meeting_dialogs.rs
 msgid "The organizer can't be written to from this account."
 msgstr ""
@@ -15964,6 +16019,11 @@ msgid "This build can't ask a server when other people are busy: only your own c
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "This build can't ask the Exchange server for rooms."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/scheduling.rs
 msgid "This build can't ask the Exchange server when other people are busy: only your own calendar is shown."
 msgstr ""
@@ -16320,6 +16380,11 @@ msgstr ""
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingScreen.kt
 msgid "This link goes to"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "This list has no rooms."
 msgstr ""
 
 #. interface
@@ -22423,6 +22488,13 @@ msgstr[1] ""
 #: crates/ui-egui/src/agent_gate.rs
 msgid "{n} more question is waiting."
 msgid_plural "{n} more questions are waiting."
+msgstr[0] ""
+msgstr[1] ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "{n} more room isn't shown"
+msgid_plural "{n} more rooms aren't shown"
 msgstr[0] ""
 msgstr[1] ""
 

@@ -1202,7 +1202,11 @@ fn event_body(fields: &EventFields, mark: &str, zone: &str, own: bool) -> Option
             .map(|attendee| {
                 json!({
                     "emailAddress": {"address": attendee.address.email.trim(), "name": attendee.address.name.trim()},
-                    "type": if attendee.optional { "optional" } else { "required" },
+                    "type": match (attendee.resource, attendee.optional) {
+                        (true, _) => "resource",
+                        (false, true) => "optional",
+                        (false, false) => "required",
+                    },
                 })
             })
             .collect();
@@ -1786,6 +1790,7 @@ fn event_of(entry: &Value) -> Option<RemoteEvent> {
                 address: person(attendee),
                 optional: text(attendee, "type").eq_ignore_ascii_case("optional"),
                 response: response(attendee.get("status")),
+                resource: text(attendee, "type").eq_ignore_ascii_case("resource"),
             })
             .collect(),
         response: response(entry.get("responseStatus")),

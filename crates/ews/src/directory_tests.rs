@@ -128,12 +128,13 @@ fn an_all_day_event_keeps_the_instant_and_the_day_of_its_zone() {
 #[test]
 fn only_the_people_a_server_can_name_are_written() {
     let people = vec![
-        Attendee { address: Address::new("Ada", "ada@example.org"), optional: false, response: Response::None },
-        Attendee { address: Address::new("No Address", ""), optional: false, response: Response::None },
+        Attendee { address: Address::new("Ada", "ada@example.org"), optional: false, response: Response::None, resource: false },
+        Attendee { address: Address::new("No Address", ""), optional: false, response: Response::None, resource: false },
         Attendee {
             address: Address::new("Directory", "/o=example/ou=Exchange Administrative Group/cn=Someone"),
             optional: true,
             response: Response::None,
+            resource: false,
         },
     ];
     let event = RemoteEvent { title: "Review".into(), start: 1_795_000_000, end: 1_795_001_800, attendees: people, ..Default::default() };
@@ -151,8 +152,8 @@ fn only_the_people_a_server_can_name_are_written() {
 fn a_change_writes_only_the_people_a_server_can_name() {
     let fields = EventFields {
         attendees: Some(vec![
-            Attendee { address: Address::new("Ada", "ada@example.org"), optional: false, response: Response::None },
-            Attendee { address: Address::new("No Address", ""), optional: false, response: Response::None },
+            Attendee { address: Address::new("Ada", "ada@example.org"), optional: false, response: Response::None, resource: false },
+            Attendee { address: Address::new("No Address", ""), optional: false, response: Response::None, resource: false },
         ]),
         ..Default::default()
     };
@@ -166,7 +167,7 @@ fn a_change_writes_only_the_people_a_server_can_name() {
 }
 
 fn people_without_an_address() -> Attendee {
-    Attendee { address: Address::new("No Address", ""), optional: false, response: Response::None }
+    Attendee { address: Address::new("No Address", ""), optional: false, response: Response::None, resource: false }
 }
 
 /// An appointment made here names this account as its sender (`PR_SENT_REPRESENTING_*`), so that
@@ -203,7 +204,7 @@ fn a_plain_appointment_says_it_is_not_a_meeting() {
         title: "Review".into(),
         start: 1_795_000_000,
         end: 1_795_001_800,
-        attendees: vec![Attendee { address: Address::new("Ada", "ada@example.org"), optional: false, response: Response::None }],
+        attendees: vec![Attendee { address: Address::new("Ada", "ada@example.org"), optional: false, response: Response::None, resource: false }],
         ..Default::default()
     };
     let written = calendar_item(&meeting, "", None).write();
@@ -299,7 +300,7 @@ fn an_events_elements_follow_the_schemas_order() {
     event.categories = vec!["Work".into()];
     event.reminder_minutes = Some(15);
     event.location = "Room 1".into();
-    event.attendees = vec![Attendee { address: Address::new("Cy", "cy@example.org"), optional: false, response: Response::None }];
+    event.attendees = vec![Attendee { address: Address::new("Cy", "cy@example.org"), optional: false, response: Response::None, resource: false }];
     let written = calendar_item(&event, "W. Europe Standard Time", None).write();
     let order = [
         "<t:Subject>",
@@ -393,4 +394,50 @@ fn a_proposed_time_goes_with_an_answer_that_is_sent() {
     ] {
         assert!(!quiet.contains("Proposed"), "{quiet}");
     }
+}
+
+/// A room booked goes as one of the meeting's `Resources`, after the people ([MS-OXWSCAL]); a
+/// calendar item's `Resources` come back as rooms.
+#[test]
+fn a_room_booked_goes_and_comes_as_a_resource() {
+    let person =
+        |email: &str, optional: bool, resource: bool| Attendee { address: Address::new("", email), optional, response: Response::None, resource };
+    let event = RemoteEvent {
+        title: "Planning".into(),
+        start: 1_795_000_000,
+        end: 1_795_001_800,
+        attendees: vec![person("cy@example.org", false, false), person("di@example.org", true, false), person("room-101@example.org", false, true)],
+        ..Default::default()
+    };
+    let written = calendar_item(&event, "", None).write();
+    let (required, optional, resources) =
+        (written.find("<t:RequiredAttendees>").unwrap(), written.find("<t:OptionalAttendees>").unwrap(), written.find("<t:Resources>").unwrap());
+    assert!(required < optional && optional < resources, "{written}");
+    let rooms = &written[resources..];
+    assert!(rooms.contains("room-101@example.org") && !rooms.contains("cy@example.org"), "{written}");
+    assert!(!written[required..resources].contains("room-101@example.org"), "the room isn't one of the people: {written}");
+
+    let page = find_items(
+        "<t:CalendarItem><t:ItemId Id=\"e-1\" ChangeKey=\"k\"/><t:Subject>Planning</t:Subject>\
+         <t:Start>2026-10-12T13:00:00Z</t:Start><t:End>2026-10-12T14:00:00Z</t:End>\
+         <t:RequiredAttendees><t:Attendee><t:Mailbox><t:EmailAddress>cy@example.org</t:EmailAddress><t:RoutingType>SMTP</t:RoutingType></t:Mailbox></t:Attendee></t:RequiredAttendees>\
+         <t:Resources><t:Attendee><t:Mailbox><t:Name>Room 1.01</t:Name><t:EmailAddress>room-101@example.org</t:EmailAddress><t:RoutingType>SMTP</t:RoutingType></t:Mailbox>\
+         <t:ResponseType>Accept</t:ResponseType></t:Attendee></t:Resources></t:CalendarItem>",
+    );
+    let Item::Event(read) = &page.items[0] else { panic!("an event") };
+    let said: Vec<(&str, bool, bool, Response)> =
+        read.attendees.iter().map(|a| (a.address.email.as_str(), a.optional, a.resource, a.response)).collect();
+    assert_eq!(said, [("cy@example.org", false, false, Response::None), ("room-101@example.org", false, true, Response::Accepted)]);
+}
+
+/// A change to who is invited sets the rooms too, and clears them when none is left.
+#[test]
+fn a_change_of_who_is_invited_sets_or_clears_the_rooms() {
+    let room = Attendee { address: Address::new("Room 1.01", "room-101@example.org"), optional: false, response: Response::None, resource: true };
+    let with = mailcraft_model::remote::EventFields { attendees: Some(vec![room]), ..Default::default() };
+    let written = update_event(&with, "e-1", "", false, "").write();
+    assert!(written.contains("FieldURI=\"calendar:Resources\"") && written.contains("room-101@example.org"), "{written}");
+    let without = mailcraft_model::remote::EventFields { attendees: Some(Vec::new()), ..Default::default() };
+    let written = update_event(&without, "e-1", "", false, "").write();
+    assert!(written.contains("<t:DeleteItemField><t:FieldURI FieldURI=\"calendar:Resources\"/>"), "{written}");
 }

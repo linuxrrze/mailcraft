@@ -269,7 +269,12 @@ fn write_event(out: &mut String, e: &Event, stamp: &str, zone: Option<Zone>) {
         fold(out, &format!("ORGANIZER{}", person(organizer)));
     }
     for attendee in e.attendees.iter().filter(|a| !is_blank(&a.address)) {
-        let role = if attendee.optional { "OPT-PARTICIPANT" } else { "REQ-PARTICIPANT" };
+        let role = match (attendee.resource, attendee.optional) {
+            (true, _) => "NON-PARTICIPANT",
+            (false, true) => "OPT-PARTICIPANT",
+            (false, false) => "REQ-PARTICIPANT",
+        };
+        let kind = if attendee.resource { "CUTYPE=ROOM;" } else { "" };
         let status = match attendee.response {
             Response::None if !e.response_options.request_responses => "NEEDS-ACTION;RSVP=FALSE",
             Response::None => "NEEDS-ACTION;RSVP=TRUE",
@@ -277,7 +282,7 @@ fn write_event(out: &mut String, e: &Event, stamp: &str, zone: Option<Zone>) {
             Response::Tentative => "TENTATIVE",
             Response::Declined => "DECLINED",
         };
-        fold(out, &format!("ATTENDEE;ROLE={role};PARTSTAT={status}{}", person(&attendee.address)));
+        fold(out, &format!("ATTENDEE;{kind}ROLE={role};PARTSTAT={status}{}", person(&attendee.address)));
     }
     if let Some(minutes) = e.reminder_minutes {
         fold(out, "BEGIN:VALARM");
@@ -372,10 +377,20 @@ mod tests {
             end: at(2026, 10, 12, 10, 30),
             organizer: Some(Address::new("Okafor, Nadia", "nadia.okafor@example.org")),
             attendees: vec![
-                Attendee { address: Address::new("Tomas Lindqvist", "tomas.lindqvist@example.org"), optional: false, response: Response::None },
-                Attendee { address: Address::new("Mei \"MT\" Tanaka", "mei.tanaka@example.org"), optional: true, response: Response::Tentative },
-                Attendee { address: Address::new("", "ibrahim@example.org"), optional: false, response: Response::Declined },
-                Attendee { address: Address::new("Zoë: ops", "zoe@example.org"), optional: false, response: Response::Accepted },
+                Attendee {
+                    address: Address::new("Tomas Lindqvist", "tomas.lindqvist@example.org"),
+                    optional: false,
+                    response: Response::None,
+                    resource: false,
+                },
+                Attendee {
+                    address: Address::new("Mei \"MT\" Tanaka", "mei.tanaka@example.org"),
+                    optional: true,
+                    response: Response::Tentative,
+                    resource: false,
+                },
+                Attendee { address: Address::new("", "ibrahim@example.org"), optional: false, response: Response::Declined, resource: false },
+                Attendee { address: Address::new("Zoë: ops", "zoe@example.org"), optional: false, response: Response::Accepted, resource: false },
                 Attendee::default(),
             ],
             recurrence: Some(Recurrence { interval: 2, by_day: vec![Weekday::Mon, Weekday::Wed], count: Some(8), ..Recurrence::every(Freq::Weekly) }),

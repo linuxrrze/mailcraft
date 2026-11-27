@@ -139,6 +139,17 @@ impl Client {
         ask.answer(&self.call(exchange, &ask.element()).await?)
     }
 
+    /// The organisation's lists of rooms (Room Finder): `GetRoomLists`, which reads and changes
+    /// nothing.
+    pub async fn room_lists<E: HttpExchange>(&self, exchange: &E) -> Result<Vec<mailcraft_model::Address>, Error> {
+        crate::rooms::read_room_lists(&self.call(exchange, &crate::rooms::get_room_lists()).await?)
+    }
+
+    /// The rooms of the list at `list` (its address): `GetRooms`, which reads and changes nothing.
+    pub async fn rooms<E: HttpExchange>(&self, exchange: &E, list: &str) -> Result<Vec<mailcraft_model::Address>, Error> {
+        crate::rooms::read_rooms(&self.call(exchange, &crate::rooms::get_rooms(list)).await?)
+    }
+
     /// Tests the account: the Inbox can be had. It is `GetFolder` of the Inbox by its
     /// distinguished name, and nothing is changed by it.
     pub async fn check<E: HttpExchange>(&self, exchange: &E) -> Result<FolderInfo, Error> {
