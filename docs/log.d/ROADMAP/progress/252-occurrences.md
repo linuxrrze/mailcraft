@@ -1,0 +1,1 @@
+| 2026-11-27 | #252: one day of an Exchange server account's series that has no name of its own here (made or expanded on this computer) is found on the server by the series' `UID` and when the series has it, and changed, answered, forwarded or deleted there; it was refused before |

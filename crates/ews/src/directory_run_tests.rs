@@ -427,3 +427,120 @@ fn a_calendar_that_failed_leaves_the_mail_whole_and_says_so_in_its_piece() {
     assert!(last.whole, "the mail was read whole");
     assert!(last.errors.iter().any(|line| line.contains("calendars")), "the run says it too: {:?}", last.errors);
 }
+
+/// A server with one weekly series (`UID` `series-uid`, id `series-1`) and, in the week around
+/// 2026-10-14T09:00Z, its occurrences of the 7th, the 14th (`occ-14`, moved to 11:00, so an
+/// exception) and the 21st, with another series' occurrence at the very same time; every
+/// `DeleteItem` and `UpdateItem` is done, and written down.
+struct Series {
+    has_the_day: bool,
+    asked: Mutex<Vec<String>>,
+}
+
+const OCCURRENCE: i64 = 1_791_968_400; // 2026-10-14T09:00:00Z
+
+impl crate::http::HttpExchange for Series {
+    fn exchange(&self, request: &crate::http::HttpRequest) -> impl Future<Output = Result<crate::http::HttpResponse, crate::http::TransportError>> {
+        let body = String::from_utf8_lossy(request.body()).into_owned();
+        self.asked.lock().unwrap_or_else(|poisoned| poisoned.into_inner()).push(body.clone());
+        let event = |id: &str, uid: &str, kind: &str, start: &str, original: &str| {
+            format!(
+                "<t:CalendarItem><t:ItemId Id=\"{id}\" ChangeKey=\"k\"/><t:Subject>Stand-up</t:Subject><t:Start>{start}</t:Start>\
+                 <t:End>{start}</t:End><t:OriginalStart>{original}</t:OriginalStart><t:CalendarItemType>{kind}</t:CalendarItemType>\
+                 <t:UID>{uid}</t:UID></t:CalendarItem>"
+            )
+        };
+        let answer = if body.contains("<m:GetItem") {
+            assert!(body.contains("Id=\"series-1\"") && body.contains("calendar:UID"), "{body}");
+            crate::standin::response(
+                "GetItem",
+                "<m:GetItemResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode><m:Items>\
+                 <t:CalendarItem><t:ItemId Id=\"series-1\" ChangeKey=\"k\"/><t:UID>series-uid</t:UID></t:CalendarItem></m:Items></m:GetItemResponseMessage>",
+            )
+        } else if body.contains("<m:FindItem") {
+            assert!(body.contains("<m:CalendarView") && body.contains("DistinguishedFolderId Id=\"calendar\""), "{body}");
+            let mut items = event("occ-7", "series-uid", "Occurrence", "2026-10-07T09:00:00Z", "2026-10-07T09:00:00Z");
+            if self.has_the_day {
+                items.push_str(&event("occ-14", "series-uid", "Exception", "2026-10-14T11:00:00Z", "2026-10-14T09:00:00Z"));
+            }
+            items.push_str(&event("other-14", "other-uid", "Occurrence", "2026-10-14T09:00:00Z", "2026-10-14T09:00:00Z"));
+            items.push_str(&event("occ-21", "series-uid", "Occurrence", "2026-10-21T09:00:00Z", "2026-10-21T09:00:00Z"));
+            crate::standin::response(
+                "FindItem",
+                &format!(
+                    "<m:FindItemResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode>\
+                     <m:RootFolder TotalItemsInView=\"4\" IncludesLastItemInRange=\"true\"><t:Items>{items}</t:Items></m:RootFolder></m:FindItemResponseMessage>"
+                ),
+            )
+        } else if body.contains("<m:DeleteItem") {
+            crate::standin::response(
+                "DeleteItem",
+                "<m:DeleteItemResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode></m:DeleteItemResponseMessage>",
+            )
+        } else {
+            assert!(body.contains("<m:UpdateItem"), "{body}");
+            crate::standin::response(
+                "UpdateItem",
+                "<m:UpdateItemResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode><m:Items>\
+                 <t:CalendarItem><t:ItemId Id=\"occ-14\" ChangeKey=\"k2\"/></t:CalendarItem></m:Items></m:UpdateItemResponseMessage>",
+            )
+        };
+        ready(Ok(crate::http::HttpResponse::new(200, answer.into_bytes())))
+    }
+}
+
+fn one_day(kind: EventChangeKind, fields: EventFields) -> mailcraft_model::sync::EwsDirectoryRequest {
+    mailcraft_model::sync::EwsDirectoryRequest {
+        account: 1,
+        email: "ada@example.org".into(),
+        url: "http://127.0.0.1/EWS/Exchange.asmx".into(),
+        changes: Some(mailcraft_model::remote::EventsUpload {
+            ops: vec![EventOp { kind, event: 9, series: "series-1".into(), occurrence: OCCURRENCE, fields, ..Default::default() }],
+            ..Default::default()
+        }),
+        ..Default::default()
+    }
+}
+
+fn push(server: &Series, request: &mailcraft_model::sync::EwsDirectoryRequest) -> mailcraft_model::remote::EventOutcome {
+    let client = crate::Client::new("http://127.0.0.1/EWS/Exchange.asmx", crate::Secret::new("test")).unwrap();
+    let cancel = std::sync::atomic::AtomicBool::new(false);
+    let result = crate::standin::block_on(sync_directory(&client, server, request, &cancel, &mut |_| true)).unwrap();
+    result.uploaded.unwrap().outcomes.into_iter().next().unwrap()
+}
+
+/// One day of a series that has no name of its own here is found by the series' `UID` and when
+/// the series has it (even moved since), and deleted there; it is known by its own id after.
+#[test]
+fn one_day_of_a_series_is_found_on_the_server_and_deleted() {
+    let server = Series { has_the_day: true, asked: Mutex::new(Vec::new()) };
+    let outcome = push(&server, &one_day(EventChangeKind::Delete, EventFields::default()));
+    assert_eq!(outcome.result, mailcraft_model::remote::EventResult::Done, "{}", outcome.error);
+    assert_eq!(outcome.remote, "occ-14");
+    let asked = server.asked.lock().unwrap().clone();
+    let deleted: Vec<&String> = asked.iter().filter(|body| body.contains("<m:DeleteItem")).collect();
+    assert_eq!(deleted.len(), 1);
+    assert!(deleted[0].contains("Id=\"occ-14\""), "that day alone, not the series nor the other series' day: {}", deleted[0]);
+}
+
+#[test]
+fn one_day_of_a_series_is_found_on_the_server_and_changed() {
+    let server = Series { has_the_day: true, asked: Mutex::new(Vec::new()) };
+    let fields = EventFields { title: Some("Stand-up, short".into()), ..Default::default() };
+    let outcome = push(&server, &one_day(EventChangeKind::Update, fields));
+    assert_eq!(outcome.result, mailcraft_model::remote::EventResult::Done, "{}", outcome.error);
+    assert_eq!(outcome.remote, "occ-14");
+    let asked = server.asked.lock().unwrap().clone();
+    let updated = asked.iter().find(|body| body.contains("<m:UpdateItem")).expect("changed");
+    assert!(updated.contains("Id=\"occ-14\"") && updated.contains("Stand-up, short"), "{updated}");
+}
+
+/// The server's series has no such day (it was taken away there): the change is gone, and
+/// nothing is deleted or changed.
+#[test]
+fn a_day_the_servers_series_hasnt_is_gone() {
+    let server = Series { has_the_day: false, asked: Mutex::new(Vec::new()) };
+    let outcome = push(&server, &one_day(EventChangeKind::Delete, EventFields::default()));
+    assert_eq!(outcome.result, mailcraft_model::remote::EventResult::Gone);
+    assert!(server.asked.lock().unwrap().iter().all(|body| !body.contains("<m:DeleteItem") && !body.contains("<m:UpdateItem")));
+}

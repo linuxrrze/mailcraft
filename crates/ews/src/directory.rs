@@ -143,7 +143,8 @@ impl std::fmt::Debug for FindItems {
 }
 
 impl FindItems {
-    /// Reads `max` items of `folder` (its server id) from `offset`.
+    /// Reads `max` items of `folder` (its server id; empty for the account's own folder of the
+    /// kind) from `offset`.
     pub fn new(kind: Kind, folder: &str, offset: u32, max: u32) -> Self {
         Self { kind, folder: folder.to_owned(), view: None, offset, max: max.clamp(1, MAX_PAGE), plain: false }
     }
@@ -225,7 +226,12 @@ impl FindItems {
                 .attr("Offset", &self.offset.to_string())
                 .attr("BasePoint", "Beginning"),
         };
-        let folder = Element::new("t:FolderId").attr("Id", &self.folder);
+        // (No folder named: the account's own of the kind, by its distinguished name.)
+        let folder = if self.folder.is_empty() {
+            Element::new("t:DistinguishedFolderId").attr("Id", default_folder(self.kind))
+        } else {
+            Element::new("t:FolderId").attr("Id", &self.folder)
+        };
         Element::new("m:FindItem").attr("Traversal", "Shallow").child(shape).child(page).child(Element::new("m:ParentFolderIds").child(folder))
     }
 
@@ -1274,6 +1280,27 @@ pub fn update_item(kind: Kind, item: &ItemUp, id: &str, change_key: &str, send: 
     }
     let change = Element::new("t:ItemChange").child(item_id).child(updates);
     operation.attr("ConflictResolution", conflict_resolution(change_key)).child(Element::new("m:ItemChanges").child(change))
+}
+
+/// `GetItem` of a calendar item's `UID` alone ([MS-OXWSCAL] `calendar:UID`): what a series and
+/// its occurrences share.
+pub fn get_uid(id: &str) -> Element {
+    Element::new("m:GetItem")
+        .child(
+            Element::new("m:ItemShape")
+                .child(Element::new("t:BaseShape").text("IdOnly"))
+                .child(Element::new("t:AdditionalProperties").child(Element::new("t:FieldURI").attr("FieldURI", "calendar:UID"))),
+        )
+        .child(Element::new("m:ItemIds").child(Element::new("t:ItemId").attr("Id", id)))
+}
+
+/// The `UID` of the calendar item [`get_uid`] asked for; empty when the server gives none.
+pub fn read_uid(reply: &Reply) -> Result<String, Error> {
+    let messages = reply.messages("GetItem")?;
+    let [message] = messages.as_slice() else { return Err(Error::Unexpected) };
+    let items = message.ok()?.child_in(MESSAGES, "Items").ok_or(Error::Unexpected)?;
+    let item = items.children.iter().find(|item| item.is(TYPES, "CalendarItem")).ok_or(Error::Unexpected)?;
+    Ok(line(child_text(item, "UID"), 1_024))
 }
 
 fn default_folder(kind: Kind) -> &'static str {

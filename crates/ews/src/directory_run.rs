@@ -527,6 +527,28 @@ impl<E: HttpExchange> Run<'_, E> {
     async fn push_event(&mut self, op: &mailcraft_model::remote::EventOp, zone: &str, email: &str) -> EventOutcome {
         let zone = op.fields.zones.as_ref().map(|zones| zones.start.as_str()).filter(|zone| !zone.trim().is_empty()).unwrap_or(zone);
         let mut outcome = EventOutcome { op: op.clone(), ..Default::default() };
+        // One occurrence of a series that has no name of its own here: the server is asked which
+        // of its items it is, and the change goes to that one.
+        let mut occurrence_id = String::new();
+        let resolved;
+        let op = if op.remote.is_empty() && !op.series.is_empty() && op.occurrence != 0 && op.kind != mailcraft_model::remote::EventChangeKind::Create
+        {
+            match self.find_occurrence(op).await {
+                Ok(Some(id)) => {
+                    occurrence_id.clone_from(&id);
+                    resolved = mailcraft_model::remote::EventOp { remote: id, ..op.clone() };
+                    &resolved
+                }
+                // (The server's series has no such day: it was taken away there.)
+                Ok(None) => {
+                    outcome.result = EventResult::Gone;
+                    return outcome;
+                }
+                Err(error) => return settle(outcome, Err(error)),
+            }
+        } else {
+            op
+        };
         if op.remote.is_empty() && op.kind != mailcraft_model::remote::EventChangeKind::Create {
             outcome.result = EventResult::Refused;
             outcome.error = "the server's copy of this event is not known here".to_owned();
@@ -596,43 +618,44 @@ impl<E: HttpExchange> Run<'_, E> {
                 }
             }
         };
-        match result {
-            Ok((id, key)) => {
-                outcome.result = EventResult::Done;
-                if !id.is_empty() {
-                    outcome.remote = id;
-                } else if op.kind == mailcraft_model::remote::EventChangeKind::Create {
-                    // (A create always gives an id; without one nothing can find it again.)
-                    outcome.result = EventResult::Failed;
-                    outcome.error = "the server didn't say which event it made".to_owned();
-                }
-                outcome.change_key = key;
-            }
-            Err(Asked::Code(ResponseCode::ItemNotFound | ResponseCode::FolderNotFound)) => outcome.result = EventResult::Gone,
-            Err(Asked::Code(ResponseCode::AccessDenied)) => outcome.result = EventResult::Denied,
-            Err(Asked::Code(ResponseCode::ServerBusy)) => outcome.result = EventResult::Failed,
-            Err(Asked::Stop(Stop::Busy(seconds))) => {
-                outcome.result = EventResult::Failed;
-                outcome.retry_after = Some(seconds.max(1));
-            }
-            Err(Asked::Stop(Stop::Auth)) => {
-                outcome.result = EventResult::Failed;
-                outcome.error = "the server turned the sign-in down".to_owned();
-            }
-            Err(Asked::Stop(Stop::Unreachable | Stop::Tls)) => {
-                outcome.result = EventResult::Failed;
-                outcome.error = "the server couldn't be reached".to_owned();
-            }
-            Err(Asked::Code(_)) => {
-                outcome.result = EventResult::Refused;
-                outcome.error = "the server won't do it".to_owned();
-            }
-            Err(_) => {
-                outcome.result = EventResult::Failed;
-                outcome.error = "the server's answer couldn't be used".to_owned();
-            }
+        if let Ok((id, _)) = &result
+            && id.is_empty()
+            && !occurrence_id.is_empty()
+        {
+            // The occurrence's own name, as the server gave it: it is known by it from now on.
+            outcome.remote = occurrence_id;
         }
-        outcome
+        settle(outcome, result)
+    }
+
+    /// The server's id of the occurrence of `op`'s series that falls at `op.occurrence` (as the
+    /// series has it: an occurrence moved since is found by where it was), in `op`'s calendar.
+    /// The series' `UID` is asked for, then the calendar a week either side; `None` when no item
+    /// there is that occurrence. A calendar opened by address isn't looked in (its folder isn't
+    /// known by an id here).
+    async fn find_occurrence(&mut self, op: &mailcraft_model::remote::EventOp) -> Result<Option<String>, Asked> {
+        if op.calendar.starts_with(mailcraft_model::remote::OPENED_PREFIX) {
+            return Ok(None);
+        }
+        let uid = self.ask(&directory::get_uid(&op.series), &|reply| directory::read_uid(reply)).await?;
+        if uid.is_empty() {
+            return Ok(None);
+        }
+        const AROUND: i64 = 7 * 86_400;
+        let find = directory::FindItems::new(Kind::Calendar, &op.calendar, 0, 512)
+            .view(op.occurrence.saturating_sub(AROUND), op.occurrence.saturating_add(AROUND));
+        let page = self.ask(&find.element(), &|reply| find.answer(reply)).await?;
+        Ok(page.items.into_iter().find_map(|item| match item {
+            Item::Event(event)
+                if event.uid == uid
+                    && matches!(event.kind, RemoteEventKind::Occurrence | RemoteEventKind::Exception)
+                    && event.original.unwrap_or(event.start) == op.occurrence
+                    && !event.id.is_empty() =>
+            {
+                Some(event.id)
+            }
+            _ => None,
+        }))
     }
 
     async fn push_contact(&mut self, op: &mailcraft_model::remote::ContactOp) -> ContactOutcome {
@@ -861,6 +884,48 @@ fn forward_item(id: &str, to: &[mailcraft_model::Address], comment: &str) -> Ele
         item = item.child(Element::new("t:Body").attr("BodyType", "Text").text(comment));
     }
     Element::new("m:CreateItem").child(Element::new("m:Items").child(item))
+}
+
+/// `outcome` as the server's answer `result` makes it: done (with the id and change key the
+/// server gave, if any), gone, denied, refused, or failed for now.
+fn settle(mut outcome: EventOutcome, result: Result<(String, String), Asked>) -> EventOutcome {
+    match result {
+        Ok((id, key)) => {
+            outcome.result = EventResult::Done;
+            if !id.is_empty() {
+                outcome.remote = id;
+            } else if outcome.op.kind == mailcraft_model::remote::EventChangeKind::Create {
+                // (A create always gives an id; without one nothing can find it again.)
+                outcome.result = EventResult::Failed;
+                outcome.error = "the server didn't say which event it made".to_owned();
+            }
+            outcome.change_key = key;
+        }
+        Err(Asked::Code(ResponseCode::ItemNotFound | ResponseCode::FolderNotFound)) => outcome.result = EventResult::Gone,
+        Err(Asked::Code(ResponseCode::AccessDenied)) => outcome.result = EventResult::Denied,
+        Err(Asked::Code(ResponseCode::ServerBusy)) => outcome.result = EventResult::Failed,
+        Err(Asked::Stop(Stop::Busy(seconds))) => {
+            outcome.result = EventResult::Failed;
+            outcome.retry_after = Some(seconds.max(1));
+        }
+        Err(Asked::Stop(Stop::Auth)) => {
+            outcome.result = EventResult::Failed;
+            outcome.error = "the server turned the sign-in down".to_owned();
+        }
+        Err(Asked::Stop(Stop::Unreachable | Stop::Tls)) => {
+            outcome.result = EventResult::Failed;
+            outcome.error = "the server couldn't be reached".to_owned();
+        }
+        Err(Asked::Code(_)) => {
+            outcome.result = EventResult::Refused;
+            outcome.error = "the server won't do it".to_owned();
+        }
+        Err(_) => {
+            outcome.result = EventResult::Failed;
+            outcome.error = "the server's answer couldn't be used".to_owned();
+        }
+    }
+    outcome
 }
 
 #[cfg(test)]
