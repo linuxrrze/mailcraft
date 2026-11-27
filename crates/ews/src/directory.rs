@@ -1583,7 +1583,11 @@ pub enum Answer {
 /// (`MessageDisposition`): sent to the organizer with a copy kept (`SendAndSaveCopy`), or, when
 /// the owner chose not to send a response, only saved — in Deleted Items, so that no draft is
 /// left behind — while the server still takes the answer into the meeting.
-pub fn meeting_answer(answer: Answer, id: &str, comment: &str, send: bool) -> Element {
+///
+/// `proposed` is another time the owner proposes with a tentative answer or a decline (from and
+/// up to): `ProposedStart` and `ProposedEnd` after the item it answers ([MS-OXWSMTGS], Exchange
+/// 2013 and later), only with an answer that is sent, since the proposal is mail to the organizer.
+pub fn meeting_answer(answer: Answer, id: &str, comment: &str, send: bool, proposed: Option<(Timestamp, Timestamp)>) -> Element {
     let name = match answer {
         Answer::Accept => "AcceptItem",
         Answer::Tentative => "TentativelyAcceptItem",
@@ -1594,6 +1598,11 @@ pub fn meeting_answer(answer: Answer, id: &str, comment: &str, send: bool) -> El
         item = item.child(Element::new("t:Body").attr("BodyType", "Text").text(&text(comment, 2_000)));
     }
     item = item.child(Element::new("t:ReferenceItemId").attr("Id", id));
+    if let Some((start, end)) = proposed.filter(|(start, end)| send && answer != Answer::Accept && end > start) {
+        item = item
+            .child(Element::new("t:ProposedStart").text(&mailcraft_time::format_iso_utc(start)))
+            .child(Element::new("t:ProposedEnd").text(&mailcraft_time::format_iso_utc(end)));
+    }
     let operation = Element::new("m:CreateItem").attr("MessageDisposition", if send { "SendAndSaveCopy" } else { "SaveOnly" });
     let operation = if send {
         operation
