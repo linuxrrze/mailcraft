@@ -17,6 +17,9 @@ Another mailbox's calendar or address book is read with the owner's sign-in by p
 in every folder request; it is listed under Shared Calendars or with the account's books. Grommunio
 lets the owner into the shared folder it is given but not list that mailbox's other folders, so a
 shared calendar or book is read as its default folder there.
+A calendar shared with the owner for its free and busy times alone, which the server won't list,
+is drawn from those instead (`GetUserAvailability`): blocks of time without a title or a place,
+each saying how it shows, as Outlook shows such a calendar.
 
 Find a Time asks the server when the people invited are busy, for a meeting in the account's
 calendar (`GetUserAvailability`, [MS-OXWSGTAV]): their addresses and the day go to the server, with

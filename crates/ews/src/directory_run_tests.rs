@@ -616,3 +616,112 @@ fn a_zone_windows_has_no_name_for_is_left_out() {
     let made = made_in("Nowhere/Atlantis");
     assert!(!made.contains("StartTimeZone") && !made.contains("Atlantis"), "{made}");
 }
+
+/// Somebody's calendar shared with the account for its free and busy times alone: listing it is
+/// refused (`ErrorAccessDenied`, at `GetFolder` or at its calendar view, as `deny_folder` says),
+/// and `GetUserAvailability` tells when they are busy, unless `nothing_at_all`.
+struct FreeBusyOnly {
+    deny_folder: bool,
+    nothing_at_all: bool,
+}
+
+impl crate::http::HttpExchange for FreeBusyOnly {
+    fn exchange(&self, request: &crate::http::HttpRequest) -> impl Future<Output = Result<crate::http::HttpResponse, crate::http::TransportError>> {
+        let body = String::from_utf8_lossy(request.body()).into_owned();
+        let denied = |operation: &str| {
+            crate::standin::response(
+                operation,
+                &format!(
+                    "<m:{operation}ResponseMessage ResponseClass=\"Error\"><m:ResponseCode>ErrorAccessDenied</m:ResponseCode></m:{operation}ResponseMessage>"
+                ),
+            )
+        };
+        let answer = if body.contains("<m:GetFolder") {
+            if self.deny_folder {
+                denied("GetFolder")
+            } else {
+                crate::standin::response(
+                    "GetFolder",
+                    "<m:GetFolderResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode><m:Folders>\
+                     <t:CalendarFolder><t:FolderId Id=\"their-calendar\" ChangeKey=\"k\"/><t:FolderClass>IPF.Appointment</t:FolderClass>\
+                     <t:DisplayName>Calendar</t:DisplayName></t:CalendarFolder></m:Folders></m:GetFolderResponseMessage>",
+                )
+            }
+        } else if body.contains("<m:FindFolder") {
+            denied("FindFolder")
+        } else if body.contains("<m:FindItem") {
+            denied("FindItem")
+        } else {
+            assert!(body.contains("<m:GetUserAvailabilityRequest") && body.contains("<t:Address>bo@example.org</t:Address>"), "{body}");
+            let response = if self.nothing_at_all {
+                "<m:FreeBusyResponse><m:ResponseMessage ResponseClass=\"Error\"><m:ResponseCode>ErrorNoFreeBusyAccess</m:ResponseCode>\
+                 </m:ResponseMessage></m:FreeBusyResponse>"
+                    .to_owned()
+            } else {
+                "<m:FreeBusyResponse><m:ResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode></m:ResponseMessage>\
+                 <m:FreeBusyView><t:FreeBusyViewType>FreeBusy</t:FreeBusyViewType><t:CalendarEventArray>\
+                 <t:CalendarEvent><t:StartTime>2026-10-14T09:00:00</t:StartTime><t:EndTime>2026-10-14T10:00:00</t:EndTime><t:BusyType>Busy</t:BusyType></t:CalendarEvent>\
+                 <t:CalendarEvent><t:StartTime>2026-10-15T13:00:00</t:StartTime><t:EndTime>2026-10-15T17:00:00</t:EndTime><t:BusyType>OOF</t:BusyType></t:CalendarEvent>\
+                 </t:CalendarEventArray></m:FreeBusyView></m:FreeBusyResponse>"
+                    .to_owned()
+            };
+            crate::standin::envelope(&format!(
+                "<m:GetUserAvailabilityResponse xmlns:m=\"{}\" xmlns:t=\"{}\"><m:FreeBusyResponseArray>{response}</m:FreeBusyResponseArray></m:GetUserAvailabilityResponse>",
+                crate::soap::MESSAGES,
+                crate::soap::TYPES
+            ))
+        };
+        ready(Ok(crate::http::HttpResponse::new(200, answer.into_bytes())))
+    }
+}
+
+fn opened_by_address(server: &FreeBusyOnly) -> mailcraft_model::sync::EwsDirectoryResult {
+    let client = crate::Client::new("http://127.0.0.1/EWS/Exchange.asmx", crate::Secret::new("test")).unwrap();
+    let request = mailcraft_model::sync::EwsDirectoryRequest {
+        account: 1,
+        email: "ada@example.org".into(),
+        url: "http://127.0.0.1/EWS/Exchange.asmx".into(),
+        from: 1_791_763_200,
+        to: 1_791_763_200 + 7 * 86_400,
+        shared: vec![mailcraft_model::sync::EwsSharedMailbox { address: "bo@example.org".into(), calendar: true, ..Default::default() }],
+        ..Default::default()
+    };
+    let cancel = std::sync::atomic::AtomicBool::new(false);
+    crate::standin::block_on(sync_directory(&client, server, &request, &cancel, &mut |_| true)).unwrap()
+}
+
+/// A calendar opened by address that may only be seen for its free and busy times is drawn from
+/// those, as Outlook shows one: blocks of time without a title, listed as such.
+#[test]
+fn a_calendar_shared_for_free_and_busy_alone_is_drawn_from_those() {
+    for deny_folder in [false, true] {
+        let result = opened_by_address(&FreeBusyOnly { deny_folder, nothing_at_all: false });
+        assert!(result.errors.is_empty(), "{:?}", result.errors);
+        let list = result.calendars.as_ref().expect("listed");
+        let [calendar] = list.calendars.as_slice() else { panic!("one calendar: {list:?}") };
+        assert_eq!(calendar.id, "user:bo@example.org");
+        assert_eq!(calendar.rights, mailcraft_model::Rights::FreeBusy);
+        assert_eq!(calendar.group, "Shared Calendars");
+        assert!(!list.complete);
+        let [events] = result.events.as_slice() else { panic!("one download") };
+        assert!(events.free_busy && events.complete && events.calendar == "user:bo@example.org");
+        let blocks: Vec<_> = events.events.iter().map(|e| (e.start - 1_791_763_200, e.end - 1_791_763_200, e.show_as, e.title.is_empty())).collect();
+        assert_eq!(
+            blocks,
+            [
+                (2 * 86_400 + 9 * 3_600, 2 * 86_400 + 10 * 3_600, mailcraft_model::ShowAs::Busy, true),
+                (3 * 86_400 + 13 * 3_600, 3 * 86_400 + 17 * 3_600, mailcraft_model::ShowAs::OutOfOffice, true),
+            ],
+            "deny_folder: {deny_folder}"
+        );
+    }
+}
+
+/// Somebody who won't let even their free and busy times be seen: the calendar isn't read, and
+/// that is said, as before.
+#[test]
+fn a_calendar_that_tells_nothing_at_all_is_said_to_be_unread() {
+    let result = opened_by_address(&FreeBusyOnly { deny_folder: true, nothing_at_all: true });
+    assert_eq!(result.errors, ["Couldn't read a calendar that was shared with the account"]);
+    assert!(result.events.is_empty());
+}

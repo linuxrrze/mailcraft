@@ -1,0 +1,1 @@
+- A colleague's calendar opened by address on an Exchange server account, when they share only when they are busy, shows those times as blocks without a title, as Outlook shows it, instead of failing to read. ([#252](https://github.com/GITHUB_REPOSITORY/issues/252))

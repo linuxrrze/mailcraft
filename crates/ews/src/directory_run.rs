@@ -39,6 +39,10 @@ const MAX_PAGES: usize = 200;
 const MAX_ITEMS: usize = 20_000;
 /// Most changes one run carries of each kind.
 const MAX_CHANGES: usize = 5_000;
+/// Most `GetUserAvailability` questions for one calendar shared for free and busy times alone:
+/// the stretch read (a month back and a year ahead, or the days on screen) in stretches of 42
+/// days, with room to spare.
+const MAX_AVAILABILITY_ASKS: usize = 10;
 
 /// Read the directory of `request`: the changes first, then the folders and what they hold.
 pub async fn sync_directory<E: HttpExchange>(
@@ -163,7 +167,15 @@ impl<E: HttpExchange> Run<'_, E> {
                 continue;
             }
             if shared.calendar {
-                match self.read_calendars(request, Some(address), Some(address), true).await {
+                let read = match self.read_calendars(request, Some(address), Some(address), true).await {
+                    // Not to be listed, only its free and busy times may be had (a calendar
+                    // shared for those alone): drawn from them instead, as Outlook shows one.
+                    Err(Asked::Code(ResponseCode::AccessDenied)) => {
+                        self.free_busy_calendar(request, address).await.map(|(list, events)| (list, vec![events], 0))
+                    }
+                    other => other,
+                };
+                match read {
                     Ok((mut list, events, failed)) => {
                         if failed > 0 {
                             out.errors.push("Couldn't read a calendar that was shared with the account".to_owned());
@@ -324,6 +336,9 @@ impl<E: HttpExchange> Run<'_, E> {
             let (mut download, complete) = match self.read_events(folder, &remote_id, from, to, shared).await {
                 Ok(read) => read,
                 Err(Asked::Stop(stop)) => return Err(Asked::Stop(stop)),
+                // Somebody else's calendar that may be seen but not listed: for whoever asked to
+                // draw it from its free and busy times.
+                Err(Asked::Code(ResponseCode::AccessDenied)) if shared && main => return Err(Asked::Code(ResponseCode::AccessDenied)),
                 Err(_) => {
                     list.complete = false;
                     failed = failed.saturating_add(1);
@@ -340,6 +355,80 @@ impl<E: HttpExchange> Run<'_, E> {
             events.push(download);
         }
         Ok((list, events, failed))
+    }
+
+    /// The main calendar of `address`, shared with the account for its free and busy times alone,
+    /// as those (`GetUserAvailability`, the stretch of the request in stretches of 42 days): each
+    /// block of time taken an event without a title or a place, only when and how it shows (busy,
+    /// tentative, out of office, working elsewhere), known again by those. The calendar is listed
+    /// as one that only says when its owner is busy ([`Rights::FreeBusy`]). A person whose time
+    /// the server won't tell is [`ResponseCode::AccessDenied`] still.
+    async fn free_busy_calendar(
+        &mut self,
+        request: &mailcraft_model::sync::EwsDirectoryRequest,
+        address: &str,
+    ) -> Result<(CalendarsDownload, EventsDownload), Asked> {
+        let id = mailcraft_model::remote::opened_id(address);
+        let mut download = EventsDownload {
+            account: request.account,
+            email: request.email.clone(),
+            calendar: id.clone(),
+            from: request.from,
+            to: request.to,
+            complete: true,
+            free_busy: true,
+            ..Default::default()
+        };
+        let mut seen = std::collections::HashSet::new();
+        let mut at = request.from;
+        for n in 0..MAX_AVAILABILITY_ASKS {
+            if at >= request.to {
+                break;
+            }
+            let end = request.to.min(at.saturating_add(crate::availability::MAX_WINDOW));
+            let ask = mailcraft_model::remote::FreeBusyAsk { people: vec![address.to_owned()], from: at, to: end };
+            let Some(question) = crate::availability::GetUserAvailability::new(&ask) else { return Err(Asked::Bad) };
+            let answer = self.ask(&question.element(), &|reply| question.answer(reply)).await?;
+            let person = answer.people.first().ok_or(Asked::Code(ResponseCode::AccessDenied))?;
+            if !person.error.is_empty() {
+                return Err(Asked::Code(ResponseCode::AccessDenied));
+            }
+            for busy in &person.busy {
+                let id = format!("freebusy:{}:{}:{}", busy.start, busy.end, busy.show_as.code());
+                if download.events.len() < MAX_ITEMS && seen.insert(id.clone()) {
+                    download.events.push(RemoteEvent {
+                        id,
+                        start: busy.start,
+                        end: busy.end,
+                        show_as: busy.show_as,
+                        is_organizer: Some(false),
+                        ..Default::default()
+                    });
+                }
+            }
+            at = end;
+            // Not all of the stretch was asked for: nothing is taken away for being missing.
+            if n.saturating_add(1) == MAX_AVAILABILITY_ASKS && at < request.to {
+                download.complete = false;
+            }
+        }
+        let list = CalendarsDownload {
+            account: request.account,
+            email: request.email.clone(),
+            // (A calendar opened by address never describes the whole account.)
+            complete: false,
+            calendars: vec![RemoteCalendar {
+                id,
+                name: address.to_owned(),
+                group: "Shared Calendars".to_owned(),
+                rights: mailcraft_model::Rights::FreeBusy,
+                owner: Some(CalendarOwner { address: address.to_owned(), name: address.to_owned() }),
+                main: false,
+                ..Default::default()
+            }],
+            ..Default::default()
+        };
+        Ok((list, download))
     }
 
     async fn read_events(&mut self, folder: &FolderInfo, remote_id: &str, from: i64, to: i64, plain: bool) -> Result<(EventsDownload, bool), Asked> {
