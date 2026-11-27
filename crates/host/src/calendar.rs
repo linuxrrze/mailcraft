@@ -78,6 +78,9 @@ pub struct FreeBusyResult {
     pub consent_needed: bool,
     /// The token that was handed in is no longer taken.
     pub token_refused: bool,
+    /// An Exchange server turned the password down: it is asked for again at the next
+    /// Send/Receive, as a run's is.
+    pub password_refused: bool,
     /// What the server said; `None` when it couldn't be asked.
     pub schedule: Option<FreeBusy>,
     /// Why there is no answer, for the owner to read.

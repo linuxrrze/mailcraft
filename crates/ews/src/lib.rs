@@ -48,6 +48,9 @@ pub mod auth;
 pub mod autodiscover;
 #[deny(missing_docs)]
 #[cfg_attr(not(test), deny(clippy::indexing_slicing, clippy::arithmetic_side_effects))]
+pub mod availability;
+#[deny(missing_docs)]
+#[cfg_attr(not(test), deny(clippy::indexing_slicing, clippy::arithmetic_side_effects))]
 pub mod basic;
 #[deny(missing_docs)]
 #[cfg_attr(not(test), deny(clippy::indexing_slicing, clippy::arithmetic_side_effects))]
@@ -107,6 +110,8 @@ pub mod standin;
 #[cfg(any(test, feature = "stand-in"))]
 pub mod standin_autodiscover;
 #[cfg(any(test, feature = "stand-in"))]
+pub mod standin_availability;
+#[cfg(any(test, feature = "stand-in"))]
 pub mod standin_directory;
 #[cfg(any(test, feature = "stand-in"))]
 pub mod standin_mail;
@@ -115,6 +120,8 @@ pub mod standin_ntlm;
 #[cfg(any(test, feature = "stand-in"))]
 pub mod standin_write;
 
+#[cfg(test)]
+mod availability_tests;
 #[cfg(test)]
 mod delete_check_tests;
 #[cfg(test)]
@@ -140,6 +147,7 @@ mod up_tests;
 
 pub use auth::{AuthError, Scheme};
 pub use autodiscover::{Autodiscover, Consent, ConsentReason, Discovered, Failure, Outcome, SrvName, Step};
+pub use availability::GetUserAvailability;
 pub use basic::CredentialError;
 pub use changes::{DeleteMode, ItemUpdate};
 pub use client::Client;

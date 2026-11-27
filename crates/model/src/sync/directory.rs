@@ -146,6 +146,40 @@ impl std::fmt::Debug for EwsResolveRequest {
     }
 }
 
+/// Other people's free and busy time to ask an Exchange server account's server about (Find a
+/// Time: `GetUserAvailability`), with where its server is, as an [`EwsResolveRequest`] says it. The
+/// password goes beside the request and is not in it.
+#[derive(Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(default, rename_all = "camelCase")]
+pub struct EwsFreeBusyRequest {
+    pub account: Id,
+    /// The account's address.
+    pub email: String,
+    /// The address of the Exchange Web Services endpoint. Never logged.
+    pub url: String,
+    /// The name the password is sent with; empty means `email`.
+    #[serde(skip_serializing_if = "String::is_empty")]
+    pub username: String,
+    /// The fingerprint of the one certificate the owner trusts for this account; empty when none.
+    #[serde(skip_serializing_if = "String::is_empty")]
+    pub trusted: String,
+    /// Whose time, and when.
+    pub ask: crate::remote::FreeBusyAsk,
+}
+
+/// Counts only: no address, and nobody asked about.
+impl std::fmt::Debug for EwsFreeBusyRequest {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("EwsFreeBusyRequest")
+            .field("account", &self.account)
+            .field("trusted", &!self.trusted.is_empty())
+            .field("people", &self.ask.people.len())
+            .field("from", &self.ask.from)
+            .field("to", &self.ask.to)
+            .finish()
+    }
+}
+
 /// What the address list has for one name looked up.
 #[derive(Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]

@@ -1,0 +1,1 @@
+| 2026-11-27 | #252: Find a Time with an Exchange server account: `GetUserAvailability` ([MS-OXWSGTAV], the `FreeBusy` view, in UTC) in `crates/ews` (`availability`), a stand-in that holds it to the schema, the request built by the engine (`ews_free_busy_request`) and run by the desktop host (`ews_runner::run_free_busy`) |
