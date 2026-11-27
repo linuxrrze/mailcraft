@@ -256,3 +256,25 @@ fn a_calendar_shared_for_free_and_busy_alone_is_taken_in_as_such() {
     // (The account's main calendar is kept with no id of its own: `apply_calendars`.)
     assert!(s.mailbox.calendars.iter().any(|c| c.origin.account == account && c.origin.id.is_empty()), "the account's own stays");
 }
+
+/// The working hours an Exchange server says the owner has set are the calendar's work time, as a
+/// Microsoft account's mailbox settings are: the days, and the hours moved from the mailbox's zone
+/// (an hour east here) to this computer's (UTC).
+#[test]
+fn the_mailboxs_working_hours_shade_the_calendar() {
+    use mailcraft_time::Weekday::{Fri, Mon, Thu, Tue, Wed};
+    // (This computer's clock at UTC, whatever the machine's own is.)
+    let mut s = Session::at(mailcraft_model::Mailbox::default(), NOW, 0);
+    let account = s.run("account.add", &json!({"email": ME, "kind": "exchange", "ews": {"url": URL}})).unwrap()["id"].as_u64().unwrap();
+    let result = EwsDirectoryResult {
+        account,
+        email: ME.into(),
+        working_hours: Some(mailcraft_model::sync::EwsWorkingHours { days: vec![Mon, Tue, Wed, Thu, Fri], start: 540, end: 1_080, offset: 60 }),
+        ..Default::default()
+    };
+    apply_ews_directory(&mut s, &result).unwrap();
+    let hours = crate::cmd::calendar_settings::work_hours(&s);
+    assert!(hours.from_mailbox);
+    assert_eq!(hours.days, [Mon, Tue, Wed, Thu, Fri]);
+    assert_eq!((hours.start, hours.end), (480, 1_020), "09:00 to 18:00 an hour east is 08:00 to 17:00 UTC");
+}

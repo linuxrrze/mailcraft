@@ -1,0 +1,1 @@
+| 2026-11-27 | #252: an Exchange server account's to-do deleted here is taken off the deletions waiting once the server has done it (or had done it): its outcome names it, and it was sent again at every Send/Receive (#962 review) |

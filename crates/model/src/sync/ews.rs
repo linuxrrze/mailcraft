@@ -238,6 +238,21 @@ pub struct EwsDirectoryResult {
     /// How the run signed in, `basic` or `ntlm`.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub signed_in_with: String,
+    /// The working hours the owner has set in the mailbox, when the run asked and the server said.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub working_hours: Option<EwsWorkingHours>,
+}
+
+/// The working hours of a mailbox as an Exchange server says them (`WorkingHours`, [MS-OXWSGTAV]):
+/// the days, and from and up to, in minutes of the day by the clock of the mailbox's zone, whose
+/// offset from UTC (minutes east) is the one in effect when they were read.
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(default, rename_all = "camelCase")]
+pub struct EwsWorkingHours {
+    pub days: Vec<mailcraft_time::Weekday>,
+    pub start: u16,
+    pub end: u16,
+    pub offset: i32,
 }
 
 impl EwsDirectoryResult {

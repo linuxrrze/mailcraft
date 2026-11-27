@@ -216,6 +216,20 @@ pub fn apply_ews_directory(s: &mut Session, result: &EwsDirectoryResult) -> CmdR
         let applied = super::tasks_remote::apply_task_outcomes(&mut s.mailbox, outcomes)?;
         counts["tasks"] = json!(applied.added + applied.updated);
     }
+    // The working hours the owner has set in the mailbox: what shades the calendar's work time,
+    // as a Microsoft account's mailbox settings do (unless the owner keeps hours of their own).
+    if let Some(hours) = &result.working_hours {
+        let email = s.mailbox.account(account).map(|a| a.email.trim().to_owned()).unwrap_or_default();
+        let hours = super::calendar_settings::MailboxHours {
+            email,
+            days: hours.days.clone(),
+            start: hours.start,
+            end: hours.end,
+            zone: String::new(),
+            offset: Some(hours.offset),
+        };
+        s.mailbox_hours_in(account, &hours);
+    }
     if let Some(list) = &result.calendars {
         let applied = super::remote::apply_calendars(s, list)?;
         counts["calendars"] = applied.get("added").cloned().unwrap_or_else(|| json!(0));

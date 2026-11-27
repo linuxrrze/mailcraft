@@ -148,6 +148,11 @@ impl<E: HttpExchange> Run<'_, E> {
                 Err(_) => out.errors.push("Couldn't read the calendars from the server".to_owned()),
             }
         }
+        // The working hours the owner has set in the mailbox, with a Send/Receive of the account's
+        // own calendar (not a read of the days on screen, nor a shared mailbox's).
+        if request.calendars && mailbox.is_none() && !request.background {
+            out.working_hours = self.working_hours(&request.email).await;
+        }
         if request.contacts {
             match self.read_contacts(request.account, &request.email, mailbox, None).await {
                 Ok(download) => out.contacts = Some(download),
@@ -431,6 +436,22 @@ impl<E: HttpExchange> Run<'_, E> {
             ..Default::default()
         };
         Ok((list, download))
+    }
+
+    /// The working hours of the mailbox at `email`, as `GetUserAvailability` says them of the owner
+    /// for the day to come ([`crate::availability::working_hours`]); nothing when the server
+    /// won't say (which is never worth failing for).
+    async fn working_hours(&mut self, email: &str) -> Option<mailcraft_model::sync::EwsWorkingHours> {
+        let now = mailcraft_time::now();
+        let ask = mailcraft_model::remote::FreeBusyAsk { people: vec![email.to_owned()], from: now, to: now.saturating_add(86_400) };
+        let question = crate::availability::GetUserAvailability::new(&ask)?;
+        match self.ask(&question.element(), &|reply| Ok(crate::availability::working_hours(reply, now))).await {
+            Ok(hours) => hours,
+            Err(_) => {
+                log::debug!("ews: the mailbox's working hours couldn't be had");
+                None
+            }
+        }
     }
 
     async fn read_events(&mut self, folder: &FolderInfo, remote_id: &str, from: i64, to: i64, plain: bool) -> Result<(EventsDownload, bool), Asked> {
@@ -819,7 +840,9 @@ impl<E: HttpExchange> Run<'_, E> {
     }
 
     async fn push_task(&mut self, op: &mailcraft_model::remote_tasks::TaskOp) -> TaskOutcome {
-        let mut outcome = TaskOutcome { kind: op.kind, task: op.task, patch: op.patch.clone(), ..Default::default() };
+        // (Named by the to-do's id from the start: a deletion done, or found done already, is
+        // taken off the list of those waiting by it.)
+        let mut outcome = TaskOutcome { kind: op.kind, task: op.task, patch: op.patch.clone(), id: op.id.clone(), ..Default::default() };
         if op.id.is_empty() && op.kind != TaskOpKind::Create {
             outcome.result = TaskResult::Refused;
             outcome.error = "the server's copy of this to-do is not known here".to_owned();

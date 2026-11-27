@@ -725,3 +725,76 @@ fn a_calendar_that_tells_nothing_at_all_is_said_to_be_unread() {
     assert_eq!(result.errors, ["Couldn't read a calendar that was shared with the account"]);
     assert!(result.events.is_empty());
 }
+
+/// A server that answers every `DeleteItem` with `code`.
+struct Deleting(&'static str);
+
+impl crate::http::HttpExchange for Deleting {
+    fn exchange(&self, request: &crate::http::HttpRequest) -> impl Future<Output = Result<crate::http::HttpResponse, crate::http::TransportError>> {
+        assert!(String::from_utf8_lossy(request.body()).contains("<m:DeleteItem"));
+        let class = if self.0 == "NoError" { "Success" } else { "Error" };
+        let body = crate::standin::response(
+            "DeleteItem",
+            &format!(
+                "<m:DeleteItemResponseMessage ResponseClass=\"{class}\"><m:ResponseCode>{}</m:ResponseCode></m:DeleteItemResponseMessage>",
+                self.0
+            ),
+        );
+        ready(Ok(crate::http::HttpResponse::new(200, body.into_bytes())))
+    }
+}
+
+/// A to-do's deletion done, or found done already, names the to-do (#962 review): the engine
+/// takes it off the deletions waiting by that id, so it isn't sent again at every Send/Receive.
+#[test]
+fn a_to_do_deleted_names_itself_in_the_outcome() {
+    for (code, result) in [("NoError", TaskResult::Done), ("ErrorItemNotFound", TaskResult::Gone)] {
+        let client = crate::Client::new("http://127.0.0.1/EWS/Exchange.asmx", crate::Secret::new("test")).unwrap();
+        let request = mailcraft_model::sync::EwsDirectoryRequest {
+            account: 1,
+            email: "ada@example.org".into(),
+            url: "http://127.0.0.1/EWS/Exchange.asmx".into(),
+            task_changes: Some(mailcraft_model::remote_tasks::TasksUpload {
+                ops: vec![TaskOp { kind: TaskOpKind::Delete, task: 4, id: "todo-1".into(), ..Default::default() }],
+                ..Default::default()
+            }),
+            ..Default::default()
+        };
+        let cancel = std::sync::atomic::AtomicBool::new(false);
+        let done = crate::standin::block_on(sync_directory(&client, &Deleting(code), &request, &cancel, &mut |_| true)).unwrap();
+        let outcome = &done.tasks_uploaded.unwrap().outcomes[0];
+        assert_eq!((outcome.result, outcome.id.as_str()), (result, "todo-1"), "{code}");
+    }
+}
+
+/// A Send/Receive of the account's own calendar asks for the owner's working hours (the stand-in's
+/// are Monday to Friday, 08:00 to 17:00 UTC); a read of the days on screen doesn't ask.
+#[test]
+fn a_send_receive_brings_the_owners_working_hours_and_a_calendar_read_doesnt() {
+    for background in [false, true] {
+        let standin = crate::standin::StandIn::new();
+        standin.state().schedules = vec![crate::standin_availability::Schedule { email: "ada@example.org".into(), ..Default::default() }];
+        let client = crate::Client::new("http://127.0.0.1/EWS/Exchange.asmx", crate::Secret::new(crate::standin::AUTHORIZATION)).unwrap();
+        let request = mailcraft_model::sync::EwsDirectoryRequest {
+            account: 1,
+            email: "ada@example.org".into(),
+            url: "http://127.0.0.1/EWS/Exchange.asmx".into(),
+            calendars: true,
+            from: 1_791_000_000,
+            to: 1_793_000_000,
+            background,
+            ..Default::default()
+        };
+        let cancel = std::sync::atomic::AtomicBool::new(false);
+        let result = crate::standin::block_on(sync_directory(&client, &standin, &request, &cancel, &mut |_| true)).unwrap();
+        assert!(result.errors.is_empty(), "{:?}", result.errors);
+        if background {
+            assert_eq!(result.working_hours, None);
+            assert_eq!(standin.state().availability_asked, 0);
+        } else {
+            use mailcraft_time::Weekday::{Fri, Mon, Thu, Tue, Wed};
+            let hours = result.working_hours.expect("the hours");
+            assert_eq!((hours.days, hours.start, hours.end, hours.offset), (vec![Mon, Tue, Wed, Thu, Fri], 480, 1020, 0));
+        }
+    }
+}

@@ -1,0 +1,1 @@
+- With an Exchange server account, the calendar shades the working hours set in the mailbox (days and hours), as it does for Microsoft 365, unless File › Options › Use my own working hours is ticked. ([#252](https://github.com/GITHUB_REPOSITORY/issues/252))
