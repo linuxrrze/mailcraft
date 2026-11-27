@@ -2605,7 +2605,11 @@ mod event {
             if self.meeting {
                 m.insert("attendees".into(), json!(self.required));
                 m.insert("optional".into(), json!(self.optional));
-                m.insert("rooms".into(), json!(self.rooms));
+                // (Rooms only when there are some, or there were when the form opened: removing
+                // the last one is said too.)
+                if !self.rooms.trim().is_empty() || self.baseline.get("rooms").is_some() {
+                    m.insert("rooms".into(), json!(self.rooms));
+                }
                 // What a meeting has beyond an appointment: what the people invited are asked
                 // for, and whether it is held online.
                 m.insert("requestResponses".into(), json!(self.options.request_responses));
@@ -2614,7 +2618,9 @@ mod event {
             } else if self.was_meeting {
                 m.insert("attendees".into(), json!(""));
                 m.insert("optional".into(), json!(""));
-                m.insert("rooms".into(), json!(""));
+                if self.baseline.get("rooms").is_some() {
+                    m.insert("rooms".into(), json!(""));
+                }
             }
             // The zones the times above are by, for an event that has (or had) zones of its
             // own: none for whole days, and none again when Time Zones was turned off.
