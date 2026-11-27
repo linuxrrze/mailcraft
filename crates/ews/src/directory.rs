@@ -88,11 +88,36 @@ pub struct ItemsPage {
     pub items: Vec<Item>,
     /// This page reaches the end (`IncludesLastItemInRange`).
     pub last: bool,
+    /// How many items the server put in the page, those that couldn't be read too: an item
+    /// passed over still takes its place in the folder.
+    pub listed: usize,
+    /// Where the next page starts, as the server says (`IndexedPagingOffset`, [MS-OXWSSRCH]);
+    /// `None` when it doesn't say.
+    pub next: Option<u32>,
+}
+
+impl ItemsPage {
+    /// Where the page after this one starts, when there is one to ask for: the server's own
+    /// `IndexedPagingOffset` when it moves forward, else past every item this page listed, those
+    /// that couldn't be read too (counting only those read would ask for some of them again).
+    /// `None` when the page listed nothing: there is nothing further to walk.
+    pub fn next_offset(&self, offset: u32) -> Option<u32> {
+        if self.listed == 0 {
+            return None;
+        }
+        let past = offset.saturating_add(u32::try_from(self.listed).unwrap_or(u32::MAX));
+        Some(self.next.filter(|next| *next > offset).unwrap_or(past))
+    }
 }
 
 impl std::fmt::Debug for ItemsPage {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("ItemsPage").field("items", &self.items.len()).field("last", &self.last).finish()
+        f.debug_struct("ItemsPage")
+            .field("items", &self.items.len())
+            .field("last", &self.last)
+            .field("listed", &self.listed)
+            .field("next", &self.next)
+            .finish()
     }
 }
 
@@ -216,6 +241,7 @@ impl FindItems {
                 if *item.namespace != *TYPES {
                     continue;
                 }
+                page.listed = page.listed.saturating_add(1);
                 let read = match self.kind {
                     Kind::Calendar => read_calendar(item).map(|event| Item::Event(Box::new(event))),
                     Kind::Contacts => read_contact(item).map(|contact| Item::Contact(Box::new(contact))),
@@ -227,6 +253,7 @@ impl FindItems {
             }
         }
         page.last = root.attribute("IncludesLastItemInRange").is_none_or(|last| !last.trim().eq_ignore_ascii_case("false"));
+        page.next = root.attribute("IndexedPagingOffset").and_then(|next| next.trim().parse::<u32>().ok());
         Ok(page)
     }
 }
@@ -505,14 +532,26 @@ fn read_recurrence(node: &Node) -> Option<Recurrence> {
         }
         "WeeklyRecurrence" => {
             rule.freq = Freq::Weekly;
+            // (None named: the day of the series' start, as the mailbox reads an empty list.)
+            rule.by_day = days_of_week(child_text(pattern, "DaysOfWeek"));
             named = true;
         }
         "AbsoluteMonthlyRecurrence" => {
             rule.freq = Freq::Monthly;
             named = true;
         }
+        // A day and month every year; the schema gives it no interval ([MS-OXWSCDATA]
+        // `AbsoluteYearlyRecurrencePatternType`). The day and month are the series' start's.
+        "AbsoluteYearlyRecurrence" => {
+            rule.freq = Freq::Yearly;
+            rule.interval = 1;
+            named = true;
+        }
         "RelativeMonthlyRecurrence" | "RelativeYearlyRecurrence" => {
             rule.freq = if pattern.name == "RelativeYearlyRecurrence" { Freq::Yearly } else { Freq::Monthly };
+            if rule.freq == Freq::Yearly {
+                rule.interval = 1;
+            }
             rule.by_day = days_of_week(child_text(pattern, "DaysOfWeek"));
             rule.nth = Some(match child_text(pattern, "DayOfWeekIndex") {
                 "First" => 1,
@@ -541,20 +580,33 @@ fn read_recurrence(node: &Node) -> Option<Recurrence> {
     Some(rule)
 }
 
-/// The weekdays a `DaysOfWeek` text names (`Monday Wednesday`, or `Monday,Wednesday`).
+/// The weekdays a `DaysOfWeek` text names (`Monday Wednesday`, or `Monday,Wednesday`), with the
+/// schema's `Day`, `Weekday` and `WeekendDay` ([MS-OXWSCDATA] `DayOfWeekType`) as the days they
+/// stand for. Each day once, in the week's order.
 fn days_of_week(text: &str) -> Vec<Weekday> {
-    text.split([' ', ',', ';'])
-        .filter_map(|day| match day.trim() {
-            "Sunday" => Some(Weekday::Sun),
-            "Monday" => Some(Weekday::Mon),
-            "Tuesday" => Some(Weekday::Tue),
-            "Wednesday" => Some(Weekday::Wed),
-            "Thursday" => Some(Weekday::Thu),
-            "Friday" => Some(Weekday::Fri),
-            "Saturday" => Some(Weekday::Sat),
-            _ => None,
-        })
-        .collect()
+    const WEEK: [Weekday; 7] = [Weekday::Sun, Weekday::Mon, Weekday::Tue, Weekday::Wed, Weekday::Thu, Weekday::Fri, Weekday::Sat];
+    let mut named = [false; 7];
+    for day in text.split([' ', ',', ';']) {
+        let days: &[usize] = match day.trim() {
+            "Sunday" => &[0],
+            "Monday" => &[1],
+            "Tuesday" => &[2],
+            "Wednesday" => &[3],
+            "Thursday" => &[4],
+            "Friday" => &[5],
+            "Saturday" => &[6],
+            "Day" => &[0, 1, 2, 3, 4, 5, 6],
+            "Weekday" => &[1, 2, 3, 4, 5],
+            "WeekendDay" => &[0, 6],
+            _ => &[],
+        };
+        for at in days {
+            if let Some(slot) = named.get_mut(*at) {
+                *slot = true;
+            }
+        }
+    }
+    WEEK.iter().zip(named).filter(|(_, on)| *on).map(|(day, _)| *day).collect()
 }
 
 /// A contact as a server has it.
@@ -707,12 +759,27 @@ impl std::fmt::Debug for ItemUp {
 }
 
 /// The `t:CalendarItem` element of an event: the whole of it, for a new one or a change.
+///
+/// The children go in the schema's order ([MS-OXWSCAL] `CalendarItemType`, after the item's own
+/// part, [MS-OXWSCORE] `ItemType`): a server that validates the request refuses one out of place
+/// (`ErrorSchemaValidation`).
 pub fn calendar_item(event: &RemoteEvent, zone: &str, sender: Option<&Address>) -> Element {
-    let mut item = Element::new("t:CalendarItem")
-        .child(Element::new("t:Subject").text(&line(&event.title, MAX_LINE)))
-        .child(Element::new("t:Body").attr("BodyType", "Text").text(&text(&event.description, MAX_TEXT)));
-    // The sender's properties belong to the item's own part of the schema, before the calendar's
-    // (`Start`, `End`, …): a server that validates the order refuses them at the end.
+    // ItemType: Subject, Sensitivity, Body, Categories, Importance, ReminderIsSet,
+    // ReminderMinutesBeforeStart, ExtendedProperty.
+    let mut item = Element::new("t:CalendarItem").child(Element::new("t:Subject").text(&line(&event.title, MAX_LINE)));
+    if event.private {
+        item = item.child(Element::new("t:Sensitivity").text("Private"));
+    }
+    item = item.child(Element::new("t:Body").attr("BodyType", "Text").text(&text(&event.description, MAX_TEXT)));
+    if !event.categories.is_empty() {
+        item = item.child(categories_element(&event.categories));
+    }
+    item = item.child(Element::new("t:Importance").text(importance_name(event.importance)));
+    if let Some(minutes) = event.reminder_minutes {
+        item = item
+            .child(Element::new("t:ReminderIsSet").text("true"))
+            .child(Element::new("t:ReminderMinutesBeforeStart").text(&minutes.min(40_320).to_string()));
+    }
     if let Some(sender) = sender {
         for property in sender_properties(sender) {
             item = item.child(property);
@@ -724,43 +791,16 @@ pub fn calendar_item(event: &RemoteEvent, zone: &str, sender: Option<&Address>) 
     if !event.attendees.iter().any(|attendee| routing(&attendee.address).is_some()) {
         item = item.child(appointment_state_flags());
     }
+    // CalendarItemType: Start, End, IsAllDayEvent, LegacyFreeBusyStatus, Location,
+    // IsResponseRequested, RequiredAttendees, OptionalAttendees, Recurrence, StartTimeZone,
+    // EndTimeZone, AllowNewTimeProposal.
     item = item
         .child(Element::new("t:Start").text(&mailcraft_time::format_iso_utc(event.start)))
         .child(Element::new("t:End").text(&mailcraft_time::format_iso_utc(event.end.max(event.start))))
         .child(Element::new("t:IsAllDayEvent").text(if event.all_day { "true" } else { "false" }))
-        .child(Element::new("t:Location").text(&line(&event.location, MAX_LINE)));
-    let show = match event.show_as {
-        ShowAs::Free => "Free",
-        ShowAs::Tentative => "Tentative",
-        ShowAs::OutOfOffice => "OOF",
-        ShowAs::WorkingElsewhere => "WorkingElsewhere",
-        ShowAs::Busy => "Busy",
-    };
-    item = item.child(Element::new("t:LegacyFreeBusyStatus").text(show));
-    if event.private {
-        item = item.child(Element::new("t:Sensitivity").text("Private"));
-    }
-    let importance = match event.importance {
-        Importance::Low => "Low",
-        Importance::Normal => "Normal",
-        Importance::High => "High",
-    };
-    item = item.child(Element::new("t:Importance").text(importance));
-    if let Some(minutes) = event.reminder_minutes {
-        item =
-            item.child(Element::new("t:ReminderIsSet").text("true")).child(Element::new("t:ReminderMinutesBeforeStart").text(&minutes.to_string()));
-    }
-    if !event.categories.is_empty() {
-        item = item.child(
-            event
-                .categories
-                .iter()
-                .take(MAX_CATEGORIES)
-                .fold(Element::new("t:Categories"), |list, name| list.child(Element::new("t:String").text(&line(name, MAX_CATEGORY)))),
-        );
-    }
-    item = item.child(Element::new("t:IsResponseRequested").text(if event.options.request_responses { "true" } else { "false" }));
-    item = item.child(Element::new("t:AllowNewTimeProposal").text(if event.options.allow_proposals { "true" } else { "false" }));
+        .child(Element::new("t:LegacyFreeBusyStatus").text(show_as_name(event.show_as)))
+        .child(Element::new("t:Location").text(&line(&event.location, MAX_LINE)))
+        .child(Element::new("t:IsResponseRequested").text(if event.options.request_responses { "true" } else { "false" }));
     let required: Vec<&Attendee> = event.attendees.iter().filter(|a| !a.optional).collect();
     let optional: Vec<&Attendee> = event.attendees.iter().filter(|a| a.optional).collect();
     for (name, people) in [("t:RequiredAttendees", required), ("t:OptionalAttendees", optional)] {
@@ -769,13 +809,41 @@ pub fn calendar_item(event: &RemoteEvent, zone: &str, sender: Option<&Address>) 
             item = item.child(list.into_iter().fold(Element::new(name), |list, attendee| list.child(attendee)));
         }
     }
+    if let Some(rule) = &event.recurrence {
+        item = item.child(recurrence_element(rule, event, event.series_day));
+    }
     if !zone.trim().is_empty() {
         item = item.child(Element::new("t:StartTimeZone").attr("Id", zone.trim())).child(Element::new("t:EndTimeZone").attr("Id", zone.trim()));
     }
-    if let Some(rule) = &event.recurrence {
-        item = item.child(recurrence_element(rule, event));
+    item.child(Element::new("t:AllowNewTimeProposal").text(if event.options.allow_proposals { "true" } else { "false" }))
+}
+
+/// A `t:Categories` list.
+fn categories_element(names: &[String]) -> Element {
+    names
+        .iter()
+        .take(MAX_CATEGORIES)
+        .fold(Element::new("t:Categories"), |list, name| list.child(Element::new("t:String").text(&line(name, MAX_CATEGORY))))
+}
+
+/// The schema's name for an importance.
+fn importance_name(importance: Importance) -> &'static str {
+    match importance {
+        Importance::Low => "Low",
+        Importance::Normal => "Normal",
+        Importance::High => "High",
     }
-    item
+}
+
+/// The schema's name for a free/busy status (`LegacyFreeBusyType`).
+fn show_as_name(show_as: ShowAs) -> &'static str {
+    match show_as {
+        ShowAs::Free => "Free",
+        ShowAs::Tentative => "Tentative",
+        ShowAs::OutOfOffice => "OOF",
+        ShowAs::WorkingElsewhere => "WorkingElsewhere",
+        ShowAs::Busy => "Busy",
+    }
 }
 
 /// How a name goes to a server as one of the people invited: an address in SMTP form, or a
@@ -880,56 +948,65 @@ fn appointment_state_flags() -> Element {
         .child(Element::new("t:Value").text("0"))
 }
 
-/// The `t:Recurrence` element of a rule, when the mailbox can say it.
-fn recurrence_element(rule: &Recurrence, event: &RemoteEvent) -> Element {
-    let start = if event.all_day {
-        day_of(&mailcraft_time::format_iso_utc(event.start)).map(|day| DateTime::at_midnight(day).to_timestamp(0)).unwrap_or(event.start)
-    } else {
-        event.start
-    };
-    let interval = rule.interval.clamp(1, 999).to_string();
-    let mut pattern = match rule.freq {
+/// The `t:Recurrence` element of a rule, when the mailbox can say it ([MS-OXWSCDATA]
+/// `RecurrenceType`).
+///
+/// `first` is the series' first day as the calendar has it (the op's `repeat.first`): the day of
+/// the month, the month and the weekday a pattern names are that day's, and so is the range's
+/// `StartDate`, which is an `xs:date`. Without it the day of the start in UTC stands in.
+fn recurrence_element(rule: &Recurrence, event: &RemoteEvent, first: Option<Date>) -> Element {
+    let anchor = first.or_else(|| day_of(&mailcraft_time::format_iso_utc(event.start)));
+    let day_of_month = anchor.map_or(1, |d| d.day).to_string();
+    let interval = rule.interval.clamp(1, 999);
+    // A yearly pattern has no interval in the schema: every N years is every 12·N months, as a
+    // calendar keeps it.
+    let yearly_as_months = (rule.freq == Freq::Yearly && interval > 1).then(|| interval.saturating_mul(12).min(999 * 12).to_string());
+    let interval = interval.to_string();
+    let pattern = match rule.freq {
         Freq::Daily => Element::new("t:DailyRecurrence").child(Element::new("t:Interval").text(&interval)),
         Freq::Weekly => Element::new("t:WeeklyRecurrence")
             .child(Element::new("t:Interval").text(&interval))
-            .child(Element::new("t:DaysOfWeek").text(&weekdays(rule, event))),
-        Freq::Monthly if rule.nth.is_some() => Element::new("t:RelativeMonthlyRecurrence")
-            .child(Element::new("t:Interval").text(&interval))
-            .child(Element::new("t:DaysOfWeek").text(&weekdays(rule, event)))
-            .child(Element::new("t:DayOfWeekIndex").text(nth_name(rule.nth.unwrap_or(1)))),
+            .child(Element::new("t:DaysOfWeek").text(&weekdays(rule, anchor))),
+        Freq::Monthly | Freq::Yearly if rule.nth.is_some() && (rule.freq == Freq::Monthly || yearly_as_months.is_some()) => {
+            Element::new("t:RelativeMonthlyRecurrence")
+                .child(Element::new("t:Interval").text(yearly_as_months.as_deref().unwrap_or(&interval)))
+                .child(Element::new("t:DaysOfWeek").text(&weekdays(rule, anchor)))
+                .child(Element::new("t:DayOfWeekIndex").text(nth_name(rule.nth.unwrap_or(1))))
+        }
         Freq::Yearly if rule.nth.is_some() => Element::new("t:RelativeYearlyRecurrence")
-            .child(Element::new("t:DaysOfWeek").text(&weekdays(rule, event)))
+            .child(Element::new("t:DaysOfWeek").text(&weekdays(rule, anchor)))
             .child(Element::new("t:DayOfWeekIndex").text(nth_name(rule.nth.unwrap_or(1))))
-            .child(Element::new("t:Month").text(month_name(day_of(&mailcraft_time::format_iso_utc(event.start))))),
+            .child(Element::new("t:Month").text(month_name(anchor))),
         Freq::Monthly => Element::new("t:AbsoluteMonthlyRecurrence")
             .child(Element::new("t:Interval").text(&interval))
-            .child(Element::new("t:DayOfMonth").text(&day_of(&mailcraft_time::format_iso_utc(event.start)).map_or(1, |d| d.day).to_string())),
-        Freq::Yearly => Element::new("t:AbsoluteYearlyRecurrence")
-            .child(Element::new("t:Interval").text(&interval))
-            .child(Element::new("t:DayOfMonth").text(&day_of(&mailcraft_time::format_iso_utc(event.start)).map_or(1, |d| d.day).to_string()))
-            .child(Element::new("t:Month").text(month_name(day_of(&mailcraft_time::format_iso_utc(event.start))))),
+            .child(Element::new("t:DayOfMonth").text(&day_of_month)),
+        Freq::Yearly => match &yearly_as_months {
+            Some(months) => Element::new("t:AbsoluteMonthlyRecurrence")
+                .child(Element::new("t:Interval").text(months))
+                .child(Element::new("t:DayOfMonth").text(&day_of_month)),
+            None => Element::new("t:AbsoluteYearlyRecurrence")
+                .child(Element::new("t:DayOfMonth").text(&day_of_month))
+                .child(Element::new("t:Month").text(month_name(anchor))),
+        },
     };
-    if pattern.name().is_empty() {
-        pattern = Element::new("t:DailyRecurrence").child(Element::new("t:Interval").text(&interval));
-    }
+    let start_date = anchor.map(|day| day.iso()).unwrap_or_else(|| "1970-01-01".to_owned());
     let range = if let Some(count) = rule.count {
         Element::new("t:NumberedRecurrence")
-            .child(Element::new("t:StartDate").text(&mailcraft_time::format_iso_utc(start)))
+            .child(Element::new("t:StartDate").text(&start_date))
             .child(Element::new("t:NumberOfOccurrences").text(&count.to_string()))
     } else if let Some(until) = rule.until {
-        Element::new("t:EndDateRecurrence")
-            .child(Element::new("t:StartDate").text(&mailcraft_time::format_iso_utc(start)))
-            .child(Element::new("t:EndDate").text(&mailcraft_time::format_iso_utc(DateTime::at_midnight(until).to_timestamp(0))))
+        Element::new("t:EndDateRecurrence").child(Element::new("t:StartDate").text(&start_date)).child(Element::new("t:EndDate").text(&until.iso()))
     } else {
-        Element::new("t:NoEndRecurrence").child(Element::new("t:StartDate").text(&mailcraft_time::format_iso_utc(start)))
+        Element::new("t:NoEndRecurrence").child(Element::new("t:StartDate").text(&start_date))
     };
     Element::new("t:Recurrence").child(pattern).child(range)
 }
 
-fn weekdays(rule: &Recurrence, event: &RemoteEvent) -> String {
+/// The weekdays of a rule, or the anchor day's when it names none.
+fn weekdays(rule: &Recurrence, anchor: Option<Date>) -> String {
     let mut days = rule.by_day.clone();
     if days.is_empty()
-        && let Some(day) = day_of(&mailcraft_time::format_iso_utc(event.start))
+        && let Some(day) = anchor
     {
         days.push(day.weekday());
     }
@@ -975,42 +1052,30 @@ fn month_name(day: Option<Date>) -> &'static str {
     }
 }
 
-/// The `t:Contact` element of a contact.
+/// The `t:Contact` element of a contact, its children in the schema's order ([MS-OXWSCORE]
+/// `ItemType`, then [MS-OXWSCONT] `ContactItemType`): Body, Categories, DisplayName, GivenName,
+/// MiddleName, Nickname, CompanyName, EmailAddresses, PhysicalAddresses, PhoneNumbers, Birthday,
+/// BusinessHomePage, Department, JobTitle, Surname.
 pub fn contact_item(contact: &RemoteContact) -> Element {
-    let mut item = Element::new("t:Contact")
-        .child(Element::new("t:DisplayName").text(&line(&contact.display_name, MAX_LINE)))
-        .child(Element::new("t:GivenName").text(&line(&contact.first, MAX_LINE)))
-        .child(Element::new("t:MiddleName").text(&line(&contact.middle, MAX_LINE)))
-        .child(Element::new("t:Surname").text(&line(&contact.last, MAX_LINE)))
-        .child(Element::new("t:Nickname").text(&line(&contact.nickname, MAX_LINE)))
-        .child(Element::new("t:CompanyName").text(&line(&contact.company, MAX_LINE)))
-        .child(Element::new("t:JobTitle").text(&line(&contact.title, MAX_LINE)))
-        .child(Element::new("t:Department").text(&line(&contact.department, MAX_LINE)));
+    let mut item = Element::new("t:Contact");
     if !contact.notes.trim().is_empty() {
         item = item.child(Element::new("t:Body").attr("BodyType", "Text").text(&text(&contact.notes, MAX_TEXT)));
     }
+    if let Some(names) = contact.categories.as_ref().filter(|names| !names.is_empty()) {
+        item = item.child(categories_element(names));
+    }
+    item = item
+        .child(Element::new("t:DisplayName").text(&line(&contact.display_name, MAX_LINE)))
+        .child(Element::new("t:GivenName").text(&line(&contact.first, MAX_LINE)))
+        .child(Element::new("t:MiddleName").text(&line(&contact.middle, MAX_LINE)))
+        .child(Element::new("t:Nickname").text(&line(&contact.nickname, MAX_LINE)))
+        .child(Element::new("t:CompanyName").text(&line(&contact.company, MAX_LINE)));
     if !contact.emails.is_empty() {
         item = item.child(contact.emails.iter().take(3).enumerate().fold(Element::new("t:EmailAddresses"), |list, (n, entry)| {
             let key = match n {
                 0 => "EmailAddress1",
                 1 => "EmailAddress2",
                 _ => "EmailAddress3",
-            };
-            list.child(Element::new("t:Entry").attr("Key", key).text(&line(&entry.value, MAX_LINE)))
-        }));
-    }
-    if !contact.phones.is_empty() {
-        item = item.child(contact.phones.iter().take(MAX_ENTRIES).fold(Element::new("t:PhoneNumbers"), |list, entry| {
-            let key = match entry.label.to_ascii_lowercase().as_str() {
-                "business" | "work" => "BusinessPhone",
-                "home" => "HomePhone",
-                "mobile" | "cell" => "MobilePhone",
-                "business fax" => "BusinessFax",
-                "home fax" => "HomeFax",
-                "pager" => "Pager",
-                "assistant" => "AssistantPhone",
-                "company" => "CompanyMainPhone",
-                _ => "OtherTelephone",
             };
             list.child(Element::new("t:Entry").attr("Key", key).text(&line(&entry.value, MAX_LINE)))
         }));
@@ -1029,63 +1094,68 @@ pub fn contact_item(contact: &RemoteContact) -> Element {
                     .child(Element::new("t:Street").text(&text(&address.street, MAX_LINE)))
                     .child(Element::new("t:City").text(&line(&address.city, MAX_LINE)))
                     .child(Element::new("t:State").text(&line(&address.region, MAX_LINE)))
-                    .child(Element::new("t:PostalCode").text(&line(&address.postal_code, MAX_LINE)))
-                    .child(Element::new("t:CountryOrRegion").text(&line(&address.country, MAX_LINE))),
+                    .child(Element::new("t:CountryOrRegion").text(&line(&address.country, MAX_LINE)))
+                    .child(Element::new("t:PostalCode").text(&line(&address.postal_code, MAX_LINE))),
             )
         }));
     }
-    if let Some(site) = contact.websites.first().filter(|site| !site.trim().is_empty()) {
-        item = item.child(Element::new("t:BusinessHomePage").text(&line(site, MAX_LINE)));
+    if !contact.phones.is_empty() {
+        item = item.child(contact.phones.iter().take(MAX_ENTRIES).fold(Element::new("t:PhoneNumbers"), |list, entry| {
+            let key = match entry.label.to_ascii_lowercase().as_str() {
+                "business" | "work" => "BusinessPhone",
+                "home" => "HomePhone",
+                "mobile" | "cell" => "MobilePhone",
+                "business fax" => "BusinessFax",
+                "home fax" => "HomeFax",
+                "pager" => "Pager",
+                "assistant" => "AssistantPhone",
+                "company" => "CompanyMainPhone",
+                _ => "OtherTelephone",
+            };
+            list.child(Element::new("t:Entry").attr("Key", key).text(&line(&entry.value, MAX_LINE)))
+        }));
     }
     if let Some(day) = contact.birthday {
         item = item.child(Element::new("t:Birthday").text(&format!("{}T00:00:00Z", day.iso())));
     }
-    item
+    if let Some(site) = contact.websites.first().filter(|site| !site.trim().is_empty()) {
+        item = item.child(Element::new("t:BusinessHomePage").text(&line(site, MAX_LINE)));
+    }
+    item.child(Element::new("t:Department").text(&line(&contact.department, MAX_LINE)))
+        .child(Element::new("t:JobTitle").text(&line(&contact.title, MAX_LINE)))
+        .child(Element::new("t:Surname").text(&line(&contact.last, MAX_LINE)))
 }
 
-/// The `t:Task` element of a to-do.
+/// The `t:Task` element of a to-do, its children in the schema's order ([MS-OXWSCORE] `ItemType`,
+/// then [MS-OXWSTASK] `TaskType`): Subject, Body, Categories, Importance, ReminderDueBy,
+/// ReminderIsSet, CompleteDate, DueDate, PercentComplete, StartDate, Status.
+///
+/// Completion is said through `Status`, `PercentComplete` and `CompleteDate`; `IsComplete` is
+/// what the server makes of them and is not written.
 pub fn task_item(task: &RemoteTask) -> Element {
     let mut item = Element::new("t:Task")
         .child(Element::new("t:Subject").text(&line(&task.title, MAX_LINE)))
         .child(Element::new("t:Body").attr("BodyType", "Text").text(&text(&task.notes, MAX_TEXT)));
-    if let Some(start) = task.start {
-        item = item.child(Element::new("t:StartDate").text(&format!("{}T00:00:00Z", start.iso())));
+    if !task.categories.is_empty() {
+        item = item.child(categories_element(&task.categories));
+    }
+    item = item.child(Element::new("t:Importance").text(importance_name(task.importance)));
+    if let Some(when) = task.reminder {
+        item = item
+            .child(Element::new("t:ReminderDueBy").text(&mailcraft_time::format_iso_utc(when)))
+            .child(Element::new("t:ReminderIsSet").text("true"));
+    }
+    if let Some(when) = task.completed {
+        item = item.child(Element::new("t:CompleteDate").text(&mailcraft_time::format_iso_utc(when)));
     }
     if let Some(due) = task.due {
         item = item.child(Element::new("t:DueDate").text(&format!("{}T00:00:00Z", due.iso())));
     }
-    match task.completed {
-        Some(when) => {
-            item = item
-                .child(Element::new("t:Status").text("Completed"))
-                .child(Element::new("t:PercentComplete").text("100"))
-                .child(Element::new("t:IsComplete").text("true"))
-                .child(Element::new("t:CompleteDate").text(&mailcraft_time::format_iso_utc(when)));
-        }
-        None => {
-            item = item.child(Element::new("t:Status").text("NotStarted")).child(Element::new("t:PercentComplete").text("0"));
-        }
+    item = item.child(Element::new("t:PercentComplete").text(if task.completed.is_some() { "100" } else { "0" }));
+    if let Some(start) = task.start {
+        item = item.child(Element::new("t:StartDate").text(&format!("{}T00:00:00Z", start.iso())));
     }
-    let importance = match task.importance {
-        Importance::Low => "Low",
-        Importance::Normal => "Normal",
-        Importance::High => "High",
-    };
-    item = item.child(Element::new("t:Importance").text(importance));
-    if !task.categories.is_empty() {
-        item = item.child(
-            task.categories
-                .iter()
-                .take(MAX_CATEGORIES)
-                .fold(Element::new("t:Categories"), |list, name| list.child(Element::new("t:String").text(&line(name, MAX_CATEGORY)))),
-        );
-    }
-    if let Some(when) = task.reminder {
-        item = item
-            .child(Element::new("t:ReminderIsSet").text("true"))
-            .child(Element::new("t:ReminderDueBy").text(&mailcraft_time::format_iso_utc(when)));
-    }
-    item
+    item.child(Element::new("t:Status").text(if task.completed.is_some() { "Completed" } else { "NotStarted" }))
 }
 
 /// `CreateItem` with one item in `folder` (`None`: the server's default folder for its kind).
@@ -1140,7 +1210,6 @@ fn field_uri(kind: Kind, name: &str) -> Option<&'static str> {
         (Kind::Tasks, "DueDate") => "task:DueDate",
         (Kind::Tasks, "Status") => "task:Status",
         (Kind::Tasks, "PercentComplete") => "task:PercentComplete",
-        (Kind::Tasks, "IsComplete") => "task:IsComplete",
         (Kind::Tasks, "CompleteDate") => "task:CompleteDate",
         (Kind::Tasks, "ReminderDueBy") => "item:ReminderDueBy",
         _ => return None,
@@ -1161,7 +1230,7 @@ fn clearable(kind: Kind) -> &'static [&'static str] {
             "StartTimeZone",
             "EndTimeZone",
         ],
-        Kind::Contacts => &["EmailAddresses", "PhoneNumbers", "PhysicalAddresses", "BusinessHomePage", "Birthday"],
+        Kind::Contacts => &["Categories", "EmailAddresses", "PhoneNumbers", "PhysicalAddresses", "BusinessHomePage", "Birthday"],
         Kind::Tasks => &["StartDate", "DueDate", "CompleteDate", "Categories", "ReminderIsSet", "ReminderDueBy"],
     }
 }
@@ -1204,7 +1273,7 @@ pub fn update_item(kind: Kind, item: &ItemUp, id: &str, change_key: &str, send: 
         }
     }
     let change = Element::new("t:ItemChange").child(item_id).child(updates);
-    operation.attr("ConflictResolution", "AlwaysOverwrite").child(Element::new("m:ItemChanges").child(change))
+    operation.attr("ConflictResolution", conflict_resolution(change_key)).child(Element::new("m:ItemChanges").child(change))
 }
 
 fn default_folder(kind: Kind) -> &'static str {
@@ -1280,7 +1349,9 @@ pub fn update_event(fields: &mailcraft_model::remote::EventFields, id: &str, cha
             Some(rule) => {
                 let (start, end, all_day) = fields.time.map_or((0, 0, false), |time| (time.start, time.end, time.all_day));
                 let event = RemoteEvent { start, end, all_day, ..RemoteEvent::default() };
-                put(set_field("t:CalendarItem", "calendar:Recurrence", recurrence_element(rule, &event)));
+                // (The series' first day anchors the pattern: a change of the rule alone carries
+                // no time, and the day of the instant 0 is no day of the series.)
+                put(set_field("t:CalendarItem", "calendar:Recurrence", recurrence_element(rule, &event, Some(repeat.first))));
             }
             None => put(delete_field("calendar:Recurrence")),
         }
@@ -1341,7 +1412,7 @@ pub fn update_event(fields: &mailcraft_model::remote::EventFields, id: &str, cha
     };
     Element::new("m:UpdateItem")
         .attr("SendMeetingInvitationsOrCancellations", if send { "SendToAllAndSaveCopy" } else { "SendToNone" })
-        .attr("ConflictResolution", "AlwaysOverwrite")
+        .attr("ConflictResolution", conflict_resolution(change_key))
         .child(Element::new("m:ItemChanges").child(Element::new("t:ItemChange").child(item_id).child(updates)))
 }
 
@@ -1367,14 +1438,13 @@ pub fn update_task(patch: &mailcraft_model::TaskPatch, id: &str, change_key: &st
             Some(when) => {
                 put(set_field("t:Task", "task:Status", Element::new("t:Status").text("Completed")));
                 put(set_field("t:Task", "task:PercentComplete", Element::new("t:PercentComplete").text("100")));
-                put(set_field("t:Task", "task:IsComplete", Element::new("t:IsComplete").text("true")));
                 put(set_field("t:Task", "task:CompleteDate", Element::new("t:CompleteDate").text(&mailcraft_time::format_iso_utc(when))));
             }
             None => {
                 put(set_field("t:Task", "task:Status", Element::new("t:Status").text("NotStarted")));
+                // (Not started again is the end of its completion: the server's `CompleteDate`
+                // and `IsComplete` follow from the status, [MS-OXWSTASK].)
                 put(set_field("t:Task", "task:PercentComplete", Element::new("t:PercentComplete").text("0")));
-                put(set_field("t:Task", "task:IsComplete", Element::new("t:IsComplete").text("false")));
-                put(delete_field("task:CompleteDate"));
             }
         }
     }
@@ -1417,16 +1487,27 @@ pub fn update_task(patch: &mailcraft_model::TaskPatch, id: &str, change_key: &st
         false => Element::new("t:ItemId").attr("Id", id).attr("ChangeKey", change_key),
     };
     Element::new("m:UpdateItem")
-        .attr("ConflictResolution", "AlwaysOverwrite")
+        .attr("ConflictResolution", conflict_resolution(change_key))
         .child(Element::new("m:ItemChanges").child(Element::new("t:ItemChange").child(item_id).child(updates)))
+}
+
+/// How an `UpdateItem` meets a newer copy on the server ([MS-OXWSCORE] `ConflictResolutionType`):
+/// with the change key the edit was made from, it is refused when the server's copy has changed
+/// since (`NeverOverwrite`), so an edit made here never overwrites one made elsewhere; without
+/// one there is nothing to compare, and the change is written (`AlwaysOverwrite`).
+fn conflict_resolution(change_key: &str) -> &'static str {
+    if change_key.trim().is_empty() { "AlwaysOverwrite" } else { "NeverOverwrite" }
 }
 
 /// `DeleteItem` of an item: to Deleted Items, or (a calendar item) with a cancellation.
 pub fn delete_item(kind: Kind, id: &str, change_key: &str, send: bool, soft: bool) -> Element {
     let delete_type = if soft { "SoftDelete" } else { "MoveToDeletedItems" };
     let mut operation = Element::new("m:DeleteItem").attr("DeleteType", delete_type);
-    if kind == Kind::Calendar {
-        operation = operation.attr("SendMeetingCancellations", if send { "SendToAllAndSaveCopy" } else { "SendToNone" });
+    match kind {
+        Kind::Calendar => operation = operation.attr("SendMeetingCancellations", if send { "SendToAllAndSaveCopy" } else { "SendToNone" }),
+        // Required when tasks are deleted ([MS-OXWSCORE] `DeleteItem`): the whole to-do.
+        Kind::Tasks => operation = operation.attr("AffectedTaskOccurrences", "AllOccurrences"),
+        Kind::Contacts => {}
     }
     let item_id = match change_key.trim().is_empty() {
         true => Element::new("t:ItemId").attr("Id", id),
@@ -1468,19 +1549,31 @@ pub enum Answer {
     Decline,
 }
 
-/// `CreateItem` with an `AcceptItem`/`TentativeItem`/`DeclineItem` for a meeting the owner was
-/// invited to, with the note that goes to its organizer.
-pub fn meeting_answer(answer: Answer, id: &str, comment: &str) -> Element {
+/// `CreateItem` with an `AcceptItem`/`TentativelyAcceptItem`/`DeclineItem` for a meeting the
+/// owner was invited to ([MS-OXWSMTGS]), with the note that goes to its organizer.
+///
+/// A response object is a message, so the operation says what becomes of it
+/// (`MessageDisposition`): sent to the organizer with a copy kept (`SendAndSaveCopy`), or, when
+/// the owner chose not to send a response, only saved — in Deleted Items, so that no draft is
+/// left behind — while the server still takes the answer into the meeting.
+pub fn meeting_answer(answer: Answer, id: &str, comment: &str, send: bool) -> Element {
     let name = match answer {
         Answer::Accept => "AcceptItem",
-        Answer::Tentative => "TentativeItem",
+        Answer::Tentative => "TentativelyAcceptItem",
         Answer::Decline => "DeclineItem",
     };
-    let mut item = Element::new(&format!("t:{name}")).child(Element::new("t:ReferenceItemId").attr("Id", id));
-    if !comment.trim().is_empty() {
+    let mut item = Element::new(&format!("t:{name}"));
+    if send && !comment.trim().is_empty() {
         item = item.child(Element::new("t:Body").attr("BodyType", "Text").text(&text(comment, 2_000)));
     }
-    Element::new("m:CreateItem").child(Element::new("m:Items").child(item))
+    item = item.child(Element::new("t:ReferenceItemId").attr("Id", id));
+    let operation = Element::new("m:CreateItem").attr("MessageDisposition", if send { "SendAndSaveCopy" } else { "SaveOnly" });
+    let operation = if send {
+        operation
+    } else {
+        operation.child(Element::new("m:SavedItemFolderId").child(Element::new("t:DistinguishedFolderId").attr("Id", "deleteditems")))
+    };
+    operation.child(Element::new("m:Items").child(item))
 }
 
 /// The id a response to an invitation was saved under (some servers answer with none).
