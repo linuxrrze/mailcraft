@@ -237,6 +237,8 @@ pub struct State {
     pub schedules: Vec<crate::standin_availability::Schedule>,
     /// How many `GetUserAvailability` questions were answered.
     pub availability_asked: u32,
+    /// The calendar folder's `CategoryList` as its `XmlData` (base64); `None`: the mailbox has none.
+    pub category_list: Option<String>,
 }
 
 impl Default for State {
@@ -336,6 +338,7 @@ impl Default for State {
             directory: Vec::new(),
             schedules: Vec::new(),
             availability_asked: 0,
+            category_list: None,
         }
     }
 }
@@ -544,6 +547,7 @@ impl State {
             "GetItem" => self.get_item(operation),
             "ResolveNames" => self.resolve_names(operation),
             "GetUserAvailabilityRequest" => self.get_user_availability(operation),
+            "GetUserConfiguration" => self.get_user_configuration(operation),
             name if crate::standin_write::HANDLED.contains(&name) => {
                 self.writes.push(name.to_owned());
                 self.write(name, operation)
