@@ -508,7 +508,12 @@ fn the_calendar_comes_page_by_page() {
     // The next page is asked for by the address the first one named.
     assert!(server.request(1).starts_with("GET /v1.0/me/calendarView?startDateTime=x&%24skip=1 HTTP/1.1\r\n"), "{}", server.request(1));
 
-    let person = |name: &str, email: &str, optional: bool, response: Response| Attendee { address: Address::new(name, email), optional, response };
+    let person = |name: &str, email: &str, optional: bool, response: Response| Attendee {
+        address: Address::new(name, email),
+        optional,
+        response,
+        resource: false,
+    };
     assert_eq!(
         download.events[0],
         RemoteEvent {
@@ -526,7 +531,8 @@ fn the_calendar_comes_page_by_page() {
                 person("Ada Lovelace", "ada@example.org", false, Response::None),
                 person("Cy", "cy@example.org", true, Response::Tentative),
                 person("Dee", "dee@example.org", false, Response::Declined),
-                person("Room 4", "room4@example.org", false, Response::Accepted),
+                // (Graph's `resource`: a room booked.)
+                Attendee { resource: true, ..person("Room 4", "room4@example.org", false, Response::Accepted) },
                 person("Bo Marsh", "bo@example.org", false, Response::None),
             ],
             response: Response::Accepted,
@@ -2083,7 +2089,7 @@ fn meetings_series_and_answers_are_written_as_graph_takes_them() {
     let clock = |hour: u8| DateTime::new(day, hour, 0, 0).unwrap();
     let invited = vec![
         Attendee { address: Address::new("Bo Marsh", "bo@example.org"), ..Default::default() },
-        Attendee { address: Address::new("", "cy@example.org"), optional: true, response: Response::Accepted },
+        Attendee { address: Address::new("", "cy@example.org"), optional: true, response: Response::Accepted, resource: false },
         // Nobody is invited twice, and somebody without an address can't be.
         Attendee { address: Address::new("Bo again", "BO@example.org"), ..Default::default() },
         Attendee { address: Address::new("Room 4", ""), ..Default::default() },
@@ -2624,3 +2630,22 @@ fn graph_requests_reuse_their_connection() {
     }
 }
 mod meetings;
+
+/// A room booked for a meeting goes to Graph as an attendee of the type `resource`.
+#[test]
+fn a_room_booked_goes_as_a_resource() {
+    let attendee =
+        |email: &str, optional: bool, resource: bool| Attendee { address: Address::new("", email), optional, response: Response::None, resource };
+    let fields = EventFields {
+        attendees: Some(vec![
+            attendee("bo@example.org", false, false),
+            attendee("cy@example.org", true, false),
+            attendee("room-101@example.org", false, true),
+        ]),
+        ..Default::default()
+    };
+    let body: serde_json::Value = serde_json::from_str(&event_body(&fields, "", "", true).unwrap()).unwrap();
+    let kinds: Vec<(&str, &str)> =
+        body["attendees"].as_array().unwrap().iter().map(|a| (a["emailAddress"]["address"].as_str().unwrap(), a["type"].as_str().unwrap())).collect();
+    assert_eq!(kinds, [("bo@example.org", "required"), ("cy@example.org", "optional"), ("room-101@example.org", "resource")]);
+}

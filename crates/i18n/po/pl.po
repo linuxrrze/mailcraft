@@ -2194,6 +2194,16 @@ msgid "Asking about other people's time stopped unexpectedly"
 msgstr "Sprawdzanie czasu innych osób zostało nieoczekiwanie przerwane"
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking for the rooms stopped unexpectedly"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking the server for the rooms…"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/scheduling.rs
 #, fuzzy
 msgid "Asking the server when everybody is free…"
@@ -2210,6 +2220,11 @@ msgstr "Pytanie serwera…"
 #, fuzzy
 msgid "Asking your domain's DNS…"
 msgstr "Pytanie DNS Twojej domeny…"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking…"
+msgstr ""
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt
@@ -2715,6 +2730,16 @@ msgstr "Treść zawiera"
 msgid "Bold"
 msgstr "Pogrubienie"
 
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Book"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Booked"
+msgstr ""
+
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
 #, fuzzy
@@ -2763,8 +2788,8 @@ msgstr "Lista punktowana"
 msgid "Bullets"
 msgstr "Punktory"
 
-#. name
-#: crates/model/src/calendar.rs
+#. interface, name
+#: crates/model/src/calendar.rs crates/ui-egui/src/room_finder.rs
 #, fuzzy
 msgid "Busy"
 msgstr "Zajęty"
@@ -3488,6 +3513,11 @@ msgstr "Wybierz domyślny podpis"
 #, fuzzy
 msgid "Choose Google sign-in, or select Use an app password instead."
 msgstr "Wybierz logowanie przez Google lub zamiast tego wybierz Użyj hasła aplikacji."
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Choose a building…"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -6483,8 +6513,8 @@ msgstr[0] "Znaleziono {n} folder"
 msgstr[1] "Znaleziono {n} foldery"
 msgstr[2] "Znaleziono {n} folderów"
 
-#. name
-#: crates/model/src/calendar.rs
+#. interface, name
+#: crates/model/src/calendar.rs crates/ui-egui/src/room_finder.rs
 #, fuzzy
 msgid "Free"
 msgstr "Wolny"
@@ -10813,7 +10843,7 @@ msgid "No folders match"
 msgstr "Żaden folder nie pasuje"
 
 #. interface
-#: crates/ui-egui/src/scheduling.rs
+#: crates/ui-egui/src/room_finder.rs crates/ui-egui/src/scheduling.rs
 #, fuzzy
 msgid "No information"
 msgstr "Brak informacji"
@@ -14083,6 +14113,21 @@ msgstr "Po prawej"
 msgid "Right before or after: {items}"
 msgstr "Tuż przed lub po: {items}"
 
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "Room"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Room Finder"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+msgid "Rooms"
+msgstr ""
+
 #. command label
 #: crates/engine/src/cmd/rules_remote.rs
 #, fuzzy
@@ -16041,6 +16086,11 @@ msgstr "Zaloguj się jeszcze raz przez Microsoft, aby MailCraft mógł odczytać
 #, fuzzy
 msgid "Sign in with Send/Receive first, then change your automatic replies."
 msgstr "Najpierw zaloguj się przez Wyślij/Odbierz, a potem zmień automatyczne odpowiedzi."
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Sign in with Send/Receive to see the rooms."
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/scheduling.rs
@@ -18229,6 +18279,11 @@ msgid "The one this build came with"
 msgstr "Ten dołączony do tej wersji programu"
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "The organisation has no lists of rooms."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/meeting_dialogs.rs
 #, fuzzy
 msgid "The organizer can't be written to from this account."
@@ -19278,6 +19333,11 @@ msgid "This build can't ask a server when other people are busy: only your own c
 msgstr "Ta wersja programu nie może zapytać serwera, kiedy inne osoby są zajęte: pokazywany jest tylko Twój własny kalendarz."
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "This build can't ask the Exchange server for rooms."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/scheduling.rs
 msgid "This build can't ask the Exchange server when other people are busy: only your own calendar is shown."
 msgstr ""
@@ -19710,6 +19770,11 @@ msgstr "To łącze prowadzi gdzie indziej, niż wskazuje jego tekst."
 #, fuzzy
 msgid "This link goes to"
 msgstr "To łącze prowadzi do"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "This list has no rooms."
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/reading/unsubscribe.rs
@@ -27102,6 +27167,14 @@ msgid_plural "{n} more questions are waiting."
 msgstr[0] "{n} kolejne pytanie czeka."
 msgstr[1] "{n} kolejne pytania czekają."
 msgstr[2] "{n} kolejnych pytań czeka."
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "{n} more room isn't shown"
+msgid_plural "{n} more rooms aren't shown"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #. interface
 #: crates/ui-egui/src/files.rs

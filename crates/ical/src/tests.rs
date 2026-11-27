@@ -49,10 +49,20 @@ fn sample_events() -> Vec<Event> {
         end: at(2026, 10, 12, 10, 30),
         organizer: Some(Address::new("Okafor, Nadia", "nadia.okafor@example.org")),
         attendees: vec![
-            Attendee { address: Address::new("Tomas Lindqvist", "tomas.lindqvist@example.org"), optional: false, response: Response::None },
-            Attendee { address: Address::new("Mei \"MT\" Tanaka ^_^", "mei.tanaka@example.org"), optional: true, response: Response::Tentative },
-            Attendee { address: Address::new("", "ibrahim@example.org"), optional: false, response: Response::Declined },
-            Attendee { address: Address::new("Zoë: ops; night", "zoe@example.org"), optional: true, response: Response::Accepted },
+            Attendee {
+                address: Address::new("Tomas Lindqvist", "tomas.lindqvist@example.org"),
+                optional: false,
+                response: Response::None,
+                resource: false,
+            },
+            Attendee {
+                address: Address::new("Mei \"MT\" Tanaka ^_^", "mei.tanaka@example.org"),
+                optional: true,
+                response: Response::Tentative,
+                resource: false,
+            },
+            Attendee { address: Address::new("", "ibrahim@example.org"), optional: false, response: Response::Declined, resource: false },
+            Attendee { address: Address::new("Zoë: ops; night", "zoe@example.org"), optional: true, response: Response::Accepted, resource: false },
         ],
         reminder_minutes: Some(15),
         show_as: ShowAs::Tentative,
@@ -159,8 +169,11 @@ fn every_free_busy_state_and_response_round_trips() {
     for show_as in ShowAs::ALL {
         for response in [Response::None, Response::Accepted, Response::Tentative, Response::Declined] {
             for optional in [false, true] {
-                let e =
-                    Event { show_as, attendees: vec![Attendee { address: Address::new("A", "a@example.org"), optional, response }], ..base.clone() };
+                let e = Event {
+                    show_as,
+                    attendees: vec![Attendee { address: Address::new("A", "a@example.org"), optional, response, resource: false }],
+                    ..base.clone()
+                };
                 assert_eq!(round_trip(std::slice::from_ref(&e), &[]).events, [e]);
             }
         }
@@ -171,7 +184,7 @@ fn every_free_busy_state_and_response_round_trips() {
 fn importance_what_is_asked_of_the_people_invited_and_the_link_to_join_by_round_trip() {
     use mailcraft_model::{OnlineMeeting, OnlineProvider, ResponseOptions};
     let join = "https://teams.example.org/l/meetup-join/19%3ameeting_abc%40thread.v2/0?context=%7b%22Tid%22%3a%221%22%7d";
-    let invited = vec![Attendee { address: Address::new("Bo", "bo@example.org"), optional: false, response: Response::None }];
+    let invited = vec![Attendee { address: Address::new("Bo", "bo@example.org"), optional: false, response: Response::None, resource: false }];
     let base = Event { uid: "x".into(), attendees: invited, ..Default::default() };
     for importance in [Importance::Low, Importance::Normal, Importance::High] {
         for (request_responses, allow_proposals) in [(true, true), (false, true), (true, false), (false, false)] {
@@ -317,8 +330,10 @@ fn event() -> impl Strategy<Value = Event> {
         let end = if all_day { start.add_days(days) } else { start.add_minutes(minutes) };
         let (organizer, attendees) = people;
         let responses = [Response::None, Response::Accepted, Response::Tentative, Response::Declined];
-        let attendees =
-            attendees.into_iter().map(|(address, optional, response)| Attendee { address, optional, response: responses[response] }).collect();
+        let attendees = attendees
+            .into_iter()
+            .map(|(address, optional, response)| Attendee { address, optional, response: responses[response], resource: false })
+            .collect();
         let (recurrence, exceptions, reminder_minutes) = series;
         let (show_as, categories, private, cancelled) = flags;
         Event {
@@ -552,4 +567,31 @@ fn a_calendar_cut_anywhere_never_panics() {
         survives(&text[..cut]);
         survives(&text[cut..]);
     }
+}
+
+/// A room booked for a meeting is written as one (RFC 5545 `CUTYPE=ROOM`, neither required nor
+/// optional), and read back as one.
+#[test]
+fn a_room_booked_is_written_and_read_as_a_room() {
+    let mut e = Event {
+        id: 1,
+        uid: "rooms@example.org".into(),
+        title: "Planning".into(),
+        start: at(2026, 10, 12, 9, 0),
+        end: at(2026, 10, 12, 10, 0),
+        organizer: Some(Address::new("Ada", "ada@example.org")),
+        ..sample_events().remove(0)
+    };
+    e.attendees = vec![
+        Attendee { address: Address::new("Cy", "cy@example.org"), optional: false, response: Response::None, resource: false },
+        Attendee { address: Address::new("Room 1.01", "room-101@example.org"), optional: false, response: Response::Accepted, resource: true },
+    ];
+    let text = write(&[&e], &[], &options());
+    // (Unfolded: a long line goes on in the next, after a space.)
+    let unfolded = text.replace("\r\n ", "");
+    let room_line = unfolded.lines().find(|line| line.contains("room-101")).expect("the room's line");
+    assert!(room_line.starts_with("ATTENDEE;CUTYPE=ROOM;ROLE=NON-PARTICIPANT;PARTSTAT=ACCEPTED"), "{room_line}");
+    let back = parse(&text, &|_| 0);
+    let said: Vec<(&str, bool, bool)> = back.events[0].attendees.iter().map(|a| (a.address.email.as_str(), a.optional, a.resource)).collect();
+    assert_eq!(said, [("cy@example.org", false, false), ("room-101@example.org", false, true)]);
 }

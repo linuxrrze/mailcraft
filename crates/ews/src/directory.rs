@@ -182,6 +182,7 @@ impl FindItems {
                 "item:LastModifiedTime",
                 "calendar:RequiredAttendees",
                 "calendar:OptionalAttendees",
+                "calendar:Resources",
                 "calendar:StartTimeZone",
                 "calendar:EndTimeZone",
                 "calendar:OriginalStart",
@@ -358,9 +359,9 @@ fn organizer(node: &Node) -> Option<Address> {
     node.child_in(TYPES, "Organizer").and_then(recipient)
 }
 
-/// The people in a recipient list (`RequiredAttendees`), with whether each is optional and what
-/// they answered.
-fn attendees(node: &Node, name: &str, optional: bool) -> Vec<Attendee> {
+/// The people in a recipient list (`RequiredAttendees`), with whether each is optional or a room
+/// or other resource booked (`Resources`), and what they answered.
+fn attendees(node: &Node, name: &str, optional: bool, resource: bool) -> Vec<Attendee> {
     let Some(list) = node.child_in(TYPES, name) else { return Vec::new() };
     list.children
         .iter()
@@ -373,7 +374,7 @@ fn attendees(node: &Node, name: &str, optional: bool) -> Vec<Attendee> {
                 "Decline" | "Declined" => Response::Declined,
                 _ => Response::None,
             };
-            Some(Attendee { address, optional, response })
+            Some(Attendee { address, optional, response, resource })
         })
         .collect()
 }
@@ -490,7 +491,11 @@ fn read_calendar(node: &Node) -> Option<RemoteEvent> {
         start_zone: line(&start_zone, 64),
         end_zone: line(&end_zone, 64),
         organizer: organizer(node),
-        attendees: attendees(node, "RequiredAttendees", false).into_iter().chain(attendees(node, "OptionalAttendees", true)).collect(),
+        attendees: attendees(node, "RequiredAttendees", false, false)
+            .into_iter()
+            .chain(attendees(node, "OptionalAttendees", true, false))
+            .chain(attendees(node, "Resources", false, true))
+            .collect(),
         response,
         show_as,
         private: child_text(node, "Sensitivity") == "Private",
@@ -807,9 +812,10 @@ pub fn calendar_item(event: &RemoteEvent, zone: &str, sender: Option<&Address>) 
         .child(Element::new("t:LegacyFreeBusyStatus").text(show_as_name(event.show_as)))
         .child(Element::new("t:Location").text(&line(&event.location, MAX_LINE)))
         .child(Element::new("t:IsResponseRequested").text(if event.options.request_responses { "true" } else { "false" }));
-    let required: Vec<&Attendee> = event.attendees.iter().filter(|a| !a.optional).collect();
-    let optional: Vec<&Attendee> = event.attendees.iter().filter(|a| a.optional).collect();
-    for (name, people) in [("t:RequiredAttendees", required), ("t:OptionalAttendees", optional)] {
+    let required: Vec<&Attendee> = event.attendees.iter().filter(|a| !a.optional && !a.resource).collect();
+    let optional: Vec<&Attendee> = event.attendees.iter().filter(|a| a.optional && !a.resource).collect();
+    let resources: Vec<&Attendee> = event.attendees.iter().filter(|a| a.resource).collect();
+    for (name, people) in [("t:RequiredAttendees", required), ("t:OptionalAttendees", optional), ("t:Resources", resources)] {
         let list: Vec<Element> = people.iter().filter_map(|attendee| attendee_element(&attendee.address)).collect();
         if !list.is_empty() {
             item = item.child(list.into_iter().fold(Element::new(name), |list, attendee| list.child(attendee)));
@@ -1196,6 +1202,7 @@ fn field_uri(kind: Kind, name: &str) -> Option<&'static str> {
         (Kind::Calendar, "AllowNewTimeProposal") => "calendar:AllowNewTimeProposal",
         (Kind::Calendar, "RequiredAttendees") => "calendar:RequiredAttendees",
         (Kind::Calendar, "OptionalAttendees") => "calendar:OptionalAttendees",
+        (Kind::Calendar, "Resources") => "calendar:Resources",
         (Kind::Calendar, "StartTimeZone") => "calendar:StartTimeZone",
         (Kind::Calendar, "EndTimeZone") => "calendar:EndTimeZone",
         (Kind::Calendar, "Recurrence") => "calendar:Recurrence",
@@ -1232,6 +1239,7 @@ fn clearable(kind: Kind) -> &'static [&'static str] {
             "ReminderMinutesBeforeStart",
             "RequiredAttendees",
             "OptionalAttendees",
+            "Resources",
             "Recurrence",
             "StartTimeZone",
             "EndTimeZone",
@@ -1384,11 +1392,16 @@ pub fn update_event(fields: &mailcraft_model::remote::EventFields, id: &str, cha
         }
     }
     if let Some(people) = &fields.attendees {
-        for (name, uri, optional) in
-            [("t:RequiredAttendees", "calendar:RequiredAttendees", false), ("t:OptionalAttendees", "calendar:OptionalAttendees", true)]
-        {
-            let list: Vec<Element> =
-                people.iter().filter(|a| a.optional == optional).filter_map(|attendee| attendee_element(&attendee.address)).collect();
+        for (name, uri, optional, resource) in [
+            ("t:RequiredAttendees", "calendar:RequiredAttendees", false, false),
+            ("t:OptionalAttendees", "calendar:OptionalAttendees", true, false),
+            ("t:Resources", "calendar:Resources", false, true),
+        ] {
+            let list: Vec<Element> = people
+                .iter()
+                .filter(|a| a.resource == resource && (resource || a.optional == optional))
+                .filter_map(|attendee| attendee_element(&attendee.address))
+                .collect();
             let field = if list.is_empty() {
                 delete_field(uri)
             } else {

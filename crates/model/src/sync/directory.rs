@@ -180,6 +180,63 @@ impl std::fmt::Debug for EwsFreeBusyRequest {
     }
 }
 
+/// The organisation's rooms to ask an Exchange server account's server about (Room Finder): its
+/// lists of rooms, or the rooms of one list. Where its server is, as an [`EwsResolveRequest`]
+/// says it; the password goes beside the request and is not in it.
+#[derive(Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(default, rename_all = "camelCase")]
+pub struct EwsRoomsRequest {
+    pub account: Id,
+    /// The account's address.
+    pub email: String,
+    /// The address of the Exchange Web Services endpoint. Never logged.
+    pub url: String,
+    /// The name the password is sent with; empty means `email`.
+    #[serde(skip_serializing_if = "String::is_empty")]
+    pub username: String,
+    /// The fingerprint of the one certificate the owner trusts for this account; empty when none.
+    #[serde(skip_serializing_if = "String::is_empty")]
+    pub trusted: String,
+    /// The address of the list whose rooms are asked for; empty for the lists themselves.
+    #[serde(skip_serializing_if = "String::is_empty")]
+    pub list: String,
+}
+
+/// Counts only: no address.
+impl std::fmt::Debug for EwsRoomsRequest {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("EwsRoomsRequest").field("account", &self.account).field("rooms", &!self.list.is_empty()).finish()
+    }
+}
+
+/// What an [`EwsRoomsRequest`] came to: the lists of rooms, or the rooms of the list asked about,
+/// each a name and an address.
+#[derive(Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(default, rename_all = "camelCase")]
+pub struct EwsRoomsResult {
+    pub account: Id,
+    /// The list asked about; empty for the lists.
+    pub list: String,
+    pub found: Vec<Address>,
+    /// Why there is nothing, for the owner to read; empty when the server answered.
+    #[serde(skip_serializing_if = "String::is_empty")]
+    pub error: String,
+    /// The server turned the password down.
+    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    pub password_refused: bool,
+}
+
+/// Counts only: which rooms an organisation has is its own business.
+impl std::fmt::Debug for EwsRoomsResult {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("EwsRoomsResult")
+            .field("account", &self.account)
+            .field("found", &self.found.len())
+            .field("error", &!self.error.is_empty())
+            .finish()
+    }
+}
+
 /// What the address list has for one name looked up.
 #[derive(Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]

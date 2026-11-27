@@ -69,9 +69,14 @@ fn week(s: &mut Session) -> (Id, Id, Id) {
             show_as: ShowAs::Tentative,
             organizer: Some(Address::new("Dana Fern", "dana@partner.example")),
             attendees: vec![
-                Attendee { address: Address::new("Eli Moss", "eli@partner.example"), optional: false, response: Response::Accepted },
-                Attendee { address: Address::new("Avery Quinn", "avery@lumen.example"), optional: false, response: Response::Tentative },
-                Attendee { address: Address::new("Fay Lin", "fay@partner.example"), optional: true, response: Response::Declined },
+                Attendee { address: Address::new("Eli Moss", "eli@partner.example"), optional: false, response: Response::Accepted, resource: false },
+                Attendee {
+                    address: Address::new("Avery Quinn", "avery@lumen.example"),
+                    optional: false,
+                    response: Response::Tentative,
+                    resource: false,
+                },
+                Attendee { address: Address::new("Fay Lin", "fay@partner.example"), optional: true, response: Response::Declined, resource: false },
             ],
             origin: mailcraft_model::Origin { guest: true, ..Default::default() },
             ..Default::default()

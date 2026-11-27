@@ -16,6 +16,8 @@ mod invitation;
 mod invitation_tests;
 pub(crate) use invitation::{same_organizer, tidy_imported};
 mod meeting;
+#[cfg(test)]
+mod rooms_tests;
 mod selection;
 pub mod share;
 #[cfg(test)]
@@ -86,7 +88,7 @@ fn own_specs() -> Vec<CommandSpec> {
     ]
 }
 
-const EVENT: &str = r#"{"title": string, "start"?: "YYYY-MM-DDTHH:MM" (default: the next half hour on the day in view), "end"?: same (default: 30 minutes), "startZone"?: zone | null, "endZone"?: zone | null (the time zones the event has of its own, by a name `calendar.timeZones` lists: `Europe/Berlin`, `Eastern Standard Time`, `UTC+05:30`; a time given together with its zone is a time by that zone's clock, a zone given alone keeps the event's time on the clock and moves it; times given without a zone, and all times in answers, are by the clock of the zone the calendar is shown in, `view.timeZone`), "allDay"?: bool, "location"?: string, "description"?: string, "attendees"?: "a@x; b@y", "optional"?: "c@z", "recurrence"?: {"freq": "daily"|"weekly"|"monthly"|"yearly", "interval"?: n, "byDay"?: ["mon",…], "nth"?: 1-5|-1, "count"?: n, "until"?: "YYYY-MM-DD"} | null, "reminder"?: minutes | null, "showAs"?: string, "categories"?: [string], "private"?: bool, "importance"?: "high"|"normal"|"low", "requestResponses"?: bool, "allowProposals"?: bool (what the people invited to a meeting are asked for; both true unless said), "online"?: bool (a Teams meeting, which the server of the calendar makes: refused for a calendar on this computer, and for an account that can't make one), "calendar"?: number (default: the calendar being worked in, calendar.setCurrent), "send"?: bool} — a meeting with people invited that goes into a calendar an account's server keeps makes that server send the invitations by mail, so it has to say which is meant: "send": true invites them, "send": false keeps the meeting in a calendar on this computer and invites nobody (the answer then says "keptHere": true); without either the command refuses"#;
+const EVENT: &str = r#"{"title": string, "start"?: "YYYY-MM-DDTHH:MM" (default: the next half hour on the day in view), "end"?: same (default: 30 minutes), "startZone"?: zone | null, "endZone"?: zone | null (the time zones the event has of its own, by a name `calendar.timeZones` lists: `Europe/Berlin`, `Eastern Standard Time`, `UTC+05:30`; a time given together with its zone is a time by that zone's clock, a zone given alone keeps the event's time on the clock and moves it; times given without a zone, and all times in answers, are by the clock of the zone the calendar is shown in, `view.timeZone`), "allDay"?: bool, "location"?: string, "description"?: string, "attendees"?: "a@x; b@y", "optional"?: "c@z", "rooms"?: "r@x" (rooms booked for a meeting, invited as rooms: Room Finder; what of the people and the rooms isn't given stays as it was), "recurrence"?: {"freq": "daily"|"weekly"|"monthly"|"yearly", "interval"?: n, "byDay"?: ["mon",…], "nth"?: 1-5|-1, "count"?: n, "until"?: "YYYY-MM-DD"} | null, "reminder"?: minutes | null, "showAs"?: string, "categories"?: [string], "private"?: bool, "importance"?: "high"|"normal"|"low", "requestResponses"?: bool, "allowProposals"?: bool (what the people invited to a meeting are asked for; both true unless said), "online"?: bool (a Teams meeting, which the server of the calendar makes: refused for a calendar on this computer, and for an account that can't make one), "calendar"?: number (default: the calendar being worked in, calendar.setCurrent), "send"?: bool} — a meeting with people invited that goes into a calendar an account's server keeps makes that server send the invitations by mail, so it has to say which is meant: "send": true invites them, "send": false keeps the meeting in a calendar on this computer and invites nobody (the answer then says "keptHere": true); without either the command refuses"#;
 
 /// How long before its first day a new whole-day event reminds, when reminders are on: 18
 /// hours, which is six in the evening of the day before.
@@ -341,13 +343,13 @@ fn parse_recurrence(v: &Value) -> Result<Recurrence, CmdError> {
     })
 }
 
-fn parse_attendees(text: &str, optional: bool) -> Result<Vec<Attendee>, CmdError> {
+fn parse_attendees(text: &str, optional: bool, resource: bool) -> Result<Vec<Attendee>, CmdError> {
     Address::parse_list(text)
         .into_iter()
         .take(500)
         .map(|address| {
             if address.is_valid() {
-                Ok(Attendee { address, optional, response: Response::None })
+                Ok(Attendee { address, optional, response: Response::None, resource })
             } else {
                 Err(failed!("\"{address}\" isn't an e-mail address", address = address.email))
             }
@@ -412,9 +414,22 @@ fn apply(s: &Session, e: &mut Event, v: &Value) -> Result<(), CmdError> {
         }
     }
     own_times.apply(s, e, v, (start.is_some(), end.is_some()))?;
-    if v.get("attendees").is_some() || v.get("optional").is_some() {
-        let mut list = parse_attendees(p::str(v, "attendees").unwrap_or(""), false)?;
-        list.extend(parse_attendees(p::str(v, "optional").unwrap_or(""), true)?);
+    let people_given = v.get("attendees").is_some() || v.get("optional").is_some();
+    let rooms_given = v.get("rooms").is_some();
+    if people_given || rooms_given {
+        // The people, and the rooms booked: what isn't given stays as it was.
+        let mut list = if people_given {
+            let mut people = parse_attendees(p::str(v, "attendees").unwrap_or(""), false, false)?;
+            people.extend(parse_attendees(p::str(v, "optional").unwrap_or(""), true, false)?);
+            people
+        } else {
+            e.attendees.iter().filter(|a| !a.resource).cloned().collect()
+        };
+        if rooms_given {
+            list.extend(parse_attendees(p::str(v, "rooms").unwrap_or(""), false, true)?);
+        } else {
+            list.extend(e.attendees.iter().filter(|a| a.resource).cloned());
+        }
         // People already invited keep their answers.
         for a in &mut list {
             if let Some(old) = e.attendees.iter().find(|o| o.address.same_mailbox(&a.address)) {
@@ -957,7 +972,11 @@ fn event_json(s: &Session, e: &Event) -> Value {
         "id": e.id, "calendar": e.calendar, "title": e.title, "location": e.location, "description": e.description,
         "start": start, "end": end, "allDay": e.all_day,
         "organizer": e.organizer.as_ref().map(Address::full),
-        "attendees": e.attendees.iter().map(|a| json!({"address": a.address.full(), "optional": a.optional, "response": a.response})).collect::<Vec<_>>(),
+        "attendees": e
+            .attendees
+            .iter()
+            .map(|a| json!({"address": a.address.full(), "optional": a.optional, "room": a.resource, "response": a.response}))
+            .collect::<Vec<_>>(),
         "recurrence": e.recurrence.as_ref().map(|r| json!({"rule": r, "text": r.describe(e.start.date)})),
         "exceptions": e.exceptions.iter().map(|d| d.iso()).collect::<Vec<_>>(),
         "reminder": e.reminder_minutes, "showAs": e.show_as, "categories": e.categories, "private": e.private, "cancelled": e.cancelled,
@@ -1184,7 +1203,11 @@ fn from_message(s: &mut Session, v: &Value) -> CmdResult {
         start,
         end: start.add_minutes(30),
         organizer: s.mailbox.account(m.account).map(|a| a.address()),
-        attendees: people.into_iter().take(500).map(|address| Attendee { address, optional: false, response: Response::None }).collect(),
+        attendees: people
+            .into_iter()
+            .take(500)
+            .map(|address| Attendee { address, optional: false, response: Response::None, resource: false })
+            .collect(),
         reminder_minutes: s.prefs.default_reminder,
         ..Default::default()
     };

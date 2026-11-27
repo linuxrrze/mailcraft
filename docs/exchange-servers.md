@@ -17,6 +17,9 @@ Another mailbox's calendar or address book is read with the owner's sign-in by p
 in every folder request; it is listed under Shared Calendars or with the account's books. Grommunio
 lets the owner into the shared folder it is given but not list that mailbox's other folders, so a
 shared calendar or book is read as its default folder there.
+Room Finder asks the server for the organisation's lists of rooms and the rooms of the one chosen
+(`GetRoomLists`, `GetRooms`, [MS-OXWSROOM]); a room booked goes with the meeting as one of its
+`Resources`, and is read back as one.
 A calendar shared with the owner for its free and busy times alone, which the server won't list,
 is drawn from those instead (`GetUserAvailability`): blocks of time without a title or a place,
 each saying how it shows, as Outlook shows such a calendar.

@@ -389,7 +389,7 @@ fn people(b: &mut Builder) {
 }
 
 fn calendar(b: &mut Builder) {
-    let attendee = |p: (&str, &str), response: Response| Attendee { address: addr(p), optional: false, response };
+    let attendee = |p: (&str, &str), response: Response| Attendee { address: addr(p), optional: false, response, resource: false };
     let me = Some(addr(ME));
     let weekdays = vec![Weekday::Mon, Weekday::Tue, Weekday::Wed, Weekday::Thu, Weekday::Fri];
     // A month back, so the series is already running.

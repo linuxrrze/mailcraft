@@ -103,6 +103,13 @@ impl Reply {
 }
 
 impl Reply {
+    /// The one message of an operation whose answer is a message itself, with no
+    /// `ResponseMessages` (`GetRoomListsResponse`, `GetRoomsResponse`: [MS-OXWSROOM]).
+    pub fn single(&self, operation: &str) -> Result<Message<'_>, Error> {
+        let response = self.body.child_in(MESSAGES, &format!("{operation}Response")).ok_or(Error::Unexpected)?;
+        Message::read(response)
+    }
+
     /// The answers of `GetUserAvailability` ([MS-OXWSGTAV]), which has no `ResponseMessages`: each
     /// `FreeBusyResponse` of its `FreeBusyResponseArray`, with the `ResponseMessage` it carries, in
     /// the order the mailboxes were asked for. One without a message it can be read by is left out.

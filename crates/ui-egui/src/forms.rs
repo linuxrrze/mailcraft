@@ -2021,6 +2021,8 @@ mod event {
         last_start: Option<Date>,
         required: String,
         optional: String,
+        /// The rooms booked (Room Finder), as addresses separated by `;`.
+        rooms: String,
         repeat: Repeat,
         reminder: Option<u32>,
         /// The reminder was chosen here, so ticking All day leaves it alone.
@@ -2089,11 +2091,12 @@ mod event {
             let (start, end, clock) = new_span(s, p.get("start").and_then(Value::as_str), p.get("end").and_then(Value::as_str), all_day);
             let mut f = EventForm {
                 opened: if meeting { "meeting" } else { "event" },
-                meeting: meeting || !text("attendees").trim().is_empty() || !text("optional").trim().is_empty(),
+                meeting: meeting || !text("attendees").trim().is_empty() || !text("optional").trim().is_empty() || !text("rooms").trim().is_empty(),
                 title: text("title"),
                 location: text("location"),
                 required: text("attendees"),
                 optional: text("optional"),
+                rooms: text("rooms"),
                 reminder: match p.get("reminder") {
                     Some(Value::Null) => None,
                     Some(v) => v.as_u64().map(|m| u32::try_from(m.min(40_320)).unwrap_or(0)).or(s.prefs.default_reminder),
@@ -2145,8 +2148,9 @@ mod event {
             // As the command reads it (#553): one named wrongly opens nothing, never the selected one.
             let id = mailcraft_engine::p::id_strict(p, "id").ok()?.or(s.sel.event)?;
             let e = s.mailbox.event(id)?;
-            let line =
-                |optional: bool| format_list(&e.attendees.iter().filter(|a| a.optional == optional).map(|a| a.address.clone()).collect::<Vec<_>>());
+            let line = |optional: bool| {
+                format_list(&e.attendees.iter().filter(|a| a.optional == optional && !a.resource).map(|a| a.address.clone()).collect::<Vec<_>>())
+            };
             let mut f = EventForm {
                 opened: "editEvent",
                 id: Some(id),
@@ -2157,6 +2161,7 @@ mod event {
                 location: e.location.clone(),
                 required: line(false),
                 optional: line(true),
+                rooms: format_list(&e.attendees.iter().filter(|a| a.resource).map(|a| a.address.clone()).collect::<Vec<_>>()),
                 repeat: Repeat::of(e.recurrence.as_ref(), e.start.date),
                 reminder: e.reminder_minutes,
                 reminder_set: true,
@@ -2326,6 +2331,7 @@ mod event {
                 event: self.id,
                 required: people(&self.required),
                 optional: people(&self.optional),
+                rooms: people(&self.rooms),
                 day: span.map_or_else(|| self.shown_day(), |(start, _)| start.date),
                 span,
                 all_day: self.all_day,
@@ -2376,9 +2382,31 @@ mod event {
             let height =
                 if kit::filling() { ui.available_height() - below } else { (ui.ctx().content_rect().height() - 430.0).min(400.0) }.max(190.0);
             let meeting = self.meeting();
-            let moved = crate::scheduling::show(app, ui, &mut self.assistant, &meeting, kit::window(), height);
-            if let Some((start, end)) = moved {
+            let shown = crate::scheduling::show(app, ui, &mut self.assistant, &meeting, kit::window(), height);
+            if let Some((start, end)) = shown.moved {
                 self.set_span_of_day(start, end, twelve);
+            }
+            if let Some(room) = shown.booked {
+                self.book_room(&room);
+            }
+        }
+
+        /// Choose the list of rooms Room Finder shows, by its address.
+        pub(crate) fn choose_room_list(&mut self, list: &str) {
+            self.assistant.room_list = list.trim().to_owned();
+        }
+
+        /// Book `room` (Room Finder): it goes on the meeting's rooms, and is where the meeting is
+        /// held when no place is named yet.
+        pub(crate) fn book_room(&mut self, room: &Address) {
+            let mut rooms = Address::parse_list(&self.rooms);
+            if rooms.iter().any(|have| have.same_mailbox(room)) {
+                return;
+            }
+            rooms.push(room.clone());
+            self.rooms = format_list(&rooms);
+            if self.location.trim().is_empty() {
+                self.location = if room.name.trim().is_empty() { room.email.clone() } else { room.name.trim().to_owned() };
             }
         }
 
@@ -2577,6 +2605,11 @@ mod event {
             if self.meeting {
                 m.insert("attendees".into(), json!(self.required));
                 m.insert("optional".into(), json!(self.optional));
+                // (Rooms only when there are some, or there were when the form opened: removing
+                // the last one is said too.)
+                if !self.rooms.trim().is_empty() || self.baseline.get("rooms").is_some() {
+                    m.insert("rooms".into(), json!(self.rooms));
+                }
                 // What a meeting has beyond an appointment: what the people invited are asked
                 // for, and whether it is held online.
                 m.insert("requestResponses".into(), json!(self.options.request_responses));
@@ -2585,6 +2618,9 @@ mod event {
             } else if self.was_meeting {
                 m.insert("attendees".into(), json!(""));
                 m.insert("optional".into(), json!(""));
+                if self.baseline.get("rooms").is_some() {
+                    m.insert("rooms".into(), json!(""));
+                }
             }
             // The zones the times above are by, for an event that has (or had) zones of its
             // own: none for whole days, and none again when Time Zones was turned off.
@@ -2682,7 +2718,7 @@ mod event {
 
         /// Whether anybody is named on the attendee lines.
         fn invites(&self) -> bool {
-            self.meeting && (!self.required.trim().is_empty() || !self.optional.trim().is_empty())
+            self.meeting && (!self.required.trim().is_empty() || !self.optional.trim().is_empty() || !self.rooms.trim().is_empty())
         }
 
         /// The command OK runs, with its params: a new appointment or meeting with every field,
@@ -2692,7 +2728,8 @@ mod event {
             match self.id {
                 Some(id) => {
                     // (A time goes with the zone it is by.)
-                    let mut m = changes(&self.baseline, &now, &[&["start", "end", "allDay", "startZone", "endZone"], &["attendees", "optional"]]);
+                    let mut m =
+                        changes(&self.baseline, &now, &[&["start", "end", "allDay", "startZone", "endZone"], &["attendees", "optional", "rooms"]]);
                     m.insert("id".into(), json!(id));
                     ("calendar.edit", self.scoped(Value::Object(m)))
                 }
@@ -2732,7 +2769,11 @@ mod event {
         /// Whether OK can run: the required fields are filled in and the dates and times read
         /// as such.
         fn ready(&self) -> bool {
-            let invited = self.id.is_some() || !self.meeting || !self.required.trim().is_empty() || !self.optional.trim().is_empty();
+            let invited = self.id.is_some()
+                || !self.meeting
+                || !self.required.trim().is_empty()
+                || !self.optional.trim().is_empty()
+                || !self.rooms.trim().is_empty();
             self.missing().is_none() && invited
         }
 
@@ -2987,6 +3028,10 @@ mod event {
                 ui.add_enabled_ui(!self.guest, |ui| {
                     row(ui, tl!("Required"), |ui| attendee_line(ui, pass, s, "required", &mut self.required, hint));
                     row(ui, tl!("Optional"), |ui| attendee_line(ui, pass, s, "optional", &mut self.optional, hint));
+                    // (Shown once a room is booked: Room Finder in Find a Time books one.)
+                    if !self.rooms.trim().is_empty() {
+                        row(ui, tl!("Rooms"), |ui| attendee_line(ui, pass, s, "rooms", &mut self.rooms, hint));
+                    }
                 });
             }
             self.time_rows(ui, pass, s);
