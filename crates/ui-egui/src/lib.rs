@@ -241,6 +241,7 @@ pub mod ribbon;
 mod ribbon_field_tests;
 #[cfg(test)]
 mod ribbon_font_tests;
+pub mod room_finder;
 pub mod rule_sync;
 #[cfg(test)]
 mod rule_sync_tests;
@@ -476,6 +477,10 @@ pub struct Services {
     /// thread, waking the UI with the answer, as `free_busy` asks Microsoft's. Absent where no host
     /// does: Find a Time then shows the owner's own calendar alone ([`scheduling`]).
     pub ews_free_busy: Option<Box<dyn Fn(scheduling::EwsFreeBusyJob) -> Receiver<scheduling::FreeBusyResult>>>,
+    /// The same host: ask an Exchange server account's server for the organisation's lists of
+    /// rooms, or the rooms of one list (Room Finder: `GetRoomLists`, `GetRooms`), on a background
+    /// thread. Absent where no host does: Find a Time then has no Room Finder to offer.
+    pub ews_rooms: Option<Box<dyn Fn(room_finder::EwsRoomsJob) -> Receiver<mailcraft_model::sync::EwsRoomsResult>>>,
     /// Desktop: set an Exchange server account up on a background thread (#252, E7), once the owner
     /// has pressed Connect and not before: find the server unless its address is given, ask the
     /// owner (through the job's answers) before the sign-in goes to a host outside the domain, and
@@ -1517,7 +1522,7 @@ pub const UI_COMMANDS: &[(&str, &str, &str, &str)] = &[
         "ui.eventWindow",
         "Appointment Window",
         "Window",
-        r#"{"window"?: number (default: the appointment or meeting window in front), "page"?: "appointment"|"scheduling" (a meeting's Find a Time page), "recurrence"?: bool (open or close its Appointment Recurrence dialog), "do"?: "save"|"saveAndClose"|"send"|"close" — as its keys and its close button do: closing asks first when something isn't saved, and nothing is sent to anybody without the owner's yes; "freeBusy"?: {"people": [{"email", "busy": [{"start": seconds, "end": seconds, "showAs"}], "error"?: string}]} — a stand-in for the server's answer about the people invited, for Find a Time} — answers {"window", "event", "page", "meeting", "dirty", "recurrence", "asking", "importance": "low"|"normal"|"high", "online": bool (it is, or is to be, a Teams meeting), "joinUrl": string (the link to join by, when its server gave one: data, never followed by itself), "scheduling"?: {"day", "start", "end", "rows", "known", "unknown", "bars", "pending", "note"}}"#,
+        r#"{"window"?: number (default: the appointment or meeting window in front), "page"?: "appointment"|"scheduling" (a meeting's Find a Time page), "recurrence"?: bool (open or close its Appointment Recurrence dialog), "do"?: "save"|"saveAndClose"|"send"|"close" — as its keys and its close button do: closing asks first when something isn't saved, and nothing is sent to anybody without the owner's yes; "freeBusy"?: {"people": [{"email", "busy": [{"start": seconds, "end": seconds, "showAs"}], "error"?: string}]} — a stand-in for the server's answer about the people invited, for Find a Time; "roomList"?: string (Room Finder's list of rooms to show, by its address), "bookRoom"?: string (a room's address: booked as Room Finder's Book does, in the form alone)} — answers {"window", "event", "page", "meeting", "dirty", "recurrence", "asking", "rooms": [the rooms booked, by address], "importance": "low"|"normal"|"high", "online": bool (it is, or is to be, a Teams meeting), "joinUrl": string (the link to join by, when its server gave one: data, never followed by itself), "scheduling"?: {"day", "start", "end", "rows", "known", "unknown", "bars", "pending", "note"}}"#,
     ),
     (
         "ui.unsubscribeMany",
@@ -2080,6 +2085,8 @@ pub struct MailApp {
     pub(crate) ran: (u64, String, Result<Value, String>),
     /// When people are free and busy, as Find a Time found out ([`scheduling`]).
     pub(crate) free_busy: scheduling::Store,
+    /// The organisation's rooms, for Room Finder in Find a Time.
+    pub(crate) rooms: room_finder::Rooms,
     /// Names of the message being written looked up in an address list ([`check_names`]).
     pub(crate) resolving: Option<check_names::Resolving>,
     /// People's Address Book while it is shown: who the search found, kept nowhere else (#1262).
@@ -2283,6 +2290,7 @@ impl MailApp {
             text_selection: Default::default(),
             ran: (0, String::new(), Ok(Value::Null)),
             free_busy: Default::default(),
+            rooms: Default::default(),
             resolving: None,
             address_book: None,
             updates: Default::default(),
@@ -5636,6 +5644,7 @@ impl MailApp {
         self.poll_sieve();
         self.poll_calendar_check();
         self.poll_free_busy();
+        self.poll_rooms();
         self.poll_resolving();
         self.poll_address_book(ctx);
         self.poll_sync();

@@ -2497,6 +2497,16 @@ msgid "Asking about other people's time stopped unexpectedly"
 msgstr "查询他人空闲时间时意外停止"
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking for the rooms stopped unexpectedly"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking the server for the rooms…"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/scheduling.rs
 #, fuzzy
 msgid "Asking the server when everybody is free…"
@@ -2513,6 +2523,11 @@ msgstr "正在查询服务器…"
 #, fuzzy
 msgid "Asking your domain's DNS…"
 msgstr "正在查询您域名的 DNS…"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking…"
+msgstr ""
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt
@@ -3058,6 +3073,16 @@ msgstr "正文包含"
 msgid "Bold"
 msgstr "粗体"
 
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Book"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Booked"
+msgstr ""
+
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
 #, fuzzy
@@ -3106,8 +3131,8 @@ msgstr "项目符号列表"
 msgid "Bullets"
 msgstr "项目符号"
 
-#. name
-#: crates/model/src/calendar.rs
+#. interface, name
+#: crates/model/src/calendar.rs crates/ui-egui/src/room_finder.rs
 #, fuzzy
 msgid "Busy"
 msgstr "忙碌"
@@ -3909,6 +3934,11 @@ msgstr "选择默认签名"
 #, fuzzy
 msgid "Choose Google sign-in, or select Use an app password instead."
 msgstr "选择 Google 登录，或选择使用应用密码。"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Choose a building…"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -7013,8 +7043,8 @@ msgstr[0] "找到 {n} 个文件夹"
 msgid "Found: sign-in at {signIn}, tokens from {token}."
 msgstr "已找到：登录地址 {signIn}，令牌来自 {token}。"
 
-#. name
-#: crates/model/src/calendar.rs
+#. interface, name
+#: crates/model/src/calendar.rs crates/ui-egui/src/room_finder.rs
 #, fuzzy
 msgid "Free"
 msgstr "空闲"
@@ -11839,7 +11869,7 @@ msgid "No folders match"
 msgstr "没有匹配的文件夹"
 
 #. interface
-#: crates/ui-egui/src/scheduling.rs
+#: crates/ui-egui/src/room_finder.rs crates/ui-egui/src/scheduling.rs
 #, fuzzy
 msgid "No information"
 msgstr "暂无信息"
@@ -15263,6 +15293,21 @@ msgid "Right before or after: {items}"
 msgstr "紧接在之前或之后：{items}"
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "Room"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Room Finder"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+msgid "Rooms"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/sieve_editor.rs
 #, fuzzy
 msgid "Rule \"{rule}\" of your Sieve script \"{name}\""
@@ -17304,6 +17349,11 @@ msgstr "首先使用“发送/接收”登录，然后更改您的自动回复�
 #, fuzzy
 msgid "Sign in with Send/Receive first."
 msgstr "请先通过“发送/接收”登录。"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Sign in with Send/Receive to see the rooms."
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/scheduling.rs
@@ -19630,6 +19680,11 @@ msgid "The online archive needs a connection to the server"
 msgstr "在线存档需要连接到服务器"
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "The organisation has no lists of rooms."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/meeting_dialogs.rs
 #, fuzzy
 msgid "The organizer can't be written to from this account."
@@ -20853,6 +20908,11 @@ msgid "This build can't ask a server when other people are busy: only your own c
 msgstr "此版本无法向服务器查询其他人的忙闲信息：仅显示您自己的日历。"
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "This build can't ask the Exchange server for rooms."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/scheduling.rs
 msgid "This build can't ask the Exchange server when other people are busy: only your own calendar is shown."
 msgstr ""
@@ -21301,6 +21361,11 @@ msgstr "此链接的实际目标与显示文字所示的地址不同。"
 #, fuzzy
 msgid "This link goes to"
 msgstr "此链接指向"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "This list has no rooms."
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/reading/unsubscribe.rs
@@ -29836,6 +29901,12 @@ msgstr[0] "另有 {n} 项未列出"
 msgid "{n} more question is waiting."
 msgid_plural "{n} more questions are waiting."
 msgstr[0] "还有 {n} 个问题等待处理。"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "{n} more room isn't shown"
+msgid_plural "{n} more rooms aren't shown"
+msgstr[0] ""
 
 #. interface
 #: crates/ui-egui/src/files.rs

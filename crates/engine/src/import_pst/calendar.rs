@@ -360,7 +360,7 @@ fn people(m: &mailcraft_pst::Message, text: &Text, notes: &mut Vec<String>) -> (
         };
         // (PidTagRecipientType: 1 required, 2 optional, 3 a resource.)
         let optional = p.int(0x0C15) == Some(2);
-        list.push(Attendee { address, optional, response });
+        list.push(Attendee { address, optional, response, resource: false });
     }
     (list, organizer)
 }

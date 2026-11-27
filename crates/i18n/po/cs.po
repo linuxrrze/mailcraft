@@ -2494,6 +2494,16 @@ msgid "Asking about other people's time stopped unexpectedly"
 msgstr "Zjišťování času ostatních lidí se nečekaně zastavilo"
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking for the rooms stopped unexpectedly"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking the server for the rooms…"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/scheduling.rs
 #, fuzzy
 msgid "Asking the server when everybody is free…"
@@ -2510,6 +2520,11 @@ msgstr "Dotazuji se serveru…"
 #, fuzzy
 msgid "Asking your domain's DNS…"
 msgstr "Dotazuji se DNS vaší domény…"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking…"
+msgstr ""
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt
@@ -3057,6 +3072,16 @@ msgstr "Text zprávy obsahuje"
 msgid "Bold"
 msgstr "Tučné"
 
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Book"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Booked"
+msgstr ""
+
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
 #, fuzzy
@@ -3105,8 +3130,8 @@ msgstr "Seznam s odrážkami"
 msgid "Bullets"
 msgstr "Odrážky"
 
-#. name
-#: crates/model/src/calendar.rs
+#. interface, name
+#: crates/model/src/calendar.rs crates/ui-egui/src/room_finder.rs
 #, fuzzy
 msgid "Busy"
 msgstr "Zaneprázdněn"
@@ -3908,6 +3933,11 @@ msgstr "Zvolit výchozí podpis"
 #, fuzzy
 msgid "Choose Google sign-in, or select Use an app password instead."
 msgstr "Zvolte přihlášení přes Google, nebo vyberte Použít heslo aplikace."
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Choose a building…"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -7033,8 +7063,8 @@ msgstr[2] "Nalezeno {n} složek"
 msgid "Found: sign-in at {signIn}, tokens from {token}."
 msgstr "Nalezeno: přihlášení na {signIn}, tokeny z {token}."
 
-#. name
-#: crates/model/src/calendar.rs
+#. interface, name
+#: crates/model/src/calendar.rs crates/ui-egui/src/room_finder.rs
 #, fuzzy
 msgid "Free"
 msgstr "Volno"
@@ -11870,7 +11900,7 @@ msgid "No folders match"
 msgstr "Žádné složky neodpovídají"
 
 #. interface
-#: crates/ui-egui/src/scheduling.rs
+#: crates/ui-egui/src/room_finder.rs crates/ui-egui/src/scheduling.rs
 #, fuzzy
 msgid "No information"
 msgstr "Žádné informace"
@@ -15290,6 +15320,21 @@ msgid "Right before or after: {items}"
 msgstr "Těsně před nebo po: {items}"
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "Room"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Room Finder"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+msgid "Rooms"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/sieve_editor.rs
 #, fuzzy
 msgid "Rule \"{rule}\" of your Sieve script \"{name}\""
@@ -17339,6 +17384,11 @@ msgstr "Nejprve se přihlaste pomocí Odeslat/přijmout, pak změňte automatick
 #, fuzzy
 msgid "Sign in with Send/Receive first."
 msgstr "Nejprve se přihlaste pomocí Odeslat/Přijmout."
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Sign in with Send/Receive to see the rooms."
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/scheduling.rs
@@ -19669,6 +19719,11 @@ msgid "The online archive needs a connection to the server"
 msgstr "Online archiv potřebuje připojení k serveru"
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "The organisation has no lists of rooms."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/meeting_dialogs.rs
 #, fuzzy
 msgid "The organizer can't be written to from this account."
@@ -20904,6 +20959,11 @@ msgid "This build can't ask a server when other people are busy: only your own c
 msgstr "Toto sestavení se nemůže serveru ptát, kdy jsou ostatní zaneprázdněni: zobrazuje se jen váš vlastní kalendář."
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "This build can't ask the Exchange server for rooms."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/scheduling.rs
 msgid "This build can't ask the Exchange server when other people are busy: only your own calendar is shown."
 msgstr ""
@@ -21366,6 +21426,11 @@ msgstr "Tento odkaz vede jinam, než říká jeho text."
 #, fuzzy
 msgid "This link goes to"
 msgstr "Tento odkaz vede na"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "This list has no rooms."
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/reading/unsubscribe.rs
@@ -30092,6 +30157,14 @@ msgid_plural "{n} more questions are waiting."
 msgstr[0] "Čeká ještě {n} otázka."
 msgstr[1] "Čekají ještě {n} otázky."
 msgstr[2] "Čeká ještě {n} otázek."
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "{n} more room isn't shown"
+msgid_plural "{n} more rooms aren't shown"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #. interface
 #: crates/ui-egui/src/files.rs

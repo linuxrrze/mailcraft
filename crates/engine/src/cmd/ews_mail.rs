@@ -32,9 +32,9 @@
 //! changed here since the server last said. No server id and no sync state is logged.
 
 use mailcraft_model::sync::{
-    ArchiveSeen, ChangeOutcome, EwsFetchRequest, EwsFolderState, EwsFreeBusyRequest, EwsMailRequest, EwsMailResult, EwsResolveRequest, EwsScope,
-    FolderChange, FolderChangeDone, GraphFetchResult, MAX_DRAFTS, MAX_EWS_STATE_BYTES, MAX_EWS_STATES, MAX_FOLDER_CHANGES, MAX_MESSAGE_CHANGES,
-    MAX_RESOLVE_TEXT, MAX_RESOLVE_TEXTS, MessageOutcome, SendOutcome, SyncPhase, one_line,
+    ArchiveSeen, ChangeOutcome, EwsFetchRequest, EwsFolderState, EwsFreeBusyRequest, EwsMailRequest, EwsMailResult, EwsResolveRequest,
+    EwsRoomsRequest, EwsScope, FolderChange, FolderChangeDone, GraphFetchResult, MAX_DRAFTS, MAX_EWS_STATE_BYTES, MAX_EWS_STATES, MAX_FOLDER_CHANGES,
+    MAX_MESSAGE_CHANGES, MAX_RESOLVE_TEXT, MAX_RESOLVE_TEXTS, MessageOutcome, SendOutcome, SyncPhase, one_line,
 };
 use mailcraft_model::{Account, AccountKind, EwsServer, FolderKind, Id, Mailbox};
 use serde_json::{Value, json};
@@ -398,6 +398,25 @@ pub fn ews_free_busy_request(s: &Session, account: Id, ask: &mailcraft_model::re
         username: server.username.clone(),
         trusted: server.trusted.clone(),
         ask,
+    })
+}
+
+/// What the server of the Exchange server account `account` is asked about the organisation's
+/// rooms (Room Finder): its lists of rooms, or the rooms of the list at `list`. Nothing but that
+/// list's address goes to the server.
+pub fn ews_rooms_request(s: &Session, account: Id, list: &str) -> Result<EwsRoomsRequest, CmdError> {
+    let (a, server) = ews_account(&s.mailbox, account)?;
+    let list = one_line(list, 254);
+    if !list.is_empty() && !mailcraft_model::Address::new("", &list).is_valid() {
+        return Err(bad("a list of rooms is named by its address"));
+    }
+    Ok(EwsRoomsRequest {
+        account,
+        email: a.email.clone(),
+        url: server.url.clone(),
+        username: server.username.clone(),
+        trusted: server.trusted.clone(),
+        list,
     })
 }
 

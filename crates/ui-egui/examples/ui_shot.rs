@@ -722,6 +722,50 @@ fn main() {
     {
         services.update_start.didnt_start = Some((env!("CARGO_PKG_VERSION").to_string(), kept));
     }
+    // An Exchange server's rooms (Room Finder), when a line says (`{"host": {"rooms": true}}`): two
+    // buildings, the North one with four rooms, and free and busy times in which Room 1.02 and
+    // anybody whose address starts with "maya" are busy from 10:00 to 11:00 UTC that day.
+    if lines.iter().any(|l| l.pointer("/host/rooms").is_some()) {
+        services.ews_rooms = Some(Box::new(|job: mailcraft_ui_egui::room_finder::EwsRoomsJob| {
+            let (tx, rx) = std::sync::mpsc::channel();
+            let request = job.request;
+            let found = if request.list.is_empty() {
+                vec![
+                    mailcraft_model::Address::new("North Building", "north-rooms@lumen.example"),
+                    mailcraft_model::Address::new("South Building", "south-rooms@lumen.example"),
+                ]
+            } else {
+                (1..=4).map(|n| mailcraft_model::Address::new(format!("Room 1.0{n}"), format!("room-10{n}@lumen.example"))).collect()
+            };
+            let _ = tx.send(mailcraft_model::sync::EwsRoomsResult { account: request.account, list: request.list, found, ..Default::default() });
+            rx
+        }));
+        services.ews_free_busy = Some(Box::new(|job: mailcraft_ui_egui::scheduling::EwsFreeBusyJob| {
+            use mailcraft_model::remote::{BusyTime, FreeBusy, PersonSchedule};
+            let (tx, rx) = std::sync::mpsc::channel();
+            let ask = job.request.ask;
+            let people = ask
+                .people
+                .iter()
+                .map(|email| PersonSchedule {
+                    email: email.clone(),
+                    busy: if email.starts_with("room-102") || email.starts_with("maya") {
+                        vec![BusyTime { start: ask.from + 10 * 3_600, end: ask.from + 11 * 3_600, show_as: mailcraft_model::ShowAs::Busy }]
+                    } else {
+                        Vec::new()
+                    },
+                    error: String::new(),
+                })
+                .collect();
+            let schedule = FreeBusy { from: ask.from, to: ask.to, people };
+            let _ = tx.send(mailcraft_ui_egui::scheduling::FreeBusyResult {
+                account: job.request.account,
+                schedule: Some(schedule),
+                ..Default::default()
+            });
+            rx
+        }));
+    }
     // The owner's own keys (#30), when a line says (`{"host": {"ownKeys": true}}`): a smartcard's
     // certificate and a GnuPG key, made up, and GnuPG trusting nothing.
     if lines.iter().any(|l| l.pointer("/host/ownKeys").is_some()) {

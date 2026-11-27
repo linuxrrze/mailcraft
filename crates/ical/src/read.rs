@@ -530,7 +530,15 @@ impl EventBuilder {
                         "DECLINED" => Response::Declined,
                         _ => Response::None,
                     };
-                    self.attendees.push(Attendee { address, optional: matches!(role.as_str(), "OPT-PARTICIPANT" | "NON-PARTICIPANT"), response });
+                    // A room or other resource booked (RFC 5545 `CUTYPE`) is neither required nor
+                    // optional.
+                    let resource = matches!(line.param("CUTYPE").map(keyword).unwrap_or_default().as_str(), "ROOM" | "RESOURCE");
+                    self.attendees.push(Attendee {
+                        address,
+                        optional: !resource && matches!(role.as_str(), "OPT-PARTICIPANT" | "NON-PARTICIPANT"),
+                        response,
+                        resource,
+                    });
                     match line.param("RSVP").map(keyword).unwrap_or_default().as_str() {
                         "TRUE" => self.rsvp.0 = self.rsvp.0.saturating_add(1),
                         "FALSE" => self.rsvp.1 = self.rsvp.1.saturating_add(1),
@@ -875,10 +883,13 @@ END:VCALENDAR\r\n";
             [
                 ("Tomas Lindqvist", "tomas.lindqvist@example.org", false, Response::None),
                 ("Mei Tanaka", "mei.tanaka@example.org", true, Response::Tentative),
-                ("Room 4.12", "room-412@example.org", true, Response::Accepted),
+                // (A room booked is neither required nor optional: `CUTYPE=ROOM`.)
+                ("Room 4.12", "room-412@example.org", false, Response::Accepted),
                 ("", "ibrahim@example.org", false, Response::Declined),
             ]
         );
+        let rooms: Vec<&str> = e.attendees.iter().filter(|a| a.resource).map(|a| a.address.email.as_str()).collect();
+        assert_eq!(rooms, ["room-412@example.org"]);
         assert_eq!(e.reminder_minutes, Some(15));
         assert_eq!(e.show_as, ShowAs::Tentative);
         assert!(!e.private && !e.cancelled && e.recurrence.is_none() && e.exceptions.is_empty() && e.categories.is_empty());

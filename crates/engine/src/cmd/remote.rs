@@ -420,7 +420,12 @@ fn invited(event: &Event) -> Vec<Attendee> {
     event
         .attendees
         .iter()
-        .map(|attendee| Attendee { address: attendee.address.clone(), optional: attendee.optional, response: Response::None })
+        .map(|attendee| Attendee {
+            address: attendee.address.clone(),
+            optional: attendee.optional,
+            response: Response::None,
+            resource: attendee.resource,
+        })
         .collect()
 }
 

@@ -50,13 +50,15 @@ use mailcraft_ews::{
 };
 use mailcraft_model::sync::{
     DirectoryKind, DirectoryPerson, EwsDirectoryRequest, EwsDirectoryResult, EwsFetchRequest, EwsFreeBusyRequest, EwsMailRequest, EwsMailResult,
-    EwsResolveRequest, EwsResolveResult, EwsResolved, GraphFetchResult, MAX_RESOLVE_PEOPLE, MAX_RESOLVE_TEXTS, SyncPhase, Timings,
+    EwsResolveRequest, EwsResolveResult, EwsResolved, EwsRoomsRequest, EwsRoomsResult, GraphFetchResult, MAX_RESOLVE_PEOPLE, MAX_RESOLVE_TEXTS,
+    SyncPhase, Timings,
 };
 use mailcraft_net::https::Connection;
 use mailcraft_net::{CertificateProblem, NetError};
 use mailcraft_ui_egui::check_names::EwsResolveJob;
 use mailcraft_ui_egui::ews_calendar::EwsCalendarJob;
 use mailcraft_ui_egui::ews_mail::{EwsFetchJob, EwsJob};
+use mailcraft_ui_egui::room_finder::EwsRoomsJob;
 use mailcraft_ui_egui::scheduling::{EwsFreeBusyJob, FreeBusyResult};
 
 /// What the run says when the secure connection could not be had for a reason the owner can't
@@ -672,21 +674,65 @@ pub(crate) fn run_free_busy_with(request: &EwsFreeBusyRequest, password: &str) -
         Ok(schedule) => out.schedule = Some(schedule),
         Err(error) => {
             out.password_refused = matches!(error, mailcraft_ews::Error::Unauthorized) && transport.auth_problem().is_none();
-            out.error = free_busy_words(&error, transport.problem().as_ref(), transport.auth_problem());
+            out.error = ask_words("Couldn't see when people are free", &error, transport.problem().as_ref(), transport.auth_problem());
         }
     }
     out
 }
 
-/// Why the server couldn't say when people are busy, in words for the owner.
-fn free_busy_words(error: &mailcraft_ews::Error, problem: Option<&CertificateProblem>, auth: Option<AuthProblem>) -> String {
+/// Asks an Exchange server account's server for the organisation's lists of rooms, or the rooms of
+/// one (Room Finder), on a thread of its own: `GetRoomLists` or `GetRooms`, which read and change
+/// nothing.
+pub(crate) fn run_rooms(job: EwsRoomsJob, wake: &egui::Context) -> Receiver<EwsRoomsResult> {
+    let (tx, rx) = std::sync::mpsc::channel();
+    let wake = wake.clone();
+    let spawned = std::thread::Builder::new().name("exchange rooms".into()).spawn(move || {
+        let EwsRoomsJob { request, secret } = job;
+        let _ = tx.send(run_rooms_with(&request, &secret));
+        wake.request_repaint();
+    });
+    if let Err(e) = spawned {
+        log::error!("couldn't start asking an Exchange server for its rooms: {e}");
+    }
+    rx
+}
+
+/// [`run_rooms`] on this thread. What goes wrong is said in words that name neither the server
+/// nor anybody.
+pub(crate) fn run_rooms_with(request: &EwsRoomsRequest, password: &str) -> EwsRoomsResult {
+    let mut out = EwsRoomsResult { account: request.account, list: request.list.clone(), ..Default::default() };
+    let client = match client(&request.url, &request.username, &request.email, password) {
+        Ok(client) => client,
+        Err(why) => {
+            out.error = why.to_owned();
+            return out;
+        }
+    };
+    let transport = Transport::new(&request.trusted).with_ntlm(ntlm_key(&request.username, &request.email, password));
+    let answer = if request.list.is_empty() {
+        crate::block_on::block_on(client.room_lists(&transport))
+    } else {
+        crate::block_on::block_on(client.rooms(&transport, &request.list))
+    };
+    match answer {
+        Ok(found) => out.found = found,
+        Err(error) => {
+            out.password_refused = matches!(error, mailcraft_ews::Error::Unauthorized) && transport.auth_problem().is_none();
+            out.error = ask_words("Couldn't ask for the rooms", &error, transport.problem().as_ref(), transport.auth_problem());
+        }
+    }
+    out
+}
+
+/// Why a question to the server (when people are free, which rooms there are) came to nothing, in
+/// words for the owner after `line`.
+fn ask_words(line: &str, error: &mailcraft_ews::Error, problem: Option<&CertificateProblem>, auth: Option<AuthProblem>) -> String {
     use mailcraft_ews::Error;
-    const LINE: &str = "Couldn't see when people are free";
     if let Some(auth) = auth {
-        return format!("{LINE}: {}", auth.words());
+        return format!("{line}: {}", auth.words());
     }
     if let Some(problem) = problem {
-        return format!("{LINE}: {problem}");
+        return format!("{line}: {problem}");
     }
     let why = match error {
         Error::Unauthorized => "the server turned the password down",
@@ -697,7 +743,7 @@ fn free_busy_words(error: &mailcraft_ews::Error, problem: Option<&CertificatePro
         Error::Server(_) => "the server refused",
         _ => "the server's answer can't be read",
     };
-    format!("{LINE}: {why}")
+    format!("{line}: {why}")
 }
 
 /// How long a busy server is waited for before a name is asked again, at most.

@@ -683,6 +683,7 @@ fn event_state(window: &Open) -> Value {
         "dirty": window.what.dirty(),
         "recurrence": form.is_some_and(|f| f.modal()),
         "asking": window.asking,
+        "rooms": form.map(|f| f.meeting().rooms.iter().map(|room| room.email.clone()).collect::<Vec<_>>()).unwrap_or_default(),
     });
     // How much it matters, whether it is (to be) a Teams meeting, and the link to join it by.
     if let Some((importance, online, link)) = form.map(|f| f.meeting_state()) {
@@ -768,7 +769,7 @@ fn event_window(app: &mut MailApp, p: &Value) -> Result<Value, String> {
         Some(v) => v.as_str().map(Some).ok_or_else(|| format!("`{key}` is text")),
         None => Ok(None),
     };
-    let (page, action) = (text("page")?, text("do")?);
+    let (page, action, room_list, book) = (text("page")?, text("do")?, text("roomList")?, text("bookRoom")?);
     let recurrence = match p.get("recurrence").filter(|v| !v.is_null()) {
         Some(v) => Some(v.as_bool().ok_or_else(|| "`recurrence` is true or false".to_string())?),
         None => None,
@@ -797,6 +798,15 @@ fn event_window(app: &mut MailApp, p: &Value) -> Result<Value, String> {
             Some(true) => form.open_recurrence(),
             Some(false) => form.close_recurrence(),
             None => {}
+        }
+        // Room Finder, as its list and its Book buttons do (the meeting changes here alone).
+        if let Some(list) = room_list {
+            form.choose_room_list(list);
+        }
+        if let Some(room) = book {
+            let room = mailcraft_model::Address::parse_list(room).into_iter().next().filter(mailcraft_model::Address::is_valid);
+            let Some(room) = room else { return Err("`bookRoom` is a room's address".to_string()) };
+            form.book_room(&room);
         }
     }
     match action {

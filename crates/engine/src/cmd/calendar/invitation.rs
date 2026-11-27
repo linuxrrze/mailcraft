@@ -834,7 +834,7 @@ pub(super) fn respond(s: &mut Session, v: &Value) -> CmdResult {
             if let Some(who) = event.attendees.iter_mut().find(|who| me(who)) {
                 who.response = response;
             } else if invited < 500 {
-                event.attendees.push(Attendee { address: owner.address(), optional: false, response });
+                event.attendees.push(Attendee { address: owner.address(), optional: false, response, resource: false });
             }
             event.show_as = if response == Response::Tentative { ShowAs::Tentative } else { ShowAs::Busy };
             event.reminder_minutes = event.reminder_minutes.or(s.prefs.default_reminder);
@@ -924,7 +924,7 @@ fn reply_message(
         start_repeated: proposed.is_none() && event.start_repeated,
         end_repeated: proposed.is_none() && event.end_repeated,
         organizer: Some(organizer.clone()),
-        attendees: vec![Attendee { address: owner.address(), optional: false, response }],
+        attendees: vec![Attendee { address: owner.address(), optional: false, response, resource: false }],
         ..Default::default()
     };
     let now = s.now();

@@ -70,3 +70,35 @@ fn a_password_the_server_turns_down_is_said_and_marked() {
     assert!(result.password_refused);
     assert_eq!(result.error, "Couldn't see when people are free: the server turned the password down");
 }
+
+/// Room Finder the whole way: the lists of rooms, then the rooms of one, from the stand-in.
+#[test]
+fn the_rooms_come_from_the_server_list_by_list() {
+    use mailcraft_ews::standin_rooms::RoomList;
+    use mailcraft_model::sync::EwsRoomsRequest;
+    let server = serve();
+    server.standin.state().room_lists = vec![RoomList {
+        name: "Building 1".into(),
+        email: "building-1@example.org".into(),
+        rooms: vec![("Room 1.01".into(), "room-101@example.org".into())],
+    }];
+    let ask = |list: &str| EwsRoomsRequest {
+        account: 7,
+        email: ME.into(),
+        url: server.url.clone(),
+        username: USER.into(),
+        trusted: String::new(),
+        list: list.into(),
+    };
+    let lists = crate::ews_runner::run_rooms_with(&ask(""), PASSWORD);
+    assert!(lists.error.is_empty(), "{}", lists.error);
+    assert_eq!((lists.account, lists.found.len()), (7, 1));
+    assert_eq!(lists.found[0].email, "building-1@example.org");
+    let rooms = crate::ews_runner::run_rooms_with(&ask("building-1@example.org"), PASSWORD);
+    assert_eq!(rooms.list, "building-1@example.org");
+    let said: Vec<(&str, &str)> = rooms.found.iter().map(|a| (a.name.as_str(), a.email.as_str())).collect();
+    assert_eq!(said, [("Room 1.01", "room-101@example.org")]);
+    let refused = crate::ews_runner::run_rooms_with(&ask(""), "not the password");
+    assert!(refused.password_refused && refused.found.is_empty());
+    assert_eq!(refused.error, "Couldn't ask for the rooms: the server turned the password down");
+}

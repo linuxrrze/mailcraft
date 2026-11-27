@@ -347,6 +347,10 @@ pub struct Attendee {
     pub address: Address,
     pub optional: bool,
     pub response: Response,
+    /// A room or other resource booked for the meeting, not a person: it is invited as one
+    /// (`t:Resources` on an Exchange server, `CUTYPE=ROOM` in iCalendar) and answers by itself.
+    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    pub resource: bool,
 }
 
 /// What the people invited to a meeting are asked for, which its organizer decides.

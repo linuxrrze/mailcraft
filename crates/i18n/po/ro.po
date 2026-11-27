@@ -2501,6 +2501,16 @@ msgid "Asking about other people's time stopped unexpectedly"
 msgstr "Interogarea disponibilității altor persoane s-a oprit neașteptat"
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking for the rooms stopped unexpectedly"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking the server for the rooms…"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/scheduling.rs
 #, fuzzy
 msgid "Asking the server when everybody is free…"
@@ -2517,6 +2527,11 @@ msgstr "Se întreabă serverul…"
 #, fuzzy
 msgid "Asking your domain's DNS…"
 msgstr "Se interoghează DNS-ul domeniului dvs.…"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking…"
+msgstr ""
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt
@@ -3064,6 +3079,16 @@ msgstr "Corpul conține"
 msgid "Bold"
 msgstr "Aldin"
 
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Book"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Booked"
+msgstr ""
+
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
 #, fuzzy
@@ -3112,8 +3137,8 @@ msgstr "Listă cu marcatori"
 msgid "Bullets"
 msgstr "Marcatori"
 
-#. name
-#: crates/model/src/calendar.rs
+#. interface, name
+#: crates/model/src/calendar.rs crates/ui-egui/src/room_finder.rs
 #, fuzzy
 msgid "Busy"
 msgstr "Ocupat"
@@ -3915,6 +3940,11 @@ msgstr "Alegere semnătură implicită"
 #, fuzzy
 msgid "Choose Google sign-in, or select Use an app password instead."
 msgstr "Alegeți conectarea Google sau selectați Folosiți în schimb o parolă de aplicație."
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Choose a building…"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -7040,8 +7070,8 @@ msgstr[2] "S-au găsit {n} de dosare"
 msgid "Found: sign-in at {signIn}, tokens from {token}."
 msgstr "Găsit: conectare la {signIn}, tokenuri de la {token}."
 
-#. name
-#: crates/model/src/calendar.rs
+#. interface, name
+#: crates/model/src/calendar.rs crates/ui-egui/src/room_finder.rs
 #, fuzzy
 msgid "Free"
 msgstr "Liber"
@@ -11882,7 +11912,7 @@ msgid "No folders match"
 msgstr "Niciun dosar nu se potrivește"
 
 #. interface
-#: crates/ui-egui/src/scheduling.rs
+#: crates/ui-egui/src/room_finder.rs crates/ui-egui/src/scheduling.rs
 #, fuzzy
 msgid "No information"
 msgstr "Nicio informație"
@@ -15308,6 +15338,21 @@ msgid "Right before or after: {items}"
 msgstr "Imediat înainte sau după: {items}"
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "Room"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Room Finder"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+msgid "Rooms"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/sieve_editor.rs
 #, fuzzy
 msgid "Rule \"{rule}\" of your Sieve script \"{name}\""
@@ -17361,6 +17406,11 @@ msgstr "Conectați-vă întâi cu Trimitere/primire, apoi modificați răspunsur
 #, fuzzy
 msgid "Sign in with Send/Receive first."
 msgstr "Conectați-vă mai întâi cu Trimitere/Primire."
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Sign in with Send/Receive to see the rooms."
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/scheduling.rs
@@ -19693,6 +19743,11 @@ msgid "The online archive needs a connection to the server"
 msgstr "Arhiva online are nevoie de o conexiune la server"
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "The organisation has no lists of rooms."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/meeting_dialogs.rs
 #, fuzzy
 msgid "The organizer can't be written to from this account."
@@ -20928,6 +20983,11 @@ msgid "This build can't ask a server when other people are busy: only your own c
 msgstr "Această versiune nu poate întreba un server când sunt ocupate alte persoane: se afișează doar calendarul dvs."
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "This build can't ask the Exchange server for rooms."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/scheduling.rs
 msgid "This build can't ask the Exchange server when other people are busy: only your own calendar is shown."
 msgstr ""
@@ -21390,6 +21450,11 @@ msgstr "Acest link duce în altă parte decât spune textul lui."
 #, fuzzy
 msgid "This link goes to"
 msgstr "Acest link duce la"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "This list has no rooms."
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/reading/unsubscribe.rs
@@ -30120,6 +30185,14 @@ msgid_plural "{n} more questions are waiting."
 msgstr[0] "Mai așteaptă {n} întrebare."
 msgstr[1] "Mai așteaptă {n} întrebări."
 msgstr[2] "Mai așteaptă {n} de întrebări."
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "{n} more room isn't shown"
+msgid_plural "{n} more rooms aren't shown"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #. interface
 #: crates/ui-egui/src/files.rs
