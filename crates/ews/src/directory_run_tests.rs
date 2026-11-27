@@ -261,3 +261,467 @@ fn shared_folders_alone_cannot_replace_the_account_directory() {
     assert!(!result.calendars.unwrap().complete);
     assert!(!result.contacts.unwrap().complete);
 }
+
+/// A server with calendar folders as told: `GetFolder` gives the default one (`main`),
+/// `FindFolder` lists `listed` in that order, and `FindItem` in the folder `broken` is refused
+/// (`ErrorInternalServerError`, no busy server) while any other is an empty folder.
+struct Calendars {
+    listed: Vec<String>,
+    broken: &'static str,
+}
+
+impl crate::http::HttpExchange for Calendars {
+    fn exchange(&self, request: &crate::http::HttpRequest) -> impl Future<Output = Result<crate::http::HttpResponse, crate::http::TransportError>> {
+        let body = String::from_utf8_lossy(request.body()).into_owned();
+        let folder = |id: &str| {
+            format!(
+                "<t:CalendarFolder><t:FolderId Id=\"{id}\" ChangeKey=\"k\"/><t:FolderClass>IPF.Appointment</t:FolderClass>\
+                 <t:DisplayName>Calendar {id}</t:DisplayName></t:CalendarFolder>"
+            )
+        };
+        let answer = if body.contains("<m:GetFolder") {
+            crate::standin::response(
+                "GetFolder",
+                &format!(
+                    "<m:GetFolderResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode><m:Folders>{}</m:Folders></m:GetFolderResponseMessage>",
+                    folder("main")
+                ),
+            )
+        } else if body.contains("<m:FindFolder") {
+            let all: String = self.listed.iter().map(|id| folder(id)).collect();
+            crate::standin::response(
+                "FindFolder",
+                &format!(
+                    "<m:FindFolderResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode>\
+                     <m:RootFolder IndexedPagingOffset=\"{n}\" TotalItemsInView=\"{n}\" IncludesLastItemInRange=\"true\"><t:Folders>{all}</t:Folders></m:RootFolder>\
+                     </m:FindFolderResponseMessage>",
+                    n = self.listed.len()
+                ),
+            )
+        } else if body.contains(&format!("Id=\"{}\"", self.broken)) {
+            crate::standin::response(
+                "FindItem",
+                "<m:FindItemResponseMessage ResponseClass=\"Error\"><m:ResponseCode>ErrorInternalServerError</m:ResponseCode></m:FindItemResponseMessage>",
+            )
+        } else {
+            crate::standin::response(
+                "FindItem",
+                "<m:FindItemResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode>\
+                 <m:RootFolder IndexedPagingOffset=\"0\" TotalItemsInView=\"0\" IncludesLastItemInRange=\"true\"><t:Items/></m:RootFolder></m:FindItemResponseMessage>",
+            )
+        };
+        ready(Ok(crate::http::HttpResponse::new(200, answer.into_bytes())))
+    }
+}
+
+fn read_calendars_of(server: &Calendars, shared: &[&str]) -> mailcraft_model::sync::EwsDirectoryResult {
+    let client = crate::Client::new("http://127.0.0.1/EWS/Exchange.asmx", crate::Secret::new("test")).unwrap();
+    let request = mailcraft_model::sync::EwsDirectoryRequest {
+        account: 1,
+        email: "ada@example.org".into(),
+        url: "http://127.0.0.1/EWS/Exchange.asmx".into(),
+        calendars: true,
+        from: 1_791_000_000,
+        to: 1_793_000_000,
+        shared: shared
+            .iter()
+            .map(|address| mailcraft_model::sync::EwsSharedMailbox { address: (*address).into(), calendar: true, ..Default::default() })
+            .collect(),
+        ..Default::default()
+    };
+    let cancel = std::sync::atomic::AtomicBool::new(false);
+    crate::standin::block_on(sync_directory(&client, server, &request, &cancel, &mut |_| true)).unwrap()
+}
+
+/// A calendar whose events can't be read is passed over (#962 review): the others are read, it
+/// stays in the list (so nothing of it is taken away here), the list isn't whole, and it is said.
+#[test]
+fn a_calendar_that_cant_be_read_is_passed_over_and_the_others_are_read() {
+    let server = Calendars { listed: vec!["main".into(), "broken".into(), "team".into()], broken: "broken" };
+    let result = read_calendars_of(&server, &[]);
+    let list = result.calendars.as_ref().expect("a list");
+    assert_eq!(list.calendars.len(), 3, "the one that failed is still listed");
+    assert!(!list.complete, "a list with a calendar not read takes nothing away");
+    assert_eq!(result.events.len(), 2, "the main calendar's events and the team's");
+    assert!(result.events.iter().all(|download| download.calendar != "broken"));
+    assert_eq!(result.errors, ["Couldn't read one of the calendars from the server"]);
+}
+
+/// The default calendar is read first wherever the listing puts it, so the cap on how many are
+/// read never cuts it (#962 review): a list without its main calendar would be refused whole.
+#[test]
+fn the_default_calendar_comes_first_whatever_the_listing() {
+    let most = mailcraft_model::remote::MAX_REMOTE_CALENDARS;
+    let mut listed: Vec<String> = (0..most + 20).map(|n| format!("c{n}")).collect();
+    listed.insert(most + 10, "main".into());
+    let result = read_calendars_of(&Calendars { listed, broken: "none" }, &[]);
+    let list = result.calendars.as_ref().expect("a list");
+    assert!(list.calendars.first().is_some_and(|c| c.main), "the main one first");
+    assert_eq!(list.calendars.iter().filter(|c| c.main).count(), 1);
+    assert_eq!(list.calendars.len(), most);
+    assert!(!list.complete, "more than are read");
+}
+
+/// Shared calendars put with the account's own past the cap make a list that isn't whole
+/// (#962 review): the calendars cut from it are not taken away here.
+#[test]
+fn shared_calendars_past_the_cap_make_the_list_not_whole() {
+    let listed: Vec<String> = std::iter::once("main".to_owned()).chain((0..60).map(|n| format!("c{n}"))).collect();
+    let result = read_calendars_of(&Calendars { listed, broken: "none" }, &["team@example.org"]);
+    let list = result.calendars.as_ref().expect("a list");
+    assert!(list.calendars.len() > mailcraft_model::remote::MAX_REMOTE_CALENDARS);
+    assert!(!list.complete);
+    assert!(result.errors.is_empty(), "{:?}", result.errors);
+}
+
+/// The stand-in, with every calendar view refused.
+struct NoCalendarView(crate::standin::StandIn);
+
+impl crate::http::HttpExchange for NoCalendarView {
+    fn exchange(&self, request: &crate::http::HttpRequest) -> impl Future<Output = Result<crate::http::HttpResponse, crate::http::TransportError>> {
+        let refused = String::from_utf8_lossy(request.body()).contains("<m:CalendarView");
+        let answer = refused.then(|| {
+            crate::standin::response(
+                "FindItem",
+                "<m:FindItemResponseMessage ResponseClass=\"Error\"><m:ResponseCode>ErrorInternalServerError</m:ResponseCode></m:FindItemResponseMessage>",
+            )
+        });
+        let delegated = self.0.exchange(request);
+        async move {
+            match answer {
+                Some(body) => Ok(crate::http::HttpResponse::new(200, body.into_bytes())),
+                None => delegated.await,
+            }
+        }
+    }
+}
+
+/// A calendar that couldn't be read leaves the mail whole (#962 review): the run's last piece may
+/// still take away what the server no longer has, and the piece with the calendar says it failed,
+/// so that it isn't taken for one read just now.
+#[test]
+fn a_calendar_that_failed_leaves_the_mail_whole_and_says_so_in_its_piece() {
+    let standin = NoCalendarView(crate::standin::StandIn::new());
+    let client = crate::Client::new("https://mail.example.org/EWS/Exchange.asmx", crate::Secret::new(crate::standin::AUTHORIZATION)).unwrap();
+    let request = mailcraft_model::sync::EwsMailRequest {
+        email: "ada@example.org".into(),
+        url: "https://mail.example.org/EWS/Exchange.asmx".into(),
+        list_folders: true,
+        directory: Some(Box::new(mailcraft_model::sync::EwsDirectoryRequest {
+            account: 1,
+            email: "ada@example.org".into(),
+            url: "https://mail.example.org/EWS/Exchange.asmx".into(),
+            calendars: true,
+            from: 1_791_000_000,
+            to: 1_793_000_000,
+            ..Default::default()
+        })),
+        ..Default::default()
+    };
+    let cancel = std::sync::atomic::AtomicBool::new(false);
+    let mut pieces = Vec::new();
+    crate::standin::block_on(crate::sync_mail(&client, &standin, &request, &cancel, &mut |_| true, &mut |piece| pieces.push(piece))).unwrap();
+    let directory = pieces.iter().find_map(|piece| piece.directory.as_deref()).expect("the calendar's piece");
+    assert_eq!(directory.errors, ["Couldn't read one of the calendars from the server"]);
+    let last = pieces.last().expect("a last piece");
+    assert!(last.whole, "the mail was read whole");
+    assert!(last.errors.iter().any(|line| line.contains("calendars")), "the run says it too: {:?}", last.errors);
+}
+
+/// A server with one weekly series (`UID` `series-uid`, id `series-1`) and, in the week around
+/// 2026-10-14T09:00Z, its occurrences of the 7th, the 14th (`occ-14`, moved to 11:00, so an
+/// exception) and the 21st, with another series' occurrence at the very same time; every
+/// `DeleteItem` and `UpdateItem` is done, and written down.
+struct Series {
+    has_the_day: bool,
+    asked: Mutex<Vec<String>>,
+}
+
+const OCCURRENCE: i64 = 1_791_968_400; // 2026-10-14T09:00:00Z
+
+impl crate::http::HttpExchange for Series {
+    fn exchange(&self, request: &crate::http::HttpRequest) -> impl Future<Output = Result<crate::http::HttpResponse, crate::http::TransportError>> {
+        let body = String::from_utf8_lossy(request.body()).into_owned();
+        self.asked.lock().unwrap_or_else(|poisoned| poisoned.into_inner()).push(body.clone());
+        let event = |id: &str, uid: &str, kind: &str, start: &str, original: &str| {
+            format!(
+                "<t:CalendarItem><t:ItemId Id=\"{id}\" ChangeKey=\"k\"/><t:Subject>Stand-up</t:Subject><t:Start>{start}</t:Start>\
+                 <t:End>{start}</t:End><t:OriginalStart>{original}</t:OriginalStart><t:CalendarItemType>{kind}</t:CalendarItemType>\
+                 <t:UID>{uid}</t:UID></t:CalendarItem>"
+            )
+        };
+        let answer = if body.contains("<m:GetItem") {
+            assert!(body.contains("Id=\"series-1\"") && body.contains("calendar:UID"), "{body}");
+            crate::standin::response(
+                "GetItem",
+                "<m:GetItemResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode><m:Items>\
+                 <t:CalendarItem><t:ItemId Id=\"series-1\" ChangeKey=\"k\"/><t:UID>series-uid</t:UID></t:CalendarItem></m:Items></m:GetItemResponseMessage>",
+            )
+        } else if body.contains("<m:FindItem") {
+            assert!(body.contains("<m:CalendarView") && body.contains("DistinguishedFolderId Id=\"calendar\""), "{body}");
+            let mut items = event("occ-7", "series-uid", "Occurrence", "2026-10-07T09:00:00Z", "2026-10-07T09:00:00Z");
+            if self.has_the_day {
+                items.push_str(&event("occ-14", "series-uid", "Exception", "2026-10-14T11:00:00Z", "2026-10-14T09:00:00Z"));
+            }
+            items.push_str(&event("other-14", "other-uid", "Occurrence", "2026-10-14T09:00:00Z", "2026-10-14T09:00:00Z"));
+            items.push_str(&event("occ-21", "series-uid", "Occurrence", "2026-10-21T09:00:00Z", "2026-10-21T09:00:00Z"));
+            crate::standin::response(
+                "FindItem",
+                &format!(
+                    "<m:FindItemResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode>\
+                     <m:RootFolder TotalItemsInView=\"4\" IncludesLastItemInRange=\"true\"><t:Items>{items}</t:Items></m:RootFolder></m:FindItemResponseMessage>"
+                ),
+            )
+        } else if body.contains("<m:DeleteItem") {
+            crate::standin::response(
+                "DeleteItem",
+                "<m:DeleteItemResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode></m:DeleteItemResponseMessage>",
+            )
+        } else {
+            assert!(body.contains("<m:UpdateItem"), "{body}");
+            crate::standin::response(
+                "UpdateItem",
+                "<m:UpdateItemResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode><m:Items>\
+                 <t:CalendarItem><t:ItemId Id=\"occ-14\" ChangeKey=\"k2\"/></t:CalendarItem></m:Items></m:UpdateItemResponseMessage>",
+            )
+        };
+        ready(Ok(crate::http::HttpResponse::new(200, answer.into_bytes())))
+    }
+}
+
+fn one_day(kind: EventChangeKind, fields: EventFields) -> mailcraft_model::sync::EwsDirectoryRequest {
+    mailcraft_model::sync::EwsDirectoryRequest {
+        account: 1,
+        email: "ada@example.org".into(),
+        url: "http://127.0.0.1/EWS/Exchange.asmx".into(),
+        changes: Some(mailcraft_model::remote::EventsUpload {
+            ops: vec![EventOp { kind, event: 9, series: "series-1".into(), occurrence: OCCURRENCE, fields, ..Default::default() }],
+            ..Default::default()
+        }),
+        ..Default::default()
+    }
+}
+
+fn push(server: &Series, request: &mailcraft_model::sync::EwsDirectoryRequest) -> mailcraft_model::remote::EventOutcome {
+    let client = crate::Client::new("http://127.0.0.1/EWS/Exchange.asmx", crate::Secret::new("test")).unwrap();
+    let cancel = std::sync::atomic::AtomicBool::new(false);
+    let result = crate::standin::block_on(sync_directory(&client, server, request, &cancel, &mut |_| true)).unwrap();
+    result.uploaded.unwrap().outcomes.into_iter().next().unwrap()
+}
+
+/// One day of a series that has no name of its own here is found by the series' `UID` and when
+/// the series has it (even moved since), and deleted there; it is known by its own id after.
+#[test]
+fn one_day_of_a_series_is_found_on_the_server_and_deleted() {
+    let server = Series { has_the_day: true, asked: Mutex::new(Vec::new()) };
+    let outcome = push(&server, &one_day(EventChangeKind::Delete, EventFields::default()));
+    assert_eq!(outcome.result, mailcraft_model::remote::EventResult::Done, "{}", outcome.error);
+    assert_eq!(outcome.remote, "occ-14");
+    let asked = server.asked.lock().unwrap().clone();
+    let deleted: Vec<&String> = asked.iter().filter(|body| body.contains("<m:DeleteItem")).collect();
+    assert_eq!(deleted.len(), 1);
+    assert!(deleted[0].contains("Id=\"occ-14\""), "that day alone, not the series nor the other series' day: {}", deleted[0]);
+}
+
+#[test]
+fn one_day_of_a_series_is_found_on_the_server_and_changed() {
+    let server = Series { has_the_day: true, asked: Mutex::new(Vec::new()) };
+    let fields = EventFields { title: Some("Stand-up, short".into()), ..Default::default() };
+    let outcome = push(&server, &one_day(EventChangeKind::Update, fields));
+    assert_eq!(outcome.result, mailcraft_model::remote::EventResult::Done, "{}", outcome.error);
+    assert_eq!(outcome.remote, "occ-14");
+    let asked = server.asked.lock().unwrap().clone();
+    let updated = asked.iter().find(|body| body.contains("<m:UpdateItem")).expect("changed");
+    assert!(updated.contains("Id=\"occ-14\"") && updated.contains("Stand-up, short"), "{updated}");
+}
+
+/// The server's series has no such day (it was taken away there): the change is gone, and
+/// nothing is deleted or changed.
+#[test]
+fn a_day_the_servers_series_hasnt_is_gone() {
+    let server = Series { has_the_day: false, asked: Mutex::new(Vec::new()) };
+    let outcome = push(&server, &one_day(EventChangeKind::Delete, EventFields::default()));
+    assert_eq!(outcome.result, mailcraft_model::remote::EventResult::Gone);
+    assert!(server.asked.lock().unwrap().iter().all(|body| !body.contains("<m:DeleteItem") && !body.contains("<m:UpdateItem")));
+}
+
+/// A server that makes every item it is asked to, writing each request down.
+struct Making {
+    asked: Mutex<Vec<String>>,
+}
+
+impl crate::http::HttpExchange for Making {
+    fn exchange(&self, request: &crate::http::HttpRequest) -> impl Future<Output = Result<crate::http::HttpResponse, crate::http::TransportError>> {
+        let body = String::from_utf8_lossy(request.body()).into_owned();
+        let operation = if body.contains("<m:CreateItem") { "CreateItem" } else { "UpdateItem" };
+        self.asked.lock().unwrap_or_else(|poisoned| poisoned.into_inner()).push(body);
+        let answer = crate::standin::response(
+            operation,
+            &format!(
+                "<m:{operation}ResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode><m:Items>\
+                 <t:CalendarItem><t:ItemId Id=\"made-1\" ChangeKey=\"k\"/></t:CalendarItem></m:Items></m:{operation}ResponseMessage>"
+            ),
+        );
+        ready(Ok(crate::http::HttpResponse::new(200, answer.into_bytes())))
+    }
+}
+
+/// The request that makes a weekly stand-up, with the calendar's zone `zone`.
+fn made_in(zone: &str) -> String {
+    let server = Making { asked: Mutex::new(Vec::new()) };
+    let client = crate::Client::new("http://127.0.0.1/EWS/Exchange.asmx", crate::Secret::new("test")).unwrap();
+    let request = mailcraft_model::sync::EwsDirectoryRequest {
+        account: 1,
+        email: "ada@example.org".into(),
+        url: "http://127.0.0.1/EWS/Exchange.asmx".into(),
+        changes: Some(mailcraft_model::remote::EventsUpload {
+            ops: vec![EventOp {
+                kind: EventChangeKind::Create,
+                event: 3,
+                fields: EventFields {
+                    title: Some("Stand-up".into()),
+                    time: Some(EventTime { start: OCCURRENCE, end: OCCURRENCE + 900, all_day: false }),
+                    ..Default::default()
+                },
+                ..Default::default()
+            }],
+            zone: zone.into(),
+            ..Default::default()
+        }),
+        ..Default::default()
+    };
+    let cancel = std::sync::atomic::AtomicBool::new(false);
+    let result = crate::standin::block_on(sync_directory(&client, &server, &request, &cancel, &mut |_| true)).unwrap();
+    assert_eq!(result.uploaded.unwrap().outcomes[0].result, mailcraft_model::remote::EventResult::Done);
+    server.asked.lock().unwrap().iter().find(|body| body.contains("<m:CreateItem")).cloned().expect("made")
+}
+
+/// Exchange takes a zone by the name Windows has for it, and refuses one of the IANA database:
+/// a calendar in `Europe/Berlin` makes its events in `W. Europe Standard Time`, so that a series
+/// made here repeats by Berlin's clock across a daylight-saving change.
+#[test]
+fn an_event_is_made_in_its_zone_by_the_name_windows_has_for_it() {
+    let made = made_in("Europe/Berlin");
+    assert!(made.contains("<t:StartTimeZone Id=\"W. Europe Standard Time\"/>"), "{made}");
+    assert!(made.contains("<t:EndTimeZone Id=\"W. Europe Standard Time\"/>"), "{made}");
+    assert!(!made.contains("Europe/Berlin"), "{made}");
+    // Named the Windows way already: as it is.
+    assert!(made_in("Eastern Standard Time").contains("<t:StartTimeZone Id=\"Eastern Standard Time\"/>"));
+}
+
+/// A zone that has no Windows name (or is no zone at all) is left out rather than sent and
+/// refused: the times go as the instants they are.
+#[test]
+fn a_zone_windows_has_no_name_for_is_left_out() {
+    let made = made_in("Nowhere/Atlantis");
+    assert!(!made.contains("StartTimeZone") && !made.contains("Atlantis"), "{made}");
+}
+
+/// Somebody's calendar shared with the account for its free and busy times alone: listing it is
+/// refused (`ErrorAccessDenied`, at `GetFolder` or at its calendar view, as `deny_folder` says),
+/// and `GetUserAvailability` tells when they are busy, unless `nothing_at_all`.
+struct FreeBusyOnly {
+    deny_folder: bool,
+    nothing_at_all: bool,
+}
+
+impl crate::http::HttpExchange for FreeBusyOnly {
+    fn exchange(&self, request: &crate::http::HttpRequest) -> impl Future<Output = Result<crate::http::HttpResponse, crate::http::TransportError>> {
+        let body = String::from_utf8_lossy(request.body()).into_owned();
+        let denied = |operation: &str| {
+            crate::standin::response(
+                operation,
+                &format!(
+                    "<m:{operation}ResponseMessage ResponseClass=\"Error\"><m:ResponseCode>ErrorAccessDenied</m:ResponseCode></m:{operation}ResponseMessage>"
+                ),
+            )
+        };
+        let answer = if body.contains("<m:GetFolder") {
+            if self.deny_folder {
+                denied("GetFolder")
+            } else {
+                crate::standin::response(
+                    "GetFolder",
+                    "<m:GetFolderResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode><m:Folders>\
+                     <t:CalendarFolder><t:FolderId Id=\"their-calendar\" ChangeKey=\"k\"/><t:FolderClass>IPF.Appointment</t:FolderClass>\
+                     <t:DisplayName>Calendar</t:DisplayName></t:CalendarFolder></m:Folders></m:GetFolderResponseMessage>",
+                )
+            }
+        } else if body.contains("<m:FindFolder") {
+            denied("FindFolder")
+        } else if body.contains("<m:FindItem") {
+            denied("FindItem")
+        } else {
+            assert!(body.contains("<m:GetUserAvailabilityRequest") && body.contains("<t:Address>bo@example.org</t:Address>"), "{body}");
+            let response = if self.nothing_at_all {
+                "<m:FreeBusyResponse><m:ResponseMessage ResponseClass=\"Error\"><m:ResponseCode>ErrorNoFreeBusyAccess</m:ResponseCode>\
+                 </m:ResponseMessage></m:FreeBusyResponse>"
+                    .to_owned()
+            } else {
+                "<m:FreeBusyResponse><m:ResponseMessage ResponseClass=\"Success\"><m:ResponseCode>NoError</m:ResponseCode></m:ResponseMessage>\
+                 <m:FreeBusyView><t:FreeBusyViewType>FreeBusy</t:FreeBusyViewType><t:CalendarEventArray>\
+                 <t:CalendarEvent><t:StartTime>2026-10-14T09:00:00</t:StartTime><t:EndTime>2026-10-14T10:00:00</t:EndTime><t:BusyType>Busy</t:BusyType></t:CalendarEvent>\
+                 <t:CalendarEvent><t:StartTime>2026-10-15T13:00:00</t:StartTime><t:EndTime>2026-10-15T17:00:00</t:EndTime><t:BusyType>OOF</t:BusyType></t:CalendarEvent>\
+                 </t:CalendarEventArray></m:FreeBusyView></m:FreeBusyResponse>"
+                    .to_owned()
+            };
+            crate::standin::envelope(&format!(
+                "<m:GetUserAvailabilityResponse xmlns:m=\"{}\" xmlns:t=\"{}\"><m:FreeBusyResponseArray>{response}</m:FreeBusyResponseArray></m:GetUserAvailabilityResponse>",
+                crate::soap::MESSAGES,
+                crate::soap::TYPES
+            ))
+        };
+        ready(Ok(crate::http::HttpResponse::new(200, answer.into_bytes())))
+    }
+}
+
+fn opened_by_address(server: &FreeBusyOnly) -> mailcraft_model::sync::EwsDirectoryResult {
+    let client = crate::Client::new("http://127.0.0.1/EWS/Exchange.asmx", crate::Secret::new("test")).unwrap();
+    let request = mailcraft_model::sync::EwsDirectoryRequest {
+        account: 1,
+        email: "ada@example.org".into(),
+        url: "http://127.0.0.1/EWS/Exchange.asmx".into(),
+        from: 1_791_763_200,
+        to: 1_791_763_200 + 7 * 86_400,
+        shared: vec![mailcraft_model::sync::EwsSharedMailbox { address: "bo@example.org".into(), calendar: true, ..Default::default() }],
+        ..Default::default()
+    };
+    let cancel = std::sync::atomic::AtomicBool::new(false);
+    crate::standin::block_on(sync_directory(&client, server, &request, &cancel, &mut |_| true)).unwrap()
+}
+
+/// A calendar opened by address that may only be seen for its free and busy times is drawn from
+/// those, as Outlook shows one: blocks of time without a title, listed as such.
+#[test]
+fn a_calendar_shared_for_free_and_busy_alone_is_drawn_from_those() {
+    for deny_folder in [false, true] {
+        let result = opened_by_address(&FreeBusyOnly { deny_folder, nothing_at_all: false });
+        assert!(result.errors.is_empty(), "{:?}", result.errors);
+        let list = result.calendars.as_ref().expect("listed");
+        let [calendar] = list.calendars.as_slice() else { panic!("one calendar: {list:?}") };
+        assert_eq!(calendar.id, "user:bo@example.org");
+        assert_eq!(calendar.rights, mailcraft_model::Rights::FreeBusy);
+        assert_eq!(calendar.group, "Shared Calendars");
+        assert!(!list.complete);
+        let [events] = result.events.as_slice() else { panic!("one download") };
+        assert!(events.free_busy && events.complete && events.calendar == "user:bo@example.org");
+        let blocks: Vec<_> = events.events.iter().map(|e| (e.start - 1_791_763_200, e.end - 1_791_763_200, e.show_as, e.title.is_empty())).collect();
+        assert_eq!(
+            blocks,
+            [
+                (2 * 86_400 + 9 * 3_600, 2 * 86_400 + 10 * 3_600, mailcraft_model::ShowAs::Busy, true),
+                (3 * 86_400 + 13 * 3_600, 3 * 86_400 + 17 * 3_600, mailcraft_model::ShowAs::OutOfOffice, true),
+            ],
+            "deny_folder: {deny_folder}"
+        );
+    }
+}
+
+/// Somebody who won't let even their free and busy times be seen: the calendar isn't read, and
+/// that is said, as before.
+#[test]
+fn a_calendar_that_tells_nothing_at_all_is_said_to_be_unread() {
+    let result = opened_by_address(&FreeBusyOnly { deny_folder: true, nothing_at_all: true });
+    assert_eq!(result.errors, ["Couldn't read a calendar that was shared with the account"]);
+    assert!(result.events.is_empty());
+}

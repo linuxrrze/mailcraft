@@ -39,6 +39,10 @@ const MAX_PAGES: usize = 200;
 const MAX_ITEMS: usize = 20_000;
 /// Most changes one run carries of each kind.
 const MAX_CHANGES: usize = 5_000;
+/// Most `GetUserAvailability` questions for one calendar shared for free and busy times alone:
+/// the stretch read (a month back and a year ahead, or the days on screen) in stretches of 42
+/// days, with room to spare.
+const MAX_AVAILABILITY_ASKS: usize = 10;
 
 /// Read the directory of `request`: the changes first, then the folders and what they hold.
 pub async fn sync_directory<E: HttpExchange>(
@@ -133,9 +137,12 @@ impl<E: HttpExchange> Run<'_, E> {
         // The account's own calendars, books and to-dos.
         if request.calendars {
             match self.read_calendars(request, mailbox, None, false).await {
-                Ok((list, events)) => {
+                Ok((list, events, failed)) => {
                     out.calendars = Some(list);
                     out.events.extend(events);
+                    if failed > 0 {
+                        out.errors.push(calendars_failed(failed));
+                    }
                 }
                 Err(Asked::Stop(stop)) => return Err(Asked::Stop(stop)),
                 Err(_) => out.errors.push("Couldn't read the calendars from the server".to_owned()),
@@ -162,11 +169,27 @@ impl<E: HttpExchange> Run<'_, E> {
                 continue;
             }
             if shared.calendar {
-                match self.read_calendars(request, Some(address), Some(address), true).await {
-                    Ok((mut list, events)) => {
+                let read = match self.read_calendars(request, Some(address), Some(address), true).await {
+                    // Not to be listed, only its free and busy times may be had (a calendar
+                    // shared for those alone): drawn from them instead, as Outlook shows one.
+                    Err(Asked::Code(ResponseCode::AccessDenied)) => {
+                        self.free_busy_calendar(request, address).await.map(|(list, events)| (list, vec![events], 0))
+                    }
+                    other => other,
+                };
+                match read {
+                    Ok((mut list, events, failed)) => {
+                        if failed > 0 {
+                            out.errors.push("Couldn't read a calendar that was shared with the account".to_owned());
+                        }
                         if let Some(own) = out.calendars.as_mut() {
                             own.complete &= list.complete;
                             own.calendars.append(&mut list.calendars);
+                            // More than are kept: those past the cap aren't listed, and a list that
+                            // isn't whole takes nothing away.
+                            if own.calendars.len() > mailcraft_model::remote::MAX_REMOTE_CALENDARS {
+                                own.complete = false;
+                            }
                         } else {
                             // Shared folders alone never describe the whole account.
                             list.complete = false;
@@ -258,9 +281,10 @@ impl<E: HttpExchange> Run<'_, E> {
             }
             offset = offset.saturating_add(u32::try_from(before).unwrap_or(u32::MAX));
         }
-        if let Some(default) = &default
-            && !all.iter().any(|folder| folder.id == default.id)
-        {
+        // The default folder first, wherever the listing put it: what is read is cut to a number of
+        // folders, and the default one is never the one cut.
+        if let Some(default) = &default {
+            all.retain(|folder| folder.id != default.id);
             all.insert(0, default.clone());
         }
         Ok((default, all, complete))
@@ -272,8 +296,10 @@ impl<E: HttpExchange> Run<'_, E> {
         mailbox: Option<&str>,
         owner_address: Option<&str>,
         shared: bool,
-    ) -> Result<(CalendarsDownload, Vec<EventsDownload>), Asked> {
+    ) -> Result<(CalendarsDownload, Vec<EventsDownload>, usize), Asked> {
         let (default, folders, complete) = self.directory_folders(Kind::Calendar, mailbox).await?;
+        // How many calendars' events couldn't be read.
+        let mut failed = 0usize;
         let mut list = CalendarsDownload {
             account: request.account,
             email: request.email.clone(),
@@ -303,9 +329,24 @@ impl<E: HttpExchange> Run<'_, E> {
                 main: !shared && main,
                 ..Default::default()
             });
-            let from = request.from.max(1);
+            // (As the request has it, before 1970 too: only a window that doesn't move forward is
+            // given one second.)
+            let from = request.from;
             let to = request.to.max(from.saturating_add(1));
-            let (mut download, complete) = self.read_events(folder, &remote_id, from, to, shared).await?;
+            // A calendar whose events can't be read is passed over: it stays in the list (and its
+            // events here as they were), the list says it isn't whole, and the others are read.
+            let (mut download, complete) = match self.read_events(folder, &remote_id, from, to, shared).await {
+                Ok(read) => read,
+                Err(Asked::Stop(stop)) => return Err(Asked::Stop(stop)),
+                // Somebody else's calendar that may be seen but not listed: for whoever asked to
+                // draw it from its free and busy times.
+                Err(Asked::Code(ResponseCode::AccessDenied)) if shared && main => return Err(Asked::Code(ResponseCode::AccessDenied)),
+                Err(_) => {
+                    list.complete = false;
+                    failed = failed.saturating_add(1);
+                    continue;
+                }
+            };
             if !complete {
                 list.complete = false;
             }
@@ -315,7 +356,81 @@ impl<E: HttpExchange> Run<'_, E> {
             download.has_options = true;
             events.push(download);
         }
-        Ok((list, events))
+        Ok((list, events, failed))
+    }
+
+    /// The main calendar of `address`, shared with the account for its free and busy times alone,
+    /// as those (`GetUserAvailability`, the stretch of the request in stretches of 42 days): each
+    /// block of time taken an event without a title or a place, only when and how it shows (busy,
+    /// tentative, out of office, working elsewhere), known again by those. The calendar is listed
+    /// as one that only says when its owner is busy ([`Rights::FreeBusy`]). A person whose time
+    /// the server won't tell is [`ResponseCode::AccessDenied`] still.
+    async fn free_busy_calendar(
+        &mut self,
+        request: &mailcraft_model::sync::EwsDirectoryRequest,
+        address: &str,
+    ) -> Result<(CalendarsDownload, EventsDownload), Asked> {
+        let id = mailcraft_model::remote::opened_id(address);
+        let mut download = EventsDownload {
+            account: request.account,
+            email: request.email.clone(),
+            calendar: id.clone(),
+            from: request.from,
+            to: request.to,
+            complete: true,
+            free_busy: true,
+            ..Default::default()
+        };
+        let mut seen = std::collections::HashSet::new();
+        let mut at = request.from;
+        for n in 0..MAX_AVAILABILITY_ASKS {
+            if at >= request.to {
+                break;
+            }
+            let end = request.to.min(at.saturating_add(crate::availability::MAX_WINDOW));
+            let ask = mailcraft_model::remote::FreeBusyAsk { people: vec![address.to_owned()], from: at, to: end };
+            let Some(question) = crate::availability::GetUserAvailability::new(&ask) else { return Err(Asked::Bad) };
+            let answer = self.ask(&question.element(), &|reply| question.answer(reply)).await?;
+            let person = answer.people.first().ok_or(Asked::Code(ResponseCode::AccessDenied))?;
+            if !person.error.is_empty() {
+                return Err(Asked::Code(ResponseCode::AccessDenied));
+            }
+            for busy in &person.busy {
+                let id = format!("freebusy:{}:{}:{}", busy.start, busy.end, busy.show_as.code());
+                if download.events.len() < MAX_ITEMS && seen.insert(id.clone()) {
+                    download.events.push(RemoteEvent {
+                        id,
+                        start: busy.start,
+                        end: busy.end,
+                        show_as: busy.show_as,
+                        is_organizer: Some(false),
+                        ..Default::default()
+                    });
+                }
+            }
+            at = end;
+            // Not all of the stretch was asked for: nothing is taken away for being missing.
+            if n.saturating_add(1) == MAX_AVAILABILITY_ASKS && at < request.to {
+                download.complete = false;
+            }
+        }
+        let list = CalendarsDownload {
+            account: request.account,
+            email: request.email.clone(),
+            // (A calendar opened by address never describes the whole account.)
+            complete: false,
+            calendars: vec![RemoteCalendar {
+                id,
+                name: address.to_owned(),
+                group: "Shared Calendars".to_owned(),
+                rights: mailcraft_model::Rights::FreeBusy,
+                owner: Some(CalendarOwner { address: address.to_owned(), name: address.to_owned() }),
+                main: false,
+                ..Default::default()
+            }],
+            ..Default::default()
+        };
+        Ok((list, download))
     }
 
     async fn read_events(&mut self, folder: &FolderInfo, remote_id: &str, from: i64, to: i64, plain: bool) -> Result<(EventsDownload, bool), Asked> {
@@ -502,7 +617,31 @@ impl<E: HttpExchange> Run<'_, E> {
 
     async fn push_event(&mut self, op: &mailcraft_model::remote::EventOp, zone: &str, email: &str) -> EventOutcome {
         let zone = op.fields.zones.as_ref().map(|zones| zones.start.as_str()).filter(|zone| !zone.trim().is_empty()).unwrap_or(zone);
+        let zone = windows_zone(zone);
+        let zone = zone.as_str();
         let mut outcome = EventOutcome { op: op.clone(), ..Default::default() };
+        // One occurrence of a series that has no name of its own here: the server is asked which
+        // of its items it is, and the change goes to that one.
+        let mut occurrence_id = String::new();
+        let resolved;
+        let op = if op.remote.is_empty() && !op.series.is_empty() && op.occurrence != 0 && op.kind != mailcraft_model::remote::EventChangeKind::Create
+        {
+            match self.find_occurrence(op).await {
+                Ok(Some(id)) => {
+                    occurrence_id.clone_from(&id);
+                    resolved = mailcraft_model::remote::EventOp { remote: id, ..op.clone() };
+                    &resolved
+                }
+                // (The server's series has no such day: it was taken away there.)
+                Ok(None) => {
+                    outcome.result = EventResult::Gone;
+                    return outcome;
+                }
+                Err(error) => return settle(outcome, Err(error)),
+            }
+        } else {
+            op
+        };
         if op.remote.is_empty() && op.kind != mailcraft_model::remote::EventChangeKind::Create {
             outcome.result = EventResult::Refused;
             outcome.error = "the server's copy of this event is not known here".to_owned();
@@ -572,43 +711,44 @@ impl<E: HttpExchange> Run<'_, E> {
                 }
             }
         };
-        match result {
-            Ok((id, key)) => {
-                outcome.result = EventResult::Done;
-                if !id.is_empty() {
-                    outcome.remote = id;
-                } else if op.kind == mailcraft_model::remote::EventChangeKind::Create {
-                    // (A create always gives an id; without one nothing can find it again.)
-                    outcome.result = EventResult::Failed;
-                    outcome.error = "the server didn't say which event it made".to_owned();
-                }
-                outcome.change_key = key;
-            }
-            Err(Asked::Code(ResponseCode::ItemNotFound | ResponseCode::FolderNotFound)) => outcome.result = EventResult::Gone,
-            Err(Asked::Code(ResponseCode::AccessDenied)) => outcome.result = EventResult::Denied,
-            Err(Asked::Code(ResponseCode::ServerBusy)) => outcome.result = EventResult::Failed,
-            Err(Asked::Stop(Stop::Busy(seconds))) => {
-                outcome.result = EventResult::Failed;
-                outcome.retry_after = Some(seconds.max(1));
-            }
-            Err(Asked::Stop(Stop::Auth)) => {
-                outcome.result = EventResult::Failed;
-                outcome.error = "the server turned the sign-in down".to_owned();
-            }
-            Err(Asked::Stop(Stop::Unreachable | Stop::Tls)) => {
-                outcome.result = EventResult::Failed;
-                outcome.error = "the server couldn't be reached".to_owned();
-            }
-            Err(Asked::Code(_)) => {
-                outcome.result = EventResult::Refused;
-                outcome.error = "the server won't do it".to_owned();
-            }
-            Err(_) => {
-                outcome.result = EventResult::Failed;
-                outcome.error = "the server's answer couldn't be used".to_owned();
-            }
+        if let Ok((id, _)) = &result
+            && id.is_empty()
+            && !occurrence_id.is_empty()
+        {
+            // The occurrence's own name, as the server gave it: it is known by it from now on.
+            outcome.remote = occurrence_id;
         }
-        outcome
+        settle(outcome, result)
+    }
+
+    /// The server's id of the occurrence of `op`'s series that falls at `op.occurrence` (as the
+    /// series has it: an occurrence moved since is found by where it was), in `op`'s calendar.
+    /// The series' `UID` is asked for, then the calendar a week either side; `None` when no item
+    /// there is that occurrence. A calendar opened by address isn't looked in (its folder isn't
+    /// known by an id here).
+    async fn find_occurrence(&mut self, op: &mailcraft_model::remote::EventOp) -> Result<Option<String>, Asked> {
+        if op.calendar.starts_with(mailcraft_model::remote::OPENED_PREFIX) {
+            return Ok(None);
+        }
+        let uid = self.ask(&directory::get_uid(&op.series), &|reply| directory::read_uid(reply)).await?;
+        if uid.is_empty() {
+            return Ok(None);
+        }
+        const AROUND: i64 = 7 * 86_400;
+        let find = directory::FindItems::new(Kind::Calendar, &op.calendar, 0, 512)
+            .view(op.occurrence.saturating_sub(AROUND), op.occurrence.saturating_add(AROUND));
+        let page = self.ask(&find.element(), &|reply| find.answer(reply)).await?;
+        Ok(page.items.into_iter().find_map(|item| match item {
+            Item::Event(event)
+                if event.uid == uid
+                    && matches!(event.kind, RemoteEventKind::Occurrence | RemoteEventKind::Exception)
+                    && event.original.unwrap_or(event.start) == op.occurrence
+                    && !event.id.is_empty() =>
+            {
+                Some(event.id)
+            }
+            _ => None,
+        }))
     }
 
     async fn push_contact(&mut self, op: &mailcraft_model::remote::ContactOp) -> ContactOutcome {
@@ -731,6 +871,15 @@ impl<E: HttpExchange> Run<'_, E> {
     }
 }
 
+/// What is said of calendars whose events couldn't be read.
+fn calendars_failed(failed: usize) -> String {
+    if failed == 1 {
+        "Couldn't read one of the calendars from the server".to_owned()
+    } else {
+        format!("Couldn't read {failed} of the calendars from the server")
+    }
+}
+
 /// A name a folder is shown under; a shared one says whose it is.
 fn clean_name(name: &str, owner: Option<&str>) -> String {
     let name = name.chars().filter(|c| !c.is_control()).take(255).collect::<String>();
@@ -828,6 +977,59 @@ fn forward_item(id: &str, to: &[mailcraft_model::Address], comment: &str) -> Ele
         item = item.child(Element::new("t:Body").attr("BodyType", "Text").text(comment));
     }
     Element::new("m:CreateItem").child(Element::new("m:Items").child(item))
+}
+
+/// `outcome` as the server's answer `result` makes it: done (with the id and change key the
+/// server gave, if any), gone, denied, refused, or failed for now.
+fn settle(mut outcome: EventOutcome, result: Result<(String, String), Asked>) -> EventOutcome {
+    match result {
+        Ok((id, key)) => {
+            outcome.result = EventResult::Done;
+            if !id.is_empty() {
+                outcome.remote = id;
+            } else if outcome.op.kind == mailcraft_model::remote::EventChangeKind::Create {
+                // (A create always gives an id; without one nothing can find it again.)
+                outcome.result = EventResult::Failed;
+                outcome.error = "the server didn't say which event it made".to_owned();
+            }
+            outcome.change_key = key;
+        }
+        Err(Asked::Code(ResponseCode::ItemNotFound | ResponseCode::FolderNotFound)) => outcome.result = EventResult::Gone,
+        Err(Asked::Code(ResponseCode::AccessDenied)) => outcome.result = EventResult::Denied,
+        Err(Asked::Code(ResponseCode::ServerBusy)) => outcome.result = EventResult::Failed,
+        Err(Asked::Stop(Stop::Busy(seconds))) => {
+            outcome.result = EventResult::Failed;
+            outcome.retry_after = Some(seconds.max(1));
+        }
+        Err(Asked::Stop(Stop::Auth)) => {
+            outcome.result = EventResult::Failed;
+            outcome.error = "the server turned the sign-in down".to_owned();
+        }
+        Err(Asked::Stop(Stop::Unreachable | Stop::Tls)) => {
+            outcome.result = EventResult::Failed;
+            outcome.error = "the server couldn't be reached".to_owned();
+        }
+        Err(Asked::Code(_)) => {
+            outcome.result = EventResult::Refused;
+            outcome.error = "the server won't do it".to_owned();
+        }
+        Err(_) => {
+            outcome.result = EventResult::Failed;
+            outcome.error = "the server's answer couldn't be used".to_owned();
+        }
+    }
+    outcome
+}
+
+/// The time zone an event's times are said in, by the name Exchange takes in `StartTimeZone`
+/// and `EndTimeZone` (the one Windows has: `W. Europe Standard Time`; Exchange refuses a name of
+/// the IANA database, `Europe/Berlin`). `zone` is the event's own, or the calendar's; empty for
+/// this computer's. Nothing for a zone Windows has no name for: the times then go as the instants
+/// they are, and a series repeats by UTC's clock there.
+fn windows_zone(zone: &str) -> String {
+    let zone = zone.trim();
+    let named = if zone.is_empty() { Some(mailcraft_time::Zone::system()) } else { mailcraft_time::Zone::named(zone) };
+    named.and_then(mailcraft_time::Zone::windows_name).map(str::to_owned).unwrap_or_default()
 }
 
 #[cfg(test)]

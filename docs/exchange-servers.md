@@ -17,6 +17,9 @@ Another mailbox's calendar or address book is read with the owner's sign-in by p
 in every folder request; it is listed under Shared Calendars or with the account's books. Grommunio
 lets the owner into the shared folder it is given but not list that mailbox's other folders, so a
 shared calendar or book is read as its default folder there.
+A calendar shared with the owner for its free and busy times alone, which the server won't list,
+is drawn from those instead (`GetUserAvailability`): blocks of time without a title or a place,
+each saying how it shows, as Outlook shows such a calendar.
 
 Find a Time asks the server when the people invited are busy, for a meeting in the account's
 calendar (`GetUserAvailability`, [MS-OXWSGTAV]): their addresses and the day go to the server, with
@@ -84,7 +87,7 @@ This does not close every window. If MailCraft is killed, or the computer loses 
 - A Calendar (or Contacts, Tasks) folder taken in as a mail folder by the earlier trial build stays in the folder list as an empty stub on a delta run, until the next fresh read of the folders. It only affects accounts added with that build, which needed a testing switch to add one.
 - Grommunio's `FindItem` does not return a contact's physical addresses, even when `contacts:PhysicalAddresses` is asked for; the other fields of a contact do come. A server that returns them is read as any other field.
 - A shared mailbox's other calendars and address books are not found on Grommunio, which refuses `FindFolder` on that mailbox's top: only the default calendar and address book of a person whose folder is shared are read.
-- A recurring series is read as the occurrences the server gives and the master when its rule can be said here; whether Exchange Server and Grommunio agree on the series' time zone over a daylight-saving change has not been tried.
+- A recurring series is read as the occurrences the server gives and the master when its rule can be said here. An event made or changed here goes with its time zone by the name Windows has for it (`W. Europe Standard Time`, which Exchange requires), so a series made here repeats by its own clock; whether Exchange Server and Grommunio agree on the series' time zone over a daylight-saving change has not been tried against them.
 - Changing a shared calendar's or address book's items needs the same editing rights Grommunio's `grant` names; only reading was tried there.
 - Find a Time's free and busy times have been tried against the strict stand-in alone, not yet against Exchange Server or Grommunio.
 

@@ -564,12 +564,14 @@ pub(crate) async fn sync_store<E: HttpExchange>(
             }
         }
     }
+    // Whether the mail was read whole: decided before the calendar, contacts and to-dos, whose
+    // failure says nothing of the mail.
+    let mail_clean = out.clean();
     // The calendar, contacts and to-dos, in a run of their own after the mail: a part that fails
     // does not make the mail fail, and the next run asks again.
     if let Some(directory) = request.directory.as_deref().filter(|_| !out.auth_refused && !out.stopped) {
-        let mut result = crate::directory_run::sync_directory(client, exchange, directory, cancel, &mut *run.wait).await;
+        let result = crate::directory_run::sync_directory(client, exchange, directory, cancel, &mut *run.wait).await;
         if !result.whole() {
-            out.incomplete = true;
             if result.auth_refused {
                 out.auth_refused = true;
             }
@@ -577,7 +579,9 @@ pub(crate) async fn sync_store<E: HttpExchange>(
                 out.busy_for = Some(seconds);
             }
         }
-        out.errors.append(&mut result.errors);
+        // (Said with the run's, and kept in the piece too: a calendar whose read failed is not
+        // taken for one read just now.)
+        out.errors.extend(result.errors.iter().cloned());
         log::info!(
             "ews directory: {} calendars, {} event lists, {} contacts, {} to-dos, {} calendar changes, {} contact changes, {} to-do changes",
             result.calendars.as_ref().map_or(0, |list| list.calendars.len()),
@@ -620,7 +624,7 @@ pub(crate) async fn sync_store<E: HttpExchange>(
         errors: out.errors.clone(),
         busy_for: out.busy_for,
         // (Only a run of every folder is the end of a read that may take away what the server lacks.)
-        whole: out.clean() && !request.inbox_pass && request.scope == EwsScope::All,
+        whole: mail_clean && !request.inbox_pass && request.scope == EwsScope::All,
         stopped: out.stopped,
         auth_refused: out.auth_refused,
         blocked: out.blocked,

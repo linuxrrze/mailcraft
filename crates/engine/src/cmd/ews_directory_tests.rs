@@ -205,3 +205,54 @@ fn a_shared_mailbox_is_read_through_its_owner_and_an_archive_not_at_all() {
     assert!(run.directory.is_none(), "an archive's run reads no calendar");
     assert!(super::super::ews_mail::ews_mail_request(&s, owner, false).unwrap().directory.is_some(), "its owner's does");
 }
+
+/// A calendar opened by address that the server shares for free and busy times alone comes as
+/// blocks of time (the ews crate draws them from `GetUserAvailability`): taken in as one that only
+/// says when its owner is busy, its blocks without a title, and the account's own calendar kept.
+#[test]
+fn a_calendar_shared_for_free_and_busy_alone_is_taken_in_as_such() {
+    let (mut s, account) = busy_session();
+    let id = mailcraft_model::remote::opened_id("bo@example.org");
+    let calendars = CalendarsDownload {
+        account,
+        email: ME.into(),
+        complete: false,
+        calendars: vec![RemoteCalendar {
+            id: id.clone(),
+            name: "bo@example.org".into(),
+            group: "Shared Calendars".into(),
+            rights: Rights::FreeBusy,
+            owner: Some(mailcraft_model::CalendarOwner { address: "bo@example.org".into(), name: "bo@example.org".into() }),
+            ..Default::default()
+        }],
+        ..Default::default()
+    };
+    let block = |start: i64, show_as: mailcraft_model::ShowAs| RemoteEvent {
+        id: format!("freebusy:{start}:{}:{}", start + 3_600, show_as.code()),
+        start,
+        end: start + 3_600,
+        show_as,
+        is_organizer: Some(false),
+        ..Default::default()
+    };
+    let events = EventsDownload {
+        account,
+        email: ME.into(),
+        calendar: id.clone(),
+        from: NOW,
+        to: NOW + 7 * DAY,
+        complete: true,
+        free_busy: true,
+        events: vec![block(NOW + DAY, mailcraft_model::ShowAs::Busy), block(NOW + 2 * DAY, mailcraft_model::ShowAs::OutOfOffice)],
+        ..Default::default()
+    };
+    let result = EwsDirectoryResult { account, email: ME.into(), calendars: Some(calendars), events: vec![events], ..Default::default() };
+    apply_ews_directory(&mut s, &result).unwrap();
+    let theirs = s.mailbox.calendars.iter().find(|c| c.origin.account == account && c.origin.id == id).expect("their calendar");
+    assert_eq!(theirs.rights, Rights::FreeBusy);
+    let blocks: Vec<_> = s.mailbox.events.values().filter(|e| e.calendar == theirs.id).map(|e| (e.title.is_empty(), e.show_as)).collect();
+    assert_eq!(blocks.len(), 2, "{blocks:?}");
+    assert!(blocks.iter().all(|(untitled, _)| *untitled));
+    // (The account's main calendar is kept with no id of its own: `apply_calendars`.)
+    assert!(s.mailbox.calendars.iter().any(|c| c.origin.account == account && c.origin.id.is_empty()), "the account's own stays");
+}
