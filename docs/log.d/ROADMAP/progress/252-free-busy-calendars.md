@@ -1,0 +1,1 @@
+| 2026-11-27 | #252: a calendar opened by address that an Exchange server shares for free and busy times alone (its listing refused) is drawn from `GetUserAvailability`: untitled blocks in stretches of 42 days, the calendar listed as free/busy only, as for Microsoft 365 (#70) |
