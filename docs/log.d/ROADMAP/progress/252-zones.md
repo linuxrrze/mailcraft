@@ -1,0 +1,1 @@
+| 2026-11-27 | #252: an Exchange server account's events go up with their time zone by the name Windows has for it (`W. Europe Standard Time`), which Exchange requires: an IANA name was sent and refused, and with none (the calendar in this computer's zone) a series repeated by UTC's clock |
