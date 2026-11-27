@@ -209,3 +209,166 @@ fn a_plain_appointment_says_it_is_not_a_meeting() {
     let written = calendar_item(&meeting, "", None).write();
     assert!(!written.contains("33303"), "the server sets the flags of a meeting: {written}");
 }
+
+fn recurring(pattern: &str, range: &str) -> RemoteEvent {
+    let page = find_items(&format!(
+        "<t:CalendarItem><t:ItemId Id=\"series-1\" ChangeKey=\"k\"/><t:Subject>Stand-up</t:Subject>\
+         <t:Start>2026-10-12T08:00:00Z</t:Start><t:End>2026-10-12T08:15:00Z</t:End>\
+         <t:CalendarItemType>RecurringMaster</t:CalendarItemType>\
+         <t:Recurrence>{pattern}{range}</t:Recurrence></t:CalendarItem>"
+    ));
+    let Some(Item::Event(event)) = page.items.into_iter().next() else { panic!("not an event") };
+    *event
+}
+
+/// `DaysOfWeek` may name a class of days ([MS-OXWSCDATA] `DayOfWeekType`): `Weekday` is Monday
+/// to Friday, `WeekendDay` Saturday and Sunday, `Day` every day; each day is kept once.
+#[test]
+fn a_weekly_pattern_reads_the_schemas_classes_of_days() {
+    let range = "<t:NoEndRecurrence><t:StartDate>2026-10-12</t:StartDate></t:NoEndRecurrence>";
+    let weekdays = recurring("<t:WeeklyRecurrence><t:Interval>1</t:Interval><t:DaysOfWeek>Weekday</t:DaysOfWeek></t:WeeklyRecurrence>", range);
+    let rule = weekdays.recurrence.unwrap();
+    assert_eq!(rule.freq, Freq::Weekly);
+    assert_eq!(rule.by_day, [Weekday::Mon, Weekday::Tue, Weekday::Wed, Weekday::Thu, Weekday::Fri]);
+
+    let weekend = recurring(
+        "<t:WeeklyRecurrence><t:Interval>2</t:Interval><t:DaysOfWeek>Saturday WeekendDay Sunday</t:DaysOfWeek></t:WeeklyRecurrence>",
+        range,
+    );
+    assert_eq!(weekend.recurrence.unwrap().by_day, [Weekday::Sun, Weekday::Sat]);
+}
+
+/// An `AbsoluteYearlyRecurrence` has no interval in the schema: it is every year.
+#[test]
+fn an_absolute_yearly_pattern_is_read_as_every_year() {
+    let event = recurring(
+        "<t:AbsoluteYearlyRecurrence><t:DayOfMonth>12</t:DayOfMonth><t:Month>October</t:Month></t:AbsoluteYearlyRecurrence>",
+        "<t:NumberedRecurrence><t:StartDate>2026-10-12</t:StartDate><t:NumberOfOccurrences>5</t:NumberOfOccurrences></t:NumberedRecurrence>",
+    );
+    let rule = event.recurrence.unwrap();
+    assert_eq!(rule.freq, Freq::Yearly);
+    assert_eq!(rule.interval, 1);
+    assert_eq!(rule.count, Some(5));
+}
+
+fn series(rule: Recurrence) -> RemoteEvent {
+    RemoteEvent {
+        title: "Review".into(),
+        // 2026-10-12T22:30Z: already the 13th east of UTC, so the series' own day must win.
+        start: mailcraft_time::iso_to_timestamp("2026-10-12T22:30:00Z", 0).unwrap(),
+        end: mailcraft_time::iso_to_timestamp("2026-10-12T23:00:00Z", 0).unwrap(),
+        recurrence: Some(rule),
+        series_day: Date::new(2026, 10, 13),
+        ..Default::default()
+    }
+}
+
+/// A range's `StartDate` and `EndDate` are `xs:date` values, and the pattern's day and month are
+/// the series' first day as the calendar has it, not the UTC day of its start.
+#[test]
+fn a_series_is_written_with_dates_of_its_own_first_day() {
+    let rule = Recurrence { freq: Freq::Monthly, interval: 1, until: Date::new(2027, 3, 13), ..Default::default() };
+    let written = calendar_item(&series(rule), "W. Europe Standard Time", None).write();
+    assert!(written.contains("<t:DayOfMonth>13</t:DayOfMonth>"), "the series' own day: {written}");
+    assert!(written.contains("<t:StartDate>2026-10-13</t:StartDate>"), "an xs:date start: {written}");
+    assert!(written.contains("<t:EndDate>2027-03-13</t:EndDate>"), "an xs:date end: {written}");
+    assert!(!written.contains("Z</t:StartDate>") && !written.contains("Z</t:EndDate>"), "no time in the range: {written}");
+}
+
+/// Every N years becomes every 12·N months, since `AbsoluteYearlyRecurrence` has no interval;
+/// every year stays yearly, with no interval written.
+#[test]
+fn a_yearly_series_every_few_years_is_written_in_months() {
+    let every_two = calendar_item(&series(Recurrence { freq: Freq::Yearly, interval: 2, ..Default::default() }), "", None).write();
+    assert!(every_two.contains("<t:AbsoluteMonthlyRecurrence><t:Interval>24</t:Interval><t:DayOfMonth>13</t:DayOfMonth>"), "{every_two}");
+
+    let every_one = calendar_item(&series(Recurrence { freq: Freq::Yearly, interval: 1, ..Default::default() }), "", None).write();
+    assert!(
+        every_one.contains("<t:AbsoluteYearlyRecurrence><t:DayOfMonth>13</t:DayOfMonth><t:Month>October</t:Month></t:AbsoluteYearlyRecurrence>"),
+        "{every_one}"
+    );
+}
+
+/// A server that validates the request refuses an element out of the schema's order
+/// (`ErrorSchemaValidation`): the item's own part ([MS-OXWSCORE] `ItemType`) first, then the
+/// calendar's ([MS-OXWSCAL] `CalendarItemType`).
+#[test]
+fn an_events_elements_follow_the_schemas_order() {
+    let mut event = series(Recurrence { freq: Freq::Daily, interval: 1, count: Some(3), ..Default::default() });
+    event.private = true;
+    event.categories = vec!["Work".into()];
+    event.reminder_minutes = Some(15);
+    event.location = "Room 1".into();
+    event.attendees = vec![Attendee { address: Address::new("Cy", "cy@example.org"), optional: false, response: Response::None }];
+    let written = calendar_item(&event, "W. Europe Standard Time", None).write();
+    let order = [
+        "<t:Subject>",
+        "<t:Sensitivity>",
+        "<t:Body ",
+        "<t:Categories>",
+        "<t:Importance>",
+        "<t:ReminderIsSet>",
+        "<t:ReminderMinutesBeforeStart>",
+        "<t:Start>",
+        "<t:End>",
+        "<t:IsAllDayEvent>",
+        "<t:LegacyFreeBusyStatus>",
+        "<t:Location>",
+        "<t:IsResponseRequested>",
+        "<t:RequiredAttendees>",
+        "<t:Recurrence>",
+        "<t:StartTimeZone ",
+        "<t:EndTimeZone ",
+        "<t:AllowNewTimeProposal>",
+    ];
+    let places: Vec<usize> = order.iter().map(|tag| written.find(tag).unwrap_or_else(|| panic!("{tag} missing: {written}"))).collect();
+    for (pair, tags) in places.windows(2).zip(order.windows(2)) {
+        assert!(pair[0] < pair[1], "{} before {}: {written}", tags[0], tags[1]);
+    }
+}
+
+/// An answer the owner chose not to send is only saved, out of the way in Deleted Items, without
+/// the note; one that is sent goes with a copy kept.
+#[test]
+fn an_answer_not_sent_is_saved_without_its_note() {
+    let quiet = meeting_answer(Answer::Accept, "meeting-1", "See you", false).write();
+    assert!(quiet.contains("MessageDisposition=\"SaveOnly\""), "{quiet}");
+    assert!(quiet.contains("Id=\"deleteditems\""), "{quiet}");
+    assert!(!quiet.contains("See you"), "{quiet}");
+
+    let sent = meeting_answer(Answer::Decline, "meeting-1", "See you", true).write();
+    assert!(sent.contains("MessageDisposition=\"SendAndSaveCopy\""), "{sent}");
+    assert!(sent.contains("<t:DeclineItem><t:Body BodyType=\"Text\">See you</t:Body>"), "{sent}");
+    assert!(!sent.contains("SavedItemFolderId"), "{sent}");
+}
+
+/// An item the server lists but that can't be read still takes its place in the folder: the
+/// next page starts past it, or where the server says, never back over what was listed.
+#[test]
+fn the_next_page_starts_past_every_item_listed() {
+    let reply = answer(
+        "FindItem",
+        "<m:RootFolder IncludesLastItemInRange=\"false\" IndexedPagingOffset=\"3\"><t:Items>\
+         <t:CalendarItem><t:Subject>No id, so not read</t:Subject></t:CalendarItem>\
+         <t:CalendarItem><t:ItemId Id=\"e-2\" ChangeKey=\"k\"/><t:Subject>Read</t:Subject>\
+         <t:Start>2026-10-12T13:00:00Z</t:Start><t:End>2026-10-12T14:00:00Z</t:End></t:CalendarItem>\
+         <t:CalendarItem><t:Subject>Nor this</t:Subject></t:CalendarItem>\
+         </t:Items></m:RootFolder>",
+    );
+    let page = FindItems::new(Kind::Calendar, "folder", 0, 100).answer(&reply).unwrap();
+    assert!(!page.last);
+    assert_eq!(page.items.len(), 1);
+    assert_eq!(page.listed, 3);
+    assert_eq!(page.next, Some(3));
+    assert_eq!(page.next_offset(0), Some(3));
+
+    // Without the server's word, past what was listed.
+    let unsaid = ItemsPage { listed: 3, ..Default::default() };
+    assert_eq!(unsaid.next_offset(10), Some(13));
+    // A server offset that doesn't move forward is not followed.
+    let stuck = ItemsPage { listed: 3, next: Some(10), ..Default::default() };
+    assert_eq!(stuck.next_offset(10), Some(13));
+    // A page that lists nothing ends the walk.
+    let empty = ItemsPage { next: Some(20), ..Default::default() };
+    assert_eq!(empty.next_offset(10), None);
+}

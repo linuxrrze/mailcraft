@@ -327,7 +327,7 @@ impl<E: HttpExchange> Run<'_, E> {
             let find = directory::FindItems::new(Kind::Calendar, folder.id.as_str(), offset, 512);
             let find = if plain { find.plain() } else { find };
             let page = self.ask(&find.element(), &|reply| find.answer(reply)).await?;
-            let before = page.items.len();
+            let next = page.next_offset(offset);
             let last = page.last;
             for item in page.items {
                 if let Item::Event(event) = item
@@ -339,11 +339,11 @@ impl<E: HttpExchange> Run<'_, E> {
                     masters.push(*event);
                 }
             }
-            if last || before == 0 {
+            let Some(next) = next.filter(|_| !last) else {
                 masters_complete = last;
                 break;
-            }
-            offset = offset.saturating_add(u32::try_from(before).unwrap_or(u32::MAX));
+            };
+            offset = next;
         }
         let mut download = EventsDownload {
             account: 0,
@@ -431,7 +431,7 @@ impl<E: HttpExchange> Run<'_, E> {
                 let find = directory::FindItems::new(Kind::Contacts, folder.id.as_str(), offset, 512);
                 let find = if mailbox.is_some() { find.plain() } else { find };
                 let page = self.ask(&find.element(), &|reply| find.answer(reply)).await?;
-                let before = page.items.len();
+                let next = page.next_offset(offset);
                 let last = page.last;
                 for item in page.items {
                     if let Item::Contact(mut contact) = item {
@@ -444,11 +444,11 @@ impl<E: HttpExchange> Run<'_, E> {
                         }
                     }
                 }
-                if last || before == 0 {
+                let Some(next) = next.filter(|_| !last) else {
                     finished = last;
                     break;
-                }
-                offset = offset.saturating_add(u32::try_from(before).unwrap_or(u32::MAX));
+                };
+                offset = next;
             }
             download.complete &= finished;
         }
@@ -472,7 +472,7 @@ impl<E: HttpExchange> Run<'_, E> {
                 let find = directory::FindItems::new(Kind::Tasks, folder.id.as_str(), offset, 512);
                 let find = if mailbox.is_some() { find.plain() } else { find };
                 let page = self.ask(&find.element(), &|reply| find.answer(reply)).await?;
-                let before = page.items.len();
+                let next = page.next_offset(offset);
                 let last = page.last;
                 for item in page.items {
                     if let Item::Task(mut task) = item {
@@ -484,11 +484,11 @@ impl<E: HttpExchange> Run<'_, E> {
                         }
                     }
                 }
-                if last || before == 0 {
+                let Some(next) = next.filter(|_| !last) else {
                     finished = last;
                     break;
-                }
-                offset = offset.saturating_add(u32::try_from(before).unwrap_or(u32::MAX));
+                };
+                offset = next;
             }
             if let Some(list) = download.lists.last_mut() {
                 list.complete = finished;
@@ -517,7 +517,7 @@ impl<E: HttpExchange> Run<'_, E> {
                         mailcraft_model::Response::Declined => Answer::Decline,
                         mailcraft_model::Response::None => Answer::Tentative,
                     };
-                    let element = directory::meeting_answer(answer, &op.remote, &op.comment);
+                    let element = directory::meeting_answer(answer, &op.remote, &op.comment, op.send);
                     self.ask_once(&element, &|reply| directory::answered(reply)).await.map(|()| (op.remote.clone(), String::new()))
                 }
             }
