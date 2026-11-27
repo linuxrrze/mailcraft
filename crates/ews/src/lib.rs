@@ -115,6 +115,8 @@ pub mod standin_autodiscover;
 #[cfg(any(test, feature = "stand-in"))]
 pub mod standin_availability;
 #[cfg(any(test, feature = "stand-in"))]
+pub mod standin_config;
+#[cfg(any(test, feature = "stand-in"))]
 pub mod standin_directory;
 #[cfg(any(test, feature = "stand-in"))]
 pub mod standin_mail;

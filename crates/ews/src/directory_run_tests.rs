@@ -840,6 +840,33 @@ fn an_answer_whose_proposal_the_server_cant_take_is_refused_and_said() {
     assert_eq!(outcome.error, "the server can't take a proposed time; answer again without proposing one");
 }
 
+/// A Send/Receive of the account's own calendar reads the mailbox's categories: none from a
+/// mailbox that has no list (which is no error, and nothing the server refuses), and the list's
+/// categories from one that has it.
+#[test]
+fn a_send_receive_brings_the_mailboxs_categories() {
+    for list in [None, Some("PGNhdGVnb3JpZXM+PGNhdGVnb3J5IG5hbWU9IlRyYXZlbCIgY29sb3I9IjciLz48L2NhdGVnb3JpZXM+")] {
+        let standin = crate::standin::StandIn::new();
+        standin.state().category_list = list.map(str::to_owned);
+        let client = crate::Client::new("http://127.0.0.1/EWS/Exchange.asmx", crate::Secret::new(crate::standin::AUTHORIZATION)).unwrap();
+        let request = mailcraft_model::sync::EwsDirectoryRequest {
+            account: 1,
+            email: "ada@example.org".into(),
+            url: "http://127.0.0.1/EWS/Exchange.asmx".into(),
+            calendars: true,
+            from: 1_791_000_000,
+            to: 1_793_000_000,
+            ..Default::default()
+        };
+        let cancel = std::sync::atomic::AtomicBool::new(false);
+        let result = crate::standin::block_on(sync_directory(&client, &standin, &request, &cancel, &mut |_| true)).unwrap();
+        assert!(result.errors.is_empty(), "{:?}", result.errors);
+        let names: Vec<String> = result.categories.expect("asked").categories.into_iter().map(|c| c.name).collect();
+        assert_eq!(names, if list.is_some() { vec!["Travel".to_owned()] } else { Vec::new() });
+        assert!(standin.state().requests.iter().all(|r| r.status == 200), "nothing refused");
+    }
+}
+
 /// Outlook shows neither a hidden calendar folder (`PidTagAttributeHidden`, one the mailbox keeps
 /// for itself or for a program) nor a calendar in Deleted Items, at any depth; nor does the
 /// account's list of calendars. Another calendar beside the default one is there.
