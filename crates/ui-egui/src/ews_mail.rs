@@ -381,7 +381,9 @@ impl MailApp {
                 self.ews_signed_in.insert(account, piece.signed_in_with.clone());
             }
             if untrusted {
-                self.ews_certificate.insert(account, piece.untrusted.clone());
+                // (Under the mailbox an online archive is of: File › Info shows the owner's card,
+                // and the archive signs in with the owner's trust, #1834 review.)
+                self.ews_certificate.insert(self.ews_credential_account(account), piece.untrusted.clone());
             }
             // The stretch of the calendar it read counts as read (#1274).
             if let Some(directory) = piece.directory.as_deref() {

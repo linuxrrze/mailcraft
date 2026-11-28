@@ -234,6 +234,24 @@ fn a_move_into_the_archive_not_made_yet_is_put_back_not_lost() {
     assert!(mb.message(kickoff).is_none());
 }
 
+/// A file that holds a move into the archive not made yet all the same (written by something
+/// else than [`Mailbox::for_disk`]) has it put back where the server has it when read, not lost
+/// with the archive's mail (#1834 review).
+#[test]
+fn a_file_holding_a_move_into_the_archive_puts_it_back_when_read() {
+    let (mut mb, owner) = mailbox();
+    let archive = mb.add_archive(owner).unwrap();
+    let year = archived(&mut mb, archive);
+    let (kickoff, inbox) = on_owners_server(&mut mb, owner);
+    mb.move_messages(&[kickoff], year).unwrap();
+    let written = serde_json::to_string(&mb).unwrap();
+    let mut read: Mailbox = serde_json::from_str(&written).unwrap();
+    read.repair();
+    let m = read.message(kickoff).expect("kept");
+    assert_eq!((m.account, m.folder), (owner, inbox));
+    assert!(read.messages.values().all(|m| m.account != archive));
+}
+
 /// Taking one archive away puts back only the moves into that one: another's go on; and a
 /// mailbox holding archive mail without folders still leaves it out of the file (#1834 review).
 #[test]
@@ -300,4 +318,20 @@ fn a_move_into_the_archive_of_mail_the_server_says_is_gone_isnt_put_back() {
     assert!(mb.for_disk().message(kickoff).is_none(), "not written back");
     mb.remove_archive(archive).unwrap();
     assert!(mb.message(kickoff).is_none(), "not put back");
+}
+
+/// A move between the mailbox and its archive whose copy a read was still to bring is forgotten
+/// when the account it went into goes: hidden (taken away) or removed. A later message of that
+/// Message-ID is then no moved one (#1834 review).
+#[test]
+fn moves_awaiting_their_copy_are_forgotten_with_the_account_they_went_into() {
+    let (mut mb, owner) = mailbox();
+    let archive = mb.add_archive(owner).unwrap();
+    mb.moved_across.insert((archive, "into-archive@example.org".into()), 41);
+    mb.moved_across.insert((owner, "out-of-archive@example.org".into()), 42);
+    mb.remove_archive(archive).unwrap();
+    assert_eq!(mb.take_moved_across(archive, "into-archive@example.org"), None, "the archive is gone: none will come");
+    assert_eq!(mb.moved_across.len(), 1, "a move into the owner still awaits its copy");
+    mb.remove_account(owner).unwrap();
+    assert!(mb.moved_across.is_empty());
 }
