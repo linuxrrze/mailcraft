@@ -182,6 +182,11 @@ pub struct FolderInfo {
     /// What the account may do with it, from `EffectiveRights`; `Rights::Edit` when the server
     /// didn't say.
     pub rights: Rights,
+    /// The folder it lies in, when the server says (`FindFolder` asks).
+    pub parent: Option<FolderId>,
+    /// It is hidden (`PidTagAttributeHidden`, [MS-OXPROPS]): a folder the mailbox keeps for itself
+    /// or for a program, which Outlook doesn't show. Only `FindFolder` asks.
+    pub hidden: bool,
 }
 
 impl std::fmt::Debug for FolderInfo {
@@ -308,6 +313,8 @@ fn read_folder(message: &Node) -> Result<FolderInfo, Error> {
         child_folder_count: count("ChildFolderCount"),
         class: folder.child_in(TYPES, "FolderClass").map(|n| n.text.trim().to_owned()).unwrap_or_default(),
         rights: rights(folder),
+        parent: folder.child_in(TYPES, "ParentFolderId").and_then(|parent| parent.attribute("Id")).and_then(FolderId::new),
+        hidden: hidden(folder),
     })
 }
 
@@ -366,7 +373,9 @@ impl FindFolder {
         let shape = Element::new("m:FolderShape").child(Element::new("t:BaseShape").text("Default")).child(
             Element::new("t:AdditionalProperties")
                 .child(Element::new("t:FieldURI").attr("FieldURI", "folder:FolderClass"))
-                .child(Element::new("t:FieldURI").attr("FieldURI", "folder:EffectiveRights")),
+                .child(Element::new("t:FieldURI").attr("FieldURI", "folder:EffectiveRights"))
+                .child(Element::new("t:FieldURI").attr("FieldURI", "folder:ParentFolderId"))
+                .child(Element::new("t:ExtendedFieldURI").attr("PropertyTag", HIDDEN_TAG).attr("PropertyType", "Boolean")),
         );
         let page = Element::new("m:IndexedPageFolderView")
             .attr("MaxEntriesReturned", &self.max.to_string())
@@ -422,6 +431,28 @@ fn read_folder_node(folder: &Node) -> Result<FolderInfo, Error> {
         child_folder_count: count("ChildFolderCount"),
         class: folder.child_in(TYPES, "FolderClass").map(|n| n.text.trim().to_owned()).unwrap_or_default(),
         rights: rights(folder),
+        parent: folder.child_in(TYPES, "ParentFolderId").and_then(|parent| parent.attribute("Id")).and_then(FolderId::new),
+        hidden: hidden(folder),
+    })
+}
+
+/// `PidTagAttributeHidden` ([MS-OXPROPS] 2.602): a folder Outlook doesn't show.
+pub const HIDDEN_TAG: &str = "0x10F4";
+
+/// Whether a folder element says it is hidden: an `ExtendedProperty` for [`HIDDEN_TAG`] whose value
+/// is true (the tag compared as a number, as the server may write it in either case or in
+/// decimal).
+fn hidden(folder: &Node) -> bool {
+    let tag_of = |text: &str| {
+        let text = text.trim();
+        match text.get(..2) {
+            Some("0x" | "0X") => text.get(2..).and_then(|hex| u32::from_str_radix(hex, 16).ok()),
+            _ => text.parse::<u32>().ok(),
+        }
+    };
+    folder.children.iter().filter(|child| child.is(TYPES, "ExtendedProperty")).any(|property| {
+        let tag = property.child_in(TYPES, "ExtendedFieldURI").and_then(|uri| uri.attribute("PropertyTag")).and_then(tag_of);
+        tag == Some(0x10F4) && property.child_in(TYPES, "Value").is_some_and(|value| value.text.trim().eq_ignore_ascii_case("true"))
     })
 }
 

@@ -97,6 +97,39 @@ fn a_folder_listing_keeps_its_class_and_rights() {
     assert_eq!(page.folders[0].rights, mailcraft_model::Rights::Read);
 }
 
+/// A folder listing says where each folder lies and whether it is hidden: the property
+/// `PidTagAttributeHidden` by its tag in any case or in decimal, true only when its value says so.
+#[test]
+fn a_folder_listing_says_where_a_folder_lies_and_whether_it_is_hidden() {
+    let hidden = |tag: &str, value: &str| {
+        format!(
+            "<t:ExtendedProperty><t:ExtendedFieldURI PropertyTag=\"{tag}\" PropertyType=\"Boolean\"/><t:Value>{value}</t:Value></t:ExtendedProperty>"
+        )
+    };
+    let folder = |id: &str, extra: &str| {
+        format!(
+            "<t:CalendarFolder><t:FolderId Id=\"{id}\"/><t:ParentFolderId Id=\"top\"/><t:DisplayName>{id}</t:DisplayName>\
+             <t:FolderClass>IPF.Appointment</t:FolderClass>{extra}</t:CalendarFolder>"
+        )
+    };
+    let folders = [
+        folder("a", &hidden("0x10f4", "true")),
+        folder("b", &hidden("0x10F4", "false")),
+        folder("c", &hidden("4340", "true")),
+        folder("d", &hidden("0x0E08", "true")),
+        folder("e", ""),
+    ]
+    .concat();
+    let reply = answer("FindFolder", &format!("<m:RootFolder IncludesLastItemInRange=\"true\"><t:Folders>{folders}</t:Folders></m:RootFolder>"));
+    let page = crate::folder::FindFolder::new(crate::folder::DistinguishedFolder::MessageRoot, true, 0, 100).answer(&reply).unwrap();
+    let hidden: Vec<bool> = page.folders.iter().map(|f| f.hidden).collect();
+    assert_eq!(hidden, vec![true, false, true, false, false]);
+    assert!(page.folders.iter().all(|f| f.parent.as_ref().map(crate::folder::FolderId::as_str) == Some("top")));
+    // And the listing asks for both.
+    let asked = crate::folder::FindFolder::new(crate::folder::DistinguishedFolder::MessageRoot, true, 0, 100).element().write();
+    assert!(asked.contains("folder:ParentFolderId") && asked.contains("PropertyTag=\"0x10F4\""), "{asked}");
+}
+
 #[test]
 fn an_empty_answer_has_no_items() {
     let page = find_items("");
