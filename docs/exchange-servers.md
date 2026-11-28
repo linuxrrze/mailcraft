@@ -17,6 +17,16 @@ Another mailbox's calendar or address book is read with the owner's sign-in by p
 in every folder request; it is listed under Shared Calendars or with the account's books. Grommunio
 lets the owner into the shared folder it is given but not list that mailbox's other folders, so a
 shared calendar or book is read as its default folder there.
+A new appointment in a calendar opened by address is made in that person's calendar (its
+distinguished name in their mailbox), with them as its organizer; one day of a series there is
+looked for there too.
+The calendars other people shared with the owner, as Outlook lists them under Shared Calendars,
+come with a Send/Receive: Outlook keeps them as navigation shortcuts ([MS-OXOCFG] 2.2.9), hidden
+messages of the mailbox's Common Views folder (found by that name under the root, as EWS has no
+name for it), and each names its owner by an X500 DN that the directory turns into an address
+(`ResolveNames`). Each is added to the calendars opened by address, unticked; one the owner removes
+here is not added again, and one Outlook no longer lists goes again. Hidden folders and those in
+Deleted Items are not among the account's calendars, books and to-do lists, as in Outlook.
 Room Finder asks the server for the organisation's lists of rooms and the rooms of the one chosen
 (`GetRoomLists`, `GetRooms`, [MS-OXWSROOM]); a room booked goes with the meeting as one of its
 `Resources`, and is read back as one.

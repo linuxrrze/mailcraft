@@ -227,12 +227,7 @@ impl FindItems {
                 .attr("Offset", &self.offset.to_string())
                 .attr("BasePoint", "Beginning"),
         };
-        // (No folder named: the account's own of the kind, by its distinguished name.)
-        let folder = if self.folder.is_empty() {
-            Element::new("t:DistinguishedFolderId").attr("Id", default_folder(self.kind))
-        } else {
-            Element::new("t:FolderId").attr("Id", &self.folder)
-        };
+        let folder = folder_element(self.kind, &self.folder);
         Element::new("m:FindItem").attr("Traversal", "Shallow").child(shape).child(page).child(Element::new("m:ParentFolderIds").child(folder))
     }
 
@@ -1176,11 +1171,22 @@ pub fn create_item(kind: Kind, folder: Option<&str>, item: Element, send: bool) 
     if kind == Kind::Calendar {
         operation = operation.attr("SendMeetingInvitations", if send { "SendToAllAndSaveCopy" } else { "SendToNone" });
     }
-    let folder = folder.map_or_else(
-        || Element::new("m:SavedItemFolderId").child(Element::new("t:DistinguishedFolderId").attr("Id", default_folder(kind))),
-        |id| Element::new("m:SavedItemFolderId").child(Element::new("t:FolderId").attr("Id", id)),
-    );
+    let folder = Element::new("m:SavedItemFolderId").child(folder_element(kind, folder.unwrap_or_default()));
     operation.child(folder).child(Element::new("m:Items").child(item))
+}
+
+/// The folder an id here names, as a request names it: the account's own folder of the kind by
+/// its distinguished name (no id), the main folder of the kind of a person's mailbox for one that
+/// was opened by address (`user:{address}`, [`mailcraft_model::remote::opened_id`]: the same
+/// distinguished name, in that mailbox), else the server's id.
+pub fn folder_element(kind: Kind, folder: &str) -> Element {
+    if folder.is_empty() {
+        Element::new("t:DistinguishedFolderId").attr("Id", default_folder(kind))
+    } else if let Some(address) = mailcraft_model::remote::opened_address(folder) {
+        Element::new("t:DistinguishedFolderId").attr("Id", default_folder(kind)).child(crate::folder::mailbox(&address))
+    } else {
+        Element::new("t:FolderId").attr("Id", folder)
+    }
 }
 
 /// The field URI a child element of an item is set through.

@@ -105,10 +105,17 @@ pub struct OpenedCalendar {
     pub color: Rgb,
     /// Whether it is ticked in the folder pane.
     pub ticked: bool,
+    /// It was added because Outlook lists it (an Exchange server account's navigation shortcuts),
+    /// not opened by the owner here: it goes again when Outlook's list doesn't have it any more.
+    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    pub shortcut: bool,
 }
 
 /// Most calendars one account may have opened by address.
 pub const MAX_OPENED_CALENDARS: usize = 20;
+
+/// Most addresses of shared calendars Outlook lists that an account remembers the owner removed.
+pub const MAX_DISMISSED_SHORTCUTS: usize = 200;
 
 /// An address book opened by its owner's address (Open Shared Address Book), for an Exchange
 /// server account whose contacts folders can be read at another mailbox's address: the person

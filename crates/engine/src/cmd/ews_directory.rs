@@ -236,6 +236,11 @@ pub fn apply_ews_directory(s: &mut Session, result: &EwsDirectoryResult) -> CmdR
         let applied = super::remote::apply_calendars(s, list)?;
         counts["calendars"] = applied.get("added").cloned().unwrap_or_else(|| json!(0));
     }
+    // The calendars other people shared with the owner, as Outlook lists them.
+    let mut shortcuts = (0usize, 0usize);
+    if let Some(shared) = &result.shared_calendars {
+        shortcuts = super::calendar_opened::from_shortcuts(s, account, shared);
+    }
     let mut events = 0usize;
     for download in &result.events {
         events = events.saturating_add(download.events.len());
@@ -268,7 +273,13 @@ pub fn apply_ews_directory(s: &mut Session, result: &EwsDirectoryResult) -> CmdR
             Err(e) => said.push(e.to_string()),
         }
     }
-    if uploaded || result.calendars.is_some() || !result.events.is_empty() || result.contacts.is_some() || result.tasks.is_some() {
+    if uploaded
+        || result.calendars.is_some()
+        || !result.events.is_empty()
+        || result.contacts.is_some()
+        || result.tasks.is_some()
+        || shortcuts != (0, 0)
+    {
         s.mailbox_changed();
     }
     said.truncate(20);
@@ -282,6 +293,8 @@ pub fn apply_ews_directory(s: &mut Session, result: &EwsDirectoryResult) -> CmdR
         "busyFor": result.busy_for,
         "authRefused": result.auth_refused,
         "untrusted": result.untrusted,
+        "sharedCalendarsAdded": shortcuts.0,
+        "sharedCalendarsRemoved": shortcuts.1,
     }))
 }
 
@@ -290,6 +303,10 @@ pub fn apply_ews_directory(s: &mut Session, result: &EwsDirectoryResult) -> CmdR
 pub fn result_account(result: &EwsDirectoryResult) -> Id {
     result.account
 }
+
+#[cfg(test)]
+#[path = "ews_shortcuts_tests.rs"]
+mod ews_shortcuts_tests;
 
 #[cfg(test)]
 #[path = "ews_directory_tests.rs"]
