@@ -495,6 +495,11 @@ msgid ":{tag} needs a string or a list after it."
 msgstr "Za :{tag} musí následovat řetězec nebo seznam."
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "<< AutoPick"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/credits.rs
 #, fuzzy
 msgid "@{login}, testing since {since}"
@@ -1723,6 +1728,11 @@ msgid "All of them"
 msgstr "Všechny"
 
 #. interface
+#: crates/ui-egui/src/autopick.rs
+msgid "All people and rooms"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "All the conditions must hold"
@@ -2717,6 +2727,16 @@ msgstr "srpna"
 #, fuzzy
 msgid "AutoArchive"
 msgstr "Automatická archivace"
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "AutoPick Next >>"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/windows.rs
+msgid "AutoPick is on the Find a Time page"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/account_setup/oauth_settings.rs crates/ui-egui/src/backstage.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/spelling.rs
@@ -9475,6 +9495,11 @@ msgid "Looking at the server's certificate…"
 msgstr "Prohlížím certifikát serveru…"
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "Looking for a time…"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/ribbon.rs
 #, fuzzy
 msgid "Looking for fonts…"
@@ -11870,6 +11895,11 @@ msgid "No due date"
 msgstr "Bez termínu"
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "No earlier time when everybody is free, from today on"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "No end date"
@@ -12096,6 +12126,14 @@ msgstr "Žádné úkoly."
 #, fuzzy
 msgid "No testers credited yet."
 msgstr "Zatím nejsou uvedeni žádní testeři."
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "No time when everybody is free in the next {n} day"
+msgid_plural "No time when everybody is free in the next {n} days"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #. interface
 #: crates/ui-egui/src/zones.rs
@@ -15108,6 +15146,11 @@ msgstr "Žádost je ve složce Pošta k odeslání."
 #, fuzzy
 msgid "Required"
 msgstr "Povinné"
+
+#. interface
+#: crates/ui-egui/src/autopick.rs
+msgid "Required people"
+msgstr ""
 
 #. command label, interface, ribbon
 #: crates/engine/src/cmd/compose.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/ribbon.rs
@@ -19682,6 +19725,11 @@ msgstr "Jméno, které příjemci vidí; když je prázdné, vaše vlastní"
 msgid "The name the calendar gives itself"
 msgstr "Název, který si kalendář dává sám"
 
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "The next time when everybody is free"
+msgstr ""
+
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt
 #, fuzzy
@@ -20579,6 +20627,11 @@ msgstr "Testovací událost je zase pryč. Nic jiného v kalendáři se nečetlo
 #, fuzzy
 msgid "The text wasn't found."
 msgstr "Text nebyl nalezen."
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "The time before this when everybody is free"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/reminder_dialog.rs

@@ -2401,6 +2401,23 @@ mod event {
             self.assistant.room_list = list.trim().to_owned();
         }
 
+        /// AutoPick, as its buttons do: the meeting goes to the next time everybody counted is
+        /// free (the one before, `forward` false), found as Find a Time is drawn.
+        pub(crate) fn auto_pick(&mut self, forward: bool) {
+            let meeting = self.meeting();
+            self.assistant.auto_pick(&meeting, forward);
+        }
+
+        /// Whose time AutoPick counts.
+        pub(crate) fn auto_pick_among(&mut self, among: crate::autopick::Among) {
+            self.assistant.among = among;
+        }
+
+        /// Whose time AutoPick counts now.
+        pub(crate) fn among(&self) -> crate::autopick::Among {
+            self.assistant.among
+        }
+
         /// Book `room` (Room Finder): it goes on the meeting's rooms, and is where the meeting is
         /// held when no place is named yet.
         pub(crate) fn book_room(&mut self, room: &Address) {

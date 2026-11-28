@@ -705,6 +705,9 @@ fn event_state(window: &Open) -> Value {
             "bars": drawn.bars,
             "pending": drawn.pending,
             "note": drawn.note,
+            "autoPickAmong": form.among().code(),
+            "picking": drawn.picking,
+            "pickNote": drawn.pick_note,
         });
     }
     state
@@ -770,6 +773,16 @@ fn event_window(app: &mut MailApp, p: &Value) -> Result<Value, String> {
         None => Ok(None),
     };
     let (page, action, room_list, book) = (text("page")?, text("do")?, text("roomList")?, text("bookRoom")?);
+    let forward = match text("autoPick")? {
+        None => None,
+        Some("next") => Some(true),
+        Some("previous") => Some(false),
+        Some(_) => return Err("`autoPick` is next or previous".to_string()),
+    };
+    let among = match text("autoPickAmong")? {
+        None => None,
+        Some(among) => Some(crate::autopick::Among::parse(among).ok_or_else(|| "`autoPickAmong` is everybody or required".to_string())?),
+    };
     let recurrence = match p.get("recurrence").filter(|v| !v.is_null()) {
         Some(v) => Some(v.as_bool().ok_or_else(|| "`recurrence` is true or false".to_string())?),
         None => None,
@@ -807,6 +820,16 @@ fn event_window(app: &mut MailApp, p: &Value) -> Result<Value, String> {
             let room = mailcraft_model::Address::parse_list(room).into_iter().next().filter(mailcraft_model::Address::is_valid);
             let Some(room) = room else { return Err("`bookRoom` is a room's address".to_string()) };
             form.book_room(&room);
+        }
+        // AutoPick, as its list and its buttons do: found once the page is drawn.
+        if let Some(among) = among {
+            form.auto_pick_among(among);
+        }
+        if let Some(forward) = forward {
+            if form.page() != crate::forms::Page::Scheduling {
+                return Err(tl!("AutoPick is on the Find a Time page").to_string());
+            }
+            form.auto_pick(forward);
         }
     }
     match action {

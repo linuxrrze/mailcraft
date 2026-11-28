@@ -496,6 +496,11 @@ msgid ":{tag} needs a string or a list after it."
 msgstr ":{tag} deve essere seguito da una stringa o da un elenco."
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "<< AutoPick"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/credits.rs
 #, fuzzy
 msgid "@{login}, testing since {since}"
@@ -1729,6 +1734,11 @@ msgid "All of them"
 msgstr "Tutti"
 
 #. interface
+#: crates/ui-egui/src/autopick.rs
+msgid "All people and rooms"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "All the conditions must hold"
@@ -2720,6 +2730,16 @@ msgstr "agosto"
 #, fuzzy
 msgid "AutoArchive"
 msgstr "AutoArchiviazione"
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "AutoPick Next >>"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/windows.rs
+msgid "AutoPick is on the Find a Time page"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/account_setup/oauth_settings.rs crates/ui-egui/src/backstage.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/spelling.rs
@@ -9451,6 +9471,11 @@ msgid "Looking at the server's certificate…"
 msgstr "Esame del certificato del server…"
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "Looking for a time…"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/ribbon.rs
 #, fuzzy
 msgid "Looking for fonts…"
@@ -11844,6 +11869,11 @@ msgid "No due date"
 msgstr "Nessuna scadenza"
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "No earlier time when everybody is free, from today on"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "No end date"
@@ -12068,6 +12098,13 @@ msgstr "Nessuna attività."
 #, fuzzy
 msgid "No testers credited yet."
 msgstr "Ancora nessun tester nei riconoscimenti."
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "No time when everybody is free in the next {n} day"
+msgid_plural "No time when everybody is free in the next {n} days"
+msgstr[0] ""
+msgstr[1] ""
 
 #. interface
 #: crates/ui-egui/src/zones.rs
@@ -15076,6 +15113,11 @@ msgstr "Richiesta nella sua Posta in uscita."
 #, fuzzy
 msgid "Required"
 msgstr "Obbligatorio"
+
+#. interface
+#: crates/ui-egui/src/autopick.rs
+msgid "Required people"
+msgstr ""
 
 #. command label, interface, ribbon
 #: crates/engine/src/cmd/compose.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/ribbon.rs
@@ -19635,6 +19677,11 @@ msgstr "Il nome che vedono i destinatari; il tuo se vuoto"
 msgid "The name the calendar gives itself"
 msgstr "Il nome che il calendario si dà"
 
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "The next time when everybody is free"
+msgstr ""
+
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt
 #, fuzzy
@@ -20525,6 +20572,11 @@ msgstr "L'appuntamento di prova è stato rimosso. Nient'altro nel calendario è 
 #, fuzzy
 msgid "The text wasn't found."
 msgstr "Testo non trovato."
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "The time before this when everybody is free"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/reminder_dialog.rs
