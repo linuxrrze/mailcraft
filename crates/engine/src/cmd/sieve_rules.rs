@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: MailCraft contributors
 // SPDX-License-Identifier: MIT OR Apache-2.0
-//! Rules of an IMAP account kept on its server (#9999): each one a block of MailCraft's Sieve
+//! Rules of an IMAP account kept on its server (#2057): each one a block of MailCraft's Sieve
 //! script ([`crate::sieve::script`]), after the Automatic Replies, in the rules' order.
 //!
 //! **Only what Sieve says as the rule means it.** A rule goes to the server when every one of its
@@ -42,7 +42,7 @@ fn me(mb: &Mailbox, account: Id) -> Vec<String> {
 }
 
 /// What a condition is in Sieve, and the extensions it needs. `header`: a [`Condition::Header`]
-/// may be written (a rule of the owner's own script, #9999); MailCraft's own rules have none.
+/// may be written (a rule of the owner's own script, #2057); MailCraft's own rules have none.
 fn test(c: &Condition, me: &[String], needs: &mut Vec<&'static str>, header: bool) -> Result<String, NotOnServer> {
     let to_cc = list(&["to", "cc"]);
     let mine = || if me.is_empty() { Err(NotOnServer::NoAddress) } else { Ok(list(me)) };
@@ -107,11 +107,11 @@ fn folder_name(mb: &Mailbox, account: Id, folder: Id, copy: bool) -> Result<Stri
             (false, true) => NotOnServer::CopyElsewhere,
         });
     }
-    let name = f.remote.trim();
-    if name.is_empty() {
+    // The whole name, as the server has it: "Lists " is another folder than "Lists" (#2058).
+    if f.remote.trim().is_empty() {
         return Err(not_there);
     }
-    Ok(name.to_string())
+    Ok(f.remote.clone())
 }
 
 /// `rule`, for `account`'s server, as a block of the script, or why it can't be one.
@@ -126,7 +126,7 @@ pub fn block(mb: &Mailbox, rule: &Rule, account: Id) -> Result<RuleScript, NotOn
 
 /// The Sieve of a rule made in the form (not a Sieve rule), as one `if` with its block, indented
 /// by `indent` and with the line breaks `nl` (none after its `}`), and the extensions it needs;
-/// or why it can't be said in Sieve. `header`: a [`Condition::Header`] may be written (#9999).
+/// or why it can't be said in Sieve. `header`: a [`Condition::Header`] may be written (#2057).
 pub(crate) fn rule_sieve(mb: &Mailbox, rule: &Rule, account: Id, header: bool, indent: &str, nl: &str) -> Result<(String, Vec<String>), NotOnServer> {
     let Some(a) = mb.account(account) else { return Err(NotOnServer::NoServer) };
     if rule.is_sieve() {
@@ -163,7 +163,7 @@ pub(crate) fn rule_sieve(mb: &Mailbox, rule: &Rule, account: Id, header: bool, i
             Action::CopyTo(folder) => copies.push(folder_name(mb, account, *folder, true)?),
             Action::Delete => {
                 let deleted = mb.folders.iter().find(|f| f.account == account && f.kind == FolderKind::Deleted && !f.remote.trim().is_empty());
-                moves.push(deleted.map(|f| f.remote.trim().to_string()).ok_or(NotOnServer::NoDeletedItems)?);
+                moves.push(deleted.map(|f| f.remote.clone()).ok_or(NotOnServer::NoDeletedItems)?);
             }
             Action::FlagFor(_) => return Err(NotOnServer::FlagDue),
             Action::Categorize(_) => return Err(NotOnServer::Categorize),

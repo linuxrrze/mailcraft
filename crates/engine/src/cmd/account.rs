@@ -559,7 +559,7 @@ fn apply_fields(a: &mut Account, v: &Value) -> Result<(), CmdError> {
         Some(Value::Bool(without)) => a.outgoing_without_sign_in = *without,
         Some(_) => return Err(bad("`outgoingWithoutSignIn` is true or false")),
     }
-    // Where an IMAP account's Sieve scripts are (#9999): the owner's own choice of host.
+    // Where an IMAP account's Sieve scripts are (#2057): the owner's own choice of host.
     match v.get("sieve") {
         None => {}
         Some(Value::Null) => (a.sieve_host, a.sieve_port) = (String::new(), 0),
@@ -854,7 +854,7 @@ pub fn servers_text(a: &Account) -> String {
             None => "exchange, no server address that can be used".to_string(),
         };
     }
-    // The ManageSieve server the owner named, which the sign-in goes to as well (#9999).
+    // The ManageSieve server the owner named, which the sign-in goes to as well (#2057).
     let sieve = (!a.sieve_host.is_empty() || a.sieve_port != 0).then(|| match (a.sieve_host.as_str(), a.sieve_port) {
         ("", port) => format!("sieve port {port}"),
         (host, 0) => format!("sieve {host}"),
@@ -930,6 +930,12 @@ pub(crate) fn added_by_newer(a: &Account, then: &'static str) -> CmdError {
 /// Why a shared mailbox's Exchange server settings can't be changed by themselves (#482).
 const SHARED_EWS: &str = "a shared mailbox is reached through the server settings of the account it is opened through: change that account's";
 
+/// Where an account's ManageSieve server is: the host named for it, its port, and the incoming
+/// server's host (the default one), as they are compared.
+fn sieve_at(a: &mailcraft_model::Account) -> (String, u16, Option<String>) {
+    (a.sieve_host.trim().to_ascii_lowercase(), a.sieve_port, a.incoming.as_ref().map(|i| i.host.trim().to_ascii_lowercase()))
+}
+
 fn edit(s: &mut Session, v: &Value) -> CmdResult {
     let id = p::req_id(v, "id")?;
     let mut a = s.mailbox.account(id).cloned().ok_or_else(|| failed!("no account with id {id}", id))?;
@@ -943,6 +949,7 @@ fn edit(s: &mut Session, v: &Value) -> CmdResult {
     if before.is_shared() && v.get("ews").is_some() {
         return Err(fail(SHARED_EWS));
     }
+    let sieve_before = sieve_at(&a);
     let named_by_address = before.named_by_address();
     let was_cloud = before.ews.as_ref().is_some_and(|e| e.cloud_archive);
     apply_fields(&mut a, v)?;
@@ -1048,6 +1055,9 @@ fn edit(s: &mut Session, v: &Value) -> CmdResult {
     // A longer one on a device that lists only its window's mail (a phone, MB3.16): its folders
     // are listed afresh, to bring the older mail it now covers.
     let lengthened = a.keep_offline > before.keep_offline && s.mailbox.device_limits.is_some();
+    // Where its ManageSieve server is (named, or the incoming server's host): what is known of the
+    // Sieve scripts and replies of the server before is no longer this account's (#2058).
+    let sieve_moved = sieve_before != sieve_at(&a);
     *s.mailbox.account_mut(id)? = a;
     // Its online archive goes by its address, name and colour (#1834 review).
     s.mailbox.refresh_archive_of(id);
@@ -1057,6 +1067,10 @@ fn edit(s: &mut Session, v: &Value) -> CmdResult {
             s.view.folder = s.mailbox.folder_of_kind(id, FolderKind::Inbox).unwrap_or(0);
             s.sel.messages.clear();
         }
+    }
+    if sieve_moved {
+        s.sieve.remove(&id);
+        s.auto_replies.remove(&id);
     }
     if shortened {
         s.driver.thinning.now = true;

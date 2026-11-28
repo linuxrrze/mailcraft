@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: MailCraft contributors
 // SPDX-License-Identifier: MIT OR Apache-2.0
-//! A Sieve script checked here, before any server sees it (#9999): its syntax (RFC 5228 §8),
+//! A Sieve script checked here, before any server sees it (#2057): its syntax (RFC 5228 §8),
 //! the commands, tests and tags it uses and the shape of their arguments, and whether each
 //! extension it uses is named by its `require`. The server checks again (ManageSieve's
 //! CHECKSCRIPT); this is the first look, with a line and column for each problem.
@@ -316,7 +316,7 @@ impl Kind {
 }
 
 /// What a command or test can do beyond this message's place and flags, from the least to the
-/// most (#9999).
+/// most (#2057).
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum Effect {
     /// Files, flags, keeps, discards, tests, sets variables: nothing leaves the server.
@@ -466,6 +466,8 @@ const DATE_ZONE: &[TagSpec] = &[tag("zone", S, NONE, G_ZONE), tag("originalzone"
 const ZONE: &[TagSpec] = &[tag("zone", S, NONE, 0)];
 const SIZE: &[TagSpec] = &[tag("over", None, NONE, G_SIZE), tag("under", None, NONE, G_SIZE)];
 const COPY: &[TagSpec] = &[tag("copy", None, &["copy"], 0)];
+/// `redirect :list`, to the members of a list (RFC 6134 §2.5), #2058.
+const EXTLISTS: &[TagSpec] = &[tag("list", None, &["extlists"], 0)];
 const FLAGS: &[TagSpec] = &[tag("flags", L, &["imap4flags"], 0)];
 const FILEINTO: &[TagSpec] = &[tag("create", None, &["mailbox"], 0), tag("specialuse", S, &["special-use"], 0)];
 const VACATION: &[TagSpec] = &[
@@ -546,7 +548,7 @@ const SPECS: &[Spec] = &[
     spec("stop", Control, NONE, &[], &[]),
     spec("keep", Action, NONE, &[FLAGS], &[]),
     spec("discard", Action, NONE, &[], &[]),
-    does(Sends, spec("redirect", Action, NONE, &[COPY], &[STR])),
+    does(Sends, spec("redirect", Action, NONE, &[COPY, EXTLISTS], &[STR])),
     spec("fileinto", Action, &["fileinto"], &[COPY, FLAGS, FILEINTO], &[STR]),
     spec("address", Test, NONE, &[COMPARATOR, MATCH, ADDRESS_PART, INDEX, MIME_ANY], &[LIST, LIST]),
     spec("envelope", Test, &["envelope"], &[COMPARATOR, MATCH, ADDRESS_PART], &[LIST, LIST]),
@@ -874,6 +876,11 @@ impl Ctx<'_> {
     fn problem(&mut self, fault: Fault, at: Range<usize>, warning: bool) {
         if self.problems.len() < MAX_PROBLEMS {
             self.problems.push((fault, at, warning));
+        } else if !warning && self.problems.iter().all(|p| p.2) {
+            // Full of warnings: an error still takes a place, or the script would pass (#2058).
+            if let Some(last) = self.problems.last_mut() {
+                *last = (fault, at, warning);
+            }
         }
     }
 
@@ -1110,6 +1117,10 @@ fn known(ext: &str) -> bool {
 }
 
 fn run(script: &str, server: Option<&[String]>, block_mode: bool) -> Result<Checked, Vec<Problem>> {
+    // A raw NUL is nowhere in a script, not even in a comment (RFC 5228 §2.2), #2058.
+    if let Some(at) = script.find('\0') {
+        return Err(positioned(script, vec![(Fault::Control, at..at.saturating_add(1), false)]));
+    }
     let nodes = match parse(script) {
         Ok(n) => n,
         Err(e) => return Err(positioned(script, vec![(e.fault, e.at, false)])),

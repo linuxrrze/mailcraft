@@ -481,7 +481,7 @@ pub struct AccountSetup {
     /// password. Only for an account that signs in with one.
     outgoing_without_sign_in: bool,
     /// Account Settings of an IMAP account: the ManageSieve server its Automatic Replies are kept
-    /// on, as `host` or `host:port`; empty: the incoming server's host, port 4190 (#9999).
+    /// on, as `host` or `host:port`; empty: the incoming server's host, port 4190 (#2057).
     sieve_server: String,
     /// The servers are shown on the password page.
     settings_open: bool,
@@ -751,8 +751,8 @@ impl AccountSetup {
         w.sieve_server = match (a.sieve_host.as_str(), a.sieve_port) {
             ("", 0) => String::new(),
             (host, 0) => line(host, LINE),
-            ("", port) => format!("{}:{port}", a.incoming.as_ref().map(|s| s.host.trim()).unwrap_or_default()),
-            (host, port) => format!("{}:{port}", line(host, LINE)),
+            ("", port) => host_port(a.incoming.as_ref().map(|s| s.host.trim()).unwrap_or_default(), port),
+            (host, port) => host_port(&line(host, LINE), port),
         };
         if let Some(oauth) = &a.oauth {
             w.client_id = line(&oauth.client_id, 200);
@@ -2769,7 +2769,7 @@ impl AccountSetup {
             }
         }
         // Where an existing account's Automatic Replies are kept, when its server keeps Sieve
-        // scripts somewhere other than its IMAP host on port 4190 (#9999). The account's sign-in
+        // scripts somewhere other than its IMAP host on port 4190 (#2057). The account's sign-in
         // goes there: the owner names it here, nobody else.
         if self.edit.is_some() {
             field(ui, pass, "sieve", tl!("Sieve server (Automatic Replies)"), &mut self.sieve_server, tl!("The incoming server, port 4190"), LINE)
@@ -2782,6 +2782,12 @@ impl AccountSetup {
 
 /// A ManageSieve server as Account Settings takes it: `host`, `host:port` or `[v6]:port`, or empty
 /// for the incoming server's; the host and the port (0: 4190), or `None` when it can't be used.
+/// `host` and `port` as the Sieve server's field shows them: an IPv6 address in brackets, so that
+/// the port is read back as the port (#2058).
+fn host_port(host: &str, port: u16) -> String {
+    if host.contains(':') && !host.starts_with('[') { format!("[{host}]:{port}") } else { format!("{host}:{port}") }
+}
+
 fn sieve_server(text: &str) -> Option<(String, u16)> {
     let text = text.trim();
     let (host, port) = match text.rsplit_once(':') {
@@ -3081,7 +3087,7 @@ mod tests {
     mod relay_without_sign_in;
     /// The password's eye (#438).
     mod reveal;
-    /// The ManageSieve server of an IMAP account's Automatic Replies (#9999).
+    /// The ManageSieve server of an IMAP account's Automatic Replies (#2057).
     mod sieve_server;
     /// An address at a domain nobody here knows (#761).
     mod unknown_domain;

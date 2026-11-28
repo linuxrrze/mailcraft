@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: MailCraft contributors
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! The host's side of an IMAP account's Automatic Replies and rules kept in a Sieve script, and of
-//! the Sieve rule editor's Check (#9999): what
+//! the Sieve rule editor's Check (#2057): what
 //! the window asks ([`SieveJob`]) done with `mailcraft-net`'s ManageSieve client on a background
 //! thread, and what the server has handed back as `sync.applySieve` takes it. Nothing of a
 //! script, a name or a secret is logged.
@@ -36,7 +36,7 @@ pub(crate) fn sieve_job(job: SieveJob) -> SieveResult {
         }
         return out;
     }
-    // The owner's own script, written back as typed (#9999): never MailCraft's own this way.
+    // The owner's own script, written back as typed (#2057): never MailCraft's own this way.
     if let Some(write) = job.write.as_ref().filter(|w| w.own) {
         if write.name == SCRIPT_NAME {
             out.error = "MailCraft's own script isn't written this way".into();
@@ -54,6 +54,7 @@ pub(crate) fn sieve_job(job: SieveJob) -> SieveResult {
             Ok(OwnWritten::TooLarge) => out.written = Some("tooLarge".into()),
             Err(e) => {
                 said(&mut out, &e);
+                read_after_failed_write(&job, &server, &mut out);
                 return out;
             }
         }
@@ -65,6 +66,7 @@ pub(crate) fn sieve_job(job: SieveJob) -> SieveResult {
             Ok(Written::ChangedElsewhere { .. }) => out.written = Some("changedElsewhere".into()),
             Err(e) => {
                 said(&mut out, &e);
+                read_after_failed_write(&job, &server, &mut out);
                 return out;
             }
         }
@@ -74,6 +76,18 @@ pub(crate) fn sieve_job(job: SieveJob) -> SieveResult {
         Err(e) => said(&mut out, &e),
     }
     out
+}
+
+/// After a write that failed once the server was reached and signed in to (a SETACTIVE refused
+/// after the PUTSCRIPT went through, say): what the server has now is read all the same, so that
+/// the window shows it; the write's error stays the one said (#2058).
+fn read_after_failed_write(job: &SieveJob, server: &mailcraft_model::Server, out: &mut SieveResult) {
+    if out.unavailable || out.sign_in_refused {
+        return;
+    }
+    if let Ok(state) = sieve::read(&job.account, server, &job.secret, SCRIPT_NAME) {
+        out.state = Some(state_json(&state));
+    }
 }
 
 /// What the server has, as `sync.applySieve` takes it.

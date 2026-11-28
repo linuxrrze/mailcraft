@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: MailCraft contributors
 // SPDX-License-Identifier: MIT OR Apache-2.0
-//! Automatic Replies of an IMAP account kept in a Sieve script (#9999): what is to be written, and
+//! Automatic Replies of an IMAP account kept in a Sieve script (#2057): what is to be written, and
 //! what a ManageSieve server's answer comes to. The server's side is written out by hand, as
 //! `mailcraft-net`'s `sieve` brings it.
 
@@ -225,4 +225,38 @@ fn the_owner_may_name_another_managesieve_server_and_an_agent_is_asked_about_it(
     run(&mut s, "account.edit", json!({"id": account, "sieve": null}));
     let a = s.mailbox.account(account).unwrap();
     assert_eq!((a.sieve_host.as_str(), a.sieve_port), ("", 0));
+}
+
+/// Another ManageSieve server named in Account Settings: what was known of the one before (its
+/// script, its replies) is no longer the account's, and is read again before anything is written;
+/// a change of anything else keeps it (#2058).
+#[test]
+fn another_sieve_server_forgets_what_the_one_before_had() {
+    let (mut s, account) = session();
+    read(&mut s, account, state(&ALL, None, None));
+    assert!(s.sieve.contains_key(&account) && s.auto_replies.contains_key(&account));
+    run(&mut s, "account.edit", json!({"id": account, "name": "Ada"}));
+    assert!(s.sieve.contains_key(&account) && s.auto_replies.contains_key(&account));
+    run(&mut s, "account.edit", json!({"id": account, "sieve": {"host": "sieve.example.org", "port": 4191}}));
+    assert!(!s.sieve.contains_key(&account) && !s.auto_replies.contains_key(&account));
+    assert!(refusal(&mut s, "account.setAutomaticReplies", json!({"account": account, "status": "disabled"})).contains("read"));
+}
+
+/// A write the server took, and a read after it that failed: the write is taken in all the same,
+/// so the next read knows the script as MailCraft's, not as one changed elsewhere (#2058).
+#[test]
+fn a_write_taken_without_a_read_after_it_is_still_known_as_mailcrafts() {
+    let (mut s, account) = session();
+    read(&mut s, account, state(&ALL, None, None));
+    let change =
+        run(&mut s, "account.setAutomaticReplies", json!({"account": account, "status": "alwaysEnabled", "internal": "Away.", "audience": "none"}));
+    let text = change["sieve"]["text"].as_str().unwrap().to_string();
+    run(&mut s, "sync.applySieve", json!({"account": account, "written": {"result": "done", "text": text}}));
+    assert_eq!(s.mailbox.account(account).unwrap().sieve_written, digest(&text));
+    let answer = read(&mut s, account, state(&ALL, Some(SCRIPT_NAME), Some(&text)));
+    assert_eq!(answer["changedElsewhere"], false);
+    // Without a write, a state is still required; a bad write changes nothing.
+    assert!(refusal(&mut s, "sync.applySieve", json!({"account": account})).contains("state"));
+    assert!(s.run("sync.applySieve", &json!({"account": account, "written": {"result": "odd"}})).is_err());
+    assert_eq!(s.mailbox.account(account).unwrap().sieve_written, digest(&text));
 }

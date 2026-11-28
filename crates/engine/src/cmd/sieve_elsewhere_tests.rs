@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: MailCraft contributors
 // SPDX-License-Identifier: MIT OR Apache-2.0
-//! The rules of a Sieve script MailCraft didn't write (#9999): read where they map, the rest
+//! The rules of a Sieve script MailCraft didn't write (#2057): read where they map, the rest
 //! named and never interpreted, read-only, and a hostile script never panics.
 
 use mailcraft_model::{Action, Condition, FolderKind, Id, Keep, Rule};
@@ -57,6 +57,16 @@ fn a_webmail_script_is_read_where_it_maps_and_named_where_it_doesnt() {
         assert!(r.id >= ELSEWHERE_BASE);
         assert_eq!(r.keep, Keep::Server);
     }
+}
+
+/// A reply sent from a block within a block is a reply all the same: the script sends replies
+/// (#2058).
+#[test]
+fn a_reply_in_a_nested_block_is_seen() {
+    let (s, account, _) = session();
+    let nested = "require [\"vacation\"];\r\nif header :contains \"subject\" \"x\" {\r\n  if true {\r\n    vacation \"Away.\";\r\n  }\r\n}\r\n";
+    assert!(read(&s.mailbox, account, "mine", nested, false).replies);
+    assert!(!read(&s.mailbox, account, "mine", "if true { keep; }\r\n", false).replies);
 }
 
 #[test]

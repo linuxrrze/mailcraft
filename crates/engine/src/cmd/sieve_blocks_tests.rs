@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: MailCraft contributors
 // SPDX-License-Identifier: MIT OR Apache-2.0
-//! Every rule of a Sieve account changed one at a time (#9999): a rule of the owner's own script as
+//! Every rule of a Sieve account changed one at a time (#2057): a rule of the owner's own script as
 //! its Sieve text (`sieve.ownBlock`, `sieve.putOwnBlock`), its bytes alone replaced, under the
 //! digest of the read; in the rule builder only when that loses nothing (`rules.edit`); a filter of
 //! a webmail with settings not known as its Sieve alone, its settings left as they are; and one of
@@ -110,6 +110,12 @@ fn the_form_only_when_it_loses_nothing() {
     let edit = json!({"id": shown[1].id, "name": "x", "conditions": [{"type": "fromContains", "value": "boss@example.org"}], "actions": [{"type": "moveTo", "value": lists}]});
     let refused = err(&mut s, "rules.edit", edit);
     assert!(refused.contains("address test"), "{refused}");
+    // A comment inside the command would be left out by the builder: Sieve text then (#2058).
+    let commented = OWN.replace("  fileinto \"INBOX/Lists\";\r\n  stop;", "  # the spam folder\r\n  fileinto \"INBOX/Lists\";\r\n  stop;");
+    assert_ne!(commented, OWN);
+    read(&mut s, account, &commented);
+    assert_eq!(form(&s, named(&s, account, "Spam")), Some(Err(NoForm::Comments)));
+    assert_eq!(form(&s, named(&s, account, "Lists")), Some(Ok(())));
 }
 
 #[test]
@@ -285,6 +291,41 @@ fn a_webmail_filter_not_known_is_changed_as_its_sieve_alone() {
     assert!(find(&s, odd).unwrap().span.filter);
 }
 
+/// A filter without its END:FILTER runs on to the end of the script: what follows it (a `keep;` of
+/// the owner's) would be taken in with it. It is shown, never changed as Sieve (#2058).
+#[test]
+fn a_webmail_filter_without_its_end_is_shown_and_not_changed() {
+    let (text, _) = rainloop();
+    let text = text.replace("/* END:FILTER */\n", "keep;\n");
+    let (mut s, account, _) = session(&text);
+    let odd = named(&s, account, "Odd");
+    assert!(!find(&s, odd).unwrap().span.whole);
+    assert!(!text_offered(&s, odd));
+    let e = err(&mut s, "sieve.putOwnBlock", json!({"id": odd, "text": "stop;\n", "digest": digest(&text)}));
+    assert!(e.contains("isn't clear"), "{e}");
+}
+
+/// A chain whose `if` is in a filter and whose `else` follows its END:FILTER: writing either again
+/// would take the filter's mark out. Neither is changed (#2058).
+#[test]
+fn a_chain_across_a_filters_end_is_not_changed() {
+    let (text, _) = rainloop();
+    let crossing = text.replace("    stop;\n}\n\n/* END:FILTER */\n", "    stop;\n}\n\n/* END:FILTER */\nelse {\n    keep;\n}\n");
+    assert_ne!(crossing, text);
+    let text = crossing;
+    let (mut s, account, _) = session(&text);
+    let shown = rules(&s, account);
+    assert!(shown.iter().any(|r| find(&s, r.id).is_some()), "{shown:?}");
+    for r in &shown {
+        if let Some(f) = find(&s, r.id) {
+            assert!(!f.span.whole, "{:?}", r.name);
+            assert!(!text_offered(&s, r.id));
+            assert!(form(&s, r.id).is_some_and(|f| f.is_err()));
+            assert!(s.run("sieve.putOwnBlock", &json!({"id": r.id, "text": "keep;\n", "digest": digest(&text)})).is_err());
+        }
+    }
+}
+
 #[test]
 fn one_of_mailcrafts_rules_becomes_a_sieve_rule_and_undo_brings_it_back() {
     let mut s = Session::empty();
@@ -341,4 +382,41 @@ proptest! {
             prop_assert!(after.ends_with(&OWN[at + old.len()..]));
         }
     }
+}
+
+/// One of MailCraft's rules whose folder is gone from the server can still be given Sieve of the
+/// owner's; without any, it is refused, as MailCraft can't write it (#2058).
+#[test]
+fn a_rule_whose_folder_is_gone_takes_sieve_given_for_it() {
+    let mut s = Session::empty();
+    let account = run(&mut s, "account.add", json!({"email": "ada@example.org", "incoming": {"host": "imap.example.org"}}))["id"].as_u64().unwrap();
+    let inbox = s.mailbox.folder_of_kind(account, FolderKind::Inbox).unwrap();
+    s.mailbox.folder_mut(inbox).unwrap().remote = "INBOX".into();
+    let lists = run(&mut s, "folder.new", json!({"name": "Lists", "parent": inbox}))["id"].as_u64().unwrap();
+    s.mailbox.folder_mut(lists).unwrap().remote = "INBOX/Lists".into();
+    run(&mut s, "sync.applySieve", json!({"account": account, "state": {"extensions": ALL, "scripts": [], "script": null}}));
+    let id = run(
+        &mut s,
+        "rules.add",
+        json!({"account": account, "name": "Lists", "conditions": [{"type": "subjectContains", "value": "x"}], "actions": [{"type": "moveTo", "value": lists}], "server": true}),
+    )["id"]
+        .as_u64()
+        .unwrap();
+    s.mailbox.folder_mut(lists).unwrap().remote.clear();
+    assert!(s.run("rules.toSieve", &json!({"id": id})).is_err());
+    run(&mut s, "rules.toSieve", json!({"id": id, "sieve": "keep;"}));
+    assert_eq!(s.mailbox.rules.iter().find(|r| r.id == id).unwrap().sieve, "keep;");
+}
+
+/// A rule's new text gains only what it needs in `require`, not what a command after it lacks
+/// (#2058).
+#[test]
+fn require_gains_only_what_the_new_text_needs() {
+    let text = "require [\"fileinto\"];\r\nif header :contains \"subject\" \"a\" {\r\n  fileinto \"INBOX/Lists\";\r\n}\r\nif header :contains \"subject\" \"b\" {\r\n  addflag \"\\\\Seen\";\r\n}\r\n";
+    let (s, account, _) = session(text);
+    let first = rules(&s, account)[0].id;
+    let kept = super::sieve_blocks::spliced(&s, first, "keep;\r\n", None).unwrap();
+    assert!(!kept.script.contains("imap4flags"), "{}", kept.script);
+    let flagged = super::sieve_blocks::spliced(&s, first, "addflag \"\\\\Flagged\";\r\n", None).unwrap();
+    assert!(flagged.script.contains("imap4flags"), "{}", flagged.script);
 }

@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: MailCraft contributors
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! The filters of the owner's own Sieve script, as a webmail of the RainLoop kind (RainLoop,
-//! SnappyMail) writes them, changed with the rule commands (#9999): `rules.edit`, `rules.enable`,
+//! SnappyMail) writes them, changed with the rule commands (#2057): `rules.edit`, `rules.enable`,
 //! `rules.move` and `rules.remove` on the rule a filter is shown as, and `rules.add` with
 //! `"webmail": true` for a new one.
 //!
@@ -133,12 +133,29 @@ fn wanted(s: &Session, v: &Value, account: Id, id: &str, enabled: bool, old: Opt
         _ => None,
     };
     let folder = folder.map(|f| f.remote.clone()).filter(|r| value_ok(r)).ok_or_else(|| CmdError::Failed(NotWebmail::Action.said().to_string()))?;
-    let kept = old.filter(|o| webmail_conditions(&o.conditions).as_ref() == Some(&condition));
+    // The same condition, its words as the builder shows them (trimmed): the stored ones are kept
+    // byte for byte, " YES " too (#2058).
+    let kept = old.filter(|o| webmail_conditions(&o.conditions).map(|c| trimmed(&c)) == Some(trimmed(&condition)));
     let conditions = match kept {
         Some(o) => o.conditions.clone(),
         None => conditions(&condition)?,
     };
-    Ok(Settings { id: id.to_string(), enabled, name: parts.name, conditions, folder })
+    let settings = Settings { id: id.to_string(), enabled, name: parts.name, conditions, folder };
+    // As the script is read again: settings too long to read would make the filter read-only (#2058).
+    if settings.json().len() > sieve_rainloop::MAX_JSON {
+        return Err(fail("A filter of your webmail's has too much text to look for."));
+    }
+    Ok(settings)
+}
+
+/// `c` with its words and names trimmed, as the rule builder sends them.
+fn trimmed(c: &Condition) -> Condition {
+    let trim = |w: &[String]| w.iter().map(|x| x.trim().to_string()).collect::<Vec<_>>();
+    match c {
+        Condition::ToContains(w) => Condition::ToContains(trim(w)),
+        Condition::Header { names, words, exact } => Condition::Header { names: trim(names), words: trim(words), exact: *exact },
+        other => other.clone(),
+    }
 }
 
 /// A rule's condition as the webmail's conditions, any one of which is enough.
@@ -200,7 +217,8 @@ pub(crate) fn edited(s: &Session, v: &Value) -> Result<(Id, Rule, String), CmdEr
     let (found, old) = changeable(s, v)?;
     let new = wanted(s, v, found.account, &old.id, old.enabled, Some(old))?;
     let at = found.block.at.clone().ok_or_else(|| fail(OWN_CHANGED))?;
-    let text = spliced(&found.script.text, &at, &new.block(line_end(&found.script.text)))?;
+    // The same settings: the filter's bytes stay as they are, their spacing too (#2058).
+    let text = if new == *old { found.script.text.clone() } else { spliced(&found.script.text, &at, &new.block(line_end(&found.script.text)))? };
     Ok((found.account, shown(s, found.account, &new, found.block.rule.unwrap_or_default()), text))
 }
 
@@ -263,6 +281,14 @@ pub(crate) fn added(s: &Session, v: &Value) -> Result<(Id, Rule, String), CmdErr
             spliced(text, &(last.end..last.end), &format!("{gap}{block}"))?
         }
         [last] => spliced(text, &(last.end..last.end), &format!("{nl}{nl}{block}"))?,
+        // No filter yet: at the end, only of a script with nothing but its `require` and
+        // comments (the webmail's empty one). After commands of the owner's own a new filter
+        // could never run (a `stop;` for every message), and where else it could go isn't known.
+        [] if !e.rules.is_empty() || e.replies || e.unreadable => {
+            return Err(fail(
+                "Your webmail's Sieve script has commands of its own and no filter to put a new one after: add the filter in your webmail, or change the whole script.",
+            ));
+        }
         [] => {
             let end = text.trim_end().len();
             let tail = text.get(end..).filter(|t| !t.is_empty()).unwrap_or(nl);

@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: MailCraft contributors
 // SPDX-License-Identifier: MIT OR Apache-2.0
-//! The Sieve rule editor in Rules and Alerts (#9999), driven as the owner would: Advanced… › New
+//! The Sieve rule editor in Rules and Alerts (#2057), driven as the owner would: Advanced… › New
 //! Sieve rule…, the check here as the text changes, a click on a problem putting the cursor there,
 //! Check asking the (stand-in) server and its line said as the rule's own, Save, and the pencil
 //! opening a Sieve rule again. The host's answers are written by hand, as `mailcraft-net`'s
@@ -349,4 +349,129 @@ fn a_script_of_rainloops_says_so_and_one_without_crlf_stays_without() {
     app.poll_sieve();
     let e = SieveEditor::own_script(&app, account).unwrap();
     assert_eq!((e.text.as_str(), e.written().as_str()), ("keep;\r\nstop;\n", "keep;\r\nstop;\n"));
+}
+
+/// Reload, and a read that fails: the draft stays as it was, with why, not the script as last read
+/// (#2058).
+#[test]
+fn a_reload_that_fails_keeps_the_draft() {
+    let (mut app, _, own) = own_window();
+    app.execute("ui.dialog", json!({"name": "rules"})).unwrap();
+    let mut h = harness(app);
+    h.get_by_label("Edit Your Sieve Script…").click();
+    h.run_steps(3);
+    // Changed in webmail; the save finds it so, and Reload is offered.
+    own.lock().unwrap().0 = format!("{OWN}keep;\r\n");
+    let draft = OWN.replace("\r\n", "\n").replace("\"Lists\"", "\"Lists/Mine\"");
+    editor(&mut h).text = draft.clone();
+    h.run_steps(3);
+    h.get_by_label("Save").click();
+    h.run_steps(5);
+    assert!(editor(&mut h).own.as_ref().is_some_and(|o| o.changed));
+    // The server can't be reached now.
+    h.state_mut().services.sieve = Some(Box::new(|job: SieveJob| {
+        let (tx, rx) = mpsc::channel();
+        tx.send(SieveResult { account: job.account.id, error: "no answer".into(), ..Default::default() }).unwrap();
+        rx
+    }));
+    h.get_by_label("Reload").click();
+    h.run_steps(6);
+    assert!(editor_open(&mut h));
+    let e = editor(&mut h);
+    assert_eq!(e.text, draft, "the draft is kept");
+    assert!(e.error.contains("couldn't be read again"), "{}", e.error);
+}
+
+/// While the owner's script is being saved, its text takes nothing typed and Escape doesn't close
+/// it: what became of the save is said there (#2058).
+#[test]
+fn nothing_is_typed_or_cancelled_while_a_save_is_under_way() {
+    let (mut app, _, _) = own_window();
+    app.execute("ui.dialog", json!({"name": "rules"})).unwrap();
+    let mut h = harness(app);
+    h.get_by_label("Edit Your Sieve Script…").click();
+    h.run_steps(3);
+    let draft = OWN.replace("\r\n", "\n").replace("\"Lists\"", "\"Lists/Mine\"");
+    editor(&mut h).text = draft.clone();
+    h.run_steps(3);
+    // A host that doesn't answer yet.
+    let pending: Arc<Mutex<Vec<mpsc::Sender<SieveResult>>>> = Arc::default();
+    let held = pending.clone();
+    h.state_mut().services.sieve = Some(Box::new(move |_job: SieveJob| {
+        let (tx, rx) = mpsc::channel();
+        held.lock().unwrap().push(tx);
+        rx
+    }));
+    h.get_by_label("Save").click();
+    h.run_steps(3);
+    assert!(editor(&mut h).own.as_ref().is_some_and(|o| o.saving));
+    editor(&mut h).goto = Some((1, 1));
+    h.run_steps(2);
+    h.event(egui::Event::Text("zz".into()));
+    h.run_steps(2);
+    assert_eq!(editor(&mut h).text, draft, "nothing typed while saving");
+    h.key_press(egui::Key::Escape);
+    h.run_steps(2);
+    assert!(editor_open(&mut h), "Escape doesn't close it while saving");
+    assert!(!pending.lock().unwrap().is_empty());
+}
+
+/// A draft in the Sieve editor, or in the rule builder, over Rules and Alerts is a change that
+/// isn't saved: the dialog says so, and an agent closing it or opening another asks first (#2058).
+#[test]
+fn a_draft_over_rules_and_alerts_is_unsaved_until_it_is_saved() {
+    let (mut app, _, _) = own_window();
+    app.execute("ui.dialog", json!({"name": "rules"})).unwrap();
+    let mut h = harness(app);
+    let unsaved = |h: &Harness<'static, MailApp>| match h.state().dialog.as_ref() {
+        Some(Dialog::Form(f)) => f.unsaved(),
+        _ => None,
+    };
+    assert!(unsaved(&h).is_none());
+    h.get_by_label("Edit Your Sieve Script…").click();
+    h.run_steps(3);
+    assert!(unsaved(&h).is_none(), "opened, nothing changed");
+    editor(&mut h).text.push_str("keep;\n");
+    h.run_steps(2);
+    let said = unsaved(&h).expect("the draft is unsaved");
+    assert_eq!(said["form"], "rule");
+    assert_eq!(
+        mailcraft_engine::agent::classify(&h.state().session, "ui.closeDialog", &json!({"unsaved": said})),
+        mailcraft_engine::agent::Access::Asked(mailcraft_engine::agent::Class::Delete)
+    );
+}
+
+/// Change Rule through `ui.dialog` opens a rule of the owner's own script in the same editor as its
+/// pencil does (#2058).
+#[test]
+fn change_rule_through_ui_dialog_opens_the_pencils_editor() {
+    let (mut app, account, _) = own_window();
+    let rule = app.session.sieve.get(&account).and_then(|k| k.elsewhere.as_ref()).and_then(|e| e.rules.first()).map(|r| r.id).unwrap();
+    app.execute("ui.dialog", json!({"name": "rules", "edit": rule})).unwrap();
+    let h = harness(app);
+    match h.state().dialog.as_ref() {
+        Some(Dialog::Form(Form::Rules(f))) => assert!(f.modal(), "an editor is open on the rule"),
+        _ => panic!("no Rules dialog"),
+    }
+}
+
+/// Only the rules of the owner's own script on the server: the dialog doesn't say there are none
+/// (#2058).
+#[test]
+fn rules_of_the_owners_script_alone_are_not_no_rules() {
+    let (mut app, _, _) = own_window();
+    app.execute("ui.dialog", json!({"name": "rules"})).unwrap();
+    let h = harness(app);
+    assert!(h.query_by_label("In your Sieve script \"roundcube\"").is_some());
+    assert!(h.query_by_label("No rules yet. A rule files, flags or deletes mail as it arrives.").is_none());
+}
+
+/// A CRLF script's size is counted as it is written, its line breaks two bytes each (#2058).
+#[test]
+fn a_crlf_scripts_size_is_counted_as_written() {
+    let (app, account, _) = own_window();
+    let mut e = SieveEditor::own_script(&app, account).unwrap();
+    e.text = "keep;\n".repeat(10);
+    assert_eq!(e.written_len(), e.written().len());
+    assert_eq!(e.written_len(), 70);
 }

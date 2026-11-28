@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: MailCraft contributors
 // SPDX-License-Identifier: MIT OR Apache-2.0
-//! Rules of an IMAP account kept in MailCraft's Sieve script (#9999): what each part is in Sieve,
+//! Rules of an IMAP account kept in MailCraft's Sieve script (#2057): what each part is in Sieve,
 //! what keeps a rule on this computer, that no value becomes Sieve, and what a server's answer
 //! comes to.
 
@@ -62,6 +62,27 @@ fn each_condition_is_the_sieve_that_does_what_it_does_here() {
         let b = block(&s.mailbox, &rule(account, vec![condition.clone()], mv.clone()), account).unwrap();
         assert_eq!(b.text, format!("if {sieve} {{\r\n    fileinto \"INBOX/Lists/Ünïcode\";\r\n}}\r\n"), "{condition:?}");
     }
+}
+
+/// A folder's name goes to `fileinto` whole, its spaces kept: on the server "Lists " is another
+/// folder than "Lists" (#2058).
+#[test]
+fn a_folder_name_with_spaces_at_its_ends_is_kept_whole() {
+    let (mut s, account, lists) = session(&ALL);
+    s.mailbox.folder_mut(lists).unwrap().remote = " Lists ".into();
+    if let Some(deleted) = s.mailbox.folder_of_kind(account, FolderKind::Deleted) {
+        s.mailbox.folder_mut(deleted).unwrap().remote = "Trash ".into();
+    }
+    let b = block(&s.mailbox, &rule(account, vec![Condition::ToMe], vec![Action::MoveTo(lists)]), account).unwrap();
+    assert!(b.text.contains("fileinto \" Lists \";"), "{}", b.text);
+    let b = block(&s.mailbox, &rule(account, vec![Condition::ToMe], vec![Action::Delete]), account).unwrap();
+    assert!(b.text.contains("fileinto \"Trash \";"), "{}", b.text);
+    // A name of only spaces is no folder on the server.
+    s.mailbox.folder_mut(lists).unwrap().remote = "  ".into();
+    assert_eq!(
+        block(&s.mailbox, &rule(account, vec![Condition::ToMe], vec![Action::MoveTo(lists)]), account).err(),
+        Some(NotOnServer::FolderNotThere)
+    );
 }
 
 #[test]
@@ -187,7 +208,7 @@ fn every_value(account: Id, lists: Id, v: &str) -> Rule {
 proptest! {
     #[test]
     fn no_rule_value_becomes_sieve(v in ".{0,59}[a-z]", folder in ".{0,39}[a-z]", me in ".{1,40}") {
-        // (#9999) Words, addresses, folder names and the owner's address with quotes, backslashes,
+        // (#2057) Words, addresses, folder names and the owner's address with quotes, backslashes,
         // line breaks, `;`, `}`, `#`, `text:` in them are one string each: the block has the shape
         // it has with plain words, and no command of its own.
         let (mut s, account, lists) = session(&ALL);
@@ -319,6 +340,47 @@ fn rules_run_here_while_the_server_runs_another_script_or_a_changed_one() {
     assert!(!script_due(&s, account, false).unwrap()["text"].as_str().unwrap().contains("# rule"));
 }
 
+/// A rule kept in MailCraft's script, changed to stay on this computer: while the server still
+/// runs the script with it (the write not made yet, or refused), it stays the server's and doesn't
+/// run here as well, which would act on the same mail twice; once the server is read with the
+/// script without it, it runs here (#2058).
+#[test]
+fn a_rule_moved_off_the_server_runs_here_only_once_the_script_without_it_is_there() {
+    let (mut s, account, lists) = session(&ALL);
+    run(&mut s, "sync.applySieve", json!({"account": account, "state": state(None, None)}));
+    let rule = json!({"name": "Lists", "account": account, "conditions": [{"type": "fromContains", "value": "list"}], "actions": [{"type": "moveTo", "value": lists}]});
+    let id = run(&mut s, "rules.add", rule.clone())["id"].as_u64().unwrap();
+    let text = script_due(&s, account, false).unwrap()["text"].as_str().unwrap().to_string();
+    run(
+        &mut s,
+        "sync.applySieve",
+        json!({"account": account, "state": state(Some(SCRIPT_NAME), Some(&text)), "written": {"result": "done", "text": text}}),
+    );
+    let on_server = |s: &Session| s.mailbox.rules.iter().find(|r| r.id == id).unwrap().on_server();
+    assert!(on_server(&s));
+    let mut here = rule.clone();
+    here["id"] = json!(id);
+    here["server"] = json!(false);
+    here.as_object_mut().unwrap().remove("account");
+    assert_eq!(run(&mut s, "rules.edit", here)["keep"], "here");
+    let r = s.mailbox.rules.iter().find(|r| r.id == id).unwrap();
+    assert_eq!(r.keep, Keep::Here);
+    assert!(r.on_server(), "the server's until the script without it is there");
+    // Read again before the write, or after one refused: the server still runs it.
+    run(&mut s, "sync.applySieve", json!({"account": account, "state": state(Some(SCRIPT_NAME), Some(&text))}));
+    assert!(on_server(&s));
+    // Written without it: this computer's.
+    let without = script_due(&s, account, false).unwrap()["text"].as_str().unwrap().to_string();
+    assert!(!without.contains("# rule"), "{without}");
+    run(
+        &mut s,
+        "sync.applySieve",
+        json!({"account": account, "state": state(Some(SCRIPT_NAME), Some(&without)), "written": {"result": "done", "text": without}}),
+    );
+    assert!(!on_server(&s));
+    assert_eq!(kept(&s.mailbox, s.mailbox.rules.iter().find(|r| r.id == id).unwrap()).0, "here");
+}
+
 #[test]
 fn what_the_server_said_its_scripts_may_use_is_kept_with_the_account() {
     let (mut s, account, _) = session(&[]);
@@ -328,4 +390,31 @@ fn what_the_server_said_its_scripts_may_use_is_kept_with_the_account() {
     // Changing a rule kept there needs the owner when an agent asks, as any rule does.
     assert!(matches!(crate::agent::access("rules.add"), Some(crate::agent::Access::Owner(_))));
     assert_eq!(crate::agent::access("sync.sieveScript"), Some(crate::agent::Access::Never));
+}
+
+/// A rule the owner keeps on this computer stays here when a change makes it one the server could
+/// keep; one kept here only because the server couldn't keep it goes there (#2058).
+#[test]
+fn a_rule_kept_here_by_choice_stays_here_when_it_could_go_to_the_server() {
+    let (mut s, account, lists) = session(&ALL);
+    run(&mut s, "sync.applySieve", json!({"account": account, "state": state(None, None)}));
+    let attachment = |server: Option<bool>| {
+        let mut v =
+            json!({"name": "Files", "account": account, "conditions": [{"type": "hasAttachment"}], "actions": [{"type": "moveTo", "value": lists}]});
+        if let Some(server) = server {
+            v["server"] = json!(server);
+        }
+        v
+    };
+    let subject = |id: Id| json!({"id": id, "name": "Files", "conditions": [{"type": "subjectContains", "value": "files"}], "actions": [{"type": "moveTo", "value": lists}]});
+    let chosen = run(&mut s, "rules.add", attachment(Some(false)))["id"].as_u64().unwrap();
+    assert_eq!(run(&mut s, "rules.edit", subject(chosen))["keep"], "here");
+    let forced = run(&mut s, "rules.add", attachment(None))["id"].as_u64().unwrap();
+    assert_eq!(s.mailbox.rules.iter().find(|r| r.id == forced).unwrap().keep, Keep::Here);
+    assert_eq!(run(&mut s, "rules.edit", subject(forced))["keep"], "server");
+    // Asked for the server, the choice is gone.
+    let mut there = subject(chosen);
+    there["server"] = json!(true);
+    assert_eq!(run(&mut s, "rules.edit", there)["keep"], "server");
+    assert!(!s.mailbox.rules.iter().find(|r| r.id == chosen).unwrap().here_by_choice);
 }

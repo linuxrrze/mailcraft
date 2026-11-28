@@ -1,8 +1,8 @@
 // SPDX-FileCopyrightText: MailCraft contributors
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! The dialogs Rules and Alerts opens over its list: the rule builder (New Rule…, Change Rule,
-//! and a filter of a webmail's Sieve script, #9999) and the Sieve editor (a Sieve rule, or the
-//! owner's own script whole, #9999). Each is modal over the list, as Appointment Recurrence is
+//! and a filter of a webmail's Sieve script, #2057) and the Sieve editor (a Sieve rule, or the
+//! owner's own script whole, #2057). Each is modal over the list, as Appointment Recurrence is
 //! over an appointment: the list stays as it was under it, Escape is Cancel (when it is on top: a
 //! list open in it closes first, #406), and Enter in one of the builder's one-line fields, or with
 //! none, is OK when the rule has all it needs.
@@ -118,5 +118,8 @@ pub(super) fn sieve(f: &mut RulesForm, ctx: &egui::Context, app: &MailApp) -> Op
         asks = editor.ui(ui, app);
     });
     let escape = crate::keys::escape(ctx, crate::keys::modal_layer(id));
-    asks.or(escape.then_some(EditorAsks::Cancel))
+    // Not while the owner's script is being saved: what became of the save is said in the editor,
+    // and a refusal or a change on the server would leave the typed script behind (#2058).
+    let saving = f.sieve.as_ref().and_then(|e| e.own.as_ref()).is_some_and(|o| o.saving);
+    asks.or((escape && !saving).then_some(EditorAsks::Cancel))
 }

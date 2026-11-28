@@ -48,7 +48,17 @@ impl Form {
             "editTask" => Form::Task(Box::new(task::TaskForm::edit(s, params)?)),
             "account" => Form::Account(Box::new(account::AccountForm::open(app, params)?)),
             "categories" => Form::Categories(Box::new(categories::CategoriesForm::new(s, params)?)),
-            "rules" => Form::Rules(Box::new(rules::RulesForm::new(s, params))),
+            "rules" => {
+                let mut f = rules::RulesForm::new(s, params);
+                // Opened on Change Rule for a rule: the same editor as its pencil opens (#2058).
+                if params.get("folder").and_then(Value::as_u64).is_none()
+                    && !f.modal()
+                    && let Some(rule) = params.get("edit").and_then(Value::as_u64)
+                {
+                    f.change_rule(app, rule, false);
+                }
+                Form::Rules(Box::new(f))
+            }
             "junkOptions" => Form::Junk(Box::new(junk::JunkForm::new(s, params))),
             _ => return None,
         })
@@ -169,7 +179,8 @@ impl Form {
             Form::Event(f) => f.dirty(),
             Form::Contact(f) => f.dirty(),
             Form::Task(f) => f.dirty(),
-            Form::Account(_) | Form::Categories(_) | Form::Rules(_) | Form::Junk(_) => false,
+            Form::Rules(f) => f.dirty(),
+            Form::Account(_) | Form::Categories(_) | Form::Junk(_) => false,
         }
     }
 
@@ -187,7 +198,8 @@ impl Form {
             Form::Event(f) => (if f.is_meeting() { "meeting" } else { "appointment" }, f.subject().to_string()),
             Form::Contact(f) => ("contact", f.subject()),
             Form::Task(f) => ("task", f.subject().to_string()),
-            Form::Account(_) | Form::Categories(_) | Form::Rules(_) | Form::Junk(_) => return None,
+            Form::Rules(f) => ("rule", f.draft_name()),
+            Form::Account(_) | Form::Categories(_) | Form::Junk(_) => return None,
         };
         self.changed().then(|| serde_json::json!({"form": form, "title": title}))
     }
@@ -4681,14 +4693,14 @@ pub(crate) mod rules {
         Flagged,
         Received,
         /// A header line named so contains these words: only for a filter of a webmail's Sieve
-        /// script (#9999).
+        /// script (#2057).
         Header,
         /// A header line named so is one of these words: the same.
         HeaderIs,
     }
 
     impl When {
-        /// What a filter of a webmail's Sieve script can look at (#9999).
+        /// What a filter of a webmail's Sieve script can look at (#2057).
         const WEBMAIL: [When; 3] = [When::To, When::Header, When::HeaderIs];
 
         const ALL: [When; 22] = [
@@ -4848,7 +4860,7 @@ pub(crate) mod rules {
         to: String,
         category: String,
         /// The names of the header lines a message header condition looks in, set apart by
-        /// semicolons (#9999).
+        /// semicolons (#2057).
         names: String,
         /// A sender's text Always Move filled in that isn't a whole address: looked for as one
         /// text, a semicolon in it too, as `rules.fromMessage` looks for it, while the field still
@@ -4969,6 +4981,7 @@ pub(crate) mod rules {
                 Condition::SubjectContains(w) => return words(When::Subject, w),
                 Condition::BodyContains(w) => return words(When::Body, w),
                 Condition::SubjectOrBodyContains(w) => return words(When::SubjectOrBody, w),
+                Condition::HeaderContains(w) => return words(When::HeaderWords, w),
                 Condition::SentOnlyToMe => vec![with(When::SentOnlyToMe)],
                 Condition::ToMe => vec![with(When::ToMe)],
                 Condition::CcMe => vec![with(When::CcMe)],
@@ -4984,7 +4997,7 @@ pub(crate) mod rules {
                 Condition::ReceivedBetween { from, to } => {
                     vec![Cond { from: from.map(Date::iso).unwrap_or_default(), to: to.map(Date::iso).unwrap_or_default(), ..with(When::Received) }]
                 }
-                // (Only a filter of a webmail's Sieve script has one, #9999.)
+                // (Only a filter of a webmail's Sieve script has one, #2057.)
                 Condition::Header { names, words: w, exact } => {
                     if names.iter().chain(w).any(|t| t.contains(';')) {
                         return None;
@@ -5410,7 +5423,7 @@ pub(crate) mod rules {
     /// The rule in words, naming the folder a move goes to:
     /// `When from contains "x": move it to Inbox/Projects, flag it`.
     pub fn describe(mb: &Mailbox, r: &Rule) -> String {
-        // A Sieve rule is Sieve the owner wrote (#9999): it runs on the server alone.
+        // A Sieve rule is Sieve the owner wrote (#2057): it runs on the server alone.
         if r.is_sieve() {
             return tl!("Sieve rule, run on the server").to_string();
         }
@@ -5506,7 +5519,7 @@ pub(crate) mod rules {
         if let Some(why) = cannot_edit(mb, r) {
             return match why {
                 NotEditable::Elsewhere => Some(tl!("Made in another program: MailCraft never changes this rule")),
-                // (Its text is changed in the Sieve rule editor, #9999.)
+                // (Its text is changed in the Sieve rule editor, #2057.)
                 NotEditable::Sieve => None,
                 other => Some(tl!(other.said())),
             };
@@ -5534,7 +5547,7 @@ pub(crate) mod rules {
         let t = crate::theme::Tokens::get(ui.ctx());
         let mb = &app.session.mailbox;
         // (A filter of a webmail's script is held still while a change of it is saved, or can't be
-        // changed for a reason of its own, #9999.)
+        // changed for a reason of its own, #2057.)
         let fixed = r.read_only() || lock.is_some();
         // The servers that could keep it: its own account's, or for a rule for every account, any.
         let to: Vec<&(Id, String)> = if r.keep == Keep::Here && !r.on_server() {
@@ -5557,7 +5570,7 @@ pub(crate) mod rules {
             let width = (ui.available_width() - buttons).max(40.0);
             // (Clicked, not focused: Tab goes from the switch to the buttons.)
             let (rect, resp) = ui.allocate_exact_size(vec2(width, 54.0), Sense::CLICK);
-            // The rule builder when it loses nothing; else its Sieve text, when it has some (#9999).
+            // The rule builder when it loses nothing; else its Sieve text, when it has some (#2057).
             let own = mailcraft_engine::cmd::sieve_blocks::find(&app.session, r.id).filter(|f| !f.span.filter);
             let shows_whole = || r.conditions.iter().all(|c| Cond::of(c, false).is_some()) && r.exceptions.iter().all(|c| Cond::of(c, true).is_some());
             let form_why: Option<&str> = match &own {
@@ -5586,7 +5599,7 @@ pub(crate) mod rules {
             if resp.double_clicked() && not_changeable.is_none() {
                 *change = Some((r.id, form_why.is_some()));
             }
-            // Also as Sieve, when the builder can change it too (#9999).
+            // Also as Sieve, when the builder can change it too (#2057).
             if text {
                 resp.context_menu(|ui| {
                     if ui.button(tl!("Edit as Sieve…")).on_hover_text(tl!("Change this rule as Sieve text")).clicked() {
@@ -5693,16 +5706,19 @@ pub(crate) mod rules {
         /// account (0 for a rule for every account's mail, which stays one).
         pub(super) editing: Option<(Id, Id)>,
         /// The Sieve rule editor, in a dialog of its own over the list, when it is open (Advanced…
-        /// › New Sieve rule, or Change on a Sieve rule, #9999). Never open with the builder.
+        /// › New Sieve rule, or Change on a Sieve rule, #2057). Never open with the builder.
         pub(crate) sieve: Option<crate::sieve_editor::SieveEditor>,
         /// The builder makes or changes a filter of the owner's own Sieve script, as the webmail
-        /// writes it (#9999): the digest of the script as it was read when it opened.
+        /// writes it (#2057): the digest of the script as it was read when it opened.
         webmail: Option<String>,
         /// The builder changes a rule of the owner's own Sieve script that it can change without
-        /// loss (#9999): the digest of the script as it was read when it opened.
+        /// loss (#2057): the digest of the script as it was read when it opened.
         own: Option<String>,
         /// The list's height as shown, and its whole height, at the last frame (points).
         pub(crate) list: (u32, u32),
+        /// The builder's fields as they were when it opened ([`RulesForm::builder_state`]): a
+        /// change since is a draft an agent asks before taking away (#2058).
+        pristine: Option<String>,
     }
 
     impl RulesForm {
@@ -5718,7 +5734,9 @@ pub(crate) mod rules {
             if let Some(folder) = params.get("folder").and_then(Value::as_u64) {
                 f.fill_from_message(s, folder, params.get("id").and_then(Value::as_u64).or(s.sel.focus()));
             } else if let Some(rule) = params.get("edit").and_then(Value::as_u64) {
-                // Opened on Change Rule for that rule, on its account's list.
+                // Opened on Change Rule for that rule, on its account's list. (With the window at
+                // hand, what this can't open is opened by [`RulesForm::change_rule`], as the
+                // rule's pencil opens it.)
                 if let Some(account) = s.mailbox.rules.iter().find(|r| r.id == rule).map(|r| r.account).filter(|a| *a != 0) {
                     f.choose(&s.mailbox, account);
                 }
@@ -5727,6 +5745,30 @@ pub(crate) mod rules {
                 }
             }
             f
+        }
+
+        /// Open the editor for rule `id`, as its pencil does: a Sieve rule's editor; else the
+        /// builder, on a webmail's filter, a rule of the owner's script it changes without loss, or
+        /// one of MailCraft's; else the rule as Sieve text (`as_text`: asked for that). Whether one
+        /// opened; else why not is said.
+        pub(crate) fn change_rule(&mut self, app: &MailApp, id: Id, as_text: bool) -> bool {
+            let s = &app.session;
+            if let Some(editor) = crate::sieve_editor::SieveEditor::open(&s.mailbox, id) {
+                self.close_builder();
+                self.error.clear();
+                self.sieve = Some(editor);
+            } else if !as_text && (self.edit_filter(s, id) || self.edit_own(s, id) || self.edit(&s.mailbox, id)) {
+                self.sieve = None;
+            } else if let Some(editor) = crate::sieve_editor::SieveEditor::as_sieve(app, id) {
+                // (As Sieve text: the builder can't change it without loss, or the owner asked, #2057.)
+                self.close_builder();
+                self.error.clear();
+                self.sieve = Some(editor);
+            } else {
+                self.error = tl!("This rule can't be changed here.").to_string();
+                return false;
+            }
+            true
         }
 
         /// The name Always Move Messages From This Sender gives a rule.
@@ -5814,6 +5856,7 @@ pub(crate) mod rules {
             // Where it is wanted: on the server, or there once it can be when it is here only
             // because the server couldn't keep it (as `rules.edit` reads it); else here.
             let forced = r.keep == Keep::Here
+                && !r.here_by_choice
                 && r.account != 0
                 && (!r.refused.is_empty()
                     || server_cannot(mb, r, r.account).is_some_and(|n| !matches!(n, NotOnServer::NoServer | NotOnServer::NotInStep)));
@@ -5826,7 +5869,7 @@ pub(crate) mod rules {
         }
 
         /// Open the builder on the filter of the owner's own Sieve script that rule `id` is shown
-        /// as, to change it in the webmail's own shape (#9999). `false`, and nothing changes, when
+        /// as, to change it in the webmail's own shape (#2057). `false`, and nothing changes, when
         /// it isn't one or can't be changed.
         pub(crate) fn edit_filter(&mut self, s: &Session, id: Id) -> bool {
             use mailcraft_engine::cmd::rules_webmail::find;
@@ -5851,7 +5894,7 @@ pub(crate) mod rules {
         }
 
         /// Open the builder on rule `id` of the owner's own Sieve script, when the builder can change
-        /// it without loss (#9999). `false`, and nothing changes, when it isn't one or can't.
+        /// it without loss (#2057). `false`, and nothing changes, when it isn't one or can't.
         pub(crate) fn edit_own(&mut self, s: &Session, id: Id) -> bool {
             let Some(found) = mailcraft_engine::cmd::sieve_blocks::find(s, id).filter(|f| !f.span.filter && f.span.form.is_ok()) else {
                 return false;
@@ -5882,7 +5925,7 @@ pub(crate) mod rules {
         }
 
         /// Open the builder on a new filter of `account`'s own Sieve script, as the webmail writes
-        /// it (#9999).
+        /// it (#2057).
         fn new_filter(&mut self, s: &Session, account: Id) {
             let Some(text) = s.sieve.get(&account).and_then(|k| k.elsewhere.as_ref()).map(|e| e.text.clone()) else { return };
             self.reset();
@@ -5897,6 +5940,7 @@ pub(crate) mod rules {
 
         /// Start the builder over: one empty condition, one action, a new rule.
         fn reset(&mut self) {
+            self.pristine = None;
             self.editing = None;
             self.webmail = None;
             self.own = None;
@@ -5920,7 +5964,7 @@ pub(crate) mod rules {
         pub fn command(&self) -> (&'static str, Value) {
             let conditions: Vec<Value> = self.conds.iter().map(Cond::param).collect();
             let actions: Vec<Value> = self.acts.iter().map(Act::param).collect();
-            // A rule of the owner's own script (#9999): under the digest of the script it was opened on.
+            // A rule of the owner's own script (#2057): under the digest of the script it was opened on.
             if let (Some(digest), Some((id, _))) = (&self.own, self.editing) {
                 let mut params =
                     json!({"id": id, "name": self.name, "conditions": conditions, "actions": actions, "stop": self.stop, "digest": digest});
@@ -5929,7 +5973,7 @@ pub(crate) mod rules {
                 }
                 return ("rules.edit", params);
             }
-            // A filter of the webmail's script (#9999): under the digest of the script it was opened on.
+            // A filter of the webmail's script (#2057): under the digest of the script it was opened on.
             if let Some(digest) = &self.webmail {
                 let mut params = json!({"name": self.name, "conditions": conditions, "actions": actions, "stop": true, "digest": digest});
                 return match self.editing {
@@ -6018,6 +6062,26 @@ pub(crate) mod rules {
             self.open || self.sieve.is_some()
         }
 
+        /// The builder's fields, to tell whether anything was changed in it since it opened.
+        fn builder_state(&self) -> String {
+            format!("{:?}", (&self.name, &self.conds, &self.unless, &self.acts, self.stop, self.alert, self.server, self.then_run))
+        }
+
+        /// Whether the builder or the Sieve editor holds a change that isn't saved (#2058): its
+        /// window, and an agent closing the dialog or opening another, ask first.
+        pub(crate) fn dirty(&self) -> bool {
+            let builder = self.open && self.pristine.as_deref().is_some_and(|p| p != self.builder_state());
+            builder || self.sieve.as_ref().is_some_and(crate::sieve_editor::SieveEditor::changed)
+        }
+
+        /// The name of the rule in the builder or the Sieve editor, as typed.
+        pub(crate) fn draft_name(&self) -> String {
+            match &self.sieve {
+                Some(e) => e.own.as_ref().map_or_else(|| e.name.clone(), |o| o.rule.as_ref().map_or_else(|| o.name.clone(), |r| r.name.clone())),
+                None => self.name.clone(),
+            }
+        }
+
         /// Open the rule builder on a new rule of the account shown.
         fn new_rule(&mut self) {
             self.reset();
@@ -6041,6 +6105,12 @@ pub(crate) mod rules {
             // A held Space on a rule's button is one press: its repeats would reach the button
             // that takes its place, the next rule's, and delete or move that one too.
             ui.input_mut(|i| crate::keys::drop_repeats(i, &[egui::Key::Space]));
+            // What the builder had when it opened: a change since is a draft (#2058).
+            if !self.open {
+                self.pristine = None;
+            } else if self.pristine.is_none() {
+                self.pristine = Some(self.builder_state());
+            }
             let t = crate::theme::Tokens::get(ui.ctx());
             let accounts = rule_accounts(&app.session.mailbox);
             if !accounts.iter().any(|(id, _)| *id == self.account)
@@ -6049,7 +6119,7 @@ pub(crate) mod rules {
                 self.choose(&app.session.mailbox, first);
             }
             let account = self.account;
-            // What an IMAP account's server keeps is read when the rules are shown (#9999).
+            // What an IMAP account's server keeps is read when the rules are shown (#2057).
             if app.sieve_account(account) {
                 app.sieve_read_now(account);
             }
@@ -6058,7 +6128,7 @@ pub(crate) mod rules {
             let on_server = mb.keeps_rules(account) || mb.keeps_sieve_rules(account);
             let rules: Vec<Rule> = mb.rules_in_order(account).into_iter().filter_map(|i| mb.rules.get(i).cloned()).collect();
             let (there, here): (Vec<Rule>, Vec<Rule>) = rules.into_iter().partition(|r| r.account == account && r.keep == Keep::Server);
-            // (An IMAP account's server keeps them in MailCraft's Sieve script, #9999.)
+            // (An IMAP account's server keeps them in MailCraft's Sieve script, #2057.)
             let servers = rule_accounts(mb).into_iter().filter(|(id, _)| mb.keeps_rules(*id) || mb.keeps_sieve_rules(*id)).collect::<Vec<_>>();
             let categories: Vec<String> = mb.every_category().into_iter().map(|c| c.name).collect();
             // Run Rules Now runs the rules shown, over the folder in view when it is their account's,
@@ -6074,7 +6144,7 @@ pub(crate) mod rules {
             let held = app.rules_held(account);
             let gone = if held { mb.rule_gone.iter().filter(|g| g.account == account && !g.id.is_empty()).count() } else { 0 };
             // The rules of a Sieve script MailCraft didn't write, as the server runs them: the
-            // owner's, shown and never changed (#9999); a webmail's of the RainLoop kind has its
+            // owner's, shown and never changed (#2057); a webmail's of the RainLoop kind has its
             // filters changed here in its own shape.
             let elsewhere = app.session.sieve.get(&account).and_then(|k| k.elsewhere.clone()).filter(|_| on_server);
             let webmail = elsewhere.as_ref().is_some_and(|e| !e.ours && mailcraft_engine::cmd::rules_webmail::takes_new(&app.session, account));
@@ -6088,7 +6158,7 @@ pub(crate) mod rules {
                 self.sieve = None;
             }
             let advanced = crate::sieve_editor::offered(app, account);
-            // The owner's own script the server runs, to edit whole (#9999).
+            // The owner's own script the server runs, to edit whole (#2057).
             let own_script = mailcraft_engine::cmd::sieve_own::own_script(&app.session, account).map(|(name, _)| name.to_string());
             let mut new_rule = false;
             let mut new_sieve = false;
@@ -6132,7 +6202,7 @@ pub(crate) mod rules {
                     run = Some(("rules.run", json!({"folder": folder})));
                 }
                 // Sieve written by hand, for an account whose server keeps MailCraft's script
-                // (#9999): not Outlook's, so out of the way.
+                // (#2057): not Outlook's, so out of the way.
                 if advanced {
                     ui.menu_button(tl!("Advanced…"), |ui| {
                         let tip = tl!("A rule written in Sieve, run by the server");
@@ -6157,7 +6227,7 @@ pub(crate) mod rules {
                 }
             });
             // What keeps an IMAP account's server from running them, and the way past a script
-            // changed elsewhere: replacing it, which only the owner's click does (#9999).
+            // changed elsewhere: replacing it, which only the owner's click does (#2057).
             if let Some((note, replace)) = &sieve_note {
                 ui.label(egui::RichText::new(note.as_str()).color(t.text_dim).size(11.5));
                 if *replace && ui.button(tl!("Replace with MailCraft's")).clicked() {
@@ -6210,7 +6280,7 @@ pub(crate) mod rules {
                             };
                             ui.horizontal(|ui| {
                                 heading(ui, t, &title, tip);
-                                // The script itself, edited whole as Sieve (#9999).
+                                // The script itself, edited whole as Sieve (#2057).
                                 if !e.ours && own_script.as_deref() == Some(e.script.as_str()) {
                                     let edit = ui.small_button(tl!("Edit Your Sieve Script…"));
                                     let tip = tl!("Change the whole script as Sieve text; it is written back exactly as you leave it");
@@ -6253,7 +6323,8 @@ pub(crate) mod rules {
                     for (i, r) in here.iter().enumerate() {
                         rule_row(ui, app, r, mark_of(r.id), (i > 0, i + 1 < here.len()), account, &servers, &mut run, &mut change, None);
                     }
-                    if there.is_empty() && here.is_empty() {
+                    // (Rules of the owner's own script shown above are rules too, #2058.)
+                    if there.is_empty() && here.is_empty() && elsewhere.as_ref().is_none_or(|e| e.rules.is_empty()) {
                         ui.label(egui::RichText::new(tl!("No rules yet. A rule files, flags or deletes mail as it arrives.")).color(t.text_dim));
                     }
                 });
@@ -6300,21 +6371,7 @@ pub(crate) mod rules {
                 self.sieve = None;
             }
             if let Some((id, as_text)) = change {
-                let s = &app.session;
-                if let Some(editor) = crate::sieve_editor::SieveEditor::open(&s.mailbox, id) {
-                    self.close_builder();
-                    self.error.clear();
-                    self.sieve = Some(editor);
-                } else if !as_text && (self.edit_filter(s, id) || self.edit_own(s, id) || self.edit(&s.mailbox, id)) {
-                    self.sieve = None;
-                } else if let Some(editor) = crate::sieve_editor::SieveEditor::as_sieve(app, id) {
-                    // (As Sieve text: the builder can't change it without loss, or the owner asked, #9999.)
-                    self.close_builder();
-                    self.error.clear();
-                    self.sieve = Some(editor);
-                } else {
-                    self.error = tl!("This rule can't be changed here.").to_string();
-                }
+                self.change_rule(app, id, as_text);
             }
             // The dialogs over the list: the builder, and the Sieve editor.
             let mut add = false;
@@ -6452,7 +6509,7 @@ pub(crate) mod rules {
             });
             row(ui, "", |ui| {
                 ui.checkbox(&mut self.stop, tl!("Stop processing more rules"));
-                // (A rule of the owner's own Sieve script runs on the server alone, #9999.)
+                // (A rule of the owner's own Sieve script runs on the server alone, #2057.)
                 if self.own.is_some() {
                     return;
                 }
@@ -6474,7 +6531,7 @@ pub(crate) mod rules {
             held: bool,
         ) -> Option<&'static str> {
             let t = pass.t;
-            // A filter of a webmail's script has one condition, one move, and stops (#9999); it
+            // A filter of a webmail's script has one condition, one move, and stops (#2057); it
             // reads the header lines as they are written, names and all.
             let webmail = self.webmail.is_some();
             // A rule kept on the server looks at addresses alone, as the server does; one kept here

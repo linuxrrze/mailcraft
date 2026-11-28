@@ -263,13 +263,15 @@ msgstr "+ გამონაკლისი"
 
 #. interface
 #: crates/ui-egui/src/credits.rs
+#, fuzzy
 msgid "+Bin"
-msgstr ""
+msgstr "+Bin"
 
 #. interface
 #: crates/ui-egui/src/credits.rs
+#, fuzzy
 msgid "+Lines"
-msgstr ""
+msgstr "+სტრ."
 
 #. interface
 #: crates/ui-egui/src/calendar_view.rs
@@ -494,11 +496,6 @@ msgid ":{tag} needs a string or a list after it."
 msgstr ":{tag}-ს სტრიქონი ან სია უნდა მოსდევდეს."
 
 #. interface
-#: crates/ui-egui/src/scheduling.rs
-msgid "<< AutoPick"
-msgstr ""
-
-#. interface
 #: crates/ui-egui/src/credits.rs
 #, fuzzy
 msgid "@{login}, testing since {since}"
@@ -707,6 +704,11 @@ msgstr "ფაილის დიალოგი უკვე გახსნი
 #, fuzzy
 msgid "A filter of your webmail's has one condition here, on a recipient or a message header, and no exception."
 msgstr "თქვენი ვებფოსტის ფილტრს აქ აქვს ერთი პირობა, მიმღებზე ან სათაურზე, და არანაირი გამონაკლისი."
+
+#. what a command says
+#: crates/engine/src/cmd/rules_webmail.rs
+msgid "A filter of your webmail's has too much text to look for."
+msgstr ""
 
 #. what a command says
 #: crates/engine/src/cmd/rules_webmail.rs
@@ -932,8 +934,9 @@ msgstr "პორტი არის რიცხვი 1-დან 65535-მდ
 
 #. interface
 #: crates/ui-egui/src/attachment_preview.rs
+#, fuzzy
 msgid "A preview may omit some content from the original file."
-msgstr ""
+msgstr "წინასწარ ნახვაში ორიგინალი ფაილის ნაწილი შეიძლება არ ჩანდეს."
 
 #. interface
 #: crates/ui-egui/src/import_pst.rs
@@ -1045,14 +1048,9 @@ msgstr "საერთო საფოსტო ყუთი, რომელ�
 
 #. interface
 #: crates/ui-egui/src/account_setup/help.rs
-msgid "A short note with the link to that page, to paste into mail or chat. MailCraft sends nothing itself."
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
 #, fuzzy
-msgid "A sign-in with your own identity provider is never sent to Microsoft's or Google's mail servers: change the servers above to your own."
-msgstr "თქვენი საკუთარი იდენტობის პროვაიდერით შესვლა არასოდეს იგზავნება Microsoft-ის ან Google-ის ფოსტის სერვერებზე: შეცვალეთ ზემოთ მოცემული სერვერები თქვენი საკუთარით."
+msgid "A short note with the link to that page, to paste into mail or chat. MailCraft sends nothing itself."
+msgstr "მოკლე შეტყობინება იმ გვერდის ბმულით, წერილში ან ჩატში ჩასასმელად. MailCraft თავად არაფერს აგზავნის."
 
 #. what a command says
 #: crates/engine/src/sieve_check.rs
@@ -1126,8 +1124,9 @@ msgstr "აქცენტის ფერი"
 
 #. interface
 #: crates/ui-egui/src/backstage.rs
+#, fuzzy
 msgid "Accent colour as hex"
-msgstr ""
+msgstr "აქცენტის ფერის hex-კოდი"
 
 #. android, ribbon
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarScreen.kt crates/ui-egui/src/ribbon.rs
@@ -1563,7 +1562,7 @@ msgstr "მისამართები ; ნიშნით გამოყ�
 #: crates/ui-egui/src/account_setup/senders.rs
 #, fuzzy
 msgid "Addresses your mail server lets this account send from with the same sign-in, such as aliases. Replies are sent from the address a message came to."
-msgstr "მისამართები, საიდანაც თქვენი ფოსტის სერვერი ამ ანგარიშს იმავე შესვლით გაგზავნის უფლებას აძლევს, მაგალითად, ალიასები. პასუხები იგზავნება იმ მისამართიდან, რომელზეც წერილი მოვიდა."
+msgstr "მისამართები, საიდანაც თქვენი ფოსტის სერვერი ამ ანგარიშს იმავე შესვლით გაგზავნის უფლებას აძლევს, მაგალითად, ფსევდონიმები. პასუხები იგზავნება იმ მისამართიდან, რომელზეც წერილი მოვიდა."
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt
@@ -1625,16 +1624,11 @@ msgstr "როცა ფოსტაში შეხვედრის მოთ
 msgid "Agenda"
 msgstr "დღის წესრიგი"
 
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Agree to the addresses outside your identity provider's domain, or enter others"
-msgstr "დაეთანხმეთ თქვენი იდენტობის პროვაიდერის დომენის გარეთ მყოფ მისამართებს ან შეიყვანეთ სხვა"
-
 #. command label
 #: crates/engine/src/cmd/format.rs
+#, fuzzy
 msgid "Align Text"
-msgstr ""
+msgstr "ტექსტის გასწორება"
 
 #. android, interface, name
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListModel.kt crates/engine/src/session.rs crates/model/src/offline.rs crates/ui-egui/src/advanced_search.rs crates/ui-egui/src/backstage.rs crates/ui-egui/src/keep_offline.rs
@@ -1737,11 +1731,6 @@ msgstr "ყველა სახელი შემოწმებულია"
 #, fuzzy
 msgid "All of them"
 msgstr "ყველა მათგანი"
-
-#. interface
-#: crates/ui-egui/src/autopick.rs
-msgid "All people and rooms"
-msgstr ""
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -2090,7 +2079,7 @@ msgid "Appearance"
 msgstr "იერსახე"
 
 #. interface
-#: crates/ui-egui/src/account_setup.rs crates/ui-egui/src/account_setup/oauth_settings.rs
+#: crates/ui-egui/src/account_setup.rs
 #, fuzzy
 msgid "Application (client) ID"
 msgstr "აპლიკაციის (კლიენტის) ID"
@@ -2184,11 +2173,6 @@ msgstr "ჩამოტვირთული Sieve-ის სკრიპტე�
 #, fuzzy
 msgid "Apply Downloaded To-dos"
 msgstr "ჩამოტვირთული დავალებების გამოყენება"
-
-#. command label
-#: crates/engine/src/cmd/ews_directory.rs
-msgid "Apply Read Exchange Calendar, Contacts and To-dos"
-msgstr ""
 
 #. command label
 #: crates/engine/src/cmd/search_server.rs
@@ -2306,8 +2290,9 @@ msgstr "აპრილი"
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid "Aqua"
-msgstr ""
+msgstr "ზღვისფერი"
 
 #. android, command label, interface, name, ribbon
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListModel.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/NoticeButtons.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingToolbar.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/RowActionsSheet.kt crates/engine/src/cmd/mail.rs crates/model/src/mailbox.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/swipe.rs
@@ -2405,8 +2390,9 @@ msgstr "ამ გამგზავნის სურათების ჩა
 
 #. interface
 #: crates/ui-egui/src/attachment_preview.rs
+#, fuzzy
 msgid "Ask before previewing this type of file"
-msgstr ""
+msgstr "ამ ტიპის ფაილის წინასწარ ნახვამდე კითხვა"
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PicturesSettings.kt
@@ -2446,13 +2432,15 @@ msgstr "მოითხოვეთ თქვენი To Do სიების�
 
 #. interface
 #: crates/ui-egui/src/server_sync.rs
+#, fuzzy
 msgid "Ask for permission to read and send from shared mailboxes and to read the calendars shared with you: Microsoft's page opens in your browser. Without it, nothing of them is read or sent."
-msgstr ""
+msgstr "მოითხოვეთ საერთო საფოსტო ყუთების წაკითხვისა და მათგან გაგზავნის, ასევე თქვენთვის გაზიარებული კალენდრების წაკითხვის ნებართვა: ბრაუზერში Microsoft-ის გვერდი გაიხსნება. მის გარეშე მათგან არაფერი იკითხება და არაფერი იგზავნება."
 
 #. interface
 #: crates/ui-egui/src/backstage.rs
+#, fuzzy
 msgid "Ask for these messages again at the next Send / Receive. The mail on the server is untouched, and nothing is lost if they fail again."
-msgstr ""
+msgstr "ამ წერილების ხელახლა მოთხოვნა შემდეგი გაგზავნა / მიღებისას. სერვერზე ფოსტა ხელუხლებელი რჩება და, თუ ისევ ვერ ჩამოიტვირთება, არაფერი დაიკარგება."
 
 #. interface
 #: crates/ui-egui/src/reading/remote.rs
@@ -2503,26 +2491,10 @@ msgid "Asked first"
 msgstr "ჯერ გეკითხებათ"
 
 #. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Asked for besides openid email offline_access"
-msgstr "მოთხოვნილი openid email offline_access-ის გარდა"
-
-#. interface
 #: crates/ui-egui/src/scheduling.rs
 #, fuzzy
 msgid "Asking about other people's time stopped unexpectedly"
 msgstr "სხვა ადამიანების დროის მოთხოვნა მოულოდნელად შეწყდა"
-
-#. interface
-#: crates/ui-egui/src/room_finder.rs
-msgid "Asking for the rooms stopped unexpectedly"
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/room_finder.rs
-msgid "Asking the server for the rooms…"
-msgstr ""
 
 #. interface
 #: crates/ui-egui/src/scheduling.rs
@@ -2541,11 +2513,6 @@ msgstr "სერვერის გამოკითხვა…"
 #, fuzzy
 msgid "Asking your domain's DNS…"
 msgstr "თქვენი დომენის DNS-ის გამოკითხვა…"
-
-#. interface
-#: crates/ui-egui/src/room_finder.rs
-msgid "Asking…"
-msgstr ""
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt
@@ -2576,11 +2543,6 @@ msgstr "თითოეულ სიაში მაქსიმუმ 20 ჩა
 #, fuzzy
 msgid "At most {max} contacts can be merged at once."
 msgstr "ერთდროულად მაქსიმუმ {max} კონტაქტის შერწყმა შეიძლება."
-
-#. what a command says
-#: crates/engine/src/cmd/contacts_opened.rs
-msgid "At most {n} address books can be opened by address: remove one first."
-msgstr ""
 
 #. what a command says
 #: crates/engine/src/cmd/calendar_opened.rs
@@ -2646,8 +2608,8 @@ msgstr ""
 msgid "Attach File"
 msgstr "ფაილის მიმაგრება"
 
-#. command label, interface, name
-#: crates/engine/src/cmd/compose.rs crates/ui-egui/src/pick_item.rs
+#. command label, interface, name, ribbon
+#: crates/engine/src/cmd/compose.rs crates/ui-egui/src/pick_item.rs crates/ui-egui/src/ribbon.rs
 #, fuzzy
 msgid "Attach Item"
 msgstr "ელემენტის მიმაგრება"
@@ -2703,6 +2665,12 @@ msgid "Attachments"
 msgstr "დანართები"
 
 #. interface
+#: crates/ui-egui/src/attachment_open.rs crates/ui-egui/src/compose.rs
+#, fuzzy
+msgid "Attachments can't be opened here."
+msgstr "დანართების აქ გახსნა შეუძლებელია."
+
+#. interface
 #: crates/ui-egui/src/attachment_open.rs
 #, fuzzy
 msgid "Attachments can't be opened here: save it with Save As instead."
@@ -2739,26 +2707,10 @@ msgid "AutoArchive"
 msgstr "ავტოდაარქივება"
 
 #. interface
-#: crates/ui-egui/src/scheduling.rs
-msgid "AutoPick Next >>"
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/windows.rs
-msgid "AutoPick is on the Find a Time page"
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs crates/ui-egui/src/backstage.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/spelling.rs
+#: crates/ui-egui/src/backstage.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/spelling.rs
 #, fuzzy
 msgid "Automatic"
 msgstr "ავტომატური"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Automatic (OAUTHBEARER, else XOAUTH2)"
-msgstr "ავტომატური (OAUTHBEARER, სხვა შემთხვევაში XOAUTH2)"
 
 #. interface
 #: crates/ui-egui/src/backstage.rs
@@ -3032,13 +2984,15 @@ msgstr "სანამ რამე შეიცვლება, თქვე�
 
 #. interface
 #: crates/ui-egui/src/credits.rs
+#, fuzzy
 msgid "Binary assets added"
-msgstr ""
+msgstr "დამატებული ბინარული ფაილები"
 
 #. interface
 #: crates/ui-egui/src/credits.rs
+#, fuzzy
 msgid "Binary assets removed"
-msgstr ""
+msgstr "წაშლილი ბინარული ფაილები"
 
 #. interface
 #: crates/ui-egui/src/forms.rs crates/ui-egui/src/merge_contacts.rs crates/ui-egui/src/people_view.rs
@@ -3048,8 +3002,9 @@ msgstr "დაბადების დღე"
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid "Black"
-msgstr ""
+msgstr "შავი"
 
 #. command label, interface
 #: crates/engine/src/cmd/junk.rs crates/ui-egui/src/ribbon.rs
@@ -3059,8 +3014,9 @@ msgstr "გამგზავნის დაბლოკვა"
 
 #. interface
 #: crates/ui-egui/src/forms/junk.rs
+#, fuzzy
 msgid "Blocked Senders"
-msgstr ""
+msgstr "დაბლოკილი გამგზავნები"
 
 #. interface, name
 #: crates/ui-egui/src/backstage.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/theme/accent.rs
@@ -3097,16 +3053,6 @@ msgstr "ტექსტი შეიცავს"
 #, fuzzy
 msgid "Bold"
 msgstr "მუქი"
-
-#. interface
-#: crates/ui-egui/src/room_finder.rs
-msgid "Book"
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/room_finder.rs
-msgid "Booked"
-msgstr ""
 
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
@@ -3156,8 +3102,8 @@ msgstr "ბურთულებიანი სია"
 msgid "Bullets"
 msgstr "ბურთულები"
 
-#. interface, name
-#: crates/model/src/calendar.rs crates/ui-egui/src/room_finder.rs
+#. name
+#: crates/model/src/calendar.rs
 #, fuzzy
 msgid "Busy"
 msgstr "დაკავებული"
@@ -3190,7 +3136,7 @@ msgstr "გამგზავნის მიხედვით"
 #: crates/ui-egui/src/mail_view.rs
 #, fuzzy
 msgid "By Importance"
-msgstr "მნიშვნელობის მიხედვით"
+msgstr "პრიორიტეტის მიხედვით"
 
 #. interface
 #: crates/ui-egui/src/mail_view.rs
@@ -3558,8 +3504,9 @@ msgstr "ასლი: {names}"
 
 #. interface
 #: crates/ui-egui/src/reading/react.rs
+#, fuzzy
 msgid "Celebrate"
-msgstr ""
+msgstr "ზეიმი"
 
 #. interface
 #: crates/ui-egui/src/forms.rs crates/ui-egui/src/security.rs
@@ -3861,7 +3808,7 @@ msgstr "ახალი ვერსიების შემოწმება"
 #: crates/ui-egui/src/ribbon.rs
 #, fuzzy
 msgid "Check spelling with a local dictionary"
-msgstr "მართლწერის შემოწმება ადგილობრივი ლექსიკონით"
+msgstr "მართლწერის შემოწმება ამ კომპიუტერზე არსებული ლექსიკონით"
 
 #. why a mail server couldn't be used
 #: crates/net/src/sieve.rs
@@ -3918,12 +3865,6 @@ msgid "Checking the address with Microsoft…"
 msgstr "მისამართის შემოწმება Microsoft-თან…"
 
 #. interface
-#: crates/ui-egui/src/dialogs.rs
-#, fuzzy
-msgid "Checking the address with the server…"
-msgstr "მისამართის შემოწმება სერვერთან…"
-
-#. interface
 #: crates/ui-egui/src/calendar_sync.rs
 #, fuzzy
 msgid "Checking the calendar connection…"
@@ -3958,11 +3899,6 @@ msgstr "ნაგულისხმევი ხელმოწერის ა�
 #, fuzzy
 msgid "Choose Google sign-in, or select Use an app password instead."
 msgstr "აირჩიეთ Google-ით შესვლა ან მონიშნეთ „აპლიკაციის პაროლის გამოყენება“."
-
-#. interface
-#: crates/ui-egui/src/room_finder.rs
-msgid "Choose a building…"
-msgstr ""
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -4122,26 +4058,9 @@ msgstr "დროშის მოხსნა"
 
 #. interface
 #: crates/ui-egui/src/reading.rs
+#, fuzzy
 msgid "Click to select {name}; double-click to open it"
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Client ID"
-msgstr "კლიენტის ID"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Client secret (optional)"
-msgstr "კლიენტის საიდუმლო (არასავალდებულო)"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Client secret sent"
-msgstr "კლიენტის საიდუმლოს გაგზავნა"
+msgstr "{name}: დაწკაპეთ მოსანიშნად, ორჯერ დაწკაპეთ გასახსნელად"
 
 #. ribbon, ribbon location
 #: crates/engine/src/cmd/edit.rs crates/engine/src/cmd/format.rs crates/ui-egui/src/ribbon.rs
@@ -4151,8 +4070,9 @@ msgstr "გაცვლის ბუფერი"
 
 #. interface
 #: crates/ui-egui/src/backstage.rs
+#, fuzzy
 msgid "Clock"
-msgstr ""
+msgstr "საათი"
 
 #. android, interface, ribbon
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/IncomingLayers.kt crates/ui-egui/src/account_setup.rs crates/ui-egui/src/account_setup/exchange.rs crates/ui-egui/src/compose.rs crates/ui-egui/src/dialogs.rs crates/ui-egui/src/find_replace.rs crates/ui-egui/src/folder_properties.rs crates/ui-egui/src/forms.rs crates/ui-egui/src/import_pst.rs crates/ui-egui/src/meeting_dialogs.rs crates/ui-egui/src/meeting_dialogs/share.rs crates/ui-egui/src/merge_contacts.rs crates/ui-egui/src/reminders.rs crates/ui-egui/src/report_problem.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/symbol.rs crates/ui-egui/src/sync_panel.rs crates/ui-egui/src/tasks_view.rs crates/ui-egui/src/view_source.rs
@@ -4270,8 +4190,9 @@ msgstr "ფერი"
 
 #. interface
 #: crates/ui-egui/src/credits.rs
+#, fuzzy
 msgid "Commits"
-msgstr ""
+msgstr "კომიტები"
 
 #. ribbon, ribbon location
 #: crates/engine/src/cmd/people.rs crates/ui-egui/src/ribbon.rs
@@ -4618,12 +4539,6 @@ msgid "Could not open Google sign-in"
 msgstr "Google-ით შესვლის გახსნა ვერ მოხერხდა"
 
 #. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "Couldn't ask the server which folders are other people's"
-msgstr "ვერ მოხერხდა სერვერისთვის კითხვა, რომელი საქაღალდეებია სხვა ადამიანების"
-
-#. why a mail server couldn't be used
 #: crates/net/src/push.rs
 #, fuzzy
 msgid "Couldn't bring \"{name}\" up to date"
@@ -4793,8 +4708,9 @@ msgstr "საქაღალდეების სია ვერ წაიკ
 
 #. why a mail server couldn't be used
 #: crates/net/src/sync.rs
+#, fuzzy
 msgid "Couldn't reconnect to carry on with \"{name}\""
-msgstr ""
+msgstr "საქაღალდის „{name}“ კითხვის გასაგრძელებლად ხელახლა დაკავშირება ვერ მოხერხდა"
 
 #. what a command says
 #: crates/engine/src/cmd/graph_drafts.rs
@@ -4900,8 +4816,9 @@ msgstr "მიმდინარე ხედი"
 
 #. interface, name
 #: crates/ui-egui/src/backstage.rs crates/ui-egui/src/theme/accent.rs
+#, fuzzy
 msgid "Custom color"
-msgstr ""
+msgstr "მორგებული ფერი"
 
 #. command label, interface, name, ribbon
 #: crates/engine/src/cmd/format.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/lib.rs crates/ui-egui/src/menubar.rs crates/ui-egui/src/ribbon.rs
@@ -4929,8 +4846,9 @@ msgstr "მუქი"
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid "Dark Red"
-msgstr ""
+msgstr "მუქი წითელი"
 
 #. command label
 #: crates/ui-egui/src/lib.rs
@@ -5416,12 +5334,6 @@ msgstr "პასუხების მიმართვა"
 msgid "Discard"
 msgstr "უარყოფა"
 
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Discover"
-msgstr "აღმოჩენა"
-
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReminderScheduler.kt crates/ui-egui/src/reading/warnings.rs crates/ui-egui/src/reminders.rs
 #, fuzzy
@@ -5590,8 +5502,20 @@ msgstr "მზადაა: განახლებულია"
 msgid "Done: {n} new"
 msgstr "მზადაა: ახალი {n}"
 
-#. android, ribbon location
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PicturesBanner.kt crates/engine/src/cmd/send_receive.rs
+#. interface
+#: crates/ui-egui/src/compose.rs
+#, fuzzy
+msgid "Double-click to download {name}"
+msgstr "ორჯერ დააწკაპუნეთ {name}-ის ჩამოსატვირთად"
+
+#. interface
+#: crates/ui-egui/src/compose.rs
+#, fuzzy
+msgid "Double-click to open {name}"
+msgstr "ორჯერ დააწკაპუნეთ {name}-ის გასახსნელად"
+
+#. android, interface, ribbon location
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PicturesBanner.kt crates/engine/src/cmd/send_receive.rs crates/ui-egui/src/compose.rs
 #, fuzzy
 msgid "Download"
 msgstr "ჩამოტვირთვა"
@@ -5782,7 +5706,7 @@ msgstr "ვადა"
 #: crates/engine/src/session.rs
 #, fuzzy
 msgid "Due Date"
-msgstr "შესრულების ვადა"
+msgstr "ვადა"
 
 #. command label
 #: crates/engine/src/cmd/followup.rs
@@ -5794,7 +5718,7 @@ msgstr "ვადამოსული შეხსენებები"
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "Due date"
-msgstr "შესრულების ვადა"
+msgstr "ვადა"
 
 #. what a command says
 #: crates/engine/src/cmd/tasks/status.rs
@@ -6178,7 +6102,7 @@ msgstr "ყველა ღონისძიება და დავალე
 #: crates/ui-egui/src/backstage.rs
 #, fuzzy
 msgid "Every mbox file under a folder, keeping its subfolders, into one new folder"
-msgstr "საქაღალდეში არსებული ყველა mbox ფაილი, ქვესაქაღალდეების შენარჩუნებით, ერთ ახალ საქაღალდეში"
+msgstr "საქაღალდის ყველა mbox ფაილი ქვესაქაღალდეებით, ერთ ახალ საქაღალდეში"
 
 #. interface
 #: crates/ui-egui/src/signatures.rs
@@ -6330,11 +6254,6 @@ msgstr "ინტერფეისის ყველა მოქმედე�
 msgid "Except if"
 msgstr "გარდა იმ შემთხვევისა, თუ"
 
-#. command label
-#: crates/engine/src/cmd/ews_directory.rs
-msgid "Exchange Calendar, Contacts and To-dos to Read"
-msgstr ""
-
 #. interface
 #: crates/ui-egui/src/account_setup/exchange.rs
 #, fuzzy
@@ -6440,12 +6359,6 @@ msgid "External"
 msgstr "გარე"
 
 #. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Extra scopes"
-msgstr "დამატებითი არეები"
-
-#. interface
 #: crates/ui-egui/src/calendar_sync.rs
 #, fuzzy
 msgid "FAILED"
@@ -6471,8 +6384,9 @@ msgstr "რჩეულები"
 
 #. interface
 #: crates/ui-egui/src/nav.rs
+#, fuzzy
 msgid "Favorites Are Set in Outlook"
-msgstr ""
+msgstr "რჩეულები Outlook-ში იმართება"
 
 #. command label
 #: crates/engine/src/cmd/folder.rs
@@ -6605,28 +6519,10 @@ msgid "Find next spelling error"
 msgstr "მართლწერის შემდეგი შეცდომის პოვნა"
 
 #. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Find the sign-in and token addresses from the identity provider's address. Only that address is sent."
-msgstr "პოულობს შესვლისა და ტოკენის მისამართებს იდენტობის პროვაიდერის მისამართიდან. იგზავნება მხოლოდ ეს მისამართი."
-
-#. interface
 #: crates/ui-egui/src/find_replace.rs
 #, fuzzy
 msgid "Find what"
 msgstr "რა მოიძებნოს"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Find your identity provider's addresses with Discover, or enter them"
-msgstr "იპოვეთ თქვენი იდენტობის პროვაიდერის მისამართები ღილაკით „აღმოჩენა“ ან შეიყვანეთ ისინი"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Finding the addresses stopped unexpectedly"
-msgstr "მისამართების ძებნა მოულოდნელად შეწყდა"
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -6672,8 +6568,9 @@ msgstr "დაასრულეთ შესვლა Microsoft-ის გვ�
 
 #. interface
 #: crates/ui-egui/src/credits.rs
+#, fuzzy
 msgid "First"
-msgstr ""
+msgstr "პირველი"
 
 #. command label
 #: crates/engine/src/cmd/mail.rs
@@ -6683,8 +6580,9 @@ msgstr "პირველი წერილი"
 
 #. interface
 #: crates/ui-egui/src/credits.rs
+#, fuzzy
 msgid "First commit"
-msgstr ""
+msgstr "პირველი კომიტი"
 
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PersonEditor.kt crates/ui-egui/src/forms.rs crates/ui-egui/src/merge_contacts.rs
@@ -6773,7 +6671,7 @@ msgstr ""
 "თვისებები"
 
 #. command label, ribbon location
-#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/folder.rs crates/engine/src/cmd/view.rs
+#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/folder.rs crates/engine/src/cmd/view.rs
 #, fuzzy
 msgid "Folder Pane"
 msgstr "საქაღალდეების პანელი"
@@ -6910,8 +6808,9 @@ msgstr "ანგარიშისთვის, რომელიც Microsoft
 
 #. interface
 #: crates/ui-egui/src/server_sync.rs
+#, fuzzy
 msgid "For now, nothing of shared mailboxes is read or sent: {error}"
-msgstr ""
+msgstr "ჯერჯერობით საერთო საფოსტო ყუთებიდან არაფერი იკითხება და არაფერი იგზავნება: {error}"
 
 #. interface
 #: crates/ui-egui/src/server_sync.rs
@@ -6954,12 +6853,6 @@ msgstr "ჩამოტვირთული კალენდრისა დ�
 #, fuzzy
 msgid "Forget Trusted Certificate"
 msgstr "სანდო სერტიფიკატის დავიწყება"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Forget the client secret"
-msgstr "კლიენტის საიდუმლოს დავიწყება"
 
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PicturesSettings.kt crates/ui-egui/src/reading/remote.rs
@@ -7071,14 +6964,8 @@ msgid_plural "Found {n} folders"
 msgstr[0] "ნაპოვნია საქაღალდე: {n}"
 msgstr[1] "ნაპოვნია საქაღალდე: {n}"
 
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Found: sign-in at {signIn}, tokens from {token}."
-msgstr "ნაპოვნია: შესვლა — {signIn}, ტოკენები — {token}."
-
-#. interface, name
-#: crates/model/src/calendar.rs crates/ui-egui/src/room_finder.rs
+#. name
+#: crates/model/src/calendar.rs
 #, fuzzy
 msgid "Free"
 msgstr "თავისუფალი"
@@ -7281,8 +7168,9 @@ msgstr "GitHub-ის გვერდი გახსნილია: შეა�
 
 #. interface
 #: crates/ui-egui/src/forms.rs
+#, fuzzy
 msgid "Give it a title first"
-msgstr ""
+msgstr "ჯერ სათაური მიუთითეთ"
 
 #. interface
 #: crates/ui-egui/src/report_problem.rs
@@ -7426,20 +7314,15 @@ msgstr "MailCraft {version} ვერსიაზე დაბრუნება
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid "Gold"
-msgstr ""
+msgstr "ოქროსფერი"
 
 #. name
 #: crates/model/src/mailbox.rs crates/ui-egui/src/account_setup.rs
 #, fuzzy
 msgid "Google"
 msgstr "Google"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Google (built in)"
-msgstr "Google (ჩაშენებული)"
 
 #. command label
 #: crates/ui-egui/src/lib.rs
@@ -7563,8 +7446,9 @@ msgstr "Gravatar-ს ეკითხება გამგზავნის ს
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid "Green"
-msgstr ""
+msgstr "მწვანე"
 
 #. interface
 #: crates/ui-egui/src/i18n.rs
@@ -7574,8 +7458,9 @@ msgstr "მწვანე კატეგორია"
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid "Grey"
-msgstr ""
+msgstr "ნაცრისფერი"
 
 #. interface
 #: crates/ui-egui/src/address_book.rs crates/ui-egui/src/check_names.rs
@@ -7636,6 +7521,12 @@ msgstr "პასუხები გაიგზავნოს"
 #, fuzzy
 msgid "Have replies sent to other addresses"
 msgstr "პასუხები სხვა მისამართებზე გაიგზავნოს"
+
+#. name
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Header contains"
+msgstr "სათაური შეიცავს"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -7739,12 +7630,6 @@ msgstr "დეტალების დამალვა"
 msgid "Hide MailCraft"
 msgstr "MailCraft-ის დამალვა"
 
-#. command label, interface
-#: crates/engine/src/cmd/ews_mail.rs crates/ui-egui/src/nav.rs
-#, fuzzy
-msgid "Hide Online Archive"
-msgstr "ონლაინ არქივის დამალვა"
-
 #. interface
 #: crates/ui-egui/src/calendar_view.rs
 #, fuzzy
@@ -7809,7 +7694,7 @@ msgstr "მაღალი კონტრასტი"
 #: crates/engine/src/cmd/calendar/meeting.rs crates/engine/src/cmd/compose.rs crates/ui-egui/src/forms.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/tasks_view.rs
 #, fuzzy
 msgid "High Importance"
-msgstr "მაღალი მნიშვნელობა"
+msgstr "მაღალი პრიორიტეტი"
 
 #. interface
 #: crates/ui-egui/src/backstage.rs
@@ -7821,7 +7706,7 @@ msgstr "მაღალი კონტრასტი"
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailRowParts.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MessageHeader.kt crates/ui-egui/src/calendar_view.rs
 #, fuzzy
 msgid "High importance"
-msgstr "მაღალი მნიშვნელობა"
+msgstr "მაღალი პრიორიტეტი"
 
 #. interface
 #: crates/ui-egui/src/mail_view.rs
@@ -7871,12 +7756,6 @@ msgstr "როგორ მეორდება, ამას მისი ო�
 msgid "How many messages each folder holds and the space they take"
 msgstr "რამდენ წერილს შეიცავს თითოეული საქაღალდე და რამდენ ადგილს იკავებს"
 
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "I trust these addresses"
-msgstr "ვენდობი ამ მისამართებს"
-
 #. command label
 #: crates/ui-egui/src/lib.rs
 #, fuzzy
@@ -7894,18 +7773,6 @@ msgstr "ადმინისტრატორი ვარ: დამტკი
 #, fuzzy
 msgid "Icons"
 msgstr "ხატულები"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Identity provider"
-msgstr "იდენტობის პროვაიდერი"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Identity provider (issuer)"
-msgstr "იდენტობის პროვაიდერი (გამცემი)"
 
 #. interface
 #: crates/ui-egui/src/account_setup/help.rs
@@ -7966,12 +7833,6 @@ msgstr "თუ არა, მას არაფერი ეგზავნე�
 #, fuzzy
 msgid "If you don't, nothing is sent, and you can change the servers in Server settings."
 msgstr "თუ არ გააგრძელებთ, არაფერი გაიგზავნება და სერვერების შეცვლა სერვერის პარამეტრებში შეგიძლიათ."
-
-#. interface
-#: crates/ui-egui/src/account_setup.rs
-#, fuzzy
-msgid "If you go on, you sign in on your identity provider's page and the access token it gives is sent to {hosts}. Go on only if you know it is your provider's."
-msgstr "თუ გააგრძელებთ, შეხვალთ თქვენი იდენტობის პროვაიდერის გვერდზე და მის მიერ გაცემული წვდომის ტოკენი გაეგზავნება {hosts}-ს. გააგრძელეთ მხოლოდ მაშინ, თუ იცით, რომ ისინი თქვენს პროვაიდერს ეკუთვნის."
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -8117,19 +7978,19 @@ msgstr[1] "გსურთ {n} წერილის იმპორტი ფ�
 #: crates/engine/src/session.rs crates/ui-egui/src/advanced_search.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/forms.rs crates/ui-egui/src/tasks_view.rs
 #, fuzzy
 msgid "Importance"
-msgstr "მნიშვნელობა"
+msgstr "პრიორიტეტი"
 
 #. name
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "Importance is"
-msgstr "მნიშვნელობა არის"
+msgstr "პრიორიტეტი არის"
 
 #. what a command says
 #: crates/engine/src/cmd/tasks/status.rs
 #, fuzzy
 msgid "Importance:"
-msgstr "მნიშვნელობა:"
+msgstr "პრიორიტეტი:"
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TasksScreen.kt
@@ -8276,12 +8137,6 @@ msgid "In line with text"
 msgstr "ტექსტთან ერთ ხაზზე"
 
 #. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "In the Authorization header (client_secret_basic)"
-msgstr "Authorization სათაურში (client_secret_basic)"
-
-#. interface
 #: crates/ui-egui/src/lib.rs
 #, fuzzy
 msgid "In the Outbox: it is on its way"
@@ -8298,12 +8153,6 @@ msgstr "„გასაგზავნებში“: თავის დრო
 #, fuzzy
 msgid "In the folder pane's order"
 msgstr "საქაღალდეების პანელის რიგით"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "In the form (client_secret_post)"
-msgstr "ფორმაში (client_secret_post)"
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
@@ -8582,12 +8431,6 @@ msgid "It goes with the next Send/Receive; the list then takes you off it."
 msgstr "ის მომდევნო „გაგზავნა/მიღებისას“ გაიგზავნება; შემდეგ სია თქვენს მისამართს ამოიღებს."
 
 #. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "It hands out no refresh tokens: you'll be asked to sign in again each time a sign-in runs out."
-msgstr "ის არ გასცემს განახლების ტოკენებს: ყოველ ჯერზე, როცა შესვლის ვადა ამოიწურება, ხელახლა შესვლა მოგიწევთ."
-
-#. interface
 #: crates/ui-egui/src/account_setup.rs
 #, fuzzy
 msgid "It is an identifier, not a secret. MailCraft keeps it in its settings (File › Options)."
@@ -8685,8 +8528,9 @@ msgstr "ელემენტი"
 
 #. command label
 #: crates/engine/src/cmd/item_from_message.rs
+#, fuzzy
 msgid "Item from Message"
-msgstr ""
+msgstr "ელემენტი წერილიდან"
 
 #. interface
 #: crates/ui-egui/src/calendar_view.rs
@@ -8937,12 +8781,6 @@ msgid "Keep on the server of {address}"
 msgstr "შენახვა ანგარიშის {address} სერვერზე"
 
 #. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Keep the built-in settings"
-msgstr "ჩაშენებული პარამეტრების შენარჩუნება"
-
-#. interface
 #: crates/ui-egui/src/import_pst.rs
 #, fuzzy
 msgid "Keep the notes and journal entries"
@@ -9030,13 +8868,7 @@ msgstr "ინახება სისტემის ავტორიზა�
 #: crates/ui-egui/src/backstage.rs
 #, fuzzy
 msgid "Kept in this browser's storage, saved as you go. Use Open & Export to keep a copy as a file."
-msgstr "ინახება ამ ბრაუზერის საცავში, მუშაობისას ავტომატურად. ფაილად ასლის შესანახად გამოიყენეთ „გახსნა და ექსპორტირება“."
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Kept in your system's credential store, never in the mailbox. A desktop program can't really keep it secret from you."
-msgstr "ინახება თქვენი სისტემის ავტორიზაციის მონაცემების საცავში და არასოდეს — საფოსტო ყუთში. სამაგიდო პროგრამას არ შეუძლია მისი ნამდვილად დამალვა თქვენგან."
+msgstr "ინახება ამ ბრაუზერის საცავში, მუშაობისას ავტომატურად. ფაილად ასლის შესანახად გამოიყენეთ „გახსნა და ექსპორტი“."
 
 #. interface
 #: crates/ui-egui/src/backstage.rs
@@ -9073,12 +8905,6 @@ msgstr "ინახება მხოლოდ ამ კომპიუტე
 #, fuzzy
 msgid "Kept on this computer only: invitations and repeating events aren't sent to the server yet"
 msgstr "ინახება მხოლოდ ამ კომპიუტერზე: მოწვევები და განმეორებადი ღონისძიებები სერვერზე ჯერ არ იგზავნება"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Kept: type a new one to replace it"
-msgstr "შენახულია: შეიყვანეთ ახალი მის ჩასანაცვლებლად"
 
 #. interface
 #: crates/ui-egui/src/reading/signature.rs
@@ -9118,8 +8944,9 @@ msgstr "ჯერ უდიდესი"
 
 #. interface
 #: crates/ui-egui/src/credits.rs
+#, fuzzy
 msgid "Last"
-msgstr ""
+msgstr "ბოლო"
 
 #. command label
 #: crates/engine/src/cmd/mail.rs
@@ -9141,8 +8968,9 @@ msgstr "წინა კვირა"
 
 #. interface
 #: crates/ui-egui/src/credits.rs
+#, fuzzy
 msgid "Last commit"
-msgstr ""
+msgstr "ბოლო კომიტი"
 
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PersonEditor.kt crates/ui-egui/src/forms.rs crates/ui-egui/src/merge_contacts.rs
@@ -9164,13 +8992,15 @@ msgstr "„მოგვიანებით“ ამ ანგარიშს 
 
 #. interface
 #: crates/ui-egui/src/reading/react.rs
+#, fuzzy
 msgid "Laugh"
-msgstr ""
+msgstr "სიცილი"
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid "Lavender"
-msgstr ""
+msgstr "ლავანდისფერი"
 
 #. interface
 #: crates/ui-egui/src/calendar_view.rs
@@ -9210,13 +9040,15 @@ msgstr "ამ ანგარიშის გამოტოვება ამ
 
 #. why a mail server couldn't be used
 #: crates/net/src/sync.rs
+#, fuzzy
 msgid "Leaving out 1 message of \"{name}\" that failed to download in {tries} runs; Retry Skipped Messages tries it again"
-msgstr ""
+msgstr "საქაღალდის „{name}“ 1 წერილი, რომელიც {tries} მცდელობის შემდეგაც ვერ ჩამოიტვირთა, გამოტოვებულია; „გამოტოვებული წერილების ხელახლა ცდა“ მას კიდევ სცდის"
 
 #. why a mail server couldn't be used
 #: crates/net/src/sync.rs
+#, fuzzy
 msgid "Leaving out {count} messages of \"{name}\" that failed to download in {tries} runs; Retry Skipped Messages tries them again"
-msgstr ""
+msgstr "საქაღალდის „{name}“ {count} წერილი, რომლებიც {tries} მცდელობის შემდეგაც ვერ ჩამოიტვირთა, გამოტოვებულია; „გამოტოვებული წერილების ხელახლა ცდა“ მათ კიდევ სცდის"
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -9250,13 +9082,15 @@ msgstr "ღია გვერდი მუქ თემაში"
 
 #. interface
 #: crates/ui-egui/src/reading/react.rs
+#, fuzzy
 msgid "Like"
-msgstr ""
+msgstr "მოწონება"
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid "Lime"
-msgstr ""
+msgstr "ლაიმისფერი"
 
 #. interface
 #: crates/ui-egui/src/meeting_dialogs/share.rs
@@ -9272,8 +9106,9 @@ msgstr "სტრიქონთა დაშორება"
 
 #. interface
 #: crates/ui-egui/src/credits.rs
+#, fuzzy
 msgid "Line delta"
-msgstr ""
+msgstr "სტრიქონების სხვაობა"
 
 #. interface
 #: crates/ui-egui/src/sieve_editor.rs
@@ -9331,13 +9166,15 @@ msgstr "სტრიქონი {line}: {said}"
 
 #. interface
 #: crates/ui-egui/src/credits.rs
+#, fuzzy
 msgid "Lines added"
-msgstr ""
+msgstr "დამატებული სტრიქონები"
 
 #. interface
 #: crates/ui-egui/src/credits.rs
+#, fuzzy
 msgid "Lines deleted"
-msgstr ""
+msgstr "წაშლილი სტრიქონები"
 
 #. android, command label, interface, ribbon
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt crates/engine/src/cmd/format.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/security.rs crates/ui-egui/src/signatures.rs
@@ -9356,11 +9193,6 @@ msgstr "ბმულები"
 #, fuzzy
 msgid "List Accounts"
 msgstr "ანგარიშების ჩამოთვლა"
-
-#. command label
-#: crates/engine/src/cmd/people.rs
-msgid "List Address Books"
-msgstr ""
 
 #. command label
 #: crates/engine/src/cmd/calendar_settings.rs
@@ -9416,8 +9248,8 @@ msgstr "დავალებების ჩამოთვლა"
 msgid "List {n}"
 msgstr "სია {n}"
 
-#. android, interface
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarSpeech.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PeopleScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TasksScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TodayScreen.kt crates/ui-egui/src/nav.rs
+#. android
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarSpeech.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PeopleScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TasksScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TodayScreen.kt
 #, fuzzy
 msgid "Loading…"
 msgstr "ჩატვირთვა…"
@@ -9471,11 +9303,6 @@ msgid "Looking at the server's certificate…"
 msgstr "სერვერის სერტიფიკატის შემოწმება…"
 
 #. interface
-#: crates/ui-egui/src/scheduling.rs
-msgid "Looking for a time…"
-msgstr ""
-
-#. interface
 #: crates/ui-egui/src/ribbon.rs
 #, fuzzy
 msgid "Looking for fonts…"
@@ -9519,8 +9346,9 @@ msgstr "ბრენდს ჰგავს."
 
 #. interface
 #: crates/ui-egui/src/reading/react.rs
+#, fuzzy
 msgid "Love"
-msgstr ""
+msgstr "სიყვარული"
 
 #. interface, what a command says
 #: crates/engine/src/cmd/tasks/status.rs crates/ui-egui/src/advanced_search.rs crates/ui-egui/src/forms.rs
@@ -9532,13 +9360,13 @@ msgstr "დაბალი"
 #: crates/engine/src/cmd/compose.rs crates/ui-egui/src/forms.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/tasks_view.rs
 #, fuzzy
 msgid "Low Importance"
-msgstr "დაბალი მნიშვნელობა"
+msgstr "დაბალი პრიორიტეტი"
 
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailRowParts.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MessageHeader.kt crates/ui-egui/src/calendar_view.rs
 #, fuzzy
 msgid "Low importance"
-msgstr "დაბალი მნიშვნელობა"
+msgstr "დაბალი პრიორიტეტი"
 
 #. interface
 #: crates/ui-egui/src/mail_view.rs
@@ -9636,35 +9464,17 @@ msgstr "საფოსტო საქაღალდე: ანგარიშ
 msgid "Mail from another mailbox can't go into an Outbox: the next Send/Receive would send it"
 msgstr "სხვა საფოსტო ყუთის ფოსტა „გასაგზავნებში“ ვერ მოხვდება: შემდეგი გაგზავნა/მიღება მას გაგზავნიდა"
 
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "Mail goes into an online archive only from its own mailbox: move it into that mailbox first"
-msgstr "ფოსტა ონლაინ არქივში მხოლოდ საკუთარი საფოსტო ყუთიდან ხვდება: ჯერ გადაიტანეთ იგი ამ ყუთში"
-
 #. interface
 #: crates/ui-egui/src/dialogs.rs
 #, fuzzy
 msgid "Mail in Junk E-mail still asks first. File › Options turns this off again."
 msgstr "„არასასურველ ფოსტაში“ მოხვედრილი ფოსტა მაინც ჯერ გეკითხებათ. „ფაილი › პარამეტრები“ ამას ისევ გამორთავს."
 
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "Mail in an online archive is copied within the archive: move it out instead"
-msgstr "ონლაინ არქივში არსებული ფოსტა არქივის შიგნით კოპირდება: სანაცვლოდ გადაიტანეთ გარეთ"
-
 #. interface
 #: crates/ui-egui/src/shared_mailboxes.rs
 #, fuzzy
 msgid "Mail in this shared mailbox's Outbox waits: sending from shared mailboxes needs your permission. Use Send/Receive."
 msgstr "ამ საერთო საფოსტო ყუთის „გასაგზავნებში“ არსებული ფოსტა ელოდება: საერთო საფოსტო ყუთებიდან გაგზავნას თქვენი ნებართვა სჭირდება. გამოიყენეთ გაგზავნა/მიღება."
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "Mail isn't copied into an online archive from elsewhere: move it there from its own mailbox"
-msgstr "ფოსტა სხვა ადგილიდან ონლაინ არქივში არ კოპირდება: გადაიტანეთ იგი იქ საკუთარი საფოსტო ყუთიდან"
 
 #. what a command says
 #: crates/model/src/mailbox.rs
@@ -9761,6 +9571,12 @@ msgstr "MailCraft ვერ ინახავს ამ ანგარიშ�
 #, fuzzy
 msgid "MailCraft can't keep this account's rules on its server, so they run on this computer: {why}. {advice}"
 msgstr "MailCraft ვერ შეინახავს ამ ანგარიშის წესებს მის სერვერზე, ამიტომ ისინი ამ კომპიუტერზე სრულდება: {why}. {advice}"
+
+#. interface
+#: crates/ui-egui/src/attachment_open.rs
+#, fuzzy
+msgid "MailCraft can't open {name} because of its file type."
+msgstr "MailCraft-ს არ შეუძლია {name}-ის გახსნა მისი ფაილის ტიპის გამო."
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -10088,6 +9904,11 @@ msgstr "MailCraft {version} არ დაინსტალირდა: აქ 
 msgid "MailCraft's Google Desktop registration is not yet configured for this build."
 msgstr "MailCraft-ის Google Desktop რეგისტრაცია ამ ანაწყობში ჯერ არ არის კონფიგურირებული."
 
+#. what a command says
+#: crates/engine/src/cmd/sieve_replies.rs
+msgid "MailCraft's Sieve script on the server changed again since you chose to replace it: look at it again before replacing it."
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/sieve_replies.rs
 #, fuzzy
@@ -10150,8 +9971,9 @@ msgstr "ხელმოწერა შექმენით ღილაკი�
 
 #. command label
 #: crates/ui-egui/src/lib.rs
+#, fuzzy
 msgid "Make an Item from a Message"
-msgstr ""
+msgstr "წერილიდან ელემენტის შექმნა"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -10194,6 +10016,11 @@ msgstr "წესების მართვა…"
 #, fuzzy
 msgid "Manage Task"
 msgstr "დავალების მართვა"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sieve.rs
+msgid "ManageSieve is made secure with STARTTLS, not encrypted from the first byte"
+msgstr ""
 
 #. why a mail server couldn't be used
 #: crates/net/src/sieve.rs
@@ -10323,12 +10150,6 @@ msgstr "რეგისტრის გათვალისწინება"
 msgid "May"
 msgstr "მაისი"
 
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Mechanism"
-msgstr "მექანიზმი"
-
 #. command label, interface, ribbon, ribbon location
 #: crates/engine/src/cmd/calendar.rs crates/engine/src/cmd/calendar/invitation.rs crates/engine/src/cmd/calendar/meeting.rs crates/engine/src/cmd/calendar/share.rs crates/engine/src/cmd/people.rs crates/ui-egui/src/forms.rs crates/ui-egui/src/lib.rs crates/ui-egui/src/ribbon.rs
 #, fuzzy
@@ -10385,8 +10206,9 @@ msgstr[1] "{n} კონტაქტის გაერთიანება…"
 
 #. interface
 #: crates/ui-egui/src/credits.rs
+#, fuzzy
 msgid "Merged PRs"
-msgstr ""
+msgstr "გაერთიანებული PR-ები"
 
 #. android, interface, name, ribbon, ribbon location
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt crates/engine/src/cmd/compose.rs crates/engine/src/cmd/edit.rs crates/engine/src/cmd/format.rs crates/engine/src/cmd/send_later.rs crates/engine/src/cmd/unsubscribe.rs crates/ui-egui/src/lib.rs crates/ui-egui/src/menubar.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/tasks_view.rs
@@ -10541,12 +10363,6 @@ msgstr "Microsoft 365"
 #, fuzzy
 msgid "Microsoft 365 mail is added as a Microsoft account: you sign in on Microsoft's own page in your browser, and MailCraft never sees your password."
 msgstr "Microsoft 365-ის ფოსტა Microsoft-ის ანგარიშად ემატება: Microsoft-ის საკუთარ გვერდზე შედიხართ ბრაუზერში და MailCraft თქვენს პაროლს ვერასოდეს ხედავს."
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Microsoft 365 or Outlook.com (built in)"
-msgstr "Microsoft 365 ან Outlook.com (ჩაშენებული)"
 
 #. command label
 #: crates/ui-egui/src/lib.rs
@@ -10730,8 +10546,9 @@ msgstr "მობილური"
 
 #. ribbon location
 #: crates/ui-egui/src/lib.rs
+#, fuzzy
 msgid "Module bar"
-msgstr ""
+msgstr "მოდულების ზოლი"
 
 #. date and time, name
 #: crates/i18n/src/date.rs crates/time/src/lib.rs
@@ -10891,7 +10708,7 @@ msgstr "ღონისძიების გადატანა"
 #: crates/engine/src/cmd/folder.rs
 #, fuzzy
 msgid "Move Favorite Up or Down"
-msgstr "რჩეულის ზემოთ ან ქვემოთ გადატანა"
+msgstr "რჩეულის აწევა ან ჩამოწევა"
 
 #. command label, ribbon
 #: crates/engine/src/cmd/folder.rs crates/ui-egui/src/ribbon.rs
@@ -10903,7 +10720,7 @@ msgstr "საქაღალდის გადატანა"
 #: crates/engine/src/cmd/folder.rs
 #, fuzzy
 msgid "Move Folder Up or Down"
-msgstr "საქაღალდის ზემოთ ან ქვემოთ გადატანა"
+msgstr "საქაღალდის აწევა ან ჩამოწევა"
 
 #. interface
 #: crates/ui-egui/src/move_items.rs
@@ -11167,8 +10984,9 @@ msgstr "სახელი"
 
 #. interface
 #: crates/ui-egui/src/credits.rs
+#, fuzzy
 msgid "Name (A–Z)"
-msgstr ""
+msgstr "სახელი (ა–ჰ)"
 
 #. interface
 #: crates/ui-egui/src/account_setup/senders.rs crates/ui-egui/src/dialogs.rs
@@ -11178,8 +10996,9 @@ msgstr "სახელი (არასავალდებულო)"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
+#, fuzzy
 msgid "Name somebody to invite first"
-msgstr ""
+msgstr "ჯერ მიუთითეთ, ვის იწვევთ"
 
 #. interface
 #: crates/ui-egui/src/scheduling.rs
@@ -11235,8 +11054,9 @@ msgstr "ნავიგაციის ზოლი"
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid "Navy"
-msgstr ""
+msgstr "მუქი ლურჯი"
 
 #. interface
 #: crates/ui-egui/src/backstage.rs
@@ -11424,8 +11244,9 @@ msgstr "ახალი საქაღალდე"
 
 #. interface
 #: crates/ui-egui/src/nav.rs
+#, fuzzy
 msgid "New Folder…"
-msgstr ""
+msgstr "ახალი საქაღალდე…"
 
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
@@ -11619,8 +11440,9 @@ msgstr "მომავალი ღონისძიებები"
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MessageSwipe.kt
+#, fuzzy
 msgid "Next message"
-msgstr ""
+msgstr "შემდეგი შეტყობინება"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -11702,8 +11524,9 @@ msgstr "არცერთი ანგარიში არ არის დ�
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid "No account is connected to a mail server yet."
-msgstr ""
+msgstr "საფოსტო სერვერთან ჯერ არცერთი ანგარიში არ არის დაკავშირებული."
 
 #. interface
 #: crates/ui-egui/src/calendar_sync.rs crates/ui-egui/src/favorites_sync.rs crates/ui-egui/src/lib.rs
@@ -11728,12 +11551,6 @@ msgstr "ანგარიში ჯერ არ არის: ფაილი 
 #, fuzzy
 msgid "No account's server keeps a calendar here yet, so there is nowhere to move these to."
 msgstr "აქ ჯერ არცერთი ანგარიშის სერვერი არ ინახავს კალენდარს, ამიტომ მათი გადასატანი ადგილი არ არის."
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "No addresses found: {reason}"
-msgstr "მისამართები ვერ მოიძებნა: {reason}"
 
 #. android, what a command says
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt crates/mobile/src/attachments.rs
@@ -11851,8 +11668,9 @@ msgstr "თარიღის გარეშე"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
+#, fuzzy
 msgid "No day fits this pattern"
-msgstr ""
+msgstr "ამ სქემას არცერთი დღე არ შეესაბამება"
 
 #. interface
 #: crates/ui-egui/src/reading/remote.rs
@@ -11871,11 +11689,6 @@ msgstr "ამ ტელეფონზე ჩამოტვირთული 
 #, fuzzy
 msgid "No due date"
 msgstr "ვადის გარეშე"
-
-#. interface
-#: crates/ui-egui/src/scheduling.rs
-msgid "No earlier time when everybody is free, from today on"
-msgstr ""
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -11908,7 +11721,7 @@ msgid "No folders match"
 msgstr "შესაბამისი საქაღალდე არ არის"
 
 #. interface
-#: crates/ui-egui/src/room_finder.rs crates/ui-egui/src/scheduling.rs
+#: crates/ui-egui/src/scheduling.rs
 #, fuzzy
 msgid "No information"
 msgstr "ინფორმაცია არ არის"
@@ -11969,8 +11782,9 @@ msgstr "ამ დანართის წინასწარი ნახვ
 
 #. interface
 #: crates/ui-egui/src/attachment_preview.rs
+#, fuzzy
 msgid "No preview is available for this attachment."
-msgstr ""
+msgstr "ამ დანართის წინასწარი ნახვა შეუძლებელია."
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Hosted.kt
@@ -12078,7 +11892,7 @@ msgstr "შემოწმებულ ნაწილში მართლწ�
 #: crates/ui-egui/src/spelling.rs
 #, fuzzy
 msgid "No spelling suggestions"
-msgstr "მართლწერის ვარიანტები არ არის"
+msgstr "მართლწერის შეთავაზებები არ არის"
 
 #. interface
 #: crates/ui-egui/src/keep_offline.rs
@@ -12103,13 +11917,6 @@ msgstr "დავალებები არ არის."
 #, fuzzy
 msgid "No testers credited yet."
 msgstr "ტესტერები ჯერ არ არის მოხსენიებული."
-
-#. interface
-#: crates/ui-egui/src/scheduling.rs
-msgid "No time when everybody is free in the next {n} day"
-msgid_plural "No time when everybody is free in the next {n} days"
-msgstr[0] ""
-msgstr[1] ""
 
 #. interface
 #: crates/ui-egui/src/zones.rs
@@ -12203,8 +12010,9 @@ msgstr "ამ წერილებიდან არცერთის გა
 
 #. interface
 #: crates/ui-egui/src/nav.rs
+#, fuzzy
 msgid "None of those messages is in this mailbox any more."
-msgstr ""
+msgstr "იმ წერილებიდან არცერთი ამ საფოსტო ყუთში აღარ არის."
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -12226,8 +12034,9 @@ msgstr "ჩვეულებრივი"
 
 #. interface
 #: crates/ui-egui/src/tasks_view.rs
+#, fuzzy
 msgid "Normal Importance"
-msgstr ""
+msgstr "ჩვეულებრივი პრიორიტეტი"
 
 #. command label, interface
 #: crates/engine/src/cmd/mail.rs crates/ui-egui/src/ribbon.rs
@@ -12335,7 +12144,7 @@ msgstr "Outlook-ის სიაში არ არის: იქ ფერი 
 #: crates/ui-egui/src/backstage.rs
 #, fuzzy
 msgid "Not kept anywhere yet: use Open & Export › Save Mailbox As."
-msgstr "ჯერ არსად ინახება: გამოიყენეთ „გახსნა და ექსპორტირება › საფოსტო ყუთის შენახვა როგორც“."
+msgstr "ჯერ არსად ინახება: გამოიყენეთ „გახსნა და ექსპორტი › საფოსტო ყუთის შენახვა როგორც“."
 
 #. interface
 #: crates/ui-egui/src/check_names.rs
@@ -12560,7 +12369,7 @@ msgid "Nothing was done: what the agent asked about changed after you were asked
 msgstr "არაფერი გაკეთებულა: ის, რასაც აგენტი ეკითხებოდა, შეიცვალა მას შემდეგ, რაც გკითხეს."
 
 #. interface
-#: crates/ui-egui/src/dialogs.rs
+#: crates/ui-egui/src/attachment_open.rs crates/ui-egui/src/dialogs.rs
 #, fuzzy
 msgid "Nothing was done: what you were asked about has changed since. Ask again."
 msgstr "არაფერი გაკეთებულა: ის, რაზეც გკითხეთ, მას შემდეგ შეიცვალა. სცადეთ თავიდან."
@@ -12630,18 +12439,6 @@ msgstr "დანომრილი სია"
 #, fuzzy
 msgid "Numbering"
 msgstr "დანომვრა"
-
-#. command label
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
-msgid "OAuth Built-in Settings"
-msgstr "OAuth-ის ჩაშენებული პარამეტრები"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "OAuth settings"
-msgstr "OAuth-ის პარამეტრები"
 
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AboutPages.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AccountDialogs.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/calendar_sync.rs crates/ui-egui/src/check_names.rs crates/ui-egui/src/dialogs.rs crates/ui-egui/src/forms.rs crates/ui-egui/src/merge_contacts.rs crates/ui-egui/src/move_items.rs crates/ui-egui/src/reminder_dialog.rs crates/ui-egui/src/send_later.rs crates/ui-egui/src/settings_notice.rs crates/ui-egui/src/software.rs crates/ui-egui/src/updates.rs
@@ -12791,7 +12588,7 @@ msgstr "ამ კომპიუტერზე. მათ საკუთა�
 #: crates/ui-egui/src/account_setup.rs crates/ui-egui/src/backstage.rs
 #, fuzzy
 msgid "On this device only: no mail server"
-msgstr "მხოლოდ ამ მოწყობილობაზე: საფოსტო სერვერის გარეშე"
+msgstr "მხოლოდ ამ მოწყობილობაზე: სერვერის გარეშე"
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PeopleScreen.kt
@@ -12866,12 +12663,6 @@ msgid "Online"
 msgstr "ონლაინ"
 
 #. interface
-#: crates/ui-egui/src/nav.rs
-#, fuzzy
-msgid "Online Archive – {address}"
-msgstr "ონლაინ არქივი – {address}"
-
-#. interface
 #: crates/ui-egui/src/calendar_view.rs
 #, fuzzy
 msgid "Online meeting"
@@ -12936,12 +12727,6 @@ msgstr "მხოლოდ ამ დღისთვის, პასუხი�
 #, fuzzy
 msgid "Only if nobody replies"
 msgstr "მხოლოდ თუ არავინ უპასუხებს"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Only if your provider gave one"
-msgstr "მხოლოდ თუ პროვაიდერმა მოგცათ"
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -13064,7 +12849,7 @@ msgid "Only while MailCraft isn't the window in front, and only for the Inboxes 
 msgstr "მხოლოდ მაშინ, როცა MailCraft წინა პლანზე არ არის, და მხოლოდ თქვენი საკუთარი ანგარიშების „შემოსულებისთვის“."
 
 #. android, interface, ribbon
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingScreen.kt crates/ui-egui/src/attachment_open.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/dialogs.rs crates/ui-egui/src/reading.rs crates/ui-egui/src/ribbon.rs
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingScreen.kt crates/ui-egui/src/attachment_open.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/compose.rs crates/ui-egui/src/dialogs.rs crates/ui-egui/src/reading.rs crates/ui-egui/src/ribbon.rs
 #, fuzzy
 msgid "Open"
 msgstr "გახსნა"
@@ -13083,7 +12868,7 @@ msgstr ""
 #: crates/engine/src/cmd/calendar_opened.rs crates/engine/src/cmd/file.rs crates/ui-egui/src/backstage.rs crates/ui-egui/src/lib.rs
 #, fuzzy
 msgid "Open & Export"
-msgstr "გახსნა და ექსპორტირება"
+msgstr "გახსნა და ექსპორტი"
 
 #. command label
 #: crates/engine/src/cmd/mail.rs
@@ -13114,6 +12899,12 @@ msgstr "დიალოგის გახსნა"
 #, fuzzy
 msgid "Open Draft"
 msgstr "მონახაზის გახსნა"
+
+#. command label
+#: crates/ui-egui/src/lib.rs
+#, fuzzy
+msgid "Open Draft Attachment"
+msgstr "დრაფტის დანართის გახსნა"
 
 #. interface
 #: crates/ui-egui/src/data_removal.rs
@@ -13150,18 +12941,6 @@ msgstr "პასუხებისა და გადაგზავნებ�
 #, fuzzy
 msgid "Open Result from the Server"
 msgstr "შედეგის სერვერიდან გახსნა"
-
-#. ribbon
-#: crates/ui-egui/src/ribbon.rs
-msgid ""
-"Open Shared\n"
-"Address Book"
-msgstr ""
-
-#. command label, interface
-#: crates/engine/src/cmd/contacts_opened.rs crates/ui-egui/src/dialogs.rs
-msgid "Open Shared Address Book"
-msgstr ""
 
 #. command label, interface
 #: crates/engine/src/cmd/calendar_opened.rs crates/ui-egui/src/backstage.rs crates/ui-egui/src/dialogs.rs
@@ -13321,20 +13100,9 @@ msgstr "გაიხსნას {name}? {why}"
 
 #. interface
 #: crates/ui-egui/src/open_shared.rs
-msgid "Opened the address book of {address}. It is read at the next Send/Receive, and kept on this computer only."
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/open_shared.rs
 #, fuzzy
 msgid "Opened the calendar of {name}. It is listed under Shared Calendars, on this computer only."
 msgstr "გაიხსნა კალენდარი ({name}). ის ჩამოთვლილია „გაზიარებულ კალენდრებში“, მხოლოდ ამ კომპიუტერზე."
-
-#. interface
-#: crates/ui-egui/src/dialogs.rs
-#, fuzzy
-msgid "Opened with {owner}'s server and password. It needs Full Access to the mailbox, which your organisation's administrator gives. What you change in it goes to it."
-msgstr "გაიხსნა ანგარიშის {owner} სერვერითა და პაროლით. მას საფოსტო ყუთზე სრული წვდომა (Full Access) სჭირდება, რომელსაც თქვენი ორგანიზაციის ადმინისტრატორი იძლევა. რასაც მასში შეცვლით, იქვე აისახება."
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
@@ -13386,8 +13154,9 @@ msgstr "ბრაუზერში ხსნის GitHub-ის შევს�
 
 #. interface
 #: crates/ui-egui/src/account_setup/help.rs
+#, fuzzy
 msgid "Opens Microsoft's approval page in your browser. Sign in there with an administrator account and accept; MailCraft carries on by itself."
-msgstr ""
+msgstr "ბრაუზერში ხსნის Microsoft-ის თანხმობის გვერდს. იქ შედით ადმინისტრატორის ანგარიშით და დაეთანხმეთ; MailCraft დანარჩენს თავად გააგრძელებს."
 
 #. interface
 #: crates/ui-egui/src/reading/sharing.rs
@@ -13415,8 +13184,9 @@ msgstr "ან იქნებ ერთ-ერთი ესენია?"
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid "Orange"
-msgstr ""
+msgstr "ნარინჯისფერი"
 
 #. interface
 #: crates/ui-egui/src/i18n.rs
@@ -13504,8 +13274,9 @@ msgstr "სხვა შემთხვევაში შეტყობინ�
 
 #. interface
 #: crates/ui-egui/src/reading/attachment_pictures.rs
+#, fuzzy
 msgid "Otherwise they are shown by their names. In Junk E-mail they are always shown by their names."
-msgstr ""
+msgstr "სხვა შემთხვევაში ისინი სახელებით ჩანს. „არასასურველ ფოსტაში“ ისინი ყოველთვის სახელებით ჩანს."
 
 #. interface
 #: crates/ui-egui/src/backstage.rs
@@ -13589,7 +13360,7 @@ msgstr "ორგანიზაციის გარეთ"
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TasksScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TodayScreen.kt crates/engine/src/session.rs crates/ui-egui/src/tasks_view.rs
 #, fuzzy
 msgid "Overdue"
-msgstr "ვადაგადაცილებული"
+msgstr "ვადაგასული"
 
 #. interface
 #: crates/ui-egui/src/tasks_view.rs
@@ -13617,8 +13388,9 @@ msgstr "PM"
 
 #. interface
 #: crates/ui-egui/src/credits.rs
+#, fuzzy
 msgid "PRs"
-msgstr ""
+msgstr "PR-ები"
 
 #. command label
 #: crates/engine/src/cmd/mail.rs
@@ -13736,8 +13508,9 @@ msgstr "სქემა"
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid "Peach"
-msgstr ""
+msgstr "ატმისფერი"
 
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Shell.kt crates/ui-egui/src/folder_properties.rs crates/ui-egui/src/nav.rs crates/ui-egui/src/ribbon.rs
@@ -13746,7 +13519,7 @@ msgid "Pending development"
 msgstr "დამუშავების მოლოდინში"
 
 #. android, command label, interface, name, ribbon location
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Navigation.kt crates/engine/src/cmd/contacts_opened.rs crates/engine/src/cmd/people.rs crates/engine/src/cmd/people_merge.rs crates/engine/src/cmd/view.rs crates/engine/src/session.rs crates/ui-egui/src/people_view.rs
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Navigation.kt crates/engine/src/cmd/people.rs crates/engine/src/cmd/people_merge.rs crates/engine/src/cmd/view.rs crates/engine/src/session.rs crates/ui-egui/src/people_view.rs
 #, fuzzy
 msgid "People"
 msgstr "ადამიანები"
@@ -13915,8 +13688,9 @@ msgstr "სიის თავში ჩამაგრება"
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid "Pink"
-msgstr ""
+msgstr "ვარდისფერი"
 
 #. interface
 #: crates/ui-egui/src/mail_view.rs
@@ -13984,7 +13758,7 @@ msgstr "ცალკე გამოტანა"
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "Postal code"
-msgstr "საფოსტო ინდექსი"
+msgstr "ინდექსი"
 
 #. ribbon, ribbon location
 #: crates/engine/src/cmd/send_later.rs crates/engine/src/cmd/send_receive.rs crates/ui-egui/src/ribbon.rs
@@ -14018,8 +13792,9 @@ msgstr "დანართის წინასწარი ნახვა"
 
 #. interface
 #: crates/ui-egui/src/attachment_preview.rs
+#, fuzzy
 msgid "Preview File"
-msgstr ""
+msgstr "ფაილის წინასწარი ნახვა"
 
 #. interface
 #: crates/ui-egui/src/attachment_preview.rs
@@ -14041,8 +13816,9 @@ msgstr "დანართების წინასწარი ნახვ�
 
 #. interface
 #: crates/ui-egui/src/attachment_preview.rs
+#, fuzzy
 msgid "Preview files only when you trust the sender."
-msgstr ""
+msgstr "ფაილები წინასწარ ნახეთ მხოლოდ მაშინ, როცა გამგზავნს ენდობით."
 
 #. interface
 #: crates/ui-egui/src/backstage.rs
@@ -14076,8 +13852,9 @@ msgstr "წინა გვერდი"
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MessageSwipe.kt
+#, fuzzy
 msgid "Previous message"
-msgstr ""
+msgstr "წინა შეტყობინება"
 
 #. interface
 #: crates/ui-egui/src/nav.rs
@@ -14219,8 +13996,9 @@ msgstr "სხვა ადამიანების საჯარო გა
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid "Purple"
-msgstr ""
+msgstr "იისფერი"
 
 #. interface
 #: crates/ui-egui/src/i18n.rs
@@ -14290,8 +14068,9 @@ msgstr "პერიოდი"
 
 #. command label, interface
 #: crates/engine/src/cmd/react.rs crates/ui-egui/src/reading/react.rs
+#, fuzzy
 msgid "React"
-msgstr ""
+msgstr "რეაქცია"
 
 #. interface
 #: crates/ui-egui/src/advanced_search.rs
@@ -14322,16 +14101,6 @@ msgstr "წაკითხვის სტატუსი"
 #, fuzzy
 msgid "Read the Favorites from Outlook again now"
 msgstr "რჩეულების Outlook-იდან ახლავე ხელახლა წაკითხვა"
-
-#. interface
-#: crates/ui-egui/src/dialogs.rs
-msgid "Read with {owner}'s sign-in, for as long as you keep it: the person has to have shared their address book with you. It is kept on this computer only, and read at the next Send/Receive."
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/dialogs.rs
-msgid "Read with {owner}'s sign-in, for as long as you keep it: the person has to have shared their calendar with you. It is kept on this computer only, and read at the next Send/Receive."
-msgstr ""
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
@@ -14369,18 +14138,21 @@ msgstr "კითხვის პანელი"
 
 #. interface
 #: crates/ui-egui/src/chrome.rs
+#, fuzzy
 msgid "Reading pane at the bottom"
-msgstr ""
+msgstr "კითხვის პანელი ქვემოთ"
 
 #. interface
 #: crates/ui-egui/src/chrome.rs
+#, fuzzy
 msgid "Reading pane off"
-msgstr ""
+msgstr "კითხვის პანელი გამორთულია"
 
 #. interface
 #: crates/ui-egui/src/chrome.rs
+#, fuzzy
 msgid "Reading pane on the right"
-msgstr ""
+msgstr "კითხვის პანელი მარჯვნივ"
 
 #. interface
 #: crates/ui-egui/src/shared_mailboxes.rs
@@ -14524,12 +14296,6 @@ msgstr "გამეორება"
 msgid "Red category"
 msgstr "წითელი კატეგორია"
 
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Redirect port"
-msgstr "გადამისამართების პორტი"
-
 #. command label, name
 #: crates/engine/src/cmd/edit.rs crates/ui-egui/src/menubar.rs
 #, fuzzy
@@ -14549,7 +14315,7 @@ msgid "Redo {what}"
 msgstr "ხელახლა შესრულება: {what}"
 
 #. interface
-#: crates/ui-egui/src/nav.rs crates/ui-egui/src/security.rs
+#: crates/ui-egui/src/security.rs
 #, fuzzy
 msgid "Refresh"
 msgstr "განახლება"
@@ -14559,12 +14325,6 @@ msgstr "განახლება"
 #, fuzzy
 msgid "Refresh Your Certificates and Keys"
 msgstr "თქვენი სერტიფიკატებისა და გასაღებების განახლება"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Register http://127.0.0.1 with any port (or the one above) as the redirect address."
-msgstr "დაარეგისტრირეთ http://127.0.0.1 ნებისმიერი პორტით (ან ზემოთ მითითებულით) გადამისამართების მისამართად."
 
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
@@ -14656,10 +14416,13 @@ msgstr "წაშლა"
 
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid ""
 "Remove\n"
 "Attachment"
 msgstr ""
+"დანართის\n"
+"წაშლა"
 
 #. command label, interface
 #: crates/engine/src/cmd/account.rs crates/ui-egui/src/dialogs.rs
@@ -14668,7 +14431,7 @@ msgid "Remove Account"
 msgstr "ანგარიშის წაშლა"
 
 #. command label, interface
-#: crates/engine/src/cmd/compose.rs crates/engine/src/cmd/mail.rs crates/ui-egui/src/reading.rs
+#: crates/engine/src/cmd/compose.rs crates/engine/src/cmd/mail.rs crates/ui-egui/src/compose.rs crates/ui-egui/src/reading.rs
 #, fuzzy
 msgid "Remove Attachment"
 msgstr "დანართის წაშლა"
@@ -14681,10 +14444,13 @@ msgstr "ყველაფრის წაშლა"
 
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid ""
 "Remove Imported\n"
 "Duplicates"
 msgstr ""
+"იმპორტირებული\n"
+"დუბლიკატების წაშლა"
 
 #. command label, interface
 #: crates/engine/src/cmd/imported_dupes.rs crates/ui-egui/src/dialogs.rs
@@ -14745,11 +14511,6 @@ msgstr "გამეორების მოხსნა"
 #, fuzzy
 msgid "Remove Reminder"
 msgstr "შეხსენების მოხსნა"
-
-#. command label
-#: crates/engine/src/cmd/contacts_opened.rs
-msgid "Remove Shared Address Book"
-msgstr ""
 
 #. command label, interface
 #: crates/engine/src/cmd/calendar_opened.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/dialogs.rs
@@ -14935,8 +14696,9 @@ msgstr "საქაღალდის სახელის შეცვლა"
 
 #. interface
 #: crates/ui-egui/src/nav.rs
+#, fuzzy
 msgid "Rename Folder…"
-msgstr ""
+msgstr "საქაღალდის სახელის შეცვლა…"
 
 #. command label
 #: crates/engine/src/cmd/signature.rs
@@ -14948,25 +14710,19 @@ msgstr "ხელმოწერის სახელის შეცვლა"
 #: crates/model/src/sync/progress.rs
 #, fuzzy
 msgid "Renaming a category on the server"
-msgstr "კატეგორიის გადარქმევა სერვერზე"
+msgstr "კატეგორიის სახელის შეცვლა სერვერზე"
 
 #. what a command says
 #: crates/engine/src/cmd/graph_mail.rs
 #, fuzzy
 msgid "Renaming a category on the server: {done} of {total} messages"
-msgstr "კატეგორიის გადარქმევა სერვერზე: {done} / {total} შეტყობინება"
+msgstr "კატეგორიის სახელის შეცვლა სერვერზე: {done} / {total} წერილი"
 
 #. interface
 #: crates/ui-egui/src/lib.rs
 #, fuzzy
 msgid "Renewing the sign-in…"
 msgstr "შესვლის განახლება…"
-
-#. interface
-#: crates/ui-egui/src/lib.rs
-#, fuzzy
-msgid "Renewing the sign-in… If it can't be renewed, sign in on the page that opens in your browser."
-msgstr "მიმდინარეობს შესვლის განახლება… თუ განახლება ვერ მოხერხდა, შედით გვერდზე, რომელიც ბრაუზერში გაიხსნება."
 
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt crates/ui-egui/src/forms.rs crates/ui-egui/src/meeting_dialogs/share.rs
@@ -15114,11 +14870,6 @@ msgstr "მოთხოვნა „გასაგზავნებშია�
 msgid "Required"
 msgstr "სავალდებულო"
 
-#. interface
-#: crates/ui-egui/src/autopick.rs
-msgid "Required people"
-msgstr ""
-
 #. command label, interface, ribbon
 #: crates/engine/src/cmd/compose.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/ribbon.rs
 #, fuzzy
@@ -15139,7 +14890,7 @@ msgstr ""
 #: crates/ui-egui/src/compose/picture_size.rs
 #, fuzzy
 msgid "Reset Size"
-msgstr "ზომის აღდგენა"
+msgstr "ზომის ჩამოყრა"
 
 #. command label
 #: crates/engine/src/cmd/view.rs
@@ -15195,16 +14946,11 @@ msgstr "განახლებისთვის გადატვირთ�
 msgid "Restart to update is the owner's click."
 msgstr "განახლებისთვის გადატვირთვა მფლობელის გადასაწყვეტია."
 
-#. command label
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
-msgid "Restore Default OAuth Settings"
-msgstr "OAuth-ის ნაგულისხმევი პარამეტრების აღდგენა"
-
 #. interface
 #: crates/ui-egui/src/attachment_preview.rs
+#, fuzzy
 msgid "Restore attachment preview warnings"
-msgstr ""
+msgstr "დანართის წინასწარი ნახვის გაფრთხილებების აღდგენა"
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AccountScreens.kt
@@ -15214,8 +14960,9 @@ msgstr "ხელახლა ცდა"
 
 #. command label
 #: crates/engine/src/cmd/account.rs
+#, fuzzy
 msgid "Retry Skipped Messages"
-msgstr ""
+msgstr "გამოტოვებული წერილების ხელახლა ცდა"
 
 #. command label
 #: crates/engine/src/cmd/snooze.rs
@@ -15262,12 +15009,6 @@ msgstr "განხილვა"
 #, fuzzy
 msgid "Review certificate…"
 msgstr "სერტიფიკატის განხილვა…"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Revocation address (optional)"
-msgstr "გაუქმების მისამართი (არასავალდებულო)"
 
 #. interface
 #: crates/ui-egui/src/reading/signature.rs
@@ -15326,21 +15067,6 @@ msgstr "მარჯვნივ"
 #, fuzzy
 msgid "Right before or after: {items}"
 msgstr "უშუალოდ ადრე ან შემდეგ: {items}"
-
-#. interface
-#: crates/ui-egui/src/scheduling.rs
-msgid "Room"
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/room_finder.rs
-msgid "Room Finder"
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-msgid "Rooms"
-msgstr ""
 
 #. interface
 #: crates/ui-egui/src/sieve_editor.rs
@@ -15474,13 +15200,15 @@ msgstr "SHA-256 ანაბეჭდი"
 
 #. interface
 #: crates/ui-egui/src/reading/react.rs
+#, fuzzy
 msgid "Sad"
-msgstr ""
+msgstr "სევდა"
 
 #. interface
 #: crates/ui-egui/src/forms/junk.rs
+#, fuzzy
 msgid "Safe Senders"
-msgstr ""
+msgstr "სანდო გამგზავნები"
 
 #. interface
 #: crates/ui-egui/src/backstage.rs
@@ -15534,10 +15262,13 @@ msgstr "შენახვა და დახურვა"
 
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid ""
 "Save All\n"
 "Attachments"
 msgstr ""
+"ყველა დანართის\n"
+"შენახვა"
 
 #. command label
 #: crates/engine/src/cmd/mail.rs
@@ -15673,8 +15404,9 @@ msgstr "ფაილად შენახვა"
 
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid "Save to Computer"
-msgstr ""
+msgstr "კომპიუტერში შენახვა"
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt
@@ -15708,8 +15440,9 @@ msgstr "წერილი შენახულია ფაილში {name}
 
 #. interface
 #: crates/ui-egui/src/files.rs
+#, fuzzy
 msgid "Saved the message to {name}, written from what this computer keeps of it: not byte for byte as it was received"
-msgstr ""
+msgstr "წერილი შეინახა აქ: {name}. ის ჩაიწერა იმით, რაც ამ კომპიუტერზე ინახება, და ბაიტ-ბაიტ არ ემთხვევა მიღებულს"
 
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt crates/ui-egui/src/compose.rs
@@ -15853,12 +15586,6 @@ msgstr "დაეთანხმეთ მხოლოდ მაშინ, თ�
 msgid "Says what you and your organisation's administrator can do, and lets an administrator approve MailCraft on Microsoft's page from here."
 msgstr "აჩვენებს, რისი გაკეთება შეგიძლიათ თქვენ და თქვენი ორგანიზაციის ადმინისტრატორს, და ადმინისტრატორს საშუალებას აძლევს, აქედანვე დაამტკიცოს MailCraft Microsoft-ის გვერდზე."
 
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Scopes"
-msgstr "არეები"
-
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
 #, fuzzy
@@ -15967,7 +15694,7 @@ msgstr "ფოსტაში ძიება"
 #: crates/ui-egui/src/chrome.rs
 #, fuzzy
 msgid "Search mail (try from:, has:attachment, is:unread)"
-msgstr "ფოსტაში ძიება (სცადეთ from:, has:attachment, is:unread)"
+msgstr "ძიება: from:, has:attachment, is:unread"
 
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PeopleScreen.kt crates/ui-egui/src/chrome.rs
@@ -16144,7 +15871,7 @@ msgid "Send & Receive"
 msgstr "გაგზავნა და მიღება"
 
 #. ribbon location
-#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/auto_replies.rs crates/engine/src/cmd/calendar_settings.rs crates/engine/src/cmd/calendar_subscribed.rs crates/engine/src/cmd/categories_remote.rs crates/engine/src/cmd/contacts_remote.rs crates/engine/src/cmd/dav_sync.rs crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/followup.rs crates/engine/src/cmd/graph_mail.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/jmap_mail.rs crates/engine/src/cmd/remote.rs crates/engine/src/cmd/rules_remote.rs crates/engine/src/cmd/send_later.rs crates/engine/src/cmd/send_receive.rs crates/engine/src/cmd/sieve_replies.rs crates/engine/src/cmd/snooze.rs crates/engine/src/cmd/sync_progress.rs crates/engine/src/cmd/tasks_remote.rs crates/ui-egui/src/lib.rs
+#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/auto_replies.rs crates/engine/src/cmd/calendar_settings.rs crates/engine/src/cmd/calendar_subscribed.rs crates/engine/src/cmd/categories_remote.rs crates/engine/src/cmd/contacts_remote.rs crates/engine/src/cmd/dav_sync.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/followup.rs crates/engine/src/cmd/graph_mail.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/jmap_mail.rs crates/engine/src/cmd/remote.rs crates/engine/src/cmd/rules_remote.rs crates/engine/src/cmd/send_later.rs crates/engine/src/cmd/send_receive.rs crates/engine/src/cmd/sieve_replies.rs crates/engine/src/cmd/snooze.rs crates/engine/src/cmd/sync_progress.rs crates/engine/src/cmd/tasks_remote.rs crates/ui-egui/src/lib.rs
 #, fuzzy
 msgid "Send / Receive"
 msgstr "გაგზავნა / მიღება"
@@ -16370,7 +16097,7 @@ msgid "Send your password to another server?"
 msgstr "გავუგზავნო თქვენი პაროლი სხვა სერვერს?"
 
 #. interface
-#: crates/ui-egui/src/account_setup.rs crates/ui-egui/src/account_setup/exchange.rs
+#: crates/ui-egui/src/account_setup/exchange.rs
 #, fuzzy
 msgid "Send your sign-in to another server?"
 msgstr "გავუგზავნო თქვენი შესვლის მონაცემები სხვა სერვერს?"
@@ -16446,12 +16173,6 @@ msgstr "გაგზავნა/მიღება Microsoft-ში შედ�
 #, fuzzy
 msgid "Send/Receive stopped unexpectedly"
 msgstr "გაგზავნა/მიღება მოულოდნელად შეწყდა"
-
-#. interface
-#: crates/ui-egui/src/ews_mail.rs
-#, fuzzy
-msgid "Send/Receive the mailbox to sign in and read its online archive"
-msgstr "შეასრულეთ გაგზავნა/მიღება საფოსტო ყუთისთვის, რომ შეხვიდეთ და წაიკითხოთ მისი ონლაინ არქივი"
 
 #. command label
 #: crates/engine/src/cmd/ews_mail.rs
@@ -16663,7 +16384,7 @@ msgstr "გამგზავნის მისამართების დ�
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "Set importance"
-msgstr "მნიშვნელობის დაყენება"
+msgstr "პრიორიტეტის დაყენება"
 
 #. interface
 #: crates/ui-egui/src/account_setup/help.rs
@@ -16709,15 +16430,19 @@ msgstr "რამდენიმე ტექსტი: გამოყავი
 
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid ""
 "Shade\n"
 "Rows"
 msgstr ""
+"სტრიქონების\n"
+"შეფერადება"
 
 #. command label
 #: crates/engine/src/cmd/view/display.rs
+#, fuzzy
 msgid "Shade Alternate Rows"
-msgstr ""
+msgstr "ყოველი მეორე სტრიქონის შეფერადება"
 
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
@@ -16739,8 +16464,9 @@ msgstr "გაზიარებული კალენდრები"
 
 #. interface
 #: crates/ui-egui/src/server_sync.rs
+#, fuzzy
 msgid "Shared Mailboxes and Calendars"
-msgstr ""
+msgstr "საერთო საფოსტო ყუთები და კალენდრები"
 
 #. interface
 #: crates/ui-egui/src/backstage.rs
@@ -16768,23 +16494,27 @@ msgstr "საერთო საფოსტო ყუთები"
 
 #. interface
 #: crates/ui-egui/src/server_sync.rs
+#, fuzzy
 msgid "Shared mailboxes and calendars weren't allowed: {error}"
-msgstr ""
+msgstr "საერთო საფოსტო ყუთებისა და კალენდრების ნებართვა არ გაიცა: {error}"
 
 #. interface
 #: crates/ui-egui/src/shared_permission.rs
+#, fuzzy
 msgid "Shared mailboxes and calendars: asking for your permission…"
-msgstr ""
+msgstr "საერთო საფოსტო ყუთები და კალენდრები: თქვენი ნებართვის მოთხოვნა…"
 
 #. interface
 #: crates/ui-egui/src/shared_permission.rs
+#, fuzzy
 msgid "Shared mailboxes and calendars: not allowed ({why})"
-msgstr ""
+msgstr "საერთო საფოსტო ყუთები და კალენდრები: ნებართვა არ არის ({why})"
 
 #. interface
 #: crates/ui-egui/src/shared_permission.rs
+#, fuzzy
 msgid "Shared mailboxes and calendars: waiting for your permission"
-msgstr ""
+msgstr "საერთო საფოსტო ყუთები და კალენდრები: ელოდება თქვენს ნებართვას"
 
 #. android, ribbon location
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/SettingsScreen.kt crates/engine/src/cmd/calendar/share.rs
@@ -16794,10 +16524,13 @@ msgstr "ჩვენება"
 
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid ""
 "Show\n"
 "Message"
 msgstr ""
+"წერილის\n"
+"ჩვენება"
 
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
@@ -16823,7 +16556,7 @@ msgstr ""
 #: crates/engine/src/cmd/calendar.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/forms.rs crates/ui-egui/src/ribbon.rs
 #, fuzzy
 msgid "Show As"
-msgstr "ჩვენება როგორც"
+msgstr "სტატუსი"
 
 #. command label
 #: crates/engine/src/cmd/calendar.rs
@@ -16863,14 +16596,9 @@ msgstr "MailCraft-ის ჩვენება"
 
 #. command label
 #: crates/ui-egui/src/lib.rs
-msgid "Show Message"
-msgstr ""
-
-#. command label, interface
-#: crates/engine/src/cmd/ews_mail.rs crates/ui-egui/src/nav.rs
 #, fuzzy
-msgid "Show Online Archive"
-msgstr "ონლაინ არქივის ჩვენება"
+msgid "Show Message"
+msgstr "წერილის ჩვენება"
 
 #. command label, interface
 #: crates/engine/src/cmd/calendar_settings.rs crates/ui-egui/src/calendar_view.rs
@@ -16886,8 +16614,9 @@ msgstr "Outlook-ის რჩეულების ჩვენება"
 
 #. command label
 #: crates/ui-egui/src/lib.rs
+#, fuzzy
 msgid "Show Picture Attachments as Pictures"
-msgstr ""
+msgstr "სურათის დანართების სურათებად ჩვენება"
 
 #. command label
 #: crates/engine/src/cmd/sync_progress.rs
@@ -16938,7 +16667,7 @@ msgid "Show a desktop alert for reminders"
 msgstr "შეხსენებებისას სამუშაო მაგიდაზე შეტყობინების ჩვენება"
 
 #. interface
-#: crates/ui-egui/src/alerts.rs
+#: crates/ui-egui/src/account_setup.rs crates/ui-egui/src/alerts.rs
 #, fuzzy
 msgid "Show a desktop alert when new mail arrives"
 msgstr "ახალი ფოსტის მოსვლისას სამუშაო მაგიდაზე შეტყობინების ჩვენება"
@@ -16953,7 +16682,7 @@ msgstr "შეტყობინების ჩვენება, როცა
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "Show as"
-msgstr "ჩვენება როგორც"
+msgstr "სტატუსი"
 
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
@@ -17039,8 +16768,9 @@ msgstr "პაროლის ჩვენება"
 
 #. interface
 #: crates/ui-egui/src/reading/attachment_pictures.rs
+#, fuzzy
 msgid "Show picture attachments as pictures"
-msgstr ""
+msgstr "სურათის დანართების სურათებად ჩვენება"
 
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PicturesSettings.kt crates/ui-egui/src/sender_images.rs
@@ -17094,7 +16824,7 @@ msgstr "ამ მიმოწერის წერილების ჩვე
 #: crates/ui-egui/src/compose/picture_size.rs
 #, fuzzy
 msgid "Show the picture at its own size"
-msgstr "სურათის საკუთარი ზომით ჩვენება"
+msgstr "სურათის ჩვენება რეალური ზომით"
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt
@@ -17377,27 +17107,10 @@ msgid "Sign in with Send/Receive first."
 msgstr "ჯერ შედით გაგზავნა/მიღებით."
 
 #. interface
-#: crates/ui-egui/src/room_finder.rs
-msgid "Sign in with Send/Receive to see the rooms."
-msgstr ""
-
-#. interface
 #: crates/ui-egui/src/scheduling.rs
 #, fuzzy
 msgid "Sign in with Send/Receive to see when other people are busy."
 msgstr "შედით „გაგზავნა/მიღებით“, რომ ნახოთ, როდის არიან სხვები დაკავებული."
-
-#. interface
-#: crates/ui-egui/src/account_setup.rs
-#, fuzzy
-msgid "Sign in with your identity provider (OAuth 2.0) instead"
-msgstr "სანაცვლოდ შესვლა თქვენი იდენტობის პროვაიდერით (OAuth 2.0)"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Sign-in address"
-msgstr "შესვლის მისამართი"
 
 #. interface
 #: crates/ui-egui/src/lib.rs
@@ -17461,13 +17174,15 @@ msgstr "შესვლამ არაფერი დააბრუნა"
 
 #. interface
 #: crates/ui-egui/src/account_setup/help.rs
+#, fuzzy
 msgid "Signing in didn't work"
-msgstr ""
+msgstr "შესვლა ვერ მოხერხდა"
 
 #. interface
 #: crates/ui-egui/src/account_setup/help.rs
+#, fuzzy
 msgid "Signing in happens on Microsoft's page in a web browser, and none could be started on this computer. Check that it has a default browser, then try again."
-msgstr ""
+msgstr "შესვლა ბრაუზერში, Microsoft-ის გვერდზე ხდება, ამ კომპიუტერზე კი ვერცერთი ბრაუზერი ვერ გაეშვა. შეამოწმეთ, აქვს თუ არა მას ნაგულისხმევი ბრაუზერი, შემდეგ კი კიდევ სცადეთ."
 
 #. interface
 #: crates/ui-egui/src/lib.rs
@@ -17561,8 +17276,9 @@ msgstr "გამოტოვებული"
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid "Sky"
-msgstr ""
+msgstr "ცისფერი"
 
 #. name
 #: crates/model/src/calendar.rs
@@ -17736,7 +17452,7 @@ msgstr "მართლწერის ენა"
 #: crates/ui-egui/src/spelling.rs
 #, fuzzy
 msgid "Spelling suggestions"
-msgstr "მართლწერის ვარიანტები"
+msgstr "მართლწერის შეთავაზებები"
 
 #. interface
 #: crates/ui-egui/src/calendar_view.rs
@@ -17760,7 +17476,7 @@ msgstr "ხელახლა დაწყება დეტალებიდ�
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "Start date"
-msgstr "დაწყების თარიღი"
+msgstr "დაწყება"
 
 #. what a command says
 #: crates/engine/src/cmd/tasks/status.rs
@@ -17802,7 +17518,7 @@ msgstr "იწყებს ახალ წერილს, რომელშ�
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "State or region"
-msgstr "შტატი ან რეგიონი"
+msgstr "შტატი/რეგიონი"
 
 #. ribbon location
 #: crates/ui-egui/src/lib.rs
@@ -18022,13 +17738,15 @@ msgstr "კვირა"
 
 #. interface
 #: crates/ui-egui/src/reading/react.rs
+#, fuzzy
 msgid "Surprised"
-msgstr ""
+msgstr "გაკვირვება"
 
 #. command label
 #: crates/ui-egui/src/lib.rs
+#, fuzzy
 msgid "Swipe Action"
-msgstr ""
+msgstr "გასრიალების მოქმედება"
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Navigation.kt
@@ -18038,8 +17756,9 @@ msgstr "გასრიალების მოქმედებები"
 
 #. interface
 #: crates/ui-egui/src/backstage.rs
+#, fuzzy
 msgid "Swipe horizontally over a message to run its chosen action. On Windows, a horizontal mouse wheel can also trigger it."
-msgstr ""
+msgstr "არჩეული მოქმედების შესასრულებლად წერილზე ჰორიზონტალურად გაასრიალეთ. Windows-ზე მას თაგვის ჰორიზონტალური ბორბალიც გაუშვებს."
 
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/SettingsScreen.kt crates/ui-egui/src/backstage.rs
@@ -18294,7 +18013,7 @@ msgid "Tell MailCraft's makers what went wrong, on GitHub or by email. You check
 msgstr "აცნობეთ MailCraft-ის შემქმნელებს, რა მოხდა არასწორად, GitHub-ზე ან ელფოსტით. მოხსენებას თავად ამოწმებთ და აგზავნით."
 
 #. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#: crates/ui-egui/src/account_setup.rs
 #, fuzzy
 msgid "Tenant"
 msgstr "ტენანტი"
@@ -18522,11 +18241,6 @@ msgid "That is not a sender's address"
 msgstr "ეს გამგზავნის მისამართი არ არის"
 
 #. what a command says
-#: crates/engine/src/cmd/contacts_opened.rs
-msgid "That is this account's own address: its own address book is there already."
-msgstr ""
-
-#. what a command says
 #: crates/engine/src/cmd/calendar_opened.rs
 #, fuzzy
 msgid "That is this account's own address: its own calendar is there already."
@@ -18747,31 +18461,6 @@ msgstr "ანგარიშის სერვერს ამ შეხვე
 #, fuzzy
 msgid "The account's server makes it when the meeting is sent; the link to join by comes back with it."
 msgstr "ანგარიშის სერვერი მას შეხვედრის გაგზავნისას ქმნის; შესაერთებელი ბმული მასთან ერთად ბრუნდება."
-
-#. what a command says
-#: crates/engine/src/cmd/people.rs
-msgid "The address book \"{name}\" can only be read: the server hasn't given this account permission to change its contacts."
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/people.rs
-msgid "The address book \"{name}\" is no longer available. Send/Receive may bring it back, and the contact can be changed then."
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/contacts_opened.rs
-msgid "The address book of {address} is open already."
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/people_view.rs
-msgid "The address book this contact came from can only be read: the server hasn't given this account permission to change its contacts."
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/people_view.rs
-msgid "The address book this contact came from is no longer in the account's list, so changes here could not reach the server. Send/Receive may bring it back."
-msgstr ""
 
 #. interface
 #: crates/ui-egui/src/check_names.rs
@@ -19024,16 +18713,16 @@ msgstr "კატეგორია „{name}“ ვერ აღდგა: კ�
 #, fuzzy
 msgid "The category was renamed on {n} event on the server"
 msgid_plural "The category was renamed on {n} events on the server"
-msgstr[0] "კატეგორია გადაერქვა სერვერის ღონისძიებებზე: {n}"
-msgstr[1] "კატეგორია გადაერქვა სერვერის ღონისძიებებზე: {n}"
+msgstr[0] "სერვერზე კატეგორიის სახელი შეიცვალა {n} ღონისძიებაში"
+msgstr[1] "სერვერზე კატეგორიის სახელი შეიცვალა {n} ღონისძიებაში"
 
 #. what a command says
 #: crates/engine/src/cmd/graph_mail.rs
 #, fuzzy
 msgid "The category was renamed on {n} message on the server"
 msgid_plural "The category was renamed on {n} messages on the server"
-msgstr[0] "კატეგორია გადაერქვა სერვერის შეტყობინებებზე: {n}"
-msgstr[1] "კატეგორია გადაერქვა სერვერის შეტყობინებებზე: {n}"
+msgstr[0] "სერვერზე კატეგორიის სახელი შეიცვალა {n} წერილში"
+msgstr[1] "სერვერზე კატეგორიის სახელი შეიცვალა {n} წერილში"
 
 #. interface
 #: crates/ui-egui/src/reading/signature.rs
@@ -19082,24 +18771,6 @@ msgstr "სერტიფიკატი ისეთმა სერტიფ�
 #, fuzzy
 msgid "The check stopped unexpectedly"
 msgstr "შემოწმება მოულოდნელად შეწყდა"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "The client secret can only be letters, digits and punctuation"
-msgstr "კლიენტის საიდუმლო შეიძლება შეიცავდეს მხოლოდ ასოებს, ციფრებს და პუნქტუაციის ნიშნებს"
-
-#. interface
-#: crates/ui-egui/src/lib.rs
-#, fuzzy
-msgid "The client secret for {account} isn't stored on this computer: enter it again in Account Settings (File › Info)"
-msgstr "{account}-ის კლიენტის საიდუმლო ამ კომპიუტერზე არ ინახება: შეიყვანეთ ის ხელახლა ანგარიშის პარამეტრებში (ფაილი › ინფორმაცია)"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "The client secret is kept for the settings as they were: enter it again to use it with these, or it is forgotten when you save."
-msgstr "კლიენტის საიდუმლო შენახულია წინა პარამეტრებისთვის: ხელახლა შეიყვანეთ, რომ ამ პარამეტრებთან გამოიყენოთ, თორემ შენახვისას დაიკარგება."
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -19234,9 +18905,10 @@ msgid "The download was called off."
 msgstr "ჩამოტვირთვა გაუქმდა."
 
 #. interface
-#: crates/ui-egui/src/dialogs.rs
-msgid "The e-mail address of the person whose address book you want to open"
-msgstr ""
+#: crates/ui-egui/src/attachment_open.rs
+#, fuzzy
+msgid "The draft isn't open any more"
+msgstr "დრაფტი აღარ არის გახსნილი"
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
@@ -19490,7 +19162,7 @@ msgstr "ამ ანგარიშის ფოსტა შემდეგ Mi
 #: crates/ui-egui/src/backstage.rs
 #, fuzzy
 msgid "The mail, contacts, calendar, tasks and notes of a .pst file, onto this computer"
-msgstr ".pst ფაილის ფოსტა, კონტაქტები, კალენდარი, დავალებები და შენიშვნები ამ კომპიუტერზე"
+msgstr "ფოსტა, კონტაქტები, კალენდარი, დავალებები და შენიშვნები .pst-დან აქ"
 
 #. interface
 #: crates/ui-egui/src/shared_mailboxes.rs
@@ -19664,18 +19336,13 @@ msgstr "სახელი, რომელსაც დაინახავე
 #: crates/ui-egui/src/account_setup/senders.rs
 #, fuzzy
 msgid "The name recipients see; your own when empty"
-msgstr "სახელი, რომელსაც მიმღებები ხედავენ; ცარიელის შემთხვევაში თქვენი საკუთარი"
+msgstr "სახელი, რომელსაც მიმღებები ხედავენ; თუ ცარიელია, თქვენი სახელი"
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
 #, fuzzy
 msgid "The name the calendar gives itself"
 msgstr "სახელი, რომელსაც კალენდარი თავს არქმევს"
-
-#. interface
-#: crates/ui-egui/src/scheduling.rs
-msgid "The next time when everybody is free"
-msgstr ""
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt
@@ -19684,39 +19351,16 @@ msgid "The notes are too long to edit here."
 msgstr "შენიშვნები ზედმეტად გრძელია აქ რედაქტირებისთვის."
 
 #. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#: crates/ui-egui/src/account_setup.rs
 #, fuzzy
 msgid "The one in File › Options"
 msgstr "ის, რაც ფაილი › პარამეტრებშია"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "The one registered for MailCraft"
-msgstr "MailCraft-ისთვის დარეგისტრირებული"
 
 #. interface
 #: crates/ui-egui/src/backstage.rs
 #, fuzzy
 msgid "The one this build came with"
 msgstr "ის, რომელიც ამ ანაწყობს მოჰყვა"
-
-#. interface
-#: crates/ui-egui/src/ews_mail.rs
-#, fuzzy
-msgid "The online archive couldn't be read: Refresh to try again"
-msgstr "ონლაინ არქივის წაკითხვა ვერ მოხერხდა: ხელახლა საცდელად განაახლეთ"
-
-#. interface
-#: crates/ui-egui/src/nav.rs
-#, fuzzy
-msgid "The online archive needs a connection to the server"
-msgstr "ონლაინ არქივს სერვერთან კავშირი სჭირდება"
-
-#. interface
-#: crates/ui-egui/src/room_finder.rs
-msgid "The organisation has no lists of rooms."
-msgstr ""
 
 #. interface
 #: crates/ui-egui/src/meeting_dialogs.rs
@@ -19750,8 +19394,9 @@ msgstr "მფლობელს განახლებების შემ�
 
 #. interface
 #: crates/ui-egui/src/account_setup/help.rs
+#, fuzzy
 msgid "The page was closed, or five minutes went by before the sign-in was finished."
-msgstr ""
+msgstr "გვერდი დაიხურა, ან შესვლის დასრულებამდე ხუთი წუთი გავიდა."
 
 #. interface
 #: crates/ui-egui/src/calendar_view.rs
@@ -19809,19 +19454,15 @@ msgstr "შეთავაზებული დასასრული შე�
 
 #. interface
 #: crates/ui-egui/src/forms.rs
+#, fuzzy
 msgid "The range needs a day to end by"
-msgstr ""
+msgstr "პერიოდს დასრულების დღე სჭირდება"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
-msgid "The range needs a day to start on"
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
 #, fuzzy
-msgid "The redirect port is a number from 1 to 65535, or empty for any free one"
-msgstr "გადამისამართების პორტი არის რიცხვი 1-დან 65535-მდე, ან ცარიელი ნებისმიერი თავისუფალი პორტისთვის"
+msgid "The range needs a day to start on"
+msgstr "პერიოდს დაწყების დღე სჭირდება"
 
 #. interface
 #: crates/ui-egui/src/report_problem.rs
@@ -19915,8 +19556,9 @@ msgstr "იგივე გვერდი ითხოვს თქვენი
 
 #. interface
 #: crates/ui-egui/src/server_sync.rs
+#, fuzzy
 msgid "The same page asks to read and send from the shared mailboxes you have access to and to read the calendars shared with you, so that MailCraft doesn't have to ask again."
-msgstr ""
+msgstr "იგივე გვერდი ითხოვს ნებართვას, რომ MailCraft-მა წაიკითხოს და გააგზავნოს იმ საერთო საფოსტო ყუთებიდან, რომლებზეც წვდომა გაქვთ, და წაიკითხოს თქვენთვის გაზიარებული კალენდრები, რათა ხელახლა კითხვა აღარ დასჭირდეს."
 
 #. what a command says
 #: crates/engine/src/sieve_check.rs
@@ -19998,8 +19640,9 @@ msgstr "გამგზავნის სახელად ჩანს {shown
 
 #. interface
 #: crates/ui-egui/src/forms.rs
+#, fuzzy
 msgid "The series needs a day to end by"
-msgstr ""
+msgstr "სერიას დასრულების დღე სჭირდება"
 
 #. interface
 #: crates/ui-egui/src/account_setup/exchange.rs
@@ -20144,12 +19787,6 @@ msgstr "სერვერზე {total} საქაღალდეა: ერ�
 #, fuzzy
 msgid "The server is busy. Try again in a few minutes."
 msgstr "სერვერი დაკავებულია. სცადეთ რამდენიმე წუთში."
-
-#. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
-#, fuzzy
-msgid "The server no longer has the online archive: changes made in it that hadn't reached the server are lost"
-msgstr "სერვერს ონლაინ არქივი აღარ აქვს: მასში შეტანილი ცვლილებები, რომლებიც სერვერამდე არ მისულა, დაიკარგა"
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
@@ -20368,12 +20005,6 @@ msgid "The shared mailbox couldn't be added"
 msgstr "საერთო საფოსტო ყუთი ვერ დაემატა"
 
 #. interface
-#: crates/ui-egui/src/ews_mail.rs
-#, fuzzy
-msgid "The shared mailbox couldn't be read."
-msgstr "საერთო საფოსტო ყუთის წაკითხვა ვერ მოხერხდა."
-
-#. interface
 #: crates/ui-egui/src/dialogs.rs
 #, fuzzy
 msgid "The shared mailbox opened through it is removed from this device too."
@@ -20402,12 +20033,6 @@ msgstr "შესვლა ვერ შესრულდა."
 #, fuzzy
 msgid "The sign-in didn't work. Try again."
 msgstr "შესვლა ვერ მოხერხდა. სცადეთ ხელახლა."
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "The sign-in is only sent to: {servers}"
-msgstr "შესვლა იგზავნება მხოლოდ: {servers}"
 
 #. interface, what a command says
 #: crates/engine/src/sync_driver/calendar_plan.rs crates/ui-egui/src/shared_mailboxes.rs
@@ -20441,8 +20066,9 @@ msgstr "შესვლა უარყოფილია."
 
 #. interface
 #: crates/ui-egui/src/lib.rs
+#, fuzzy
 msgid "The signature couldn't be saved: {why}. Close again to leave it unsaved."
-msgstr ""
+msgstr "ხელმოწერა ვერ შეინახა: {why}. შეუნახავად დასატოვებლად კიდევ ერთხელ დახურეთ."
 
 #. interface
 #: crates/ui-egui/src/compose.rs
@@ -20500,13 +20126,15 @@ msgstr "მართლწერის ლექსიკონი მიუწ�
 
 #. interface
 #: crates/ui-egui/src/forms.rs
+#, fuzzy
 msgid "The start and the end need a date and a time"
-msgstr ""
+msgstr "დაწყებასა და დასასრულს თარიღი და დრო სჭირდება"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
+#, fuzzy
 msgid "The start and the end need a time"
-msgstr ""
+msgstr "დაწყებასა და დასასრულს დრო სჭირდება"
 
 #. interface
 #: crates/ui-egui/src/graph_switch.rs
@@ -20561,11 +20189,6 @@ msgstr "სატესტო ჩანაწერი ისევ წაიშ
 #, fuzzy
 msgid "The text wasn't found."
 msgstr "ტექსტი ვერ მოიძებნა."
-
-#. interface
-#: crates/ui-egui/src/scheduling.rs
-msgid "The time before this when everybody is free"
-msgstr ""
 
 #. interface
 #: crates/ui-egui/src/reminder_dialog.rs
@@ -20706,12 +20329,6 @@ msgid "Thesaurus"
 msgstr "თეზაურუსი"
 
 #. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "These addresses are outside your identity provider's domain: {hosts}"
-msgstr "ეს მისამართები თქვენი იდენტობის პროვაიდერის დომენის გარეთაა: {hosts}"
-
-#. interface
 #: crates/ui-egui/src/dialogs.rs
 #, fuzzy
 msgid "These are meetings somebody else organizes; you are invited to them. Deleting them takes them out of your calendar only, and the organizer is not told that you won't come. Declining them tells the organizer, if you choose."
@@ -20740,12 +20357,6 @@ msgstr "ამ კონტაქტების აქ გაერთიან
 #, fuzzy
 msgid "These could not be removed. Remove them yourself:"
 msgstr "ესენი ვერ წაიშალა. წაშალეთ ისინი თავად:"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "These settings will no longer be {provider}'s: MailCraft will treat this account as one with your own identity provider, starting from the values above, and you'll sign in again."
-msgstr "ეს პარამეტრები აღარ იქნება {provider}-ის: MailCraft ამ ანგარიშს განიხილავს, როგორც თქვენი საკუთარი იდენტობის პროვაიდერის მქონეს, ზემოთ მოცემული მნიშვნელობებიდან დაწყებული, და ხელახლა შესვლა მოგიწევთ."
 
 #. interface
 #: crates/ui-egui/src/task_sync.rs
@@ -20892,6 +20503,11 @@ msgid "This account's Favorites come from Outlook and are changed there (File �
 msgstr "ამ ანგარიშის რჩეულები Outlook-იდან მოდის და იქ იცვლება (ფაილი › პარამეტრები შეუძლია ნაცვლად MailCraft-ში შენახულები აჩვენოს)"
 
 #. interface
+#: crates/ui-egui/src/sieve_replies.rs
+msgid "This account's Sieve server was changed in Account Settings meanwhile: open your script again."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/calendar_sync.rs
 #, fuzzy
 msgid "This account's calendar can't be asked yet: Send/Receive signs it in first."
@@ -20946,16 +20562,6 @@ msgid "This build can't ask a server when other people are busy: only your own c
 msgstr "ამ ანაწყობს არ შეუძლია სერვერს ჰკითხოს, როდის არიან სხვები დაკავებული: ნაჩვენებია მხოლოდ თქვენი კალენდარი."
 
 #. interface
-#: crates/ui-egui/src/room_finder.rs
-msgid "This build can't ask the Exchange server for rooms."
-msgstr ""
-
-#. interface
-#: crates/ui-egui/src/scheduling.rs
-msgid "This build can't ask the Exchange server when other people are busy: only your own calendar is shown."
-msgstr ""
-
-#. interface
 #: crates/ui-egui/src/lib.rs crates/ui-egui/src/sending.rs crates/ui-egui/src/shared_mailboxes.rs
 #, fuzzy
 msgid "This build can't connect to Microsoft"
@@ -20993,8 +20599,9 @@ msgstr "ამ ანაწყობს ფოსტის სერვერე
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid "This build can't connect to mail servers. Use the desktop app, or bring mail in with File › Import."
-msgstr ""
+msgstr "ამ ანაწყობს ფოსტის სერვერებთან დაკავშირება არ შეუძლია. გამოიყენეთ სამაგიდო აპლიკაცია ან შემოიტანეთ ფოსტა მენიუდან ფაილი › იმპორტი."
 
 #. interface
 #: crates/ui-egui/src/reading/remote.rs
@@ -21350,7 +20957,7 @@ msgstr "ამ ელემენტს შეუნახავი ცვლი
 #: crates/engine/src/cmd/calendar_extra.rs
 #, fuzzy
 msgid "This item has files attached, which only the server keeps and which a copy would be without: it can't be copied from here."
-msgstr "ამ ელემენტს მიმაგრებული აქვს ფაილები, რომლებსაც მხოლოდ სერვერი ინახავს და რომლებიც ასლს არ ექნებოდა: აქედან მისი კოპირება შეუძლებელია."
+msgstr "ამ ელემენტს აქვს დანართები, რომლებსაც მხოლოდ სერვერი ინახავს და ასლს ისინი არ ექნებოდა: აქედან მისი კოპირება შეუძლებელია."
 
 #. what a command says
 #: crates/engine/src/cmd/calendar/meeting.rs
@@ -21407,11 +21014,6 @@ msgid "This link goes to"
 msgstr "ეს ბმული მიდის აქ:"
 
 #. interface
-#: crates/ui-egui/src/room_finder.rs
-msgid "This list has no rooms."
-msgstr ""
-
-#. interface
 #: crates/ui-egui/src/reading/unsubscribe.rs
 #, fuzzy
 msgid "This list unsubscribes on its own page, at {host}. It opens in your browser: visiting it tells the list that this address is read."
@@ -21446,12 +21048,6 @@ msgstr "ეს საფოსტო ყუთი ფაილიდან გ�
 #, fuzzy
 msgid "This mailbox was opened from a file: confirm its servers first"
 msgstr "ეს საფოსტო ყუთი ფაილიდან გაიხსნა: ჯერ დაადასტურეთ მისი სერვერები"
-
-#. interface
-#: crates/ui-egui/src/ews_mail.rs
-#, fuzzy
-msgid "This mailbox's online archive is kept in Microsoft 365, which needs a Microsoft sign-in, so it isn't shown"
-msgstr "ამ საფოსტო ყუთის ონლაინ არქივი Microsoft 365-შია, რასაც Microsoft-ით შესვლა სჭირდება, ამიტომ არ ჩანს"
 
 #. interface
 #: crates/ui-egui/src/calendar_sync.rs
@@ -21657,13 +21253,13 @@ msgstr "ეს წერილი ხელმოწერის შემდე
 #: crates/ui-egui/src/reading.rs
 #, fuzzy
 msgid "This message was sent with High importance."
-msgstr "ეს წერილი მაღალი მნიშვნელობით გაიგზავნა."
+msgstr "ეს წერილი მაღალი პრიორიტეტით გაიგზავნა."
 
 #. interface
 #: crates/ui-egui/src/reading.rs
 #, fuzzy
 msgid "This message was sent with Low importance."
-msgstr "ეს წერილი დაბალი მნიშვნელობით გაიგზავნა."
+msgstr "ეს წერილი დაბალი პრიორიტეტით გაიგზავნა."
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
@@ -22177,17 +21773,15 @@ msgstr "დანართის გასახსნელად MailCraft ჯ
 
 #. interface
 #: crates/ui-egui/src/server_sync.rs
+#, fuzzy
 msgid ""
 "To read and send from the shared mailboxes you open with {address}, and to show the calendars shared with you, MailCraft needs your permission. Microsoft's page opens in your browser to ask you, once, for everything MailCraft uses that you haven't allowed yet.\n"
 "\n"
 "Until you allow it, nothing of those mailboxes and calendars is read, mail and meeting answers from a shared mailbox wait on this computer, and nothing is sent from your own address in their place."
 msgstr ""
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "To sign in with your own identity provider, first change the incoming and outgoing servers to your own: a sign-in from it is never sent to {provider}'s servers."
-msgstr "საკუთარი იდენტობის პროვაიდერით შესასვლელად ჯერ შეცვალეთ შემომავალი და გამავალი სერვერები თქვენი საკუთარით: მისგან მიღებული შესვლა არასოდეს იგზავნება {provider}-ის სერვერებზე."
+"იმ საერთო საფოსტო ყუთების წასაკითხად და მათგან გასაგზავნად, რომლებსაც ანგარიშით {address} ხსნით, ასევე თქვენთვის გაზიარებული კალენდრების საჩვენებლად MailCraft-ს თქვენი ნებართვა სჭირდება. ბრაუზერში გაიხსნება Microsoft-ის გვერდი, რომელიც ერთხელ გკითხავთ ყველაფერზე, რასაც MailCraft იყენებს და რისი ნებართვაც ჯერ არ მიგიციათ.\n"
+"\n"
+"სანამ ნებართვას არ მისცემთ, იმ საფოსტო ყუთებიდან და კალენდრებიდან არაფერი იკითხება, საერთო საფოსტო ყუთიდან გასაგზავნი წერილები და შეხვედრებზე პასუხები ამ კომპიუტერზე ელოდება, ხოლო მათ ნაცვლად თქვენი საკუთარი მისამართიდან არაფერი იგზავნება."
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -22230,12 +21824,6 @@ msgstr "დღეს"
 #, fuzzy
 msgid "Today could not be read."
 msgstr "„დღეს“ გვერდის წაკითხვა ვერ მოხერხდა."
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Token address"
-msgstr "ტოკენის მისამართი"
 
 #. android, interface, name, ribbon
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/DueDates.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt crates/ui-egui/src/forms.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/tasks_view.rs
@@ -22442,11 +22030,6 @@ msgid "Typing * or - and a space at the start of a line starts a bulleted list, 
 msgstr "სტრიქონის დასაწყისში * ან - და შორისის აკრეფა იწყებს ბურთულებიან სიას, 1. ან 1) კი — დანომრილს. „დაბრუნება“ აკრეფილს უკან აბრუნებს."
 
 #. interface
-#: crates/ui-egui/src/people_view.rs
-msgid "Unavailable"
-msgstr ""
-
-#. interface
 #: crates/ui-egui/src/import_pst.rs
 #, fuzzy
 msgid "Under a folder on this computer:"
@@ -22508,8 +22091,9 @@ msgstr "უცნობი ტესტი {name}."
 
 #. interface
 #: crates/ui-egui/src/mail_view.rs
+#, fuzzy
 msgid "Unpin"
-msgstr ""
+msgstr "ჩამაგრების მოხსნა"
 
 #. android, interface, name
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListModel.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailRowParts.kt crates/engine/src/session.rs crates/ui-egui/src/advanced_search.rs crates/ui-egui/src/folder_properties.rs
@@ -22611,7 +22195,7 @@ msgstr "გამოწერა გაუქმდა."
 #: crates/ui-egui/src/reading/unsubscribe.rs
 #, fuzzy
 msgid "Unsubscribing: {click} in one click, {mail} by mail, {pages} to do on their own page, {left} left out."
-msgstr "გამოწერის გაუქმება: {click} ერთი დაწკაპუნებით, {mail} წერილით, {pages} მათ საკუთარ გვერდზე გასაკეთებელი, {left} გამოტოვებული."
+msgstr "გამოწერის გაუქმება: {click} ერთი დაწკაპებით, {mail} წერილით, {pages} მათ საკუთარ გვერდზე გასაკეთებელი, {left} გამოტოვებული."
 
 #. interface
 #: crates/ui-egui/src/reading/unsubscribe.rs
@@ -22752,12 +22336,6 @@ msgid "Use a Google app password, not your everyday Google account password."
 msgstr "გამოიყენეთ Google-ის აპლიკაციის პაროლი და არა თქვენი Google ანგარიშის ჩვეულებრივი პაროლი."
 
 #. interface
-#: crates/ui-egui/src/account_setup.rs
-#, fuzzy
-msgid "Use a password instead"
-msgstr "სანაცვლოდ პაროლის გამოყენება"
-
-#. interface
 #: crates/ui-egui/src/account_setup.rs crates/ui-egui/src/account_setup/help.rs
 #, fuzzy
 msgid "Use an app password"
@@ -22776,18 +22354,6 @@ msgid "Use https:// instead"
 msgstr "https://-ის გამოყენება"
 
 #. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Use it"
-msgstr "გამოყენება"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Use my own identity provider"
-msgstr "ჩემი საკუთარი იდენტობის პროვაიდერის გამოყენება"
-
-#. interface
 #: crates/ui-egui/src/calendar_view.rs
 #, fuzzy
 msgid "Use my own working hours"
@@ -22804,12 +22370,6 @@ msgstr "სისტემის პარამეტრის გამოყ�
 #, fuzzy
 msgid "Use system setting follows Animation effects in Windows' settings. Where MailCraft can't read the system's setting yet, animations play until you choose Never play."
 msgstr "„სისტემის პარამეტრის გამოყენება“ Windows-ის პარამეტრებში „ანიმაციის ეფექტებს“ მიჰყვება. სადაც MailCraft სისტემის პარამეტრს ჯერ ვერ კითხულობს, ანიმაციები ეშვება, სანამ „არასოდეს გაშვებას“ არ აირჩევთ."
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Use your own identity provider instead…"
-msgstr "სანაცვლოდ თქვენი საკუთარი იდენტობის პროვაიდერის გამოყენება…"
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -22956,12 +22516,6 @@ msgid "Wait for the other attachment preview to finish."
 msgstr "დაელოდეთ, სანამ სხვა დანართის წინასწარი ნახვა დასრულდება."
 
 #. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Wait for your identity provider's addresses"
-msgstr "დაელოდეთ თქვენი იდენტობის პროვაიდერის მისამართებს"
-
-#. interface
 #: crates/ui-egui/src/sync_panel.rs
 #, fuzzy
 msgid "Waiting"
@@ -22971,19 +22525,13 @@ msgstr "მოლოდინში"
 #: crates/ui-egui/src/backstage.rs
 #, fuzzy
 msgid "Waiting for MailCraft's Google registration"
-msgstr "MailCraft-ის Google-ში რეგისტრაციის მოლოდინი"
+msgstr "Google-ში რეგისტრაციის მოლოდინი"
 
 #. interface
 #: crates/ui-egui/src/approval.rs
 #, fuzzy
 msgid "Waiting for the approval stopped unexpectedly"
 msgstr "დამტკიცების მოლოდინი მოულოდნელად შეწყდა"
-
-#. interface
-#: crates/ui-egui/src/lib.rs
-#, fuzzy
-msgid "Waiting for the system's credential store…"
-msgstr "სისტემის ავტორიზაციის მონაცემების საცავის მოლოდინი…"
 
 #. what a command says
 #: crates/engine/src/cmd/contacts_remote.rs
@@ -23247,6 +22795,11 @@ msgstr "სადაც ბარათის თანახმად გას
 msgid "Where they differ, the kept contact has:"
 msgstr "სადაც ისინი განსხვავდება, დატოვებულ კონტაქტს აქვს:"
 
+#. what a command says
+#: crates/engine/src/cmd/sieve_blocks.rs
+msgid "Where this rule ends in your Sieve script isn't clear (a filter of your webmail's without its END:FILTER, or a rule that runs across a filter's marks), so MailCraft doesn't change it: change it in your webmail or in the whole script."
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/account_setup.rs
 #, fuzzy
@@ -23441,8 +22994,9 @@ msgstr "მიწერა"
 
 #. interface
 #: crates/ui-egui/src/reading/invitation.rs
+#, fuzzy
 msgid "Write a Note with the Response…"
-msgstr ""
+msgstr "პასუხთან შენიშვნის დაწერა…"
 
 #. interface
 #: crates/ui-egui/src/sieve_editor.rs
@@ -23500,8 +23054,9 @@ msgstr "Yahoo Mail"
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
+#, fuzzy
 msgid "Yellow"
-msgstr ""
+msgstr "ყვითელი"
 
 #. interface
 #: crates/ui-egui/src/i18n.rs
@@ -23541,8 +23096,9 @@ msgstr "ამ გამგზავნის სურათებს ყოვ
 
 #. interface
 #: crates/ui-egui/src/account_setup/help.rs
+#, fuzzy
 msgid "You came back from Microsoft's page without having signed in: you said no there, or the page sent you back."
-msgstr ""
+msgstr "Microsoft-ის გვერდიდან შესვლის გარეშე დაბრუნდით: იქ უარი თქვით, ან გვერდმა უკან დაგაბრუნათ."
 
 #. interface
 #: crates/ui-egui/src/reading/invitation.rs
@@ -23761,12 +23317,6 @@ msgid "Your data was removed"
 msgstr "თქვენი მონაცემები წაიშალა"
 
 #. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Your domain names {issuer} for signing in."
-msgstr "თქვენი დომენი შესასვლელად {issuer}-ს ასახელებს."
-
-#. interface
 #: crates/ui-egui/src/account_setup/exchange.rs
 #, fuzzy
 msgid "Your domain's DNS couldn't be asked. Check the network connection and search again."
@@ -23882,8 +23432,9 @@ msgstr "თქვენი ორგანიზაცია MailCraft-ს ა�
 
 #. interface
 #: crates/ui-egui/src/server_sync.rs crates/ui-egui/src/shared_permission.rs
+#, fuzzy
 msgid "Your organisation doesn't let MailCraft read shared mailboxes and the calendars shared with you"
-msgstr ""
+msgstr "თქვენი ორგანიზაცია MailCraft-ს არ აძლევს საერთო საფოსტო ყუთებისა და თქვენთვის გაზიარებული კალენდრების წაკითხვის ნებას"
 
 #. interface
 #: crates/ui-egui/src/approval.rs
@@ -23953,8 +23504,9 @@ msgstr "თქვენი ორგანიზაციის ადმინ�
 
 #. interface
 #: crates/ui-egui/src/server_sync.rs
+#, fuzzy
 msgid "Your organisation's administrator has to approve MailCraft reading shared mailboxes and calendars once: File › Info"
-msgstr ""
+msgstr "თქვენი ორგანიზაციის ადმინისტრატორმა ერთხელ უნდა დაამტკიცოს, რომ MailCraft-მა საერთო საფოსტო ყუთები და კალენდრები წაიკითხოს: ფაილი › ინფორმაცია"
 
 #. interface
 #: crates/ui-egui/src
@@ -23979,12 +23531,6 @@ msgstr "თქვენი ორგანიზაციის წესებ�
 #, fuzzy
 msgid "Your own certificates and keys are used by MailCraft's desktop program: here Digital signatures are checked, and nothing is signed or decrypted."
 msgstr "თქვენს საკუთარ სერტიფიკატებსა და გასაღებებს MailCraft-ის სამაგიდო პროგრამა იყენებს: აქ ციფრული ხელმოწერები მოწმდება, ხელმოწერა ან გაშიფვრა კი არ ხდება."
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Your own identity provider"
-msgstr "თქვენი საკუთარი იდენტობის პროვაიდერი"
 
 #. interface
 #: crates/ui-egui/src/security.rs
@@ -24021,6 +23567,11 @@ msgstr "თქვენი წესები სერვერზე არ �
 #, fuzzy
 msgid "Your webmail (RainLoop or SnappyMail) keeps its own copy of this filter's settings, which stay as they are. It may put its version back the next time filters are saved there, and MailCraft changes the filter only as Sieve from now on."
 msgstr "თქვენი ვებფოსტა (RainLoop ან SnappyMail) ამ ფილტრის პარამეტრების საკუთარ ასლს ინახავს, რომლებიც უცვლელი რჩება. ფილტრების შემდეგი შენახვისას შეიძლება თავისი ვერსია დააბრუნოს, და MailCraft ამიერიდან ფილტრს მხოლოდ Sieve-ად ცვლის."
+
+#. what a command says
+#: crates/engine/src/cmd/rules_webmail.rs
+msgid "Your webmail's Sieve script has commands of its own and no filter to put a new one after: add the filter in your webmail, or change the whole script."
+msgstr ""
 
 #. what a command says
 #: crates/engine/src/cmd/rules_webmail.rs
@@ -24152,7 +23703,7 @@ msgstr "JMAP ანგარიშის სერვერისა და მ�
 #: crates/engine/src/cmd/senders.rs
 #, fuzzy
 msgid "a Microsoft or Exchange account sends from other addresses only as its server allows, which MailCraft doesn't ask for yet"
-msgstr "Microsoft-ის ან Exchange-ის ანგარიში სხვა მისამართებიდან მხოლოდ მაშინ აგზავნის, როცა მისი სერვერი ამის საშუალებას იძლევა, და MailCraft ამას ჯერ არ ითხოვს"
+msgstr "Microsoft-ის ან Exchange-ის ანგარიში სხვა მისამართებიდან მხოლოდ სერვერის ნებართვით აგზავნის, რომელსაც MailCraft ჯერ არ ითხოვს"
 
 #. why a mail server couldn't be used
 #: crates/net/src/sync.rs
@@ -24212,13 +23763,13 @@ msgstr "მონახაზს შეხსენება ვერ ექნ
 #: crates/engine/src/cmd/folder.rs
 #, fuzzy
 msgid "a favourite can't be put before itself"
-msgstr "რჩეულს საკუთარი თავის წინ ვერ დადებთ"
+msgstr "რჩეულს საკუთარი თავის წინ ვერ მოათავსებთ"
 
 #. what a command says
 #: crates/model/src/mailbox.rs
 #, fuzzy
 msgid "a folder can't be put before itself"
-msgstr "საქაღალდეს საკუთარი თავის წინ ვერ დადებთ"
+msgstr "საქაღალდეს საკუთარი თავის წინ ვერ მოათავსებთ"
 
 #. what a command says
 #: crates/model/src/mailbox.rs
@@ -24236,7 +23787,7 @@ msgstr "საქაღალდე სხვა ანგარიშში ვ
 #: crates/model/src/mailbox.rs
 #, fuzzy
 msgid "a folder is put among the folders beside it: name one with the same parent"
-msgstr "საქაღალდე მის გვერდით მყოფ საქაღალდეებს შორის თავსდება: მიუთითეთ იგივე მშობლის მქონე"
+msgstr "საქაღალდე თავის გვერდით მყოფ საქაღალდეებს შორის თავსდება: მიუთითეთ იმავე მშობელ საქაღალდეში მყოფი"
 
 #. what a command says
 #: crates/model/src/mailbox.rs
@@ -24300,23 +23851,27 @@ msgstr "წერილში სურათი მაქსიმუმ {mb} �
 
 #. what a command says
 #: crates/engine/src/cmd/react.rs
+#, fuzzy
 msgid "a reaction can't be sent to a draft or to mail you wrote"
-msgstr ""
+msgstr "რეაქცია ვერ გაიგზავნება მონახაზზე ან თქვენ მიერ დაწერილ წერილზე"
 
 #. what a command says
 #: crates/engine/src/cmd/react.rs
+#, fuzzy
 msgid "a reaction is sent only from IMAP, JMAP and local accounts, not from a Microsoft or Exchange server account"
-msgstr ""
+msgstr "რეაქცია იგზავნება მხოლოდ IMAP, JMAP და ლოკალური ანგარიშებიდან და არა Microsoft-ის ან Exchange სერვერის ანგარიშიდან"
 
 #. what a command says
 #: crates/engine/src/cmd/react.rs
+#, fuzzy
 msgid "a reaction isn't sent to automated mail (a no-reply address, a mailing list, bulk mail)"
-msgstr ""
+msgstr "რეაქცია არ იგზავნება ავტომატურ ფოსტაზე (no-reply მისამართი, საფოსტო სია, მასობრივი ფოსტა)"
 
 #. what a command says
 #: crates/engine/src/cmd/react.rs
+#, fuzzy
 msgid "a reaction isn't sent to mail in Junk E-mail"
-msgstr ""
+msgstr "რეაქცია არ იგზავნება „არასასურველ ფოსტაში“ მყოფ წერილებზე"
 
 #. what a command says
 #: crates/engine/src/cmd/auto_replies.rs
@@ -24393,12 +23948,6 @@ msgstr "საერთო საფოსტო ყუთს გადადე
 #. what a command says
 #: crates/engine/src/cmd/account.rs
 #, fuzzy
-msgid "a shared mailbox is reached through the server settings of the account it is opened through: change that account's"
-msgstr "საერთო საფოსტო ყუთთან წვდომა ხდება იმ ანგარიშის სერვერის პარამეტრებით, რომლითაც ის იხსნება: შეცვალეთ იმ ანგარიშისა"
-
-#. what a command says
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
 msgid "a shared mailbox keeps as much mail offline as the account it is opened through: change that account's"
 msgstr "საერთო საფოსტო ყუთი ოფლაინ იმდენ ფოსტას ინახავს, რამდენსაც ანგარიში, რომლითაც ის არის გახსნილი: შეცვალეთ იმ ანგარიშის პარამეტრი"
 
@@ -24425,36 +23974,6 @@ msgstr "საერთო საფოსტო ყუთის მისამ
 #, fuzzy
 msgid "a shared mailbox's rules are its own: this version doesn't make them"
 msgstr "საერთო საფოსტო ყუთის წესები მისი საკუთარია: ეს ვერსია მათ არ ქმნის"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "a sign-in with your identity provider is never sent to Microsoft's or Google's mail servers"
-msgstr "იდენტობის პროვაიდერით შესვლა არასოდეს იგზავნება Microsoft-ის ან Google-ის საფოსტო სერვერებზე"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "a sign-in with your identity provider is only sent to a mail server on this computer in a test"
-msgstr "იდენტობის პროვაიდერით შესვლა ამ კომპიუტერის საფოსტო სერვერზე მხოლოდ ტესტისას იგზავნება"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "a sign-in with your identity provider is only used with this account's own mail servers"
-msgstr "იდენტობის პროვაიდერით შესვლა გამოიყენება მხოლოდ ამ ანგარიშის საკუთარ საფოსტო სერვერებთან"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth.rs
-#, fuzzy
-msgid "a sign-in with your own identity provider is for mail only, not Microsoft Graph"
-msgstr "საკუთარი იდენტობის პროვაიდერით შესვლა მხოლოდ ფოსტისთვისაა და არა Microsoft Graph-ისთვის"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth.rs
-#, fuzzy
-msgid "a sign-in with {provider} comes back through a loopback port only"
-msgstr "{provider}-ით შესვლა ბრუნდება მხოლოდ loopback პორტით"
 
 #. why a command can't run
 #: crates/engine/src/cmd/picture.rs
@@ -24486,12 +24005,6 @@ msgstr "დავალებას სათაური სჭირდებ�
 msgid "a web server"
 msgstr "ვებსერვერს"
 
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "access was refused on the sign-in page"
-msgstr "შესვლის გვერდზე წვდომა უარყოფილ იქნა"
-
 #. what a command says, why a command can't run
 #: crates/engine/src/cmd/people.rs
 #, fuzzy
@@ -24515,23 +24028,6 @@ msgstr "ჯერ დაამატეთ ანგარიში (ფაი�
 #, fuzzy
 msgid "add at least one recipient"
 msgstr "დაამატეთ ერთი მიმღები მაინც"
-
-#. what a command says, why a command can't run
-#: crates/engine/src/cmd/contacts_opened.rs
-msgid "address books open under an Exchange server account"
-msgstr ""
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "an Exchange server account needs a server address that can be used to open a shared mailbox"
-msgstr "Exchange სერვერის ანგარიშს სჭირდება სერვერის მისამართი, რომლითაც საერთო საფოსტო ყუთის გახსნა შეიძლება"
-
-#. what a command says
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
-msgid "an Exchange server account's server and user name can't be changed while a shared mailbox opened through it has mail here: remove the shared mailbox first"
-msgstr "Exchange სერვერის ანგარიშის სერვერისა და მომხმარებლის სახელის შეცვლა შეუძლებელია, სანამ მისით გახსნილი საერთო საფოსტო ყუთის ფოსტა აქაა: ჯერ საერთო საფოსტო ყუთი წაშალეთ"
 
 #. what a command says
 #: crates/engine/src/cmd/account.rs
@@ -24604,17 +24100,6 @@ msgstr "ანგარიშს მაქსიმუმ {max} გამგზ�
 #, fuzzy
 msgid "an event needs a title"
 msgstr "ღონისძიებას სათაური სჭირდება"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-msgid "an online archive can't open a shared mailbox: name the account it belongs to"
-msgstr ""
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "an online archive stays under its mailbox: move that account"
-msgstr "ონლაინ არქივი რჩება თავისი საფოსტო ყუთის ქვეშ: გადაიტანეთ ის ანგარიში"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -24792,12 +24277,6 @@ msgid "couldn't make a secure connection to {host}: {reason}"
 msgstr "სერვერთან {host} უსაფრთხო კავშირი ვერ დამყარდა: {reason}"
 
 #. why a mail server couldn't be used
-#: crates/net/src/oauth.rs
-#, fuzzy
-msgid "couldn't open a port on this computer for the sign-in to come back to"
-msgstr "ამ კომპიუტერზე ვერ გაიხსნა პორტი, რომელზეც შესვლა დაბრუნდება"
-
-#. why a mail server couldn't be used
 #: crates/net/src/lib.rs
 #, fuzzy
 msgid "couldn't reach {host}: {reason}"
@@ -24833,18 +24312,6 @@ msgstr "შესასვლელად შეიყვანეთ პარ�
 msgid "enter a user name to sign in"
 msgstr "შესასვლელად შეიყვანეთ მომხმარებლის სახელი"
 
-#. what a command says
-#: crates/model/src/oauth.rs
-#, fuzzy
-msgid "enter the client id registered for MailCraft at your identity provider"
-msgstr "შეიყვანეთ კლიენტის ID, რომელიც თქვენს იდენტობის პროვაიდერთან MailCraft-ისთვისაა დარეგისტრირებული"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "enter your identity provider's address (its issuer)"
-msgstr "შეიყვანეთ თქვენი იდენტობის პროვაიდერის მისამართი (მისი გამცემი)"
-
 #. interface
 #: crates/ui-egui/src/reading/remote.rs
 #, fuzzy
@@ -24855,13 +24322,7 @@ msgstr "ყველა დომენიდან @{domain}"
 #: crates/model/src/rich/body.rs
 #, fuzzy
 msgid "expected and replacement must be on one line"
-msgstr "მოსალოდნელი და ჩამნაცვლებელი ტექსტი ერთ ხაზზე უნდა იყოს"
-
-#. what a command says
-#: crates/model/src/oauth.rs
-#, fuzzy
-msgid "find your identity provider's sign-in addresses (Discover), or enter them"
-msgstr "იპოვეთ თქვენი იდენტობის პროვაიდერის შესვლის მისამართები („აღმოჩენა“) ან შეიყვანეთ ისინი"
+msgstr "მოსალოდნელი და ჩამნაცვლებელი ტექსტი ერთ სტრიქონზე უნდა იყოს"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -24996,6 +24457,12 @@ msgstr "აქვს დანართი"
 #, fuzzy
 msgid "has too many files: the rest was not removed"
 msgstr "ზედმეტად ბევრი ფაილია: დანარჩენი არ წაშლილა"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "header contains {words}"
+msgstr "სათაური შეიცავს {words}"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -25179,6 +24646,11 @@ msgstr "მას აქვს ნაწილი, რომლის Sieve-ა�
 
 #. name
 #: crates/engine/src/cmd/sieve_elsewhere.rs
+msgid "it has comments inside it, which the rule builder would leave out"
+msgstr ""
+
+#. name
+#: crates/engine/src/cmd/sieve_elsewhere.rs
 #, fuzzy
 msgid "it has elsif or else branches, which the rule builder can't show"
 msgstr "მას აქვს elsif ან else განშტოებები, რომლებსაც წესების რედაქტორი ვერ აჩვენებს"
@@ -25313,7 +24785,7 @@ msgstr "ხსნის, ანაცვლებს ან ინახავ�
 #: crates/engine/src/cmd/rules.rs
 #, fuzzy
 msgid "it sets more than one importance"
-msgstr "ერთზე მეტ მნიშვნელობას აყენებს"
+msgstr "ერთზე მეტ პრიორიტეტს აყენებს"
 
 #. interface
 #: crates/ui-egui/src/graph_switch.rs crates/ui-egui/src/import_tree.rs
@@ -25568,7 +25040,7 @@ msgid "no account here keeps its rules on its server"
 msgstr "აქ არცერთი ანგარიში თავის წესებს სერვერზე არ ინახავს"
 
 #. what a command says, why a command can't run
-#: crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs
+#: crates/engine/src/cmd/ews_mail.rs
 #, fuzzy
 msgid "no account is an Exchange server account"
 msgstr "არცერთი ანგარიში არ არის Exchange სერვერის ანგარიში"
@@ -25604,20 +25076,10 @@ msgid "no account with id {account}"
 msgstr "ანგარიში id-ით {account} არ არსებობს"
 
 #. what a command says
-#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/calendar_opened.rs crates/engine/src/cmd/calendar_settings.rs crates/engine/src/cmd/compose.rs crates/engine/src/cmd/contacts_remote.rs crates/engine/src/cmd/dav_account.rs crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/folder.rs crates/engine/src/cmd/graph_mail.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/graph_switch.rs crates/engine/src/cmd/jmap_mail.rs crates/engine/src/cmd/offline.rs crates/engine/src/cmd/remote.rs crates/engine/src/cmd/rules.rs crates/engine/src/cmd/rules_sieve.rs crates/engine/src/cmd/search_server.rs crates/engine/src/cmd/senders.rs crates/engine/src/cmd/shared.rs crates/engine/src/cmd/signature.rs
+#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/calendar_opened.rs crates/engine/src/cmd/calendar_settings.rs crates/engine/src/cmd/compose.rs crates/engine/src/cmd/contacts_remote.rs crates/engine/src/cmd/dav_account.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/folder.rs crates/engine/src/cmd/graph_mail.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/graph_switch.rs crates/engine/src/cmd/jmap_mail.rs crates/engine/src/cmd/offline.rs crates/engine/src/cmd/remote.rs crates/engine/src/cmd/rules.rs crates/engine/src/cmd/rules_sieve.rs crates/engine/src/cmd/search_server.rs crates/engine/src/cmd/senders.rs crates/engine/src/cmd/shared.rs crates/engine/src/cmd/signature.rs
 #, fuzzy
 msgid "no account with id {id}"
 msgstr "ანგარიში id-ით {id} არ არსებობს"
-
-#. why a command can't run
-#: crates/engine/src/cmd/contacts_opened.rs
-msgid "no address book was opened by address"
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/contacts_opened.rs
-msgid "no address book {address} is open"
-msgstr ""
 
 #. why a mail server couldn't be used
 #: crates/net/src/transport.rs
@@ -25749,7 +25211,7 @@ msgstr "ამ ხელმოწერაში სურათი {id} არ 
 #: crates/engine/src/cmd/picture.rs
 #, fuzzy
 msgid "no picture {id} was put in this message"
-msgstr "ამ შეტყობინებაში სურათი {id} არ ჩასმულა"
+msgstr "ამ წერილში სურათი {id} არ ჩასმულა"
 
 #. what a command says
 #: crates/engine/src/cmd/rules.rs crates/engine/src/cmd/rules_sieve.rs crates/engine/src/cmd/rules_webmail.rs crates/engine/src/cmd/sieve_blocks.rs
@@ -25807,8 +25269,9 @@ msgstr "ასეთი აბზაცი არ არსებობს"
 
 #. what a command says
 #: crates/model/src/rich.rs
+#, fuzzy
 msgid "no such signature"
-msgstr ""
+msgstr "ასეთი ხელმოწერა არ არსებობს"
 
 #. what a command says
 #: crates/engine/src/cmd/tasks.rs crates/engine/src/cmd/tasks/status.rs
@@ -25827,11 +25290,6 @@ msgstr "საქაღალდე {folder} არ არსებობს"
 #, fuzzy
 msgid "nobody else is invited to this appointment"
 msgstr "ამ ჩანაწერზე სხვა არავინაა მოწვეული"
-
-#. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
-msgid "nobody with an address is asked about"
-msgstr ""
 
 #. what a command says
 #: crates/engine/src/cmd/followup.rs
@@ -25966,12 +25424,6 @@ msgid "only a message you sent can be sent again"
 msgstr "ხელახლა მხოლოდ თქვენ მიერ გაგზავნილი წერილის გაგზავნა შეიძლება"
 
 #. what a command says
-#: crates/model/src/archive.rs
-#, fuzzy
-msgid "only an Exchange server account has an online archive here"
-msgstr "აქ ონლაინ არქივი მხოლოდ Exchange სერვერის ანგარიშს აქვს"
-
-#. what a command says
 #: crates/engine/src/cmd/senders.rs
 #, fuzzy
 msgid "only an IMAP account sends from other addresses"
@@ -25997,8 +25449,9 @@ msgstr "წერილიდან „{subject}“ აქ მხოლოდ �
 
 #. what a command says
 #: crates/engine/src/sync_driver/as_received.rs
+#, fuzzy
 msgid "only the headers of “{subject}” are here, so it can't be saved as a message"
-msgstr ""
+msgstr "წერილიდან „{subject}“ აქ მხოლოდ სათაურებია, ამიტომ მისი წერილის სახით შენახვა შეუძლებელია"
 
 #. what a command says
 #: crates/engine/src/cmd/calendar/share.rs
@@ -26060,12 +25513,6 @@ msgstr "პირადი"
 msgid "pictures from the web are not downloaded: save the picture and add it from the file"
 msgstr "ინტერნეტიდან სურათები არ ჩამოიტვირთება: შეინახეთ სურათი და დაამატეთ ფაილიდან"
 
-#. why a mail server couldn't be used
-#: crates/net/src/oauth.rs
-#, fuzzy
-msgid "port {port} on this computer is in use: choose another redirect port, or automatic"
-msgstr "ამ კომპიუტერზე პორტი {port} დაკავებულია: აირჩიეთ სხვა გადამისამართების პორტი ან ავტომატური"
-
 #. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
@@ -26125,12 +25572,6 @@ msgstr "პასუხი მაქსიმუმ {n} მისამართ
 #, fuzzy
 msgid "require goes before every other command."
 msgstr "require ყველა სხვა ბრძანებამდე უნდა იყოს."
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "revocation"
-msgstr "გაუქმების"
 
 #. name
 #: crates/engine/src/agent.rs
@@ -26247,14 +25688,14 @@ msgstr "საერთო საფოსტო ყუთი"
 #. what a command says, why a command can't run
 #: crates/engine/src/cmd/shared.rs
 #, fuzzy
-msgid "shared mailboxes open under an account kept in step through Microsoft Graph, or an Exchange server account"
-msgstr "საერთო საფოსტო ყუთები იხსნება Microsoft Graph-ით სინქრონიზებული ანგარიშით ან Exchange სერვერის ანგარიშით"
+msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
+msgstr "საერთო საფოსტო ყუთები იხსნება Microsoft Graph-ით სინქრონიზებული ანგარიშით"
 
 #. what a command says
 #: crates/model/src/mailbox.rs
 #, fuzzy
-msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph or is an Exchange server account"
-msgstr "საერთო საფოსტო ყუთები იხსნება ანგარიშით, რომელიც Microsoft Graph-ით სინქრონიზდება ან Exchange სერვერის ანგარიშია"
+msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
+msgstr "საერთო საფოსტო ყუთები იხსნება ანგარიშით, რომელიც Microsoft Graph-ით სინქრონიზდება"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -26273,12 +25714,6 @@ msgstr "ჯერ შედით ანგარიშში"
 #, fuzzy
 msgid "sign in to {who} first"
 msgstr "ჯერ შედით ანგარიშში {who}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "sign-in"
-msgstr "შესვლის"
 
 #. why a mail server couldn't be used
 #: crates/proto/src/lib.rs
@@ -26327,17 +25762,6 @@ msgstr "თემა შეიცავს {words}"
 #, fuzzy
 msgid "subject or body contains {words}"
 msgstr "თემა ან ტექსტი შეიცავს {words}"
-
-#. what a command says
-#: crates/engine/src/cmd/contacts_opened.rs
-msgid "that account can't open an address book by address"
-msgstr ""
-
-#. what a command says
-#: crates/model/src/archive.rs
-#, fuzzy
-msgid "that account isn't an online archive"
-msgstr "ეს ანგარიში ონლაინ არქივი არ არის"
 
 #. what a command says
 #: crates/engine/src/cmd/calendar.rs
@@ -26395,8 +25819,9 @@ msgstr "ეს საფოსტო ყუთი MailCraft-ის სხვა 
 
 #. what a command says
 #: crates/engine/src/cmd/graph_send.rs
+#, fuzzy
 msgid "that message is a draft: open it and send it"
-msgstr ""
+msgstr "ეს წერილი მონახაზია: გახსენით და გააგზავნეთ"
 
 #. what a command says
 #: crates/engine/src/cmd/compose.rs
@@ -26433,12 +25858,6 @@ msgstr "ეს წერილი აქ არ არის"
 #, fuzzy
 msgid "that message isn't waiting in the Outbox"
 msgstr "ეს წერილი „გასაგზავნებში“ არ ელოდება"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth.rs
-#, fuzzy
-msgid "that redirect port can't be used: choose another, or automatic"
-msgstr "ამ გადამისამართების პორტის გამოყენება შეუძლებელია: აირჩიეთ სხვა ან ავტომატური"
 
 #. what a command says
 #: crates/engine/src/cmd/calendar/selection.rs
@@ -26500,6 +25919,11 @@ msgstr "ManageSieve სერვერი {at}-ზე STARTTLS-ს არ გვ
 msgid "the OpenPGP key is larger than a Public key is kept"
 msgstr "OpenPGP გასაღები იმაზე დიდია, რაც საჯარო გასაღებისთვის ინახება"
 
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+msgid "the Sieve script isn't UTF-8 text, which MailCraft can't change without altering it"
+msgstr ""
+
 #. name
 #: crates/engine/src/cmd/rules.rs
 #, fuzzy
@@ -26537,16 +25961,10 @@ msgid "the account has no user name or e-mail address to sign in with"
 msgstr "ანგარიშს შესასვლელად მომხმარებლის სახელი ან ელფოსტის მისამართი არ აქვს"
 
 #. what a command says
-#: crates/engine/src/cmd/calendar/invitation.rs crates/engine/src/cmd/calendar_opened.rs crates/engine/src/cmd/compose.rs crates/engine/src/cmd/contacts_opened.rs crates/engine/src/cmd/react.rs crates/engine/src/cmd/unsubscribe.rs
+#: crates/engine/src/cmd/calendar/invitation.rs crates/engine/src/cmd/calendar_opened.rs crates/engine/src/cmd/compose.rs crates/engine/src/cmd/react.rs crates/engine/src/cmd/unsubscribe.rs
 #, fuzzy
 msgid "the account is gone"
 msgstr "ანგარიში აღარ არსებობს"
-
-#. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
-#, fuzzy
-msgid "the account {name} is the online archive of is gone"
-msgstr "ანგარიში {name}, რომლის ონლაინ არქივიც ესაა, აღარ არსებობს"
 
 #. name
 #: crates/engine/src/cmd/rules.rs
@@ -26662,18 +26080,6 @@ msgstr "შეცვლილი შემთხვევა აღარ არ
 msgid "the check stopped unexpectedly"
 msgstr "შემოწმება მოულოდნელად შეწყდა"
 
-#. what a command says
-#: crates/model/src/oauth.rs
-#, fuzzy
-msgid "the client id can only be letters, digits and punctuation, at most 200 of them"
-msgstr "კლიენტის ID შეიძლება შეიცავდეს მხოლოდ ასოებს, ციფრებს და პუნქტუაციის ნიშნებს, არაუმეტეს 200-ისა"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "the client secret can only be letters, digits and punctuation"
-msgstr "კლიენტის საიდუმლო შეიძლება შეიცავდეს მხოლოდ ასოებს, ციფრებს და პუნქტუაციას"
-
 #. why a mail server couldn't be used
 #: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/mod.rs
 #, fuzzy
@@ -26718,8 +26124,9 @@ msgstr "ჩამოტვირთვა დასრულებამდე �
 
 #. why a mail server couldn't be used
 #: crates/proto/src/line.rs
+#, fuzzy
 msgid "the encrypted connection was damaged on the way (this is usually antivirus or firewall software that scans mail connections: turn off its mail or SSL scanning for MailCraft, or ask the mail provider)"
-msgstr ""
+msgstr "დაშიფრული კავშირი გზაში დაზიანდა (როგორც წესი, ამას იწვევს ანტივირუსი ან ფაიერვოლი, რომელიც ფოსტის კავშირებს ამოწმებს: გამორთეთ მასში ფოსტის ან SSL-ის შემოწმება MailCraft-ისთვის, ან მიმართეთ ფოსტის პროვაიდერს)"
 
 #. what a command says
 #: crates/engine/src/cmd/calendar.rs crates/engine/src/cmd/calendar_extra.rs crates/engine/src/cmd/zones.rs
@@ -26837,92 +26244,9 @@ msgstr "საქაღალდე, რომელშიც ეს წერ�
 
 #. why a mail server couldn't be used
 #: crates/net/src/sync.rs
+#, fuzzy
 msgid "the folder was numbered anew while it was being read"
-msgstr ""
-
-#. what a command says
-#: crates/model/src/oauth.rs
-#, fuzzy
-msgid "the identity provider (issuer) address can't have a query or a fragment"
-msgstr "იდენტობის პროვაიდერის (გამცემის) მისამართი არ შეიძლება შეიცავდეს მოთხოვნას ან ფრაგმენტს"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider doesn't describe itself at the usual addresses: enter its sign-in addresses"
-msgstr "იდენტობის პროვაიდერი ჩვეულ მისამართებზე თავს არ აღწერს: შეიყვანეთ მისი შესვლის მისამართები"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider sent its description on through too many redirects"
-msgstr "იდენტობის პროვაიდერმა თავისი აღწერა ზედმეტად ბევრი გადამისამართებით გადააგზავნა"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider sent its description on to an address on this computer, a private network or without https"
-msgstr "იდენტობის პროვაიდერმა თავისი აღწერა გადააგზავნა ამ კომპიუტერზე, პირად ქსელში ან https-ის გარეშე მდებარე მისამართზე"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's address can't have a query or a fragment"
-msgstr "იდენტობის პროვაიდერის მისამართი არ შეიძლება შეიცავდეს მოთხოვნას ან ფრაგმენტს"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's address {why}"
-msgstr "იდენტობის პროვაიდერის მისამართი {why}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description couldn't be fetched: {other}"
-msgstr "იდენტობის პროვაიდერის აღწერის მიღება ვერ მოხერხდა: {other}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description gives a {what} address that {why}"
-msgstr "იდენტობის პროვაიდერის აღწერა ასახელებს {what} მისამართს, რომელიც {why}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description has no {what} address"
-msgstr "იდენტობის პროვაიდერის აღწერა არ ასახელებს {what} მისამართს"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description is too long"
-msgstr "იდენტობის პროვაიდერის აღწერა ზედმეტად გრძელია"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description isn't the JSON it should be"
-msgstr "იდენტობის პროვაიდერის აღწერა არ არის მოსალოდნელი JSON"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description names another issuer than the address entered: check the address, character for character"
-msgstr "იდენტობის პროვაიდერის აღწერა ასახელებს სხვა გამცემს, ვიდრე შეყვანილი მისამართია: შეამოწმეთ მისამართი სიმბოლო სიმბოლოდ"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description says it doesn't sign people in on its page (authorization code)"
-msgstr "იდენტობის პროვაიდერის აღწერის მიხედვით, ის თავის გვერდზე არავის არ ასვლევინებს (ავტორიზაციის კოდი)"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description says it doesn't take the protected sign-in (PKCE with S256) MailCraft uses"
-msgstr "იდენტობის პროვაიდერის აღწერის მიხედვით, ის არ იღებს დაცულ შესვლას (PKCE S256-ით), რომელსაც MailCraft იყენებს"
+msgstr "საქაღალდის წერილები კითხვისას თავიდან გადაინომრა"
 
 #. what a command says
 #: crates/engine/src/import_pst.rs
@@ -26941,12 +26265,6 @@ msgstr "იმპორტს ფოსტის ჩასადები სა
 #, fuzzy
 msgid "the import was stopped"
 msgstr "იმპორტი შეწყდა"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "the incoming and outgoing servers above"
-msgstr "ზემოთ მითითებული შემომავალი და გამავალი სერვერები"
 
 #. what a command says
 #: crates/engine/src/cmd/keys.rs
@@ -26977,12 +26295,6 @@ msgstr "სია აჩვენებს ყველა ანგარიშ
 #, fuzzy
 msgid "the mail server doesn't know your contacts: replies outside the organisation go to nobody or to everybody"
 msgstr "საფოსტო სერვერმა თქვენი კონტაქტები არ იცის: ორგანიზაციის გარეთ პასუხები არავის ან ყველას მიდის"
-
-#. why a mail server couldn't be used
-#: crates/proto/src/oauthbearer.rs
-#, fuzzy
-msgid "the mail server's name can't be sent with a sign-in"
-msgstr "საფოსტო სერვერის სახელის გაგზავნა შესვლასთან ერთად შეუძლებელია"
 
 #. what a command says
 #: crates/engine/src/cmd/file.rs
@@ -27081,18 +26393,6 @@ msgid "the occurrence was not changed; nothing was moved"
 msgstr "შემთხვევა არ შეცვლილა; არაფერი გადატანილა"
 
 #. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
-#, fuzzy
-msgid "the online archive has changes that haven't reached the server yet: Send/Receive first, then hide it"
-msgstr "ონლაინ არქივში არის ცვლილებები, რომლებიც ჯერ სერვერამდე არ მისულა: ჯერ შეასრულეთ გაგზავნა/მიღება, შემდეგ დამალეთ"
-
-#. what a command says
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
-msgid "the online archive has changes that haven't reached the server yet: Send/Receive first, then say it is kept in Exchange Online"
-msgstr "ონლაინ არქივში არის ცვლილებები, რომლებიც ჯერ სერვერამდე არ მისულა: ჯერ შეასრულეთ გაგზავნა/მიღება, შემდეგ მიუთითეთ, რომ ის Exchange Online-შია"
-
-#. what a command says
 #: crates/model/src/mailbox.rs
 #, fuzzy
 msgid "the parent folder belongs to another account"
@@ -27135,12 +26435,6 @@ msgid "the proposed end is not after the proposed start"
 msgstr "შემოთავაზებული დასასრული შემოთავაზებული დასაწყისის შემდეგ არ არის"
 
 #. what a command says
-#: crates/model/src/oauth.rs
-#, fuzzy
-msgid "the redirect port must be between 1 and 65535, or automatic"
-msgstr "გადამისამართების პორტი უნდა იყოს 1-სა და 65535-ს შორის, ან ავტომატური"
-
-#. what a command says
 #: crates/model/src/mailbox_followup.rs
 #, fuzzy
 msgid "the reminder time must be in the future"
@@ -27159,16 +26453,10 @@ msgid "the result would make this account keep more sync state than is taken in"
 msgstr "შედეგის გამო ეს ანგარიში იმაზე მეტ სინქრონიზაციის მდგომარეობას შეინახავდა, ვიდრე მიიღება"
 
 #. what a command says
-#: crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs
+#: crates/engine/src/cmd/ews_mail.rs
 #, fuzzy
 msgid "the result {why}"
 msgstr "შედეგი {why}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "the revocation address {why}"
-msgstr "გაუქმების მისამართი {why}"
 
 #. name
 #: crates/engine/src/cmd/sieve_elsewhere.rs
@@ -27435,18 +26723,6 @@ msgid "the server doesn't take a password on this connection"
 msgstr "სერვერი ამ კავშირზე პაროლს არ იღებს"
 
 #. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "the server doesn't take a token with OAUTHBEARER, which this account's OAuth settings ask for"
-msgstr "სერვერი არ იღებს ტოკენს OAUTHBEARER-ით, რასაც ამ ანგარიშის OAuth-ის პარამეტრები ითხოვს"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "the server doesn't take a token with XOAUTH2, which this account's OAuth settings ask for"
-msgstr "სერვერი არ იღებს ტოკენს XOAUTH2-ით, რასაც ამ ანგარიშის OAuth-ის პარამეტრები ითხოვს"
-
-#. why a mail server couldn't be used
 #: crates/proto/src/imap/mod.rs
 #, fuzzy
 msgid "the server ended the command early"
@@ -27470,6 +26746,11 @@ msgstr "სერვერმა სესია დაასრულა: {reas
 msgid "the server greeted with a refusal: {reason}"
 msgstr "სერვერი უარით მოგვესალმა: {reason}"
 
+#. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+msgid "the server has more Sieve scripts than MailCraft reads ({n})"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/sieve_replies.rs
 #, fuzzy
@@ -27489,6 +26770,11 @@ msgid "the server keeps this folder: it can't be renamed, moved or deleted"
 msgstr "ამ საქაღალდეს სერვერი ინახავს: მისი სახელის შეცვლა, გადატანა ან წაშლა შეუძლებელია"
 
 #. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+msgid "the server listed a Sieve script whose name MailCraft can't use"
+msgstr ""
+
+#. why a mail server couldn't be used
 #: crates/proto/src/managesieve/mod.rs crates/proto/src/smtp.rs
 #, fuzzy
 msgid "the server offers no way to sign in with a password"
@@ -27499,12 +26785,6 @@ msgstr "სერვერი პაროლით შესვლის სა
 #, fuzzy
 msgid "the server offers no way to sign in with an access token"
 msgstr "სერვერი წვდომის ტოკენით შესვლის საშუალებას არ გვთავაზობს"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "the server offers no way to sign in with an access token (neither OAUTHBEARER nor XOAUTH2)"
-msgstr "სერვერი არ გვთავაზობს წვდომის ტოკენით შესვლის საშუალებას (არც OAUTHBEARER, არც XOAUTH2)"
 
 #. why a mail server couldn't be used
 #: crates/net/src/transport.rs
@@ -27626,11 +26906,21 @@ msgstr "სერვერმა პასუხს ზედმეტად დ
 msgid "the server wouldn't send “{subject}” whole, so it can't be forwarded as an attachment"
 msgstr "სერვერმა „{subject}“ მთლიანად არ გამოგზავნა, ამიტომ მისი დანართად გადაგზავნა შეუძლებელია"
 
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+msgid "the server's Sieve scripts can't be reached"
+msgstr ""
+
 #. name
 #: crates/engine/src/cmd/rules.rs
 #, fuzzy
 msgid "the server's Sieve scripts can't do one of its actions or conditions"
 msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ მისი ერთ-ერთი მოქმედების ან პირობის შესრულება"
+
+#. interface
+#: crates/ui-egui/src/sieve_replies.rs
+msgid "the server's Sieve scripts can't file mail into folders"
+msgstr ""
 
 #. name
 #: crates/engine/src/cmd/rules.rs
@@ -27693,6 +26983,11 @@ msgid "the server's Sieve scripts can't tell meeting invitations"
 msgstr "სერვერის Sieve-ის სკრიპტებს არ შეუძლიათ შეხვედრის მოწვევების გარჩევა"
 
 #. why a mail server couldn't be used
+#: crates/proto/src/managesieve/mod.rs
+msgid "the server's answer to one command is too long"
+msgstr ""
+
+#. why a mail server couldn't be used
 #: crates/proto/src/imap/mod.rs
 #, fuzzy
 msgid "the server's answer was longer than {kb} KB"
@@ -27721,18 +27016,6 @@ msgstr "სერვერის პასუხი ზედმეტად ღ
 #, fuzzy
 msgid "the server's response is too long"
 msgstr "სერვერის პასუხი ზედმეტად გრძელია"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "the sign-in came back from another identity provider than the one asked: nothing of it was used"
-msgstr "შესვლა დაბრუნდა სხვა იდენტობის პროვაიდერისგან, ვიდრე მოთხოვნილი იყო: მისგან არაფერი იქნა გამოყენებული"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "the sign-in came back without your identity provider's name, which it says it always gives: nothing of it was used"
-msgstr "შესვლა დაბრუნდა თქვენი იდენტობის პროვაიდერის სახელის გარეშე, რომელსაც, მისივე თქმით, ყოველთვის აძლევს: მისგან არაფერი იქნა გამოყენებული"
 
 #. what a command says
 #: crates/engine/src/cmd/signature.rs
@@ -27784,8 +27067,9 @@ msgstr "წერილის „{subject}“ ტექსტი ამ კო�
 
 #. what a command says
 #: crates/engine/src/sync_driver/as_received.rs
+#, fuzzy
 msgid "the text of “{subject}” can't be read on this computer, so it can't be saved as a message"
-msgstr ""
+msgstr "წერილის „{subject}“ ტექსტი ამ კომპიუტერზე ვერ იკითხება, ამიტომ მისი წერილის სახით შენახვა შეუძლებელია"
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
@@ -27794,13 +27078,13 @@ msgid "the top level"
 msgstr "ზედა დონე"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/lib.rs crates/proto/src/oauthbearer.rs
+#: crates/proto/src/lib.rs
 #, fuzzy
 msgid "the user name or access token has a character that can't be sent"
 msgstr "მომხმარებლის სახელში ან წვდომის ტოკენში ისეთი სიმბოლოა, რომლის გაგზავნაც შეუძლებელია"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/lib.rs crates/proto/src/oauthbearer.rs
+#: crates/proto/src/lib.rs
 #, fuzzy
 msgid "the user name or access token is too long to be sent"
 msgstr "მომხმარებლის სახელი ან წვდომის ტოკენი გასაგზავნად ზედმეტად გრძელია"
@@ -27878,7 +27162,7 @@ msgid "there is already a signature named \"{to}\""
 msgstr "ხელმოწერა სახელით „{to}“ უკვე არსებობს"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/lib.rs crates/proto/src/oauthbearer.rs
+#: crates/proto/src/lib.rs
 #, fuzzy
 msgid "there is no access token to sign in with"
 msgstr "შესასვლელად წვდომის ტოკენი არ არის"
@@ -27894,12 +27178,6 @@ msgstr "ანგარიში არ არის"
 #, fuzzy
 msgid "there is no account to remove"
 msgstr "წასაშლელი ანგარიში არ არის"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "there is no earlier sign-in to renew"
-msgstr "განსაახლებელი წინა შესვლა არ არსებობს"
 
 #. what a command says
 #: crates/engine/src/cmd/graph_switch.rs
@@ -27973,12 +27251,6 @@ msgstr "ეს „გაგზავნა/მიღება“ სხვა �
 msgid "this Send/Receive was for the server {name} named before"
 msgstr "ეს „გაგზავნა/მიღება“ იყო სერვერისთვის, რომელსაც {name} ადრე ასახელებდა"
 
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "this account doesn't sign in with your own identity provider"
-msgstr "ეს ანგარიში არ შედის თქვენი საკუთარი იდენტობის პროვაიდერით"
-
 #. what a command says
 #: crates/engine/src/cmd/compose.rs crates/engine/src/cmd/send_later.rs
 #, fuzzy
@@ -28049,7 +27321,7 @@ msgstr "ამ ანგარიშის კატეგორიები თ
 #: crates/ui-egui/src/reading/unsubscribe.rs
 #, fuzzy
 msgid "this build can't unsubscribe in one click"
-msgstr "ამ ვერსიას ერთი დაწკაპუნებით გამოწერის გაუქმება არ შეუძლია"
+msgstr "MailCraft-ის ეს ვერსია ერთი დაწკაპებით გამოწერის გაუქმებას ვერ ახერხებს"
 
 #. what a command says
 #: crates/engine/src/cmd/people.rs
@@ -28062,11 +27334,6 @@ msgstr "ამ კონტაქტს ელფოსტის მისამ
 #, fuzzy
 msgid "this contacts folder can only be read"
 msgstr "კონტაქტების ეს საქაღალდე მხოლოდ წასაკითხია"
-
-#. what a command says
-#: crates/engine/src/cmd/ews_directory.rs
-msgid "this directory was for another account, not for {name}"
-msgstr ""
 
 #. what a command says
 #: crates/engine/src/cmd/remote.rs
@@ -28124,8 +27391,9 @@ msgstr "ამ წერილს უკვე იმდენი დანა�
 
 #. what a command says
 #: crates/engine/src/cmd/react.rs
+#, fuzzy
 msgid "this message has a warning about its sender, so no reaction is sent to it"
-msgstr ""
+msgstr "ამ წერილს გამგზავნის შესახებ გაფრთხილება აქვს, ამიტომ მასზე რეაქცია არ იგზავნება"
 
 #. what a command says
 #: crates/model/src/pictures.rs
@@ -28135,8 +27403,9 @@ msgstr "ამ წერილს უკვე იმდენი სურა�
 
 #. what a command says
 #: crates/engine/src/cmd/react.rs
+#, fuzzy
 msgid "this message has no Message-ID, so a reaction can't say what it answers"
-msgstr ""
+msgstr "ამ წერილს Message-ID არ აქვს, ამიტომ რეაქცია ვერ მიუთითებს, რას პასუხობს"
 
 #. what a command says
 #: crates/engine/src/cmd/mail.rs
@@ -28146,8 +27415,9 @@ msgstr "ამ წერილს საძიებელი გამგზა
 
 #. what a command says
 #: crates/engine/src/cmd/react.rs
+#, fuzzy
 msgid "this message has no sender to send a reaction to"
-msgstr ""
+msgstr "ამ წერილს არ აქვს გამგზავნი, რომელსაც რეაქცია გაეგზავნება"
 
 #. what a command says
 #: crates/engine/src/cmd/mail.rs
@@ -28215,14 +27485,9 @@ msgstr "ადრესატები: {people}"
 
 #. interface
 #: crates/ui-egui/src/reading/react.rs
-msgid "to {recipient}"
-msgstr ""
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
 #, fuzzy
-msgid "token"
-msgstr "ტოკენის"
+msgid "to {recipient}"
+msgstr "ადრესატი: {recipient}"
 
 #. what a command says
 #: crates/engine/src/cmd/tasks.rs
@@ -28253,12 +27518,6 @@ msgstr "აკრიფეთ მისამართი, მაგალით
 #, fuzzy
 msgid "unexpected server response: {reason}"
 msgstr "სერვერის მოულოდნელი პასუხი: {reason}"
-
-#. what a command says
-#: crates/model/src/oauth.rs
-#, fuzzy
-msgid "use common, consumers, organizations, or a directory's id or domain as the tenant"
-msgstr "ტენანტად გამოიყენეთ common, consumers, organizations, ან დირექტორიის ID ან დომენი"
 
 #. interface
 #: crates/ui-egui/src/security.rs
@@ -28404,8 +27663,9 @@ msgstr "წელი"
 
 #. what a command says
 #: crates/engine/src/cmd/react.rs
+#, fuzzy
 msgid "you already reacted to this message with {emoji}"
-msgstr ""
+msgstr "ამ წერილზე უკვე გაგზავნეთ რეაქცია {emoji}"
 
 #. interface
 #: crates/ui-egui/src/auto_replies.rs
@@ -28418,54 +27678,6 @@ msgstr "სხვა მომხმარებლით შეხვედი�
 #, fuzzy
 msgid "you@example.org"
 msgstr "you@example.org"
-
-#. name
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "your identity provider"
-msgstr "თქვენი იდენტობის პროვაიდერი"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider answered with status {status}"
-msgstr "თქვენმა იდენტობის პროვაიდერმა უპასუხა სტატუსით {status}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider can't sign anybody in just now: try again later"
-msgstr "თქვენს იდენტობის პროვაიდერს ახლა ვერავის შეყვანა არ შეუძლია: სცადეთ მოგვიანებით"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider doesn't know this client id, or its client secret: check the OAuth settings"
-msgstr "თქვენმა იდენტობის პროვაიდერმა არ იცის ეს კლიენტის ID ან მისი საიდუმლო: შეამოწმეთ OAuth-ის პარამეტრები"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider no longer takes this sign-in: sign in again"
-msgstr "თქვენი იდენტობის პროვაიდერი ამ შესვლას აღარ იღებს: შედით ხელახლა"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider refused the sign-in"
-msgstr "თქვენმა იდენტობის პროვაიდერმა შესვლა უარყო"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider won't give what was asked for: check the extra scopes in the OAuth settings"
-msgstr "თქვენი იდენტობის პროვაიდერი არ იძლევა მოთხოვნილს: შეამოწმეთ დამატებითი არეები OAuth-ის პარამეტრებში"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider's addresses must start with https://"
-msgstr "თქვენი იდენტობის პროვაიდერის მისამართები უნდა იწყებოდეს https://-ით"
 
 #. interface
 #: crates/ui-egui/src/graph_switch.rs
@@ -28557,7 +27769,7 @@ msgstr "{address} უკვე დაყენებულია"
 #: crates/engine/src/cmd/compose.rs
 #, fuzzy
 msgid "{address} is no longer one of this account's sender addresses: choose another From"
-msgstr "{address} ამ ანგარიშის გამგზავნის მისამართი აღარ არის: აირჩიეთ სხვა „გამგზავნი“"
+msgstr "{address} ამ ანგარიშის გამგზავნის მისამართი აღარ არის: აირჩიეთ სხვა „ვისგან“"
 
 #. what a command says
 #: crates/engine/src/cmd/junk.rs
@@ -28672,12 +27884,6 @@ msgstr "{days} (მთელი დღე)"
 #, fuzzy
 msgid "{day} at {time}"
 msgstr "{day}, {time}"
-
-#. interface
-#: crates/ui-egui/src/account_setup.rs
-#, fuzzy
-msgid "{domain} says its mail signs in with an identity provider (OAuth 2.0)."
-msgstr "{domain} აცხადებს, რომ მისი ფოსტა იდენტობის პროვაიდერით შედის (OAuth 2.0)."
 
 #. interface
 #: crates/ui-egui/src/import_pst.rs crates/ui-egui/src/sync_panel.rs
@@ -28889,11 +28095,6 @@ msgstr "{name} დაეთანხმა ამ შეხვედრას."
 msgid "{name} answered this invitation."
 msgstr "{name} გამოეხმაურა ამ მოწვევას."
 
-#. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
-msgid "{name} can't be both an online archive and a shared mailbox"
-msgstr ""
-
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ShareLoad.kt
 #, fuzzy
@@ -28955,12 +28156,7 @@ msgid "{name} has no :{tag}."
 msgstr "{name}-ს არ აქვს :{tag}."
 
 #. what a command says
-#: crates/engine/src/cmd/ews_directory.rs
-msgid "{name} has no Exchange server account it is opened through"
-msgstr ""
-
-#. what a command says
-#: crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs
+#: crates/engine/src/cmd/ews_mail.rs
 #, fuzzy
 msgid "{name} has no Exchange server address that can be used"
 msgstr "{name}: Exchange სერვერის გამოსადეგი მისამართი არ არის"
@@ -29014,7 +28210,7 @@ msgid "{name} is a command; a test belongs here."
 msgstr "{name} ბრძანებაა; აქ ტესტი უნდა იყოს."
 
 #. what a command says
-#: crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/graph_mail.rs
+#: crates/engine/src/cmd/graph_mail.rs
 #, fuzzy
 msgid "{name} is a shared mailbox whose account is gone: remove it and add it again"
 msgstr "{name} საერთო საფოსტო ყუთია, რომლის ანგარიშიც აღარ არსებობს: წაშალეთ და ხელახლა დაამატეთ"
@@ -29030,11 +28226,6 @@ msgstr "{name} ტესტია; აქ ბრძანება უნდა 
 #, fuzzy
 msgid "{name} is already in {folder}."
 msgstr "{name} უკვე არის {folder}-ში."
-
-#. what a command says
-#: crates/engine/src/cmd/ews_directory.rs
-msgid "{name} is an online archive: it has no calendars, address books or to-do lists of its own"
-msgstr ""
 
 #. interface
 #: crates/ui-egui/src/files.rs
@@ -29121,7 +28312,7 @@ msgid "{name} isn't among the Favorites"
 msgstr "{name} რჩეულებში არ არის"
 
 #. what a command says
-#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs
+#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/ews_mail.rs
 #, fuzzy
 msgid "{name} isn't an Exchange server account"
 msgstr "{name} არ არის Exchange სერვერის ანგარიში"
@@ -29408,7 +28599,7 @@ msgstr[1] "საფოსტო ყუთის შიგთავსის ს
 msgid "{n} by a message from your account through your Outbox:"
 msgid_plural "{n} by a message each from your account through your Outbox:"
 msgstr[0] "{n} თქვენი ანგარიშიდან წერილით, გასაგზავნების გავლით:"
-msgstr[1] "{n} თითოეული თქვენი ანგარიშიდან წერილით, გასაგზავნების გავლით:"
+msgstr[1] "{n} თითო წერილით თქვენი ანგარიშიდან, გასაგზავნების გავლით:"
 
 #. what a command says
 #: crates/model/src/message.rs
@@ -29693,8 +28884,8 @@ msgstr[1] "{n} საათით ადრე"
 #, fuzzy
 msgid "{n} in one click: its server is sent the address it gave, nothing else."
 msgid_plural "{n} in one click: each list's server is sent the address it gave, nothing else, one at a time."
-msgstr[0] "{n} ერთი დაწკაპუნებით: მის სერვერს ეგზავნება მხოლოდ მის მიერ მითითებული მისამართი, სხვა არაფერი."
-msgstr[1] "{n} ერთი დაწკაპუნებით: თითოეული სიის სერვერს ეგზავნება მხოლოდ მის მიერ მითითებული მისამართი, სხვა არაფერი, სათითაოდ."
+msgstr[0] "{n} ერთი დაწკაპებით: სიის სერვერს ეგზავნება მხოლოდ მისივე მითითებული მისამართი, სხვა არაფერი."
+msgstr[1] "{n} ერთი დაწკაპებით: თითოეული სიის სერვერს ეგზავნება მხოლოდ მისივე მითითებული მისამართი, სხვა არაფერი, სათითაოდ."
 
 #. interface
 #: crates/ui-egui/src/chrome.rs crates/ui-egui/src/import_pst.rs
@@ -29930,17 +29121,19 @@ msgstr[1] "{n} წერილი უკვე აქ იყო"
 
 #. interface
 #: crates/ui-egui/src/nav.rs
+#, fuzzy
 msgid "{n} message was dragged: only the first was opened."
 msgid_plural "{n} messages were dragged: only the first was opened."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "გადატანილია {n} წერილი: გაიხსნა მხოლოდ პირველი."
+msgstr[1] "გადატანილია {n} წერილი: გაიხსნა მხოლოდ პირველი."
 
 #. interface
 #: crates/ui-egui/src/left_out.rs
+#, fuzzy
 msgid "{n} message was left out because it failed to download."
 msgid_plural "{n} messages were left out because they failed to download."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{n} წერილი გამოტოვებულია, რადგან ვერ ჩამოიტვირთა."
+msgstr[1] "{n} წერილი გამოტოვებულია, რადგან ვერ ჩამოიტვირთა."
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
@@ -30027,13 +29220,6 @@ msgid "{n} more question is waiting."
 msgid_plural "{n} more questions are waiting."
 msgstr[0] "კიდევ {n} შეკითხვა ელოდება."
 msgstr[1] "კიდევ {n} შეკითხვა ელოდება."
-
-#. interface
-#: crates/ui-egui/src/room_finder.rs
-msgid "{n} more room isn't shown"
-msgid_plural "{n} more rooms aren't shown"
-msgstr[0] ""
-msgstr[1] ""
 
 #. interface
 #: crates/ui-egui/src/files.rs
@@ -30264,8 +29450,8 @@ msgstr[1] "მონიშნული: {n}"
 #, fuzzy
 msgid "{n} sender is left out: mail your server doesn't vouch for, in Junk E-mail, with a warning about its sender, or that doesn't say how."
 msgid_plural "{n} senders are left out: mail your server doesn't vouch for, in Junk E-mail, with a warning about its sender, or that doesn't say how."
-msgstr[0] "{n} გამგზავნი გამოტოვებულია: ფოსტა, რომელზეც თქვენი სერვერი არ იძლევა გარანტიას, რომელიც არასასურველ ფოსტაშია, რომლის გამგზავნზეც გაფრთხილებაა, ან რომელიც არ ამბობს როგორ."
-msgstr[1] "{n} გამგზავნი გამოტოვებულია: ფოსტა, რომელზეც თქვენი სერვერი არ იძლევა გარანტიას, რომელიც არასასურველ ფოსტაშია, რომლის გამგზავნზეც გაფრთხილებაა, ან რომელიც არ ამბობს როგორ."
+msgstr[0] "{n} გამგზავნი გამოტოვებულია: ფოსტა, რომელზეც თქვენი სერვერი არ იძლევა გარანტიას, რომელიც არასასურველ ფოსტაშია, რომლის გამგზავნზეც გაფრთხილებაა, ან რომელშიც არ წერია, როგორ გაუქმდეს გამოწერა."
+msgstr[1] "{n} გამგზავნი გამოტოვებულია: ფოსტა, რომელზეც თქვენი სერვერი არ იძლევა გარანტიას, რომელიც არასასურველ ფოსტაშია, რომლის გამგზავნზეც გაფრთხილებაა, ან რომელშიც არ წერია, როგორ გაუქმდეს გამოწერა."
 
 #. interface
 #: crates/ui-egui/src/lib.rs
@@ -30353,7 +29539,7 @@ msgstr[1] "სერვერზე წაუკითხავი: {n}"
 msgid "{n} unsubscribes on its own page: open its message to do it there."
 msgid_plural "{n} unsubscribe on their own page: open each of those messages to do it there."
 msgstr[0] "{n} გამოწერას საკუთარ გვერდზე აუქმებს: ამისთვის გახსენით მისი წერილი."
-msgstr[1] "{n} გამოწერას საკუთარ გვერდზე აუქმებს: ამისთვის გახსენით თითოეული ეს წერილი."
+msgstr[1] "{n} გამოწერას საკუთარ გვერდზე აუქმებს: ამისთვის გახსენით თითოეული მათგანის წერილი."
 
 #. interface
 #: crates/ui-egui/src/import_pst.rs
@@ -30615,8 +29801,9 @@ msgstr "{why}. მასში აქ შეტანილი ცვლილ�
 
 #. interface
 #: crates/ui-egui/src/credits.rs
+#, fuzzy
 msgid "ΔLines"
-msgstr ""
+msgstr "Δსტრ."
 
 #. what a command says
 #: crates/engine/src/cmd/compose.rs
@@ -30632,8 +29819,9 @@ msgstr "„{subject}“ ჯერ არ ჩამოტვირთულა: �
 
 #. what a command says
 #: crates/engine/src/sync_driver/as_received.rs
+#, fuzzy
 msgid "“{subject}” isn't downloaded yet: open it once you're online, then save it"
-msgstr ""
+msgstr "„{subject}“ ჯერ არ ჩამოტვირთულა: გახსენით, როცა ონლაინ იქნებით, შემდეგ კი შეინახეთ"
 
 #. what a command says
 #: crates/engine/src/cmd/compose.rs
@@ -30643,8 +29831,9 @@ msgstr "„{subject}“ ჩამოსატვირთად ზედმე�
 
 #. what a command says
 #: crates/engine/src/cmd/file.rs crates/engine/src/sync_driver/as_received.rs
+#, fuzzy
 msgid "“{subject}” was too large to download: only its header is here, so it can't be saved as a message"
-msgstr ""
+msgstr "„{subject}“ ჩამოსატვირთად ზედმეტად დიდი იყო: აქ მხოლოდ მისი სათაურია, ამიტომ მისი წერილის სახით შენახვა შეუძლებელია"
 
 #. what a command says
 #: crates/engine/src/cmd/compose.rs
@@ -30668,31 +29857,42 @@ msgstr[1] "…and {n} more — type to narrow it"
 
 #. interface
 #: crates/ui-egui/src/credits.rs
+#, fuzzy
 msgid "−Bin"
-msgstr ""
+msgstr "−Bin"
 
 #. interface
 #: crates/ui-egui/src/credits.rs
+#, fuzzy
 msgid "−Lines"
-msgstr ""
-
-#, fuzzy
-#~ msgid "Calendars and contacts on a server are not read or written yet in this version."
-#~ msgstr "სერვერზე არსებული კალენდრები და კონტაქტები ამ ვერსიაში ჯერ არ იკითხება და არ იწერება."
-
-#, fuzzy
-#~ msgid "Read-only"
-#~ msgstr "მხოლოდ წასაკითხი"
+msgstr "−სტრ."
 
 #, fuzzy
 #~ msgid "This account's server keeps this contact. Changes made here aren't sent back yet, so it can't be edited or deleted here. Favorite and categories are kept on this computer."
 #~ msgstr "ამ კონტაქტს ანგარიშის სერვერი ინახავს. აქ შეტანილი ცვლილებები ჯერ უკან არ იგზავნება, ამიტომ მისი აქ რედაქტირება ან წაშლა შეუძლებელია. რჩეული და კატეგორიები ამ კომპიუტერზე ინახება."
 
 #, fuzzy
+#~ msgid "Read-only"
+#~ msgstr "მხოლოდ წასაკითხი"
+
+#, fuzzy
+#~ msgid "Calendars and contacts on a server are not read or written yet in this version."
+#~ msgstr "სერვერზე არსებული კალენდრები და კონტაქტები ამ ვერსიაში ჯერ არ იკითხება და არ იწერება."
+
+#, fuzzy
+#~ msgid "Kept on this phone only: it is not sent to your account."
+#~ msgstr "ინახება მხოლოდ ამ ტელეფონზე: თქვენს ანგარიშზე არ იგზავნება."
+
+#, fuzzy
+#~ msgid "{n} contact is put back on this computer only: too many changes are waiting to be sent."
+#~ msgid_plural "{n} contacts are put back on this computer only: too many changes are waiting to be sent."
+#~ msgstr[0] "{n} კონტაქტი ისევ მხოლოდ ამ კომპიუტერზეა: ძალიან ბევრი ცვლილება ელოდება გაგზავნას."
+#~ msgstr[1] "{n} კონტაქტი ისევ მხოლოდ ამ კომპიუტერზეა: ძალიან ბევრი ცვლილება ელოდება გაგზავნას."
+
+#, fuzzy
 #~ msgid "contact"
 #~ msgstr "კონტაქტი"
 
-#, fuzzy
 #~ msgid "Made in another program: MailCraft shows these rules, and changes them only as you edit the script's text"
 #~ msgstr "შექმნილია სხვა პროგრამაში: MailCraft აჩვენებს ამ წესებს და ცვლის მათ მხოლოდ ისე, როგორც სკრიპტის ტექსტს არედაქტირებთ"
 
@@ -30701,12 +29901,8 @@ msgstr ""
 #~ msgstr "სერვერზე, სხვა პროგრამაში შექმნილი: MailCraft მას არასოდეს ცვლის"
 
 #, fuzzy
-#~ msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
-#~ msgstr "საერთო საფოსტო ყუთები იხსნება Microsoft Graph-ით სინქრონიზებული ანგარიშით"
-
-#, fuzzy
-#~ msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
-#~ msgstr "საერთო საფოსტო ყუთები იხსნება ანგარიშით, რომელიც Microsoft Graph-ით სინქრონიზდება"
+#~ msgid "A Sieve rule: its Sieve is changed under Advanced…"
+#~ msgstr "Sieve-ის წესი: მისი Sieve იცვლება „დამატებითი…“-ის ქვეშ"
 
 #, fuzzy
 #~ msgid "Automatic replies are kept on the mail server, and MailCraft can set them only for accounts that sign in with Microsoft so far: IMAP has no standard way to set them (Sieve vacation replies may come later)"
@@ -31016,46 +30212,818 @@ msgstr ""
 #~ msgid "{not_sending_yet}: send this message from another account, or save it as a draft"
 #~ msgstr "{not_sending_yet}: ეს წერილი სხვა ანგარიშიდან გაგზავნეთ ან მონახაზად შეინახეთ"
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
 #, fuzzy
-#~ msgid "A Sieve rule: its Sieve is changed under Advanced…"
-#~ msgstr "Sieve-ის წესი: მისი Sieve იცვლება „დამატებითი…“-ის ქვეშ"
+msgid "A sign-in with your own identity provider is never sent to Microsoft's or Google's mail servers: change the servers above to your own."
+msgstr "თქვენი საკუთარი იდენტობის პროვაიდერით შესვლა არასოდეს იგზავნება Microsoft-ის ან Google-ის ფოსტის სერვერებზე: შეცვალეთ ზემოთ მოცემული სერვერები თქვენი საკუთარით."
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
 #, fuzzy
-#~ msgid "Kept on this phone only: it is not sent to your account."
-#~ msgstr "ინახება მხოლოდ ამ ტელეფონზე: თქვენს ანგარიშზე არ იგზავნება."
+msgid "Agree to the addresses outside your identity provider's domain, or enter others"
+msgstr "დაეთანხმეთ თქვენი იდენტობის პროვაიდერის დომენის გარეთ მყოფ მისამართებს ან შეიყვანეთ სხვა"
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
 #, fuzzy
-#~ msgid "{n} contact is put back on this computer only: too many changes are waiting to be sent."
-#~ msgid_plural "{n} contacts are put back on this computer only: too many changes are waiting to be sent."
-#~ msgstr[0] "{n} კონტაქტი ისევ მხოლოდ ამ კომპიუტერზეა: ძალიან ბევრი ცვლილება ელოდება გაგზავნას."
-#~ msgstr[1] "{n} კონტაქტი ისევ მხოლოდ ამ კომპიუტერზეა: ძალიან ბევრი ცვლილება ელოდება გაგზავნას."
+msgid "Asked for besides openid email offline_access"
+msgstr "მოთხოვნილი openid email offline_access-ის გარდა"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Automatic (OAUTHBEARER, else XOAUTH2)"
+msgstr "ავტომატური (OAUTHBEARER, სხვა შემთხვევაში XOAUTH2)"
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+#, fuzzy
+msgid "Checking the address with the server…"
+msgstr "მისამართის შემოწმება სერვერთან…"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Client ID"
+msgstr "კლიენტის ID"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Client secret (optional)"
+msgstr "კლიენტის საიდუმლო (არასავალდებულო)"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Client secret sent"
+msgstr "კლიენტის საიდუმლოს გაგზავნა"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "Couldn't ask the server which folders are other people's"
+msgstr "ვერ მოხერხდა სერვერისთვის კითხვა, რომელი საქაღალდეებია სხვა ადამიანების"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Discover"
+msgstr "აღმოჩენა"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Extra scopes"
+msgstr "დამატებითი არეები"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Find the sign-in and token addresses from the identity provider's address. Only that address is sent."
+msgstr "პოულობს შესვლისა და ტოკენის მისამართებს იდენტობის პროვაიდერის მისამართიდან. იგზავნება მხოლოდ ეს მისამართი."
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Find your identity provider's addresses with Discover, or enter them"
+msgstr "იპოვეთ თქვენი იდენტობის პროვაიდერის მისამართები ღილაკით „აღმოჩენა“ ან შეიყვანეთ ისინი"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Finding the addresses stopped unexpectedly"
+msgstr "მისამართების ძებნა მოულოდნელად შეწყდა"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Forget the client secret"
+msgstr "კლიენტის საიდუმლოს დავიწყება"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Found: sign-in at {signIn}, tokens from {token}."
+msgstr "ნაპოვნია: შესვლა — {signIn}, ტოკენები — {token}."
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Google (built in)"
+msgstr "Google (ჩაშენებული)"
+
+#. command label, interface
+#: crates/engine/src/cmd/ews_mail.rs crates/ui-egui/src/nav.rs
+#, fuzzy
+msgid "Hide Online Archive"
+msgstr "ონლაინ არქივის დამალვა"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "I trust these addresses"
+msgstr "ვენდობი ამ მისამართებს"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Identity provider"
+msgstr "იდენტობის პროვაიდერი"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Identity provider (issuer)"
+msgstr "იდენტობის პროვაიდერი (გამცემი)"
+
+#. interface
+#: crates/ui-egui/src/account_setup.rs
+#, fuzzy
+msgid "If you go on, you sign in on your identity provider's page and the access token it gives is sent to {hosts}. Go on only if you know it is your provider's."
+msgstr "თუ გააგრძელებთ, შეხვალთ თქვენი იდენტობის პროვაიდერის გვერდზე და მის მიერ გაცემული წვდომის ტოკენი გაეგზავნება {hosts}-ს. გააგრძელეთ მხოლოდ მაშინ, თუ იცით, რომ ისინი თქვენს პროვაიდერს ეკუთვნის."
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "In the Authorization header (client_secret_basic)"
+msgstr "Authorization სათაურში (client_secret_basic)"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "In the form (client_secret_post)"
+msgstr "ფორმაში (client_secret_post)"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "It hands out no refresh tokens: you'll be asked to sign in again each time a sign-in runs out."
+msgstr "ის არ გასცემს განახლების ტოკენებს: ყოველ ჯერზე, როცა შესვლის ვადა ამოიწურება, ხელახლა შესვლა მოგიწევთ."
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Keep the built-in settings"
+msgstr "ჩაშენებული პარამეტრების შენარჩუნება"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Kept in your system's credential store, never in the mailbox. A desktop program can't really keep it secret from you."
+msgstr "ინახება თქვენი სისტემის ავტორიზაციის მონაცემების საცავში და არასოდეს — საფოსტო ყუთში. სამაგიდო პროგრამას არ შეუძლია მისი ნამდვილად დამალვა თქვენგან."
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Kept: type a new one to replace it"
+msgstr "შენახულია: შეიყვანეთ ახალი მის ჩასანაცვლებლად"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "Mail goes into an online archive only from its own mailbox: move it into that mailbox first"
+msgstr "ფოსტა ონლაინ არქივში მხოლოდ საკუთარი საფოსტო ყუთიდან ხვდება: ჯერ გადაიტანეთ იგი ამ ყუთში"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "Mail in an online archive is copied within the archive: move it out instead"
+msgstr "ონლაინ არქივში არსებული ფოსტა არქივის შიგნით კოპირდება: სანაცვლოდ გადაიტანეთ გარეთ"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "Mail isn't copied into an online archive from elsewhere: move it there from its own mailbox"
+msgstr "ფოსტა სხვა ადგილიდან ონლაინ არქივში არ კოპირდება: გადაიტანეთ იგი იქ საკუთარი საფოსტო ყუთიდან"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Mechanism"
+msgstr "მექანიზმი"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Microsoft 365 or Outlook.com (built in)"
+msgstr "Microsoft 365 ან Outlook.com (ჩაშენებული)"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "No addresses found: {reason}"
+msgstr "მისამართები ვერ მოიძებნა: {reason}"
+
+#. command label
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "OAuth Built-in Settings"
+msgstr "OAuth-ის ჩაშენებული პარამეტრები"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "OAuth settings"
+msgstr "OAuth-ის პარამეტრები"
+
+#. interface
+#: crates/ui-egui/src/nav.rs
+#, fuzzy
+msgid "Online Archive – {address}"
+msgstr "ონლაინ არქივი – {address}"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Only if your provider gave one"
+msgstr "მხოლოდ თუ პროვაიდერმა მოგცათ"
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+#, fuzzy
+msgid "Opened with {owner}'s server and password. It needs Full Access to the mailbox, which your organisation's administrator gives. What you change in it goes to it."
+msgstr "გაიხსნა ანგარიშის {owner} სერვერითა და პაროლით. მას საფოსტო ყუთზე სრული წვდომა (Full Access) სჭირდება, რომელსაც თქვენი ორგანიზაციის ადმინისტრატორი იძლევა. რასაც მასში შეცვლით, იქვე აისახება."
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Redirect port"
+msgstr "გადამისამართების პორტი"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Register http://127.0.0.1 with any port (or the one above) as the redirect address."
+msgstr "დაარეგისტრირეთ http://127.0.0.1 ნებისმიერი პორტით (ან ზემოთ მითითებულით) გადამისამართების მისამართად."
+
+#. interface
+#: crates/ui-egui/src/lib.rs
+#, fuzzy
+msgid "Renewing the sign-in… If it can't be renewed, sign in on the page that opens in your browser."
+msgstr "მიმდინარეობს შესვლის განახლება… თუ განახლება ვერ მოხერხდა, შედით გვერდზე, რომელიც ბრაუზერში გაიხსნება."
+
+#. command label
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "Restore Default OAuth Settings"
+msgstr "OAuth-ის ნაგულისხმევი პარამეტრების აღდგენა"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Revocation address (optional)"
+msgstr "გაუქმების მისამართი (არასავალდებულო)"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Scopes"
+msgstr "არეები"
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+#, fuzzy
+msgid "Send/Receive the mailbox to sign in and read its online archive"
+msgstr "შეასრულეთ გაგზავნა/მიღება საფოსტო ყუთისთვის, რომ შეხვიდეთ და წაიკითხოთ მისი ონლაინ არქივი"
+
+#. command label, interface
+#: crates/engine/src/cmd/ews_mail.rs crates/ui-egui/src/nav.rs
+#, fuzzy
+msgid "Show Online Archive"
+msgstr "ონლაინ არქივის ჩვენება"
+
+#. interface
+#: crates/ui-egui/src/account_setup.rs
+#, fuzzy
+msgid "Sign in with your identity provider (OAuth 2.0) instead"
+msgstr "სანაცვლოდ შესვლა თქვენი იდენტობის პროვაიდერით (OAuth 2.0)"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Sign-in address"
+msgstr "შესვლის მისამართი"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "The client secret can only be letters, digits and punctuation"
+msgstr "კლიენტის საიდუმლო შეიძლება შეიცავდეს მხოლოდ ასოებს, ციფრებს და პუნქტუაციის ნიშნებს"
+
+#. interface
+#: crates/ui-egui/src/lib.rs
+#, fuzzy
+msgid "The client secret for {account} isn't stored on this computer: enter it again in Account Settings (File › Info)"
+msgstr "{account}-ის კლიენტის საიდუმლო ამ კომპიუტერზე არ ინახება: შეიყვანეთ ის ხელახლა ანგარიშის პარამეტრებში (ფაილი › ინფორმაცია)"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "The client secret is kept for the settings as they were: enter it again to use it with these, or it is forgotten when you save."
+msgstr "კლიენტის საიდუმლო შენახულია წინა პარამეტრებისთვის: ხელახლა შეიყვანეთ, რომ ამ პარამეტრებთან გამოიყენოთ, თორემ შენახვისას დაიკარგება."
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "The one registered for MailCraft"
+msgstr "MailCraft-ისთვის დარეგისტრირებული"
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+#, fuzzy
+msgid "The online archive couldn't be read: Refresh to try again"
+msgstr "ონლაინ არქივის წაკითხვა ვერ მოხერხდა: ხელახლა საცდელად განაახლეთ"
+
+#. interface
+#: crates/ui-egui/src/nav.rs
+#, fuzzy
+msgid "The online archive needs a connection to the server"
+msgstr "ონლაინ არქივს სერვერთან კავშირი სჭირდება"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "The redirect port is a number from 1 to 65535, or empty for any free one"
+msgstr "გადამისამართების პორტი არის რიცხვი 1-დან 65535-მდე, ან ცარიელი ნებისმიერი თავისუფალი პორტისთვის"
+
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+#, fuzzy
+msgid "The server no longer has the online archive: changes made in it that hadn't reached the server are lost"
+msgstr "სერვერს ონლაინ არქივი აღარ აქვს: მასში შეტანილი ცვლილებები, რომლებიც სერვერამდე არ მისულა, დაიკარგა"
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+#, fuzzy
+msgid "The shared mailbox couldn't be read."
+msgstr "საერთო საფოსტო ყუთის წაკითხვა ვერ მოხერხდა."
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "The sign-in is only sent to: {servers}"
+msgstr "შესვლა იგზავნება მხოლოდ: {servers}"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "These addresses are outside your identity provider's domain: {hosts}"
+msgstr "ეს მისამართები თქვენი იდენტობის პროვაიდერის დომენის გარეთაა: {hosts}"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "These settings will no longer be {provider}'s: MailCraft will treat this account as one with your own identity provider, starting from the values above, and you'll sign in again."
+msgstr "ეს პარამეტრები აღარ იქნება {provider}-ის: MailCraft ამ ანგარიშს განიხილავს, როგორც თქვენი საკუთარი იდენტობის პროვაიდერის მქონეს, ზემოთ მოცემული მნიშვნელობებიდან დაწყებული, და ხელახლა შესვლა მოგიწევთ."
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+#, fuzzy
+msgid "This mailbox's online archive is kept in Microsoft 365, which needs a Microsoft sign-in, so it isn't shown"
+msgstr "ამ საფოსტო ყუთის ონლაინ არქივი Microsoft 365-შია, რასაც Microsoft-ით შესვლა სჭირდება, ამიტომ არ ჩანს"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "To sign in with your own identity provider, first change the incoming and outgoing servers to your own: a sign-in from it is never sent to {provider}'s servers."
+msgstr "საკუთარი იდენტობის პროვაიდერით შესასვლელად ჯერ შეცვალეთ შემომავალი და გამავალი სერვერები თქვენი საკუთარით: მისგან მიღებული შესვლა არასოდეს იგზავნება {provider}-ის სერვერებზე."
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Token address"
+msgstr "ტოკენის მისამართი"
+
+#. interface
+#: crates/ui-egui/src/account_setup.rs
+#, fuzzy
+msgid "Use a password instead"
+msgstr "სანაცვლოდ პაროლის გამოყენება"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Use it"
+msgstr "გამოყენება"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Use my own identity provider"
+msgstr "ჩემი საკუთარი იდენტობის პროვაიდერის გამოყენება"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Use your own identity provider instead…"
+msgstr "სანაცვლოდ თქვენი საკუთარი იდენტობის პროვაიდერის გამოყენება…"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Wait for your identity provider's addresses"
+msgstr "დაელოდეთ თქვენი იდენტობის პროვაიდერის მისამართებს"
+
+#. interface
+#: crates/ui-egui/src/lib.rs
+#, fuzzy
+msgid "Waiting for the system's credential store…"
+msgstr "სისტემის ავტორიზაციის მონაცემების საცავის მოლოდინი…"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Your domain names {issuer} for signing in."
+msgstr "თქვენი დომენი შესასვლელად {issuer}-ს ასახელებს."
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Your own identity provider"
+msgstr "თქვენი საკუთარი იდენტობის პროვაიდერი"
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "a shared mailbox is reached through the server settings of the account it is opened through: change that account's"
+msgstr "საერთო საფოსტო ყუთთან წვდომა ხდება იმ ანგარიშის სერვერის პარამეტრებით, რომლითაც ის იხსნება: შეცვალეთ იმ ანგარიშისა"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "a sign-in with your identity provider is never sent to Microsoft's or Google's mail servers"
+msgstr "იდენტობის პროვაიდერით შესვლა არასოდეს იგზავნება Microsoft-ის ან Google-ის საფოსტო სერვერებზე"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "a sign-in with your identity provider is only sent to a mail server on this computer in a test"
+msgstr "იდენტობის პროვაიდერით შესვლა ამ კომპიუტერის საფოსტო სერვერზე მხოლოდ ტესტისას იგზავნება"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "a sign-in with your identity provider is only used with this account's own mail servers"
+msgstr "იდენტობის პროვაიდერით შესვლა გამოიყენება მხოლოდ ამ ანგარიშის საკუთარ საფოსტო სერვერებთან"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+#, fuzzy
+msgid "a sign-in with your own identity provider is for mail only, not Microsoft Graph"
+msgstr "საკუთარი იდენტობის პროვაიდერით შესვლა მხოლოდ ფოსტისთვისაა და არა Microsoft Graph-ისთვის"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+#, fuzzy
+msgid "a sign-in with {provider} comes back through a loopback port only"
+msgstr "{provider}-ით შესვლა ბრუნდება მხოლოდ loopback პორტით"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "access was refused on the sign-in page"
+msgstr "შესვლის გვერდზე წვდომა უარყოფილ იქნა"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "an Exchange server account needs a server address that can be used to open a shared mailbox"
+msgstr "Exchange სერვერის ანგარიშს სჭირდება სერვერის მისამართი, რომლითაც საერთო საფოსტო ყუთის გახსნა შეიძლება"
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "an Exchange server account's server and user name can't be changed while a shared mailbox opened through it has mail here: remove the shared mailbox first"
+msgstr "Exchange სერვერის ანგარიშის სერვერისა და მომხმარებლის სახელის შეცვლა შეუძლებელია, სანამ მისით გახსნილი საერთო საფოსტო ყუთის ფოსტა აქაა: ჯერ საერთო საფოსტო ყუთი წაშალეთ"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "an online archive stays under its mailbox: move that account"
+msgstr "ონლაინ არქივი რჩება თავისი საფოსტო ყუთის ქვეშ: გადაიტანეთ ის ანგარიში"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+#, fuzzy
+msgid "couldn't open a port on this computer for the sign-in to come back to"
+msgstr "ამ კომპიუტერზე ვერ გაიხსნა პორტი, რომელზეც შესვლა დაბრუნდება"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+#, fuzzy
+msgid "enter the client id registered for MailCraft at your identity provider"
+msgstr "შეიყვანეთ კლიენტის ID, რომელიც თქვენს იდენტობის პროვაიდერთან MailCraft-ისთვისაა დარეგისტრირებული"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "enter your identity provider's address (its issuer)"
+msgstr "შეიყვანეთ თქვენი იდენტობის პროვაიდერის მისამართი (მისი გამცემი)"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+#, fuzzy
+msgid "find your identity provider's sign-in addresses (Discover), or enter them"
+msgstr "იპოვეთ თქვენი იდენტობის პროვაიდერის შესვლის მისამართები („აღმოჩენა“) ან შეიყვანეთ ისინი"
+
+#. what a command says
+#: crates/model/src/archive.rs
+#, fuzzy
+msgid "only an Exchange server account has an online archive here"
+msgstr "აქ ონლაინ არქივი მხოლოდ Exchange სერვერის ანგარიშს აქვს"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+#, fuzzy
+msgid "port {port} on this computer is in use: choose another redirect port, or automatic"
+msgstr "ამ კომპიუტერზე პორტი {port} დაკავებულია: აირჩიეთ სხვა გადამისამართების პორტი ან ავტომატური"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "revocation"
+msgstr "გაუქმების"
+
+#. what a command says, why a command can't run
+#: crates/engine/src/cmd/shared.rs
+#, fuzzy
+msgid "shared mailboxes open under an account kept in step through Microsoft Graph, or an Exchange server account"
+msgstr "საერთო საფოსტო ყუთები იხსნება Microsoft Graph-ით სინქრონიზებული ანგარიშით ან Exchange სერვერის ანგარიშით"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph or is an Exchange server account"
+msgstr "საერთო საფოსტო ყუთები იხსნება ანგარიშით, რომელიც Microsoft Graph-ით სინქრონიზდება ან Exchange სერვერის ანგარიშია"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "sign-in"
+msgstr "შესვლის"
+
+#. what a command says
+#: crates/model/src/archive.rs
+#, fuzzy
+msgid "that account isn't an online archive"
+msgstr "ეს ანგარიში ონლაინ არქივი არ არის"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+#, fuzzy
+msgid "that redirect port can't be used: choose another, or automatic"
+msgstr "ამ გადამისამართების პორტის გამოყენება შეუძლებელია: აირჩიეთ სხვა ან ავტომატური"
+
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+#, fuzzy
+msgid "the account {name} is the online archive of is gone"
+msgstr "ანგარიში {name}, რომლის ონლაინ არქივიც ესაა, აღარ არსებობს"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+#, fuzzy
+msgid "the client id can only be letters, digits and punctuation, at most 200 of them"
+msgstr "კლიენტის ID შეიძლება შეიცავდეს მხოლოდ ასოებს, ციფრებს და პუნქტუაციის ნიშნებს, არაუმეტეს 200-ისა"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "the client secret can only be letters, digits and punctuation"
+msgstr "კლიენტის საიდუმლო შეიძლება შეიცავდეს მხოლოდ ასოებს, ციფრებს და პუნქტუაციას"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+#, fuzzy
+msgid "the identity provider (issuer) address can't have a query or a fragment"
+msgstr "იდენტობის პროვაიდერის (გამცემის) მისამართი არ შეიძლება შეიცავდეს მოთხოვნას ან ფრაგმენტს"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider doesn't describe itself at the usual addresses: enter its sign-in addresses"
+msgstr "იდენტობის პროვაიდერი ჩვეულ მისამართებზე თავს არ აღწერს: შეიყვანეთ მისი შესვლის მისამართები"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider sent its description on through too many redirects"
+msgstr "იდენტობის პროვაიდერმა თავისი აღწერა ზედმეტად ბევრი გადამისამართებით გადააგზავნა"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider sent its description on to an address on this computer, a private network or without https"
+msgstr "იდენტობის პროვაიდერმა თავისი აღწერა გადააგზავნა ამ კომპიუტერზე, პირად ქსელში ან https-ის გარეშე მდებარე მისამართზე"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's address can't have a query or a fragment"
+msgstr "იდენტობის პროვაიდერის მისამართი არ შეიძლება შეიცავდეს მოთხოვნას ან ფრაგმენტს"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's address {why}"
+msgstr "იდენტობის პროვაიდერის მისამართი {why}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description couldn't be fetched: {other}"
+msgstr "იდენტობის პროვაიდერის აღწერის მიღება ვერ მოხერხდა: {other}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description gives a {what} address that {why}"
+msgstr "იდენტობის პროვაიდერის აღწერა ასახელებს {what} მისამართს, რომელიც {why}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description has no {what} address"
+msgstr "იდენტობის პროვაიდერის აღწერა არ ასახელებს {what} მისამართს"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description is too long"
+msgstr "იდენტობის პროვაიდერის აღწერა ზედმეტად გრძელია"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description isn't the JSON it should be"
+msgstr "იდენტობის პროვაიდერის აღწერა არ არის მოსალოდნელი JSON"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description names another issuer than the address entered: check the address, character for character"
+msgstr "იდენტობის პროვაიდერის აღწერა ასახელებს სხვა გამცემს, ვიდრე შეყვანილი მისამართია: შეამოწმეთ მისამართი სიმბოლო სიმბოლოდ"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description says it doesn't sign people in on its page (authorization code)"
+msgstr "იდენტობის პროვაიდერის აღწერის მიხედვით, ის თავის გვერდზე არავის არ ასვლევინებს (ავტორიზაციის კოდი)"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description says it doesn't take the protected sign-in (PKCE with S256) MailCraft uses"
+msgstr "იდენტობის პროვაიდერის აღწერის მიხედვით, ის არ იღებს დაცულ შესვლას (PKCE S256-ით), რომელსაც MailCraft იყენებს"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "the incoming and outgoing servers above"
+msgstr "ზემოთ მითითებული შემომავალი და გამავალი სერვერები"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/oauthbearer.rs
+#, fuzzy
+msgid "the mail server's name can't be sent with a sign-in"
+msgstr "საფოსტო სერვერის სახელის გაგზავნა შესვლასთან ერთად შეუძლებელია"
+
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+#, fuzzy
+msgid "the online archive has changes that haven't reached the server yet: Send/Receive first, then hide it"
+msgstr "ონლაინ არქივში არის ცვლილებები, რომლებიც ჯერ სერვერამდე არ მისულა: ჯერ შეასრულეთ გაგზავნა/მიღება, შემდეგ დამალეთ"
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "the online archive has changes that haven't reached the server yet: Send/Receive first, then say it is kept in Exchange Online"
+msgstr "ონლაინ არქივში არის ცვლილებები, რომლებიც ჯერ სერვერამდე არ მისულა: ჯერ შეასრულეთ გაგზავნა/მიღება, შემდეგ მიუთითეთ, რომ ის Exchange Online-შია"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+#, fuzzy
+msgid "the redirect port must be between 1 and 65535, or automatic"
+msgstr "გადამისამართების პორტი უნდა იყოს 1-სა და 65535-ს შორის, ან ავტომატური"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "the revocation address {why}"
+msgstr "გაუქმების მისამართი {why}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "the server doesn't take a token with OAUTHBEARER, which this account's OAuth settings ask for"
+msgstr "სერვერი არ იღებს ტოკენს OAUTHBEARER-ით, რასაც ამ ანგარიშის OAuth-ის პარამეტრები ითხოვს"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "the server doesn't take a token with XOAUTH2, which this account's OAuth settings ask for"
+msgstr "სერვერი არ იღებს ტოკენს XOAUTH2-ით, რასაც ამ ანგარიშის OAuth-ის პარამეტრები ითხოვს"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "the server offers no way to sign in with an access token (neither OAUTHBEARER nor XOAUTH2)"
+msgstr "სერვერი არ გვთავაზობს წვდომის ტოკენით შესვლის საშუალებას (არც OAUTHBEARER, არც XOAUTH2)"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "the sign-in came back from another identity provider than the one asked: nothing of it was used"
+msgstr "შესვლა დაბრუნდა სხვა იდენტობის პროვაიდერისგან, ვიდრე მოთხოვნილი იყო: მისგან არაფერი იქნა გამოყენებული"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "the sign-in came back without your identity provider's name, which it says it always gives: nothing of it was used"
+msgstr "შესვლა დაბრუნდა თქვენი იდენტობის პროვაიდერის სახელის გარეშე, რომელსაც, მისივე თქმით, ყოველთვის აძლევს: მისგან არაფერი იქნა გამოყენებული"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "there is no earlier sign-in to renew"
+msgstr "განსაახლებელი წინა შესვლა არ არსებობს"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "this account doesn't sign in with your own identity provider"
+msgstr "ეს ანგარიში არ შედის თქვენი საკუთარი იდენტობის პროვაიდერით"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "token"
+msgstr "ტოკენის"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+#, fuzzy
+msgid "use common, consumers, organizations, or a directory's id or domain as the tenant"
+msgstr "ტენანტად გამოიყენეთ common, consumers, organizations, ან დირექტორიის ID ან დომენი"
+
+#. name
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "your identity provider"
+msgstr "თქვენი იდენტობის პროვაიდერი"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider answered with status {status}"
+msgstr "თქვენმა იდენტობის პროვაიდერმა უპასუხა სტატუსით {status}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider can't sign anybody in just now: try again later"
+msgstr "თქვენს იდენტობის პროვაიდერს ახლა ვერავის შეყვანა არ შეუძლია: სცადეთ მოგვიანებით"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider doesn't know this client id, or its client secret: check the OAuth settings"
+msgstr "თქვენმა იდენტობის პროვაიდერმა არ იცის ეს კლიენტის ID ან მისი საიდუმლო: შეამოწმეთ OAuth-ის პარამეტრები"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider no longer takes this sign-in: sign in again"
+msgstr "თქვენი იდენტობის პროვაიდერი ამ შესვლას აღარ იღებს: შედით ხელახლა"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider refused the sign-in"
+msgstr "თქვენმა იდენტობის პროვაიდერმა შესვლა უარყო"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider won't give what was asked for: check the extra scopes in the OAuth settings"
+msgstr "თქვენი იდენტობის პროვაიდერი არ იძლევა მოთხოვნილს: შეამოწმეთ დამატებითი არეები OAuth-ის პარამეტრებში"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider's addresses must start with https://"
+msgstr "თქვენი იდენტობის პროვაიდერის მისამართები უნდა იწყებოდეს https://-ით"
+
+#. interface
+#: crates/ui-egui/src/account_setup.rs
+#, fuzzy
+msgid "{domain} says its mail signs in with an identity provider (OAuth 2.0)."
+msgstr "{domain} აცხადებს, რომ მისი ფოსტა იდენტობის პროვაიდერით შედის (OAuth 2.0)."
 
 #. what a command says
 #: crates/engine/src/cmd/auto_replies.rs
 #, fuzzy
 msgid "Automatic replies are kept on the mail server, and MailCraft can set them only for accounts that sign in with Microsoft so far: IMAP has no standard way to set them (Sieve vacation replies may come later)"
 msgstr "ავტომატური პასუხები საფოსტო სერვერზე ინახება და MailCraft-ს ჯერჯერობით მათი დაყენება მხოლოდ იმ ანგარიშებისთვის შეუძლია, რომლებიც Microsoft-ით შედიან: IMAP-ს მათი დაყენების სტანდარტული გზა არ აქვს (Sieve-ის შვებულების პასუხები შეიძლება მოგვიანებით დაემატოს)"
-
-#. name
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "Header contains"
-msgstr "სათაური შეიცავს"
-
-#. interface
-#: crates/ui-egui/src/forms.rs
-#, fuzzy
-msgid "header contains {words}"
-msgstr "სათაური შეიცავს {words}"
-
-#. what a command says, why a command can't run
-#: crates/engine/src/cmd/shared.rs
-#, fuzzy
-msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
-msgstr "საერთო საფოსტო ყუთები იხსნება Microsoft Graph-ით სინქრონიზებული ანგარიშით"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
-msgstr "საერთო საფოსტო ყუთები იხსნება ანგარიშით, რომელიც Microsoft Graph-ით სინქრონიზდება"

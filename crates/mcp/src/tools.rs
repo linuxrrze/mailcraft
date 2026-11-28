@@ -303,7 +303,7 @@ pub(crate) const NAMING_PARAMS: &[&str] = &[
     "authorizeUrl",
     "tokenUrl",
     "revokeUrl",
-    // The digest of a script as `sieve.ownScript` read it (#9999).
+    // The digest of a script as `sieve.ownScript` read it (#2057).
     "digest",
 ];
 

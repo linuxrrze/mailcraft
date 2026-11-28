@@ -1286,7 +1286,7 @@ pub struct Session {
     /// said (`sync.applyAutomaticReplies`). The server's, read again each session: never saved.
     pub auto_replies: std::collections::HashMap<Id, crate::cmd::auto_replies::Known>,
     /// What each IMAP account's ManageSieve server last said of its Sieve scripts
-    /// (`sync.applySieve`, #9999). The server's: never saved.
+    /// (`sync.applySieve`, #2057). The server's: never saved.
     pub sieve: std::collections::HashMap<Id, crate::cmd::sieve_replies::SieveKnown>,
     pub(crate) history: Vec<Undo>,
     pub(crate) redo: Vec<Undo>,
@@ -3576,11 +3576,11 @@ impl Session {
         self.run_had.clear();
         self.jmap_read.clear();
         self.auto_replies.clear();
-        self.sieve.clear();
         // When a calendar server was asked, and what of it was read, is of the old mailbox's accounts.
         self.dav_listed.clear();
         self.dav_asked.clear();
         self.dav_seen.clear();
+        self.sieve.clear();
         // The background fetch's waits and offline flag were the old mailbox's.
         self.driver.fetch.forget();
         self.openings = self.openings.wrapping_add(1);

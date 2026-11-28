@@ -113,7 +113,7 @@ pub enum Condition {
     /// A header line named one of `names` contains one of the words, or with `exact` is one of
     /// them (letters A to Z in either case, the line's value trimmed): Outlook's "with specific
     /// words in the message header", narrowed to the lines named, as a Sieve `header :contains`
-    /// or `header :is` test of a script made elsewhere says it (#9999). Only read from such a
+    /// or `header :is` test of a script made elsewhere says it (#2057). Only read from such a
     /// script: no command makes one, and a server it can't be said to refuses it. Here, it can't be
     /// told of a message whose header lines are kept outside memory.
     Header {
@@ -716,12 +716,16 @@ pub struct Rule {
     /// Why the server didn't take it, when it didn't: it is kept here, and said so.
     #[serde(skip_serializing_if = "String::is_empty")]
     pub refused: String,
+    /// The owner keeps it on this computer (`"server": false`), not only because its server
+    /// couldn't keep it: a change that makes it one the server could keep leaves it here (#2058).
+    #[serde(skip_serializing_if = "is_false")]
+    pub here_by_choice: bool,
     /// It went to the server to be made there and no answer came: the server may have it. It is
     /// not sent again until the server's rules have been read whole, which either have it (and
     /// it is taken as this one) or don't (and it is sent again).
     #[serde(skip_serializing_if = "is_false")]
     pub unanswered: bool,
-    /// A Sieve rule (#9999): one block of Sieve the owner (or an agent, with the owner's yes)
+    /// A Sieve rule (#2057): one block of Sieve the owner (or an agent, with the owner's yes)
     /// wrote, kept in MailCraft's script on its IMAP account's server, where it runs. It has no
     /// conditions or actions of its own, and never matches here. At most [`MAX_SIEVE_RULE`]
     /// bytes. Empty for any other rule. (A version from before Sieve rules reads such a rule as
@@ -852,10 +856,14 @@ impl Rule {
     }
 
     /// Whether it reads the lines of a message's header block, which have to be in memory for it
-    /// ([`Message::header_block`]): words in the header, and an automatic reply's mark, which a
-    /// build from before it stayed on the message kept there.
+    /// ([`Message::header_block`]): words in the header, a header line by name (a rule of the
+    /// owner's own Sieve script, #2057), and an automatic reply's mark, which a build from before
+    /// it stayed on the message kept there.
     pub fn reads_header(&self) -> bool {
-        self.conditions.iter().chain(&self.exceptions).any(|c| matches!(c, Condition::HeaderContains(_) | Condition::AutomaticReply))
+        self.conditions
+            .iter()
+            .chain(&self.exceptions)
+            .any(|c| matches!(c, Condition::HeaderContains(_) | Condition::Header { .. } | Condition::AutomaticReply))
     }
 
     /// Whether it is for the arriving mail of `account`.

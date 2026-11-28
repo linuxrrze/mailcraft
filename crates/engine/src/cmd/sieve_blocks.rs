@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: MailCraft contributors
 // SPDX-License-Identifier: MIT OR Apache-2.0
-//! Every rule of a Sieve account, changed one at a time (#9999): a rule of the owner's own script
+//! Every rule of a Sieve account, changed one at a time (#2057): a rule of the owner's own script
 //! (made in webmail or another program) in the rule builder when that loses nothing, else as its
 //! Sieve text; and one of MailCraft's own rules that the builder can't show whole, as the Sieve
 //! MailCraft writes for it, from then on a Sieve rule ([`crate::cmd::rules_sieve`]).
@@ -62,6 +62,9 @@ pub fn specs() -> Vec<CommandSpec> {
     ]
 }
 
+/// Why a rule whose end isn't known ([`super::sieve_elsewhere::Span::whole`]) isn't changed.
+const NOT_WHOLE: &str = "Where this rule ends in your Sieve script isn't clear (a filter of your webmail's without its END:FILTER, or a rule that runs across a filter's marks), so MailCraft doesn't change it: change it in your webmail or in the whole script.";
+
 /// A rule of the owner's own script that the server runs, and where it is in it.
 pub struct Found<'a> {
     pub account: Id,
@@ -88,7 +91,7 @@ pub fn form(s: &Session, rule: Id) -> Option<Result<(), NoForm>> {
 
 /// Whether the rule `rule` of the owner's own script can be changed as Sieve text: it has some.
 pub fn text_offered(s: &Session, rule: Id) -> bool {
-    find(s, rule).is_some_and(|f| has_command(f.script.text.get(f.span.text_at.clone()).unwrap_or_default()))
+    find(s, rule).is_some_and(|f| f.span.whole && has_command(f.script.text.get(f.span.text_at.clone()).unwrap_or_default()))
 }
 
 /// The rule's Sieve text as read.
@@ -162,6 +165,9 @@ pub fn spliced(s: &Session, rule: Id, text: &str, read: Option<&str>) -> Result<
     if read.is_some_and(|d| !d.eq_ignore_ascii_case(&digest(&f.script.text))) {
         return Err(fail(OWN_CHANGED));
     }
+    if !f.span.whole {
+        return Err(fail(NOT_WHOLE));
+    }
     if text.len() > MAX_SCRIPT {
         return Err(failed!("A Sieve script is at most {mb} MB.", mb = MAX_SCRIPT >> 20));
     }
@@ -189,7 +195,8 @@ pub fn spliced(s: &Session, rule: Id, text: &str, read: Option<&str>) -> Result<
     for _ in 0..MAX_ADDED {
         let missing = match crate::sieve_check::check(&script, None) {
             Err(problems) => problems.into_iter().find_map(|p| match p.fault {
-                Fault::NeedsRequire { ext, .. } if p.at.start >= start => Some(ext),
+                // (Only what the new text needs: a command after it is left as it was, #2058.)
+                Fault::NeedsRequire { ext, .. } if p.at.start >= start && p.at.start < start.saturating_add(with.len()) => Some(ext),
                 _ => None,
             }),
             Ok(_) => None,
@@ -405,11 +412,14 @@ pub(crate) fn to_sieve(s: &Session, v: &Value) -> Result<(usize, Rule, Checked),
     if let Some(why) = super::rules::cannot_edit(&s.mailbox, old) {
         return Err(CmdError::Failed(why.said().to_string()));
     }
-    let made = super::sieve_rules::block(&s.mailbox, old, old.account)
-        .map_err(|why| failed!("This rule can't be said in Sieve: {why}.", why = Arg::words(why.said())))?;
+    // The Sieve MailCraft writes for it only when none is given: a rule whose folder is gone can
+    // still be given Sieve of the owner's (#2058).
     let text = match opt_text(v, "sieve")? {
         Some(t) => t.to_string(),
-        None => made.text.replace("\r\n", "\n"),
+        None => super::sieve_rules::block(&s.mailbox, old, old.account)
+            .map_err(|why| failed!("This rule can't be said in Sieve: {why}.", why = Arg::words(why.said())))?
+            .text
+            .replace("\r\n", "\n"),
     };
     let checked = super::rules_sieve::checked(a, &text)?;
     let name = match v.get("name") {

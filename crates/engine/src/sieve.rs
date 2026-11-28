@@ -352,7 +352,7 @@ pub struct RuleScript {
 /// The longest name said in a rule's comment, in characters.
 const MAX_COMMENT_NAME: usize = 200;
 
-/// `name` as a `#` comment's text can hold it (#9999): one line, with no control or format
+/// `name` as a `#` comment's text can hold it (#2057): one line, with no control or format
 /// character, no line or paragraph separator, and no `*/` (should the comment ever be read as a
 /// bracketed one), at most [`MAX_COMMENT_NAME`] characters.
 pub fn comment_name(name: &str) -> String {
@@ -476,13 +476,34 @@ fn vacation_section(vacation: &Vacation, owner: &Owner, scheduled: bool) -> Stri
             quoted(&utc(start)),
             quoted(&utc(end))
         ));
-        for line in body.split_inclusive("\r\n") {
-            out.push_str("    ");
-            out.push_str(line);
-        }
+        out.push_str(&indented(&body));
         out.push_str("}\r\n");
     } else {
         out.push_str(&body);
+    }
+    out
+}
+
+/// `body` (Sieve MailCraft wrote, with no comments) with each line that starts outside a quoted
+/// string indented by four spaces: a line of a reply's text, inside its string, is the reply's
+/// own and stays as it is (#2058).
+fn indented(body: &str) -> String {
+    let mut out = String::with_capacity(body.len().saturating_add(body.len() / 8));
+    let mut in_string = false;
+    for line in body.split_inclusive("\r\n") {
+        if !in_string {
+            out.push_str("    ");
+        }
+        out.push_str(line);
+        let mut escaped = false;
+        for c in line.chars() {
+            match c {
+                _ if escaped => escaped = false,
+                '\\' if in_string => escaped = true,
+                '"' => in_string = !in_string,
+                _ => {}
+            }
+        }
     }
     out
 }
@@ -494,7 +515,7 @@ pub fn read_vacation(script: &str) -> Option<Vacation> {
         return None;
     }
     // The replies' section alone: it ends where the first rule begins (`# rule <id>`), and a
-    // Sieve rule after it may have a `vacation` of its own (#9999).
+    // Sieve rule after it may have a `vacation` of its own (#2057).
     let lexed = lex(script)?;
     let rules_from =
         lexed.comments.iter().find(|c| !c.bracketed && c.text(script).trim_start().starts_with("rule ")).map_or(usize::MAX, |c| c.at.start);

@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: MailCraft contributors
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! The filters of a webmail's Sieve script of the RainLoop kind, changed with the rule commands
-//! (#9999): a round trip writes the script back byte for byte, a change touches the bytes of its
+//! (#2057): a round trip writes the script back byte for byte, a change touches the bytes of its
 //! filter alone, settings and Sieve together in the webmail's shape; add, delete, move and switch
 //! on and off; a filter changed by hand, or with settings not known, is read-only; hostile
 //! settings never panic. The script is synthetic, in the shape such a webmail was seen to write.
@@ -166,6 +166,17 @@ fn a_change_of_nothing_writes_the_script_back_byte_for_byte() {
     assert_eq!(written(&got, &text), text);
     let got = run(&mut s, "rules.edit", params(r[1].id, "ML-list", json!({"type": "toContains", "value": "list@lists.example.org"}), lists));
     assert_eq!(written(&got, &text), text);
+    // Spacing of its own the webmail's reader takes: kept by a change of nothing (#2058).
+    let spaced = text.replace("    fileinto \"Mailing-Lists/list\";\n", "    fileinto \"Mailing-Lists/list\";  \n\n");
+    assert_ne!(spaced, text);
+    read(&mut s, account, &spaced);
+    let r2 = rules(&s, account);
+    if super::rules_webmail::read_only(&s, r2[1].id).is_none() {
+        let got = run(&mut s, "rules.edit", params(r2[1].id, "ML-list", json!({"type": "toContains", "value": "list@lists.example.org"}), lists));
+        assert_eq!(written(&got, &spaced), spaced);
+    }
+    read(&mut s, account, &text);
+    let r = rules(&s, account);
     // Switched on already: nothing to write.
     let got = run(&mut s, "rules.enable", json!({"id": r[0].id, "value": true}));
     assert!(got.get("sieve").is_none());
@@ -290,6 +301,14 @@ fn a_new_filter_goes_after_the_last_with_a_fresh_id() {
     let got = written(&run(&mut s, "rules.add", first), bare);
     assert!(got.starts_with("require [\"body\", \"vacation\", \"fileinto\"];\n\n# RAINLOOP:SIEVE\n\n/*\nBEGIN:FILTER:"), "{got}");
     assert!(got.ends_with("/* END:FILTER */\n"));
+    // A webmail's script with no filter but commands of the owner's own, ending in `stop;`: a
+    // filter put after them would never run, so none is added (#2058).
+    let stops = "require [\"fileinto\"];\n# RAINLOOP:SIEVE\n\nif header :contains \"subject\" \"x\" { keep; }\nstop;\n";
+    let (mut s, account, junk, _) = session(stops);
+    let mut after_stop = new.clone();
+    after_stop["account"] = json!(account);
+    after_stop["actions"] = json!([{"type": "moveTo", "value": junk}]);
+    assert!(err(&mut s, "rules.add", after_stop).contains("no filter to put a new one after"));
     // Not a webmail's script: no filter is added to it.
     let (mut s, account, junk, _) = session("require \"fileinto\";\nkeep;\n");
     let mut other = new;
@@ -418,7 +437,7 @@ fn a_rule_of_a_script_not_the_webmails_stays_read_only() {
     let (mut s, account, junk, _) = session(roundcube);
     let r = rules(&s, account);
     assert!(r[0].read_only() && find(&s, r[0].id).is_none());
-    // Not as a filter: as a rule of the owner's own script, its command alone written again (#9999).
+    // Not as a filter: as a rule of the owner's own script, its command alone written again (#2057).
     let changed = run(&mut s, "rules.edit", params(r[0].id, "x", json!({"type": "toContains", "value": "x"}), junk));
     assert_eq!(changed.get("webmail"), None);
     let text = changed["sieve"]["text"].as_str().unwrap();
@@ -464,6 +483,76 @@ fn an_agent_is_asked_about_a_filter_with_what_it_does() {
     let up = json!({"id": r[1].id, "direction": "up"});
     assert_eq!(classify(&s, "rules.move", &up), Access::Owner(Class::Settings));
     assert!(describe(&s, "rules.move", &up).starts_with("move the filter “ML-list” up"));
+}
+
+/// A filter of the owner's script that files into Deleted Items deletes mail on the server, where
+/// undo doesn't reach: every rule command that puts one there or switches one on is asked as a
+/// delete, as for a server rule of MailCraft's own; the others as a change of settings (#2058).
+#[test]
+fn every_rule_command_on_a_filter_that_files_into_deleted_items_is_asked_as_a_delete() {
+    let text = script();
+    let (mut s, account, junk, _) = session(&text);
+    let bin = s.mailbox.folder_of_kind(account, FolderKind::Deleted).unwrap();
+    s.mailbox.folder_mut(bin).unwrap().remote = "Trash".into();
+    let r = rules(&s, account);
+    let new = |folder: Id| json!({"webmail": true, "account": account, "name": "Bin", "conditions": [{"type": "toContains", "value": "x@example.org"}], "actions": [{"type": "moveTo", "value": folder}]});
+    assert_eq!(classify(&s, "rules.add", &new(bin)), Access::Owner(Class::Delete));
+    assert_eq!(classify(&s, "rules.add", &new(junk)), Access::Owner(Class::Settings));
+    let to = |id: Id, folder: Id| params(id, "Lists", json!({"type": "toContains", "value": "list@lists.example.org"}), folder);
+    assert_eq!(classify(&s, "rules.edit", &to(r[1].id, bin)), Access::Owner(Class::Delete));
+    assert_eq!(classify(&s, "rules.edit", &to(r[1].id, junk)), Access::Owner(Class::Settings));
+    // The filter made, as the server then has it.
+    let added = written(&run(&mut s, "rules.add", new(bin)), &text);
+    read(&mut s, account, &added);
+    let (binned, first) = (rules(&s, account).last().unwrap().id, rules(&s, account)[0].id);
+    assert_eq!(classify(&s, "rules.edit", &to(binned, bin)), Access::Owner(Class::Delete));
+    assert_eq!(classify(&s, "rules.edit", &to(binned, junk)), Access::Owner(Class::Settings));
+    assert_eq!(classify(&s, "rules.move", &json!({"id": binned, "direction": "up"})), Access::Owner(Class::Delete));
+    assert_eq!(classify(&s, "rules.move", &json!({"id": first, "direction": "up"})), Access::Owner(Class::Settings));
+    assert_eq!(classify(&s, "rules.remove", &json!({"id": binned})), Access::Owner(Class::Delete));
+    // Switched off, then on again.
+    assert_eq!(classify(&s, "rules.enable", &json!({"id": binned, "value": false})), Access::Owner(Class::Settings));
+    let off = written(&run(&mut s, "rules.enable", json!({"id": binned, "value": false})), &added);
+    read(&mut s, account, &off);
+    let binned = rules(&s, account).last().unwrap().id;
+    assert_eq!(classify(&s, "rules.enable", &json!({"id": binned})), Access::Owner(Class::Delete));
+    assert_eq!(classify(&s, "rules.enable", &json!({"id": binned, "value": true})), Access::Owner(Class::Delete));
+    // Changed while off: it runs nowhere until switched on.
+    assert_eq!(classify(&s, "rules.edit", &to(binned, bin)), Access::Owner(Class::Settings));
+    assert_eq!(classify(&s, "rules.enable", &json!({"id": rules(&s, account)[0].id, "value": false})), Access::Owner(Class::Settings));
+}
+
+/// A filter whose settings would be too long for the script to be read again is refused before
+/// anything is written, rather than saved read-only (#2058).
+#[test]
+fn a_filter_with_settings_too_long_to_read_again_is_refused() {
+    let text = script();
+    let (mut s, account, junk, _) = session(&text);
+    // Sixty conditions of the longest words and names, each quote of them doubled in the JSON.
+    let words: Vec<String> = (0..20).map(|n| format!("{n:02}{}", "\"".repeat(198))).collect();
+    let names: Vec<String> = (0..3).map(|n| format!("X-{n}{}", "a".repeat(197))).collect();
+    let header = json!({"type": "header", "value": {"names": names, "words": words}});
+    let add = json!({"webmail": true, "account": account, "name": "Long", "conditions": [header], "actions": [{"type": "moveTo", "value": junk}]});
+    let e = err(&mut s, "rules.add", add);
+    assert!(e.contains("too much text"), "{e}");
+}
+
+/// A filter whose value has spaces at its ends, renamed in the builder (which shows its words
+/// trimmed): the value stays byte for byte (#2058).
+#[test]
+fn a_rename_keeps_a_value_with_spaces_as_it_is() {
+    let spaced = SPAM.replace("\"Value\":\"YES\"", "\"Value\":\" YES \"").replace("\"Value\":\"Yes\"", "\"Value\":\" YES \"");
+    let sieve = SPAM_SIEVE.replace("\"YES\"", "\" YES \"").replace("\"Yes\"", "\" YES \"");
+    let text = format!("{HEAD}{}\n", block(SPAM_ID, &spaced, &sieve));
+    let (mut s, account, junk, _) = session(&text);
+    let r = rules(&s, account);
+    assert_eq!(super::rules_webmail::read_only(&s, r[0].id), None, "the filter is known");
+    // The condition as the builder shows it, its words trimmed.
+    let Condition::Header { names, words, exact } = r[0].conditions[0].clone() else { panic!("{:?}", r[0].conditions) };
+    let words: Vec<String> = words.iter().map(|w| w.trim().to_string()).collect();
+    let words = json!({"type": "header", "value": {"names": names, "words": words, "exact": exact}});
+    let got = written(&run(&mut s, "rules.edit", params(r[0].id, "Junk mail", words, junk)), &text);
+    assert!(got.contains("\" YES \""), "{got}");
 }
 
 proptest! {

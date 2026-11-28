@@ -240,7 +240,7 @@ impl MailApp {
         let Ok(v) = &r else { return r };
         match id {
             "account.automaticReplies" => {
-                // An IMAP account's are read through ManageSieve (`/ask/sieve`, #9999): never
+                // An IMAP account's are read through ManageSieve (`/ask/sieve`, #2057): never
                 // through Graph.
                 if v.pointer("/ask/sieve").is_some() {
                     if let Some(account) = v.pointer("/ask/account").and_then(Value::as_u64) {
@@ -253,7 +253,7 @@ impl MailApp {
                 }
             }
             "account.setAutomaticReplies" => {
-                // A Sieve script to write: not Graph's to change (#9999).
+                // A Sieve script to write: not Graph's to change (#2057).
                 if let Some(sieve) = v.get("sieve") {
                     let account = v.get("account").and_then(Value::as_u64).unwrap_or(0);
                     self.sieve_write(account, sieve)?;
@@ -549,10 +549,19 @@ impl MailApp {
         })
     }
 
+    /// Whether MailCraft's Sieve script for `account` is the one its server runs, as MailCraft
+    /// wrote it: only then are the replies set there sent (#2058). True for any other account.
+    pub(crate) fn sieve_replies_run(&self, account: Id) -> bool {
+        if !self.sieve_account(account) {
+            return true;
+        }
+        self.session.sieve.get(&account).is_some_and(|s| !s.changed_elsewhere && s.active.as_deref() == Some(mailcraft_engine::sieve::SCRIPT_NAME))
+    }
+
     /// The accounts whose automatic replies go out now, for the status bar.
     pub(crate) fn auto_replies_on(&self) -> Vec<Id> {
         let now = self.session.now();
-        let sieve = self.sieve_accounts().into_iter().filter(|a| self.session.sieve.get(a).is_some_and(|s| !s.changed_elsewhere));
+        let sieve = self.sieve_accounts().into_iter().filter(|a| self.sieve_replies_run(*a));
         reply_accounts(&self.session.mailbox)
             .into_iter()
             .filter(|_| self.services.graph_auto_replies.is_some())
@@ -629,10 +638,11 @@ pub struct Draft {
     /// read): they are filled once, when it comes.
     pub filled: bool,
     pub error: String,
-    /// The replies are a Sieve script on an IMAP account's server (#9999), not Microsoft's.
+    /// The replies are a Sieve script on an IMAP account's server (#2057), not Microsoft's.
     pub sieve: bool,
-    /// The owner chose to replace MailCraft's script, changed elsewhere, with what is set here.
-    pub replace: bool,
+    /// The owner chose to replace MailCraft's script, changed elsewhere, with what is set here: the
+    /// digest of the script as it was when the owner chose, which alone is replaced (#2058).
+    pub replace: Option<String>,
     /// The first field takes the keyboard once.
     focus: bool,
 }
@@ -666,7 +676,7 @@ impl Draft {
             filled: false,
             error: String::new(),
             sieve: app.sieve_account(account),
-            replace: false,
+            replace: None,
             focus: false,
         };
         draft.default_range(app);
@@ -729,8 +739,8 @@ impl Draft {
             params["start"] = json!(kit::stamp(&self.start_date, &self.start_time));
             params["end"] = json!(kit::stamp(&self.end_date, &self.end_time));
         }
-        if self.replace {
-            params["replace"] = json!(true);
+        if let Some(seen) = &self.replace {
+            params["replace"] = json!(seen);
         }
         params
     }
@@ -786,7 +796,7 @@ impl Draft {
             notice(ui, &t, &text, |_| {});
         }
         let sieve_trouble = self.sieve && (app.sieve.trouble.contains_key(&self.account) || sieve.as_ref().is_some_and(|s| !s.takes_replies()));
-        let sieve_blocked = sieve_trouble || sieve.as_ref().is_some_and(|s| s.changed_elsewhere && !self.replace);
+        let sieve_blocked = sieve_trouble || sieve.as_ref().is_some_and(|s| s.changed_elsewhere && self.replace.is_none());
         if !self.filled && trouble.is_none() && !sieve_blocked {
             ui.label(RichText::new(tl!("Reading your automatic replies from the server…")).color(t.text_dim));
         } else if app.offline() {
@@ -801,7 +811,7 @@ impl Draft {
                 self.on = true;
             }
             ui.add_enabled_ui(self.on, |ui| {
-                // A Sieve server without date tests can't keep a time range (#9999).
+                // A Sieve server without date tests can't keep a time range (#2057).
                 let can_range = !self.sieve || sieve.as_ref().is_some_and(|s| s.takes_schedule());
                 if !can_range {
                     self.ranged = false;
@@ -899,7 +909,7 @@ impl Draft {
             let Some(sieve) = app.session.sieve.get(&self.account) else { return false };
             return self.filled
                 && sieve.takes_replies()
-                && (!sieve.changed_elsewhere || self.replace)
+                && (!sieve.changed_elsewhere || self.replace.is_some())
                 && !matches!(app.sieve.trouble.get(&self.account), Some(SieveTrouble::Unavailable | SieveTrouble::SignIn))
                 && !app.offline();
         }
@@ -908,7 +918,7 @@ impl Draft {
         self.filled && !matches!(trouble, Some(Trouble::SignInToRead | Trouble::SignInOver(_))) && !asking && !app.offline()
     }
 
-    /// What stands in the way of an IMAP account's replies kept in a Sieve script (#9999), and the
+    /// What stands in the way of an IMAP account's replies kept in a Sieve script (#2057), and the
     /// way past a script changed elsewhere: replacing it, which the owner asks for himself.
     fn sieve_notice(&mut self, app: &mut MailApp, ui: &mut Ui, t: &Tokens) {
         let sieve = app.session.sieve.get(&self.account).cloned();
@@ -944,7 +954,7 @@ impl Draft {
             (None, Some(s)) if !s.takes_replies() => {
                 tl!("This server keeps Sieve scripts, but they can't send automatic replies (it has no vacation extension).").to_string()
             }
-            (None, Some(s)) if s.changed_elsewhere && !self.replace => {
+            (None, Some(s)) if s.changed_elsewhere && self.replace.is_none() => {
                 let text = tl!(
                     "MailCraft's Sieve script on the server was changed elsewhere since MailCraft wrote it, so MailCraft leaves it as it is. To set your automatic replies here, replace it with MailCraft's: what was changed in it elsewhere is lost."
                 );
@@ -952,7 +962,7 @@ impl Draft {
                     let button = ui.button(tl!("Replace with MailCraft's"));
                     app.hit.add("sieveReplace", self.account, button.rect);
                     if button.clicked() {
-                        self.replace = true;
+                        self.replace = Some(s.now.clone().unwrap_or_default());
                         self.filled = true;
                     }
                 });
@@ -1005,7 +1015,7 @@ fn notice(ui: &mut Ui, t: &Tokens, text: &str, add: impl FnOnce(&mut Ui)) {
 /// replies go out, as Outlook's is; a click opens the dialog. Nothing for a mailbox without one.
 pub(crate) fn info_tiles(app: &mut MailApp, ui: &mut Ui, t: &Tokens) {
     let mut accounts = if app.services.graph_auto_replies.is_some() { reply_accounts(&app.session.mailbox) } else { Vec::new() };
-    // An IMAP account's are a Sieve script on its server (#9999): read when File › Info is shown.
+    // An IMAP account's are a Sieve script on its server (#2057): read when File › Info is shown.
     for account in app.sieve_accounts() {
         app.sieve_read_now(account);
         accounts.push(account);
@@ -1017,7 +1027,7 @@ pub(crate) fn info_tiles(app: &mut MailApp, ui: &mut Ui, t: &Tokens) {
     ui.label(RichText::new(tl!("Automatic Replies")).font(crate::theme::semibold(14.0)).color(t.accent_text));
     let now = app.session.now();
     for account in accounts {
-        let on = app.auto_replies_known(account).is_some_and(|k| k.on_at(now));
+        let on = app.auto_replies_known(account).is_some_and(|k| k.on_at(now)) && app.sieve_replies_run(account);
         let address = app.session.mailbox.account(account).map(|a| a.email.trim().to_string()).unwrap_or_default();
         let (line, _) = app.auto_replies_line(account).unwrap_or_default();
         let said = app.session.driver.auto_replies.trouble.contains_key(&account)

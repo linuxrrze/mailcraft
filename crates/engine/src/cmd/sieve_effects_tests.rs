@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: MailCraft contributors
 // SPDX-License-Identifier: MIT OR Apache-2.0
-//! What a Sieve text can do, as an agent's approval asks it (#9999): one table classes each
+//! What a Sieve text can do, as an agent's approval asks it (#2057): one table classes each
 //! command, read from the parsed text; what sends, hands mail to a program, isn't known or can't
 //! be read asks as a send; what changes messages asks as settings and says so.
 
@@ -159,7 +159,9 @@ fn the_owners_script_that_adds_a_pipe_asks_as_a_send() {
     assert!(adds_sending(THEIRS, &piped));
     // Another use of what was there counts; the same uses, moved about, don't.
     assert!(adds_sending("pipe \"a\";", "pipe \"a\"; pipe \"b\";"));
-    assert!(!adds_sending("pipe \"a\"; redirect \"x@example.org\";", "redirect \"x@example.org\"; pipe \"b\";"));
+    assert!(!adds_sending("pipe \"a\"; redirect \"x@example.org\";", "redirect \"x@example.org\"; pipe \"a\";"));
+    // Another destination for a use that was there isn't another way to send.
+    assert!(!adds_sending("pipe \"a\";", "pipe \"b\";"));
     // One that only changes messages asks as settings and says so.
     let edited = format!("require [\"fileinto\", \"editheader\"];{}addheader \"X-A\" \"b\";\r\n", THEIRS.trim_start_matches("require \"fileinto\";"));
     let params = json!({"account": account, "text": edited, "digest": d});

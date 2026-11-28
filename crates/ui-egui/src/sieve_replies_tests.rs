@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: MailCraft contributors
 // SPDX-License-Identifier: MIT OR Apache-2.0
-//! An IMAP account's Automatic Replies in the window (#9999): the job, File › Info's line, and the
+//! An IMAP account's Automatic Replies in the window (#2057): the job, File › Info's line, and the
 //! dialog in its Sieve shape. The host's answers are written out by hand, as `mailcraft-net`'s
 //! `sieve` brings them.
 
@@ -112,6 +112,11 @@ fn a_change_writes_the_engines_script_and_says_how_it_went() {
     assert_eq!(said(&app), "Automatic replies are on");
     assert_eq!(app.auto_replies_on(), vec![account]);
     assert_eq!(app.sieve_line(account), "Automatic replies: on, until you turn them off");
+    // The owner's own script made active elsewhere: MailCraft's replies, still on there, aren't
+    // being sent (#2058).
+    read(&mut app, account, &answers, SieveResult { state: Some(state(&ALL, Some("roundcube"), Some(&text))), ..Default::default() });
+    assert!(app.auto_replies_on().is_empty());
+    assert!(!app.sieve_replies_run(account));
 }
 
 #[test]
@@ -267,9 +272,16 @@ fn a_script_changed_elsewhere_is_replaced_only_by_the_owners_click() {
     assert!(!draft(&h).editable(h.state()));
     h.get_by_label("Replace with MailCraft's").click();
     h.run_steps(2);
-    assert!(draft(&h).replace && draft(&h).editable(h.state()));
-    assert_eq!(draft(&h).params()["replace"], true);
+    assert!(draft(&h).replace.is_some() && draft(&h).editable(h.state()));
+    // Bound to the script as the owner saw it (#2058).
+    assert_eq!(draft(&h).params()["replace"], mailcraft_engine::sieve::digest("keep;"));
     assert!(h.query_by_label("Replace with MailCraft's").is_none());
+    // Changed elsewhere again before OK: the engine refuses to write over what the owner didn't see.
+    let params = draft(&h).params();
+    let app = h.state_mut();
+    read(app, account, &answers, SieveResult { state: Some(state(&ALL, Some(SCRIPT_NAME), Some("discard;"))), ..Default::default() });
+    let e = app.session.run("account.setAutomaticReplies", &params).unwrap_err().to_string();
+    assert!(e.contains("changed again"), "{e}");
 }
 
 const RULES: [&str; 6] = ["vacation", "date", "relational", "fileinto", "copy", "imap4flags"];
@@ -433,4 +445,50 @@ fn the_rules_window_says_what_was_found_where_the_server_was_looked_for() {
         "MailCraft can't keep this account's rules on its server, so they run on this computer: sieve.example.org:4190 expects an encrypted connection from the start, which ManageSieve doesn't use. On Dovecot, set ssl = no on the sieve listener."
     );
     assert!(!replace);
+}
+
+/// A read under way when Account Settings names another Sieve server: what the server before had
+/// isn't taken in for the account, and the new one is read instead (#2058).
+#[test]
+fn a_read_of_the_server_before_is_dropped_once_another_is_named() {
+    let (mut app, account, answers, _) = window();
+    // A host that answers later: the job is under way while the account changes.
+    let (tx, rx) = std::sync::mpsc::channel();
+    let pending = std::sync::Mutex::new(Some(rx));
+    app.services.sieve = Some(Box::new(move |_job: SieveJob| pending.lock().unwrap().take().unwrap_or_else(|| std::sync::mpsc::channel().1)));
+    app.execute("account.automaticReplies", json!({"account": account})).unwrap();
+    app.sieve_tick_at(1.0);
+    app.execute("account.edit", json!({"id": account, "sieve": {"host": "sieve.example.org", "port": 4191}})).unwrap();
+    tx.send(SieveResult { account, state: Some(state(&ALL, None, None)), ..Default::default() }).unwrap();
+    app.poll_sieve();
+    assert!(!app.session.sieve.contains_key(&account), "the server before's answer isn't the account's");
+    drop(answers);
+}
+
+/// A rule change queued while a change of the replies is being written isn't said to be saved
+/// when the replies' write ends: each write says what it was for (#2058).
+#[test]
+fn a_write_says_what_it_was_queued_for() {
+    let (mut app, account, answers, _) = window();
+    read(&mut app, account, &answers, SieveResult { state: Some(state(&RULES, None, None)), ..Default::default() });
+    let inbox = app.session.mailbox.folder_of_kind(account, mailcraft_model::FolderKind::Inbox).unwrap();
+    app.session.mailbox.folder_mut(inbox).unwrap().remote = "INBOX".into();
+    let change =
+        app.session.run("account.setAutomaticReplies", &json!({"account": account, "status": "alwaysEnabled", "internal": "Away."})).unwrap();
+    let text = change["sieve"]["text"].as_str().unwrap().to_string();
+    answers.lock().unwrap().push_back(SieveResult {
+        account,
+        state: Some(state(&RULES, Some(SCRIPT_NAME), Some(&text))),
+        written: Some("done".into()),
+        ..Default::default()
+    });
+    app.execute("account.setAutomaticReplies", json!({"account": account, "status": "alwaysEnabled", "internal": "Away."})).unwrap();
+    // Under way; a rule change is queued meanwhile.
+    app.execute(
+        "rules.add",
+        json!({"name": "Lists", "account": account, "conditions": [{"type": "fromContains", "value": "list"}], "actions": [{"type": "moveTo", "value": inbox}]}),
+    )
+    .unwrap();
+    app.poll_sieve();
+    assert_eq!(said(&app), "Automatic replies are on");
 }
