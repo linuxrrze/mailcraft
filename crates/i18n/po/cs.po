@@ -13767,8 +13767,9 @@ msgstr "Vložit obrázek"
 
 #. interface
 #: crates/ui-egui/src/text_menu.rs
+#, fuzzy
 msgid "Paste Text Only"
-msgstr ""
+msgstr "Vložit pouze text"
 
 #. interface
 #: crates/ui-egui/src/signatures.rs
@@ -31248,3 +31249,32 @@ msgstr "−Řádky"
 #~ msgstr[1] "{n} kontakty jsou vráceny jen do tohoto počítače: na odeslání čeká příliš mnoho změn."
 #~ msgstr[2] "{n} kontaktů je vráceno jen do tohoto počítače: na odeslání čeká příliš mnoho změn."
 
+#. what a command says
+#: crates/engine/src/cmd/auto_replies.rs
+#, fuzzy
+msgid "Automatic replies are kept on the mail server, and MailCraft can set them only for accounts that sign in with Microsoft so far: IMAP has no standard way to set them (Sieve vacation replies may come later)"
+msgstr "Automatické odpovědi jsou uloženy na poštovním serveru a MailCraft je zatím umí nastavit jen u účtů, které se přihlašují přes Microsoft: IMAP nemá standardní způsob, jak je nastavit (odpovědi o nepřítomnosti přes Sieve možná přibudou později)"
+
+#. name
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Header contains"
+msgstr "Záhlaví obsahuje"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "header contains {words}"
+msgstr "záhlaví obsahuje {words}"
+
+#. what a command says, why a command can't run
+#: crates/engine/src/cmd/shared.rs
+#, fuzzy
+msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
+msgstr "sdílené poštovní schránky se otevírají pod účtem synchronizovaným přes Microsoft Graph"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
+msgstr "sdílené poštovní schránky se otevírají pod účtem, který se synchronizuje přes Microsoft Graph"

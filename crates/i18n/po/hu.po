@@ -13743,8 +13743,9 @@ msgstr "Kép beillesztése"
 
 #. interface
 #: crates/ui-egui/src/text_menu.rs
+#, fuzzy
 msgid "Paste Text Only"
-msgstr ""
+msgstr "Csak a szöveg beillesztése"
 
 #. interface
 #: crates/ui-egui/src/signatures.rs
@@ -31117,3 +31118,68 @@ msgstr "−Sorok"
 #~ msgid "A calendar server's certificate isn't trusted, so nothing was sent to it."
 #~ msgstr "Egy naptárkiszolgáló tanúsítványa nem megbízható, ezért semmit nem küldtünk neki."
 
+#. interface
+#: crates/ui-egui/src/attachment_open.rs crates/ui-egui/src/compose.rs
+#, fuzzy
+msgid "Attachments can't be opened here."
+msgstr "Itt nem lehet megnyitni a mellékleteket."
+
+#. what a command says
+#: crates/engine/src/cmd/auto_replies.rs
+#, fuzzy
+msgid "Automatic replies are kept on the mail server, and MailCraft can set them only for accounts that sign in with Microsoft so far: IMAP has no standard way to set them (Sieve vacation replies may come later)"
+msgstr "Automatikus válaszok a postaszerveren maradnak, és a MailCraft csak olyan fiókokra tudja beállítani őket, amelyek eddig a Microsoftnál jelentkeztek: IMAP nem tudja a szokásos módon beállítani azokat (a Sieve nyaralási válaszok később is bekövetkezhetnek)"
+
+#. interface
+#: crates/ui-egui/src/compose.rs
+#, fuzzy
+msgid "Double-click to download {name}"
+msgstr "Kattintson duplán a letöltéshez: {name}"
+
+#. interface
+#: crates/ui-egui/src/compose.rs
+#, fuzzy
+msgid "Double-click to open {name}"
+msgstr "Kattintson duplán a megnyitáshoz: {name}"
+
+#. name
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Header contains"
+msgstr "A fejléc tartalmazza"
+
+#. interface
+#: crates/ui-egui/src/attachment_open.rs
+#, fuzzy
+msgid "MailCraft can't open {name} because of its file type."
+msgstr "A MailCraft nem tudja megnyitni ezt a fájlt a típusa miatt: {name}"
+
+#. command label
+#: crates/ui-egui/src/lib.rs
+#, fuzzy
+msgid "Open Draft Attachment"
+msgstr "Piszkozat mellékletének megnyitása"
+
+#. interface
+#: crates/ui-egui/src/attachment_open.rs
+#, fuzzy
+msgid "The draft isn't open any more"
+msgstr "A piszkozat már nincs megnyitva"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "header contains {words}"
+msgstr "a fejléc tartalmazza: {words}"
+
+#. what a command says, why a command can't run
+#: crates/engine/src/cmd/shared.rs
+#, fuzzy
+msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
+msgstr "megosztott postafiókok nyithatók egy Microsoft Graph-on keresztül vezetett fiók alatt"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
+msgstr "megosztott postafiókok nyitnak egy fiók alatt, amely lépést tart a Microsoft Graph"

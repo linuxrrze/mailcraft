@@ -13712,8 +13712,9 @@ msgstr "სურათის ჩასმა"
 
 #. interface
 #: crates/ui-egui/src/text_menu.rs
+#, fuzzy
 msgid "Paste Text Only"
-msgstr ""
+msgstr "მხოლოდ ტექსტის ჩასმა"
 
 #. interface
 #: crates/ui-egui/src/signatures.rs
@@ -31029,3 +31030,32 @@ msgstr ""
 #~ msgstr[0] "{n} კონტაქტი ისევ მხოლოდ ამ კომპიუტერზეა: ძალიან ბევრი ცვლილება ელოდება გაგზავნას."
 #~ msgstr[1] "{n} კონტაქტი ისევ მხოლოდ ამ კომპიუტერზეა: ძალიან ბევრი ცვლილება ელოდება გაგზავნას."
 
+#. what a command says
+#: crates/engine/src/cmd/auto_replies.rs
+#, fuzzy
+msgid "Automatic replies are kept on the mail server, and MailCraft can set them only for accounts that sign in with Microsoft so far: IMAP has no standard way to set them (Sieve vacation replies may come later)"
+msgstr "ავტომატური პასუხები საფოსტო სერვერზე ინახება და MailCraft-ს ჯერჯერობით მათი დაყენება მხოლოდ იმ ანგარიშებისთვის შეუძლია, რომლებიც Microsoft-ით შედიან: IMAP-ს მათი დაყენების სტანდარტული გზა არ აქვს (Sieve-ის შვებულების პასუხები შეიძლება მოგვიანებით დაემატოს)"
+
+#. name
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Header contains"
+msgstr "სათაური შეიცავს"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "header contains {words}"
+msgstr "სათაური შეიცავს {words}"
+
+#. what a command says, why a command can't run
+#: crates/engine/src/cmd/shared.rs
+#, fuzzy
+msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
+msgstr "საერთო საფოსტო ყუთები იხსნება Microsoft Graph-ით სინქრონიზებული ანგარიშით"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
+msgstr "საერთო საფოსტო ყუთები იხსნება ანგარიშით, რომელიც Microsoft Graph-ით სინქრონიზდება"

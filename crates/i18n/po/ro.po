@@ -13784,8 +13784,9 @@ msgstr "Lipire imagine"
 
 #. interface
 #: crates/ui-egui/src/text_menu.rs
+#, fuzzy
 msgid "Paste Text Only"
-msgstr ""
+msgstr "Lipire doar text"
 
 #. interface
 #: crates/ui-egui/src/signatures.rs
@@ -31339,3 +31340,32 @@ msgstr "−Linii"
 #~ msgid "A calendar server's certificate isn't trusted, so nothing was sent to it."
 #~ msgstr "Certificatul unui server de calendare nu este de încredere, așa că nu i s-a trimis nimic."
 
+#. what a command says
+#: crates/engine/src/cmd/auto_replies.rs
+#, fuzzy
+msgid "Automatic replies are kept on the mail server, and MailCraft can set them only for accounts that sign in with Microsoft so far: IMAP has no standard way to set them (Sieve vacation replies may come later)"
+msgstr "Răspunsurile automate se păstrează pe serverul de e-mail, iar MailCraft le poate seta deocamdată doar pentru conturile care se conectează cu Microsoft: IMAP nu are o metodă standard pentru ele (răspunsurile de concediu Sieve pot veni mai târziu)"
+
+#. name
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Header contains"
+msgstr "Antetul conține"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "header contains {words}"
+msgstr "antetul conține {words}"
+
+#. what a command says, why a command can't run
+#: crates/engine/src/cmd/shared.rs
+#, fuzzy
+msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
+msgstr "cutiile poștale partajate se deschid sub un cont sincronizat prin Microsoft Graph"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
+msgstr "cutiile poștale partajate se deschid sub un cont sincronizat prin Microsoft Graph"

@@ -13743,8 +13743,9 @@ msgstr "Incolla immagine"
 
 #. interface
 #: crates/ui-egui/src/text_menu.rs
+#, fuzzy
 msgid "Paste Text Only"
-msgstr ""
+msgstr "Incolla solo il testo"
 
 #. interface
 #: crates/ui-egui/src/signatures.rs
@@ -31253,3 +31254,32 @@ msgstr "−Righe"
 #~ msgid "A calendar server's certificate isn't trusted, so nothing was sent to it."
 #~ msgstr "Il certificato di un server di calendari non è attendibile, quindi non gli è stato inviato nulla."
 
+#. what a command says
+#: crates/engine/src/cmd/auto_replies.rs
+#, fuzzy
+msgid "Automatic replies are kept on the mail server, and MailCraft can set them only for accounts that sign in with Microsoft so far: IMAP has no standard way to set them (Sieve vacation replies may come later)"
+msgstr "Le risposte automatiche sono conservate sul server di posta e per ora MailCraft può impostarle solo per gli account che accedono con Microsoft: IMAP non ha un modo standard per impostarle (le risposte di assenza Sieve potrebbero arrivare in seguito)"
+
+#. name
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Header contains"
+msgstr "L'intestazione contiene"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "header contains {words}"
+msgstr "l'intestazione contiene {words}"
+
+#. what a command says, why a command can't run
+#: crates/engine/src/cmd/shared.rs
+#, fuzzy
+msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
+msgstr "le cassette postali condivise si aprono sotto un account sincronizzato tramite Microsoft Graph"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
+msgstr "le cassette postali condivise si aprono sotto un account che è sincronizzato tramite Microsoft Graph"

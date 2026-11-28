@@ -13739,8 +13739,9 @@ msgstr "粘贴图片"
 
 #. interface
 #: crates/ui-egui/src/text_menu.rs
+#, fuzzy
 msgid "Paste Text Only"
-msgstr ""
+msgstr "仅粘贴文本"
 
 #. interface
 #: crates/ui-egui/src/signatures.rs
@@ -30957,3 +30958,32 @@ msgstr "−行"
 #~ msgid "A calendar server's certificate isn't trusted, so nothing was sent to it."
 #~ msgstr "日历服务器的证书不受信任，因此没有向其发送任何内容。"
 
+#. what a command says
+#: crates/engine/src/cmd/auto_replies.rs
+#, fuzzy
+msgid "Automatic replies are kept on the mail server, and MailCraft can set them only for accounts that sign in with Microsoft so far: IMAP has no standard way to set them (Sieve vacation replies may come later)"
+msgstr "自动回复保存在邮件服务器上。目前 MailCraft 只能为通过 Microsoft 登录的账户设置自动回复：IMAP 没有标准设置方式（将来可能支持 Sieve 假期回复）。"
+
+#. name
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "Header contains"
+msgstr "邮件头包含"
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+#, fuzzy
+msgid "header contains {words}"
+msgstr "邮件头包含 {words}"
+
+#. what a command says, why a command can't run
+#: crates/engine/src/cmd/shared.rs
+#, fuzzy
+msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
+msgstr "请在通过 Microsoft Graph 同步的账户下打开共享邮箱"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
+msgstr "共享邮箱在通过 Microsoft Graph 同步的账户下打开"
