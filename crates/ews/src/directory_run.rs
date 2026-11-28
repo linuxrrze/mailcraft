@@ -264,7 +264,10 @@ impl<E: HttpExchange> Run<'_, E> {
             Err(Asked::Code(ResponseCode::FolderNotFound | ResponseCode::NonExistentMailbox)) => None,
             Err(other) => return Err(other),
         };
+        let deleted = self.deleted_items(mailbox).await;
         let mut all: Vec<FolderInfo> = Vec::new();
+        // Where every folder listed lies, to tell the ones inside Deleted Items.
+        let mut parents: std::collections::HashMap<crate::folder::FolderId, crate::folder::FolderId> = std::collections::HashMap::new();
         let mut complete = false;
         let mut offset = 0u32;
         for _ in 0..MAX_PAGES {
@@ -285,12 +288,25 @@ impl<E: HttpExchange> Run<'_, E> {
                 Err(other) => return Err(other),
             };
             let before = page.folders.len();
-            all.extend(page.folders.into_iter().filter(|folder| folder.class.eq_ignore_ascii_case(kind.class())));
+            for folder in &page.folders {
+                if let Some(parent) = &folder.parent
+                    && parents.len() < MAX_PARENTS
+                {
+                    parents.insert(folder.id.clone(), parent.clone());
+                }
+            }
+            // (A hidden folder is the mailbox's own or a program's: Outlook doesn't show it.)
+            all.extend(page.folders.into_iter().filter(|folder| folder.class.eq_ignore_ascii_case(kind.class()) && !folder.hidden));
             if page.last || before == 0 {
                 complete = page.last;
                 break;
             }
             offset = offset.saturating_add(u32::try_from(before).unwrap_or(u32::MAX));
+        }
+        // What was deleted (a calendar in Deleted Items is a calendar still) is no list of the
+        // account's, as in Outlook.
+        if let Some(deleted) = &deleted {
+            all.retain(|folder| !lies_in(&parents, &folder.id, deleted));
         }
         // The default folder first, wherever the listing put it: what is read is cut to a number of
         // folders, and the default one is never the one cut.
@@ -299,6 +315,25 @@ impl<E: HttpExchange> Run<'_, E> {
             all.insert(0, default.clone());
         }
         Ok((default, all, complete))
+    }
+
+    /// The id of the mailbox's Deleted Items, when the server gives it: `None` when it doesn't
+    /// (the folders inside it are then not told apart).
+    async fn deleted_items(&mut self, mailbox: Option<&str>) -> Option<crate::folder::FolderId> {
+        let mut get = GetFolder::new(&[DistinguishedFolder::DeletedItems]);
+        if let Some(address) = mailbox {
+            get = get.in_mailbox(address);
+        }
+        let found = self
+            .ask(&get.element(), &|reply| {
+                let mut answers = get.answer(reply)?;
+                if answers.len() != 1 {
+                    return Err(crate::Error::Unexpected);
+                }
+                answers.pop().ok_or(crate::Error::Unexpected)?
+            })
+            .await;
+        found.ok().map(|folder| folder.id)
     }
 
     async fn read_calendars(
@@ -1069,6 +1104,27 @@ fn windows_zone(zone: &str) -> String {
     let zone = zone.trim();
     let named = if zone.is_empty() { Some(mailcraft_time::Zone::system()) } else { mailcraft_time::Zone::named(zone) };
     named.and_then(mailcraft_time::Zone::windows_name).map(str::to_owned).unwrap_or_default()
+}
+
+/// The most folders whose place is kept while the mailbox's folders are listed.
+const MAX_PARENTS: usize = 20_000;
+
+/// Whether the folder `id` lies in `ancestor`, at any depth, as far as `parents` tell (a loop or a
+/// tree deeper than any mailbox's is not followed further).
+fn lies_in(
+    parents: &std::collections::HashMap<crate::folder::FolderId, crate::folder::FolderId>,
+    id: &crate::folder::FolderId,
+    ancestor: &crate::folder::FolderId,
+) -> bool {
+    let mut at = id;
+    for _ in 0..64 {
+        match parents.get(at) {
+            Some(parent) if parent == ancestor => return true,
+            Some(parent) => at = parent,
+            None => return false,
+        }
+    }
+    false
 }
 
 #[cfg(test)]
