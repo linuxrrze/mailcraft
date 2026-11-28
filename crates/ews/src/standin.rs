@@ -233,6 +233,9 @@ pub struct State {
     pub versions: Vec<String>,
     /// The organisation's address list, for `ResolveNames` (#1262).
     pub directory: Vec<crate::standin_directory::Person>,
+    /// The ids of the folders that are hidden (`PidTagAttributeHidden`), told to a `FindFolder`
+    /// that asks for the property.
+    pub hidden_folders: Vec<String>,
 }
 
 impl Default for State {
@@ -330,6 +333,7 @@ impl Default for State {
             omits_recipients: false,
             versions: Vec::new(),
             directory: Vec::new(),
+            hidden_folders: Vec::new(),
         }
     }
 }
@@ -571,16 +575,29 @@ impl State {
         if !["IdOnly", "Default", "AllProperties"].contains(&base.text.trim()) {
             return Err(invalid("BaseShape is IdOnly, Default or AllProperties"));
         }
+        let mut asks_hidden = false;
         if let Some(additional) = inside.get(1).copied().flatten() {
             Check::is(additional, TYPES, "AdditionalProperties", &[])?;
             Check::no_text(additional)?;
             for field in &additional.children {
+                if field.is(TYPES, "ExtendedFieldURI") {
+                    // PidTagAttributeHidden, by its tag and type ([MS-OXWSCDATA] PathToExtendedFieldType).
+                    Check::is(field, TYPES, "ExtendedFieldURI", &["PropertyTag", "PropertyType"])?;
+                    Check::no_children(field)?;
+                    if !Check::attribute(field, "PropertyTag")?.eq_ignore_ascii_case("0x10F4")
+                        || Check::attribute(field, "PropertyType")? != "Boolean"
+                    {
+                        return Err(Refusal { code: "ErrorInvalidPropertyRequest", why: "this stand-in answers PidTagAttributeHidden only".into() });
+                    }
+                    asks_hidden = true;
+                    continue;
+                }
                 Check::is(field, TYPES, "FieldURI", &["FieldURI"])?;
                 Check::no_children(field)?;
-                if !matches!(Check::attribute(field, "FieldURI")?, "folder:FolderClass" | "folder:EffectiveRights") {
+                if !matches!(Check::attribute(field, "FieldURI")?, "folder:FolderClass" | "folder:EffectiveRights" | "folder:ParentFolderId") {
                     return Err(Refusal {
                         code: "ErrorInvalidPropertyRequest",
-                        why: "this stand-in answers the folder class and rights only".into(),
+                        why: "this stand-in answers the folder class, rights and parent only".into(),
                     });
                 }
             }
@@ -619,9 +636,17 @@ impl State {
         let total = folders.len();
         let mut xml = String::new();
         for folder in folders.drain(..) {
+            let hidden = if asks_hidden {
+                let value = self.hidden_folders.contains(&folder.id);
+                format!(
+                    "<t:ExtendedProperty><t:ExtendedFieldURI PropertyTag=\"0x10f4\" PropertyType=\"Boolean\"/><t:Value>{value}</t:Value></t:ExtendedProperty>"
+                )
+            } else {
+                String::new()
+            };
             xml.push_str(&format!(
                 "<t:Folder><t:FolderId Id=\"{}\" ChangeKey=\"AQAAAA==\"/><t:ParentFolderId Id=\"{}\"/><t:DisplayName>{}</t:DisplayName>\
-                 <t:FolderClass>{}</t:FolderClass><t:EffectiveRights><t:Read>true</t:Read><t:Modify>true</t:Modify></t:EffectiveRights></t:Folder>",
+                 <t:FolderClass>{}</t:FolderClass>{hidden}<t:EffectiveRights><t:Read>true</t:Read><t:Modify>true</t:Modify></t:EffectiveRights></t:Folder>",
                 escape(&folder.id),
                 escape(&folder.parent),
                 escape(&folder.name),

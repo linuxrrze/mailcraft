@@ -657,3 +657,50 @@ fn a_to_do_deleted_names_itself_in_the_outcome() {
         assert_eq!((outcome.result, outcome.id.as_str()), (result, "todo-1"), "{code}");
     }
 }
+
+/// Outlook shows neither a hidden calendar folder (`PidTagAttributeHidden`, one the mailbox keeps
+/// for itself or for a program) nor a calendar in Deleted Items, at any depth; nor does the
+/// account's list of calendars. Another calendar beside the default one is there.
+#[test]
+fn hidden_and_deleted_calendars_are_not_the_accounts() {
+    let standin = crate::standin::StandIn::new();
+    {
+        let mut s = standin.state();
+        let id_of = |n: usize| format!("AAMkAGV4YW1wbGUtb3JnL2V3cy1zdGFuZC1pbgAuAAAAAACq{n:06}+Tk/Zm9sZGVyLWlkAAA=");
+        let parent_of = |s: &crate::standin::State, distinguished: &str| {
+            s.folders.iter().find(|f| f.distinguished == distinguished).map(|f| f.id.clone()).unwrap_or_default()
+        };
+        let (top, deleted) = (parent_of(&s, "msgfolderroot"), parent_of(&s, "deleteditems"));
+        let folder = |n: usize, name: &str, parent: &str, class: &str| crate::standin::Folder {
+            distinguished: String::new(),
+            id: id_of(n),
+            name: name.into(),
+            total: 0,
+            unread: 0,
+            parent: parent.into(),
+            class: class.into(),
+        };
+        s.folders.push(folder(300, "Team", &top, "IPF.Appointment"));
+        s.folders.push(folder(301, "Unbenannt", &top, "IPF.Appointment"));
+        s.folders.push(folder(302, "Old plans", &deleted, "IPF.Appointment"));
+        s.folders.push(folder(303, "Kept", &deleted, "IPF.Note"));
+        s.folders.push(folder(304, "Deeper", &id_of(303), "IPF.Appointment"));
+        s.hidden_folders.push(id_of(301));
+    }
+    let client = crate::Client::new("http://127.0.0.1/EWS/Exchange.asmx", crate::Secret::new(crate::standin::AUTHORIZATION)).unwrap();
+    let request = mailcraft_model::sync::EwsDirectoryRequest {
+        account: 1,
+        email: "ada@example.org".into(),
+        url: "http://127.0.0.1/EWS/Exchange.asmx".into(),
+        calendars: true,
+        from: 1,
+        to: 2_000_000_000,
+        ..Default::default()
+    };
+    let cancel = std::sync::atomic::AtomicBool::new(false);
+    let result = crate::standin::block_on(sync_directory(&client, &standin, &request, &cancel, &mut |_| true)).unwrap();
+    assert!(result.errors.is_empty(), "{}", result.errors.join("; "));
+    let names: Vec<String> = result.calendars.unwrap().calendars.iter().map(|c| c.name.clone()).collect();
+    // (The default calendar first; it goes by the account's name, not the folder's.)
+    assert_eq!(names, vec![String::new(), "Team".to_string()]);
+}

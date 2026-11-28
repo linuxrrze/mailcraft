@@ -1,0 +1,1 @@
+- Exchange server accounts: a hidden calendar folder (one the mailbox keeps for itself or for a program, often unnamed) and a calendar in Deleted Items no longer show under My Calendars; Outlook doesn't show them either. ([#252](https://github.com/GITHUB_REPOSITORY/issues/252))
