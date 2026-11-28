@@ -158,6 +158,12 @@ impl<E: HttpExchange> Run<'_, E> {
                 Err(Asked::Stop(stop)) => return Err(Asked::Stop(stop)),
                 Err(_) => log::debug!("ews: the mailbox's categories couldn't be had"),
             }
+            // And the calendars other people shared, as Outlook lists them.
+            match self.shared_calendars().await {
+                Ok(found) => out.shared_calendars = found,
+                Err(Asked::Stop(stop)) => return Err(Asked::Stop(stop)),
+                Err(_) => log::debug!("ews: Outlook's shortcuts to shared calendars couldn't be read"),
+            }
         }
         if request.contacts {
             match self.read_contacts(request.account, &request.email, mailbox, None).await {
@@ -315,6 +321,80 @@ impl<E: HttpExchange> Run<'_, E> {
             all.insert(0, default.clone());
         }
         Ok((default, all, complete))
+    }
+
+    /// The calendars other people shared with the owner, from Outlook's navigation shortcuts
+    /// ([`crate::shortcuts`]): `None` when the mailbox has no Common Views folder; incomplete when
+    /// a page of shortcuts or a person couldn't be had.
+    async fn shared_calendars(&mut self) -> Result<Option<mailcraft_model::sync::EwsSharedCalendars>, Asked> {
+        let find = FindFolder::new(DistinguishedFolder::Root, false, 0, 500);
+        let folders = self.ask(&find.element(), &|reply| find.answer(reply)).await?;
+        let Some(views) = folders.folders.iter().find(|f| f.display_name.trim().eq_ignore_ascii_case(crate::shortcuts::COMMON_VIEWS)) else {
+            return Ok(None);
+        };
+        let mut found: Vec<crate::shortcuts::SharedCalendar> = Vec::new();
+        let mut complete = true;
+        let (mut offset, mut read) = (0u32, 0usize);
+        loop {
+            let element = crate::shortcuts::find_shortcuts(views.id.as_str(), offset);
+            let page = match self.ask(&element, &|reply| crate::shortcuts::read_shortcuts(reply)).await {
+                Ok(page) => page,
+                Err(Asked::Stop(stop)) => return Err(Asked::Stop(stop)),
+                Err(_) => {
+                    complete = false;
+                    break;
+                }
+            };
+            read = read.saturating_add(page.read);
+            for shared in page.shared {
+                if !found.iter().any(|known| known.dn.eq_ignore_ascii_case(&shared.dn)) {
+                    found.push(shared);
+                }
+            }
+            match page.next {
+                Some(next) if next > offset && read < crate::shortcuts::MAX_SHORTCUTS && page.read > 0 => offset = next,
+                Some(_) => {
+                    complete = false;
+                    break;
+                }
+                None => break,
+            }
+        }
+        // Each person, by the DN the shortcut names, as the directory has them.
+        let mut calendars: Vec<mailcraft_model::sync::EwsSharedCalendar> = Vec::new();
+        for shared in found.iter().take(mailcraft_model::MAX_OPENED_CALENDARS) {
+            let Some(ask) = crate::resolve::ResolveNames::new(&shared.dn) else {
+                complete = false;
+                continue;
+            };
+            let resolved = match self.ask(&ask.element(), &|reply| ask.answer(reply)).await {
+                Ok(resolved) => resolved,
+                Err(Asked::Stop(stop)) => return Err(Asked::Stop(stop)),
+                Err(_) => {
+                    complete = false;
+                    continue;
+                }
+            };
+            let people: Vec<&crate::resolve::Candidate> = resolved
+                .candidates
+                .iter()
+                .filter(|c| c.kind == crate::resolve::RecipientKind::Mailbox && mailcraft_model::mailbox_address(&c.email).is_some())
+                .collect();
+            let [person] = people.as_slice() else {
+                complete = false;
+                continue;
+            };
+            let address = mailcraft_model::mailbox_address(&person.email).unwrap_or_default();
+            if calendars.iter().any(|known| known.address.eq_ignore_ascii_case(&address)) {
+                continue;
+            }
+            let name = if shared.name.is_empty() { person.name.clone() } else { shared.name.clone() };
+            calendars.push(mailcraft_model::sync::EwsSharedCalendar { address, name });
+        }
+        if found.len() > mailcraft_model::MAX_OPENED_CALENDARS {
+            complete = false;
+        }
+        Ok(Some(mailcraft_model::sync::EwsSharedCalendars { calendars, complete }))
     }
 
     /// The id of the mailbox's Deleted Items, when the server gives it: `None` when it doesn't
@@ -751,8 +831,10 @@ impl<E: HttpExchange> Run<'_, E> {
                 if op.kind == mailcraft_model::remote::EventChangeKind::Create {
                     let folder = (!op.calendar.is_empty()).then_some(op.calendar.as_str());
                     // The appointment is the account's own: its organizer is its owner, which a
-                    // server doesn't always fill in by itself (see `calendar_item`).
-                    let sender = mailcraft_model::Address::new(email, email);
+                    // server doesn't always fill in by itself (see `calendar_item`); in a calendar
+                    // opened by address, the person whose calendar it is.
+                    let organizer = mailcraft_model::remote::opened_address(&op.calendar).unwrap_or_else(|| email.to_owned());
+                    let sender = mailcraft_model::Address::new(&organizer, &organizer);
                     let element = directory::create_item(Kind::Calendar, folder, directory::calendar_item(&event, zone, Some(&sender)), op.send);
                     let made = self.ask_once(&element, &|reply| directory::saved(reply, "CreateItem")).await;
                     let made = match made {
@@ -796,12 +878,9 @@ impl<E: HttpExchange> Run<'_, E> {
     /// The server's id of the occurrence of `op`'s series that falls at `op.occurrence` (as the
     /// series has it: an occurrence moved since is found by where it was), in `op`'s calendar.
     /// The series' `UID` is asked for, then the calendar a week either side; `None` when no item
-    /// there is that occurrence. A calendar opened by address isn't looked in (its folder isn't
-    /// known by an id here).
+    /// there is that occurrence. A calendar opened by address is looked in in its owner's mailbox,
+    /// with no property beyond the base shape asked for (as it is read).
     async fn find_occurrence(&mut self, op: &mailcraft_model::remote::EventOp) -> Result<Option<String>, Asked> {
-        if op.calendar.starts_with(mailcraft_model::remote::OPENED_PREFIX) {
-            return Ok(None);
-        }
         let uid = self.ask(&directory::get_uid(&op.series), &|reply| directory::read_uid(reply)).await?;
         if uid.is_empty() {
             return Ok(None);
@@ -809,6 +888,7 @@ impl<E: HttpExchange> Run<'_, E> {
         const AROUND: i64 = 7 * 86_400;
         let find = directory::FindItems::new(Kind::Calendar, &op.calendar, 0, 512)
             .view(op.occurrence.saturating_sub(AROUND), op.occurrence.saturating_add(AROUND));
+        let find = if mailcraft_model::remote::opened_address(&op.calendar).is_some() { find.plain() } else { find };
         let page = self.ask(&find.element(), &|reply| find.answer(reply)).await?;
         Ok(page.items.into_iter().find_map(|item| match item {
             Item::Event(event)
@@ -1126,6 +1206,14 @@ fn lies_in(
     }
     false
 }
+
+#[cfg(test)]
+#[path = "shared_write_tests.rs"]
+mod shared_write_tests;
+
+#[cfg(test)]
+#[path = "shortcuts_run_tests.rs"]
+mod shortcuts_run_tests;
 
 #[cfg(test)]
 #[path = "directory_run_tests.rs"]

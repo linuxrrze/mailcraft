@@ -1,0 +1,1 @@
+| 2026-11-28 | minor | #252: new appointments in a calendar opened by address, the calendars Outlook lists as shared (its navigation shortcuts), and hidden folders and those in Deleted Items left out |

@@ -1,0 +1,1 @@
+- Exchange server accounts: the calendars colleagues shared with you that Outlook shows under Shared Calendars now appear in MailCraft too (unticked, under Shared Calendars) after a Send/Receive, without opening each by address; and new appointments made in a colleague's calendar you may edit now reach their calendar. ([#252](https://github.com/GITHUB_REPOSITORY/issues/252))

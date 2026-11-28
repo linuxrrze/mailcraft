@@ -196,8 +196,11 @@ fn open(s: &mut Session, v: &Value) -> CmdResult {
         return Err(failed!("At most {n} calendars can be opened by address: remove one first.", n = MAX_OPENED_CALENDARS));
     }
     let color = super::calendar::next_color(&s.mailbox);
-    let opened = OpenedCalendar { address: address.clone(), name: address.clone(), color, ticked: true };
-    s.mailbox.account_mut(account).map_err(|e| fail(e.to_string()))?.opened_calendars.push(opened);
+    let opened = OpenedCalendar { address: address.clone(), name: address.clone(), color, ticked: true, shortcut: false };
+    let owner = s.mailbox.account_mut(account).map_err(|e| fail(e.to_string()))?;
+    owner.opened_calendars.push(opened);
+    // (Opened again by the owner: one Outlook lists may be added again too.)
+    owner.dismissed_shortcuts.retain(|dismissed| !dismissed.eq_ignore_ascii_case(&address));
     Ok(json!({"account": account, "address": address, "pending": true}))
 }
 
@@ -221,6 +224,16 @@ fn remove(s: &mut Session, v: &Value) -> CmdResult {
         (None, None) => return Err(bad("name the calendar: `id`, or `address`")),
     };
     let events = forget(s, account, &address)?;
+    // Removed by the owner: not added again because Outlook lists it.
+    if let Ok(owner) = s.mailbox.account_mut(account)
+        && owner.kind == mailcraft_model::AccountKind::Exchange
+        && !owner.dismissed_shortcuts.iter().any(|dismissed| dismissed.eq_ignore_ascii_case(&address))
+    {
+        if owner.dismissed_shortcuts.len() >= mailcraft_model::MAX_DISMISSED_SHORTCUTS {
+            owner.dismissed_shortcuts.remove(0);
+        }
+        owner.dismissed_shortcuts.push(address.clone());
+    }
     Ok(json!({"removed": address, "events": events}))
 }
 
@@ -239,6 +252,63 @@ fn forget(s: &mut Session, account: Id, address: &str) -> Result<usize, CmdError
         .collect();
     let events = super::remote::forget_calendars(&mut s.mailbox, &here);
     Ok(events)
+}
+
+/// The calendars other people shared with the owner of the Exchange server account `account`,
+/// as Outlook lists them ([`mailcraft_model::sync::EwsSharedCalendars`]): each that isn't here yet
+/// is added to the calendars opened by address, unticked (read once the owner ticks it), unless
+/// it is the account's own, a shared mailbox open here, a calendar the server lists already, or
+/// one the owner removed here before. When the list is complete, a calendar added this way that
+/// Outlook doesn't list any more is removed again; one the owner opened is never touched.
+/// Answers how many were added and removed.
+pub(crate) fn from_shortcuts(s: &mut Session, account: Id, found: &mailcraft_model::sync::EwsSharedCalendars) -> (usize, usize) {
+    let Some(owner) = s.mailbox.account(account) else { return (0, 0) };
+    if owner.kind != mailcraft_model::AccountKind::Exchange || owner.is_shared() {
+        return (0, 0);
+    }
+    let own = owner.email.trim().to_owned();
+    let mut added = 0usize;
+    for shared in found.calendars.iter().take(MAX_OPENED_CALENDARS) {
+        let Some(address) = mailcraft_model::mailbox_address(&shared.address) else { continue };
+        let Some(owner) = s.mailbox.account(account) else { break };
+        let skip = address.eq_ignore_ascii_case(&own)
+            || owner.opened_calendars.len() >= MAX_OPENED_CALENDARS
+            || owner.opened_calendars.iter().any(|opened| opened.address.eq_ignore_ascii_case(&address))
+            || owner.dismissed_shortcuts.iter().any(|dismissed| dismissed.eq_ignore_ascii_case(&address))
+            || s.mailbox.accounts.iter().any(|a| a.is_shared() && a.email.trim().eq_ignore_ascii_case(&address))
+            || !listed_copies(s, account, &address).is_empty();
+        if skip {
+            continue;
+        }
+        let name: String = shared.name.chars().filter(|c| !c.is_control()).take(256).collect();
+        let name = if name.trim().is_empty() { address.clone() } else { name.trim().to_owned() };
+        let color = super::calendar::next_color(&s.mailbox);
+        if let Ok(owner) = s.mailbox.account_mut(account) {
+            owner.opened_calendars.push(OpenedCalendar { address, name, color, ticked: false, shortcut: true });
+            added = added.saturating_add(1);
+        }
+    }
+    let mut removed = 0usize;
+    if found.complete {
+        let gone: Vec<String> = s
+            .mailbox
+            .account(account)
+            .map(|owner| {
+                owner
+                    .opened_calendars
+                    .iter()
+                    .filter(|opened| opened.shortcut && !found.calendars.iter().any(|c| c.address.trim().eq_ignore_ascii_case(&opened.address)))
+                    .map(|opened| opened.address.clone())
+                    .collect()
+            })
+            .unwrap_or_default();
+        for address in gone {
+            if forget(s, account, &address).is_ok() {
+                removed = removed.saturating_add(1);
+            }
+        }
+    }
+    (added, removed)
 }
 
 /// Take in how the host's reading of the calendars opened by address went, after the list of the

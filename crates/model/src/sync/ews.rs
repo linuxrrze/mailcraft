@@ -245,6 +245,30 @@ pub struct EwsDirectoryResult {
     /// said.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub categories: Option<crate::remote::CategoriesDownload>,
+    /// The calendars other people shared with the owner as Outlook lists them (its navigation
+    /// shortcuts), when the run asked and the server said.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub shared_calendars: Option<EwsSharedCalendars>,
+}
+
+/// The calendars other people shared with an Exchange server account's owner, from Outlook's
+/// navigation shortcuts in the mailbox: each person's address and what the shortcut calls it.
+/// `complete`: every shortcut was read and every person found, so a calendar that isn't here any
+/// more was taken out of Outlook's list.
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(default, rename_all = "camelCase")]
+pub struct EwsSharedCalendars {
+    #[serde(deserialize_with = "crate::sync::lenient_list")]
+    pub calendars: Vec<EwsSharedCalendar>,
+    pub complete: bool,
+}
+
+/// One calendar another person shared with the owner: their address and its name.
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(default, rename_all = "camelCase")]
+pub struct EwsSharedCalendar {
+    pub address: String,
+    pub name: String,
 }
 
 /// The working hours of a mailbox as an Exchange server says them (`WorkingHours`, [MS-OXWSGTAV]):

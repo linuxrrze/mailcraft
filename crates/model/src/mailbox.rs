@@ -529,6 +529,12 @@ pub struct Account {
     /// other account, and in a file from before there were any.
     #[serde(skip_serializing_if = "Vec::is_empty", deserialize_with = "crate::sync::lenient_list")]
     pub opened_calendars: Vec<crate::OpenedCalendar>,
+    /// For an Exchange server account: the addresses of calendars Outlook lists as shared with the
+    /// owner that the owner removed here, so that they aren't added again, at most
+    /// [`crate::MAX_DISMISSED_SHORTCUTS`]. Empty for every other account, and in a file from before
+    /// there were any.
+    #[serde(skip_serializing_if = "Vec::is_empty", deserialize_with = "crate::sync::lenient_list")]
+    pub dismissed_shortcuts: Vec<String>,
     /// For an Exchange server account: the address books its owner opened by their owner's
     /// address (Open Shared Address Book), kept here only, at most
     /// [`crate::MAX_OPENED_ADDRESS_BOOKS`]. Empty for every other account, and in a file from
