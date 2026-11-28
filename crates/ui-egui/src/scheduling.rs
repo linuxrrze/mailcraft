@@ -276,6 +276,9 @@ pub(crate) struct Drawn {
     pub bars: usize,
     pub pending: bool,
     pub note: String,
+    /// AutoPick is looking, and what it last had to say.
+    pub picking: bool,
+    pub pick_note: String,
 }
 
 /// Find a Time's own state in a window.
@@ -289,7 +292,27 @@ pub(crate) struct View {
     own: Option<(u64, Date, Option<Id>, Vec<(u32, u32, ShowAs)>)>,
     /// The list of rooms chosen in Room Finder, by its address.
     pub room_list: String,
+    /// AutoPick: whose time it counts, the search under way, and what it last had to say.
+    pub among: crate::autopick::Among,
+    pub pick: Option<crate::autopick::Pick>,
+    pub pick_note: String,
     pub drawn: Drawn,
+}
+
+impl View {
+    /// Start AutoPick on `meeting`: to the next time everybody it counts is free (the one before,
+    /// `forward` false). The search is done as the page is drawn.
+    pub(crate) fn auto_pick(&mut self, meeting: &Meeting, forward: bool) {
+        self.pick_note.clear();
+        let after = meeting.span.map(|(start, _)| DateTime::at_midnight(meeting.day).minutes_until(start));
+        self.pick = (!meeting.all_day && meeting.span.is_some()).then_some(crate::autopick::Pick {
+            forward,
+            day: meeting.day,
+            after,
+            left: crate::autopick::MAX_DAYS,
+            since: now_ms(),
+        });
+    }
 }
 
 /// What came of the page being shown: the meeting's band moved or stretched to a start and an
@@ -453,6 +476,60 @@ pub(crate) fn stand_in(app: &mut MailApp, meeting: &Meeting, schedule: &Value) -
     app.free_busy_stand_in(meeting.calendar, &asked, meeting.day, schedule)
 }
 
+/// One step of AutoPick (when it is looking) on the day in view, whose rows are `rows`: where the
+/// meeting goes, in minutes from the midnight that day began with (on another day when this one
+/// has no time for it). Nothing while the day's times are being asked for.
+#[allow(clippy::too_many_arguments)]
+fn auto_pick_step(
+    view: &mut View,
+    meeting: &Meeting,
+    rows: &[Row],
+    look: &Look,
+    span: Option<(i64, i64)>,
+    hours: &crate::autopick::Hours,
+    today: (Date, i64),
+    now: f64,
+) -> Option<(i64, i64)> {
+    let pick = view.pick?;
+    let Some((start, end)) = span.filter(|_| !meeting.all_day && pick.day == meeting.day) else {
+        // (The meeting was changed meanwhile, or can't be moved: the search is over.)
+        view.pick = None;
+        return None;
+    };
+    // The day's times are being asked for, or are still to be (a Send/Receive keeps the question
+    // back): looked at once they are known, for so long.
+    let unasked = look.people.is_empty() && look.note.is_empty() && rows.iter().any(|row| row.kind >= 2 && view.among.counts(row.kind));
+    if (look.pending || unasked) && now - pick.since < crate::autopick::WAIT_MS {
+        return None;
+    }
+    view.pick = None;
+    let length = (end - start).clamp(1, i64::from(DAY));
+    let counted = rows.iter().filter(|row| view.among.counts(row.kind)).filter_map(|row| row.day.as_ref()).map(|day| day.busy.as_slice());
+    let taken = crate::autopick::taken(counted);
+    let working = hours.days.is_empty() || hours.days.contains(&meeting.day.weekday());
+    let (from, to) = hours.of(length);
+    // (Not before now, today.)
+    let from = if meeting.day == today.0 { from.max(today.1) } else { from };
+    let found = if working { crate::autopick::first_free(&taken, (from, to), length, pick.after, pick.forward) } else { None };
+    if let Some(at) = found {
+        view.pick_note.clear();
+        return Some((at, at + length));
+    }
+    let day = hours.next_day(meeting.day, pick.forward);
+    let searched = i64::from(crate::autopick::MAX_DAYS.saturating_sub(pick.left)) + 1;
+    if pick.left == 0 || (!pick.forward && day < today.0) {
+        view.pick_note = if pick.forward {
+            tln!(searched, "No time when everybody is free in the next {n} day", "No time when everybody is free in the next {n} days").to_string()
+        } else {
+            tl!("No earlier time when everybody is free, from today on").to_string()
+        };
+        return None;
+    }
+    view.pick = Some(crate::autopick::Pick { day, after: None, left: pick.left.saturating_sub(1), since: now, ..pick });
+    let at = meeting.day.days_until(day).saturating_mul(i64::from(DAY)) + hours.first_place(length, pick.forward);
+    Some((at, at + length))
+}
+
 /// Lay the page out in `height` points of `ui`, for the window numbered `window`. When the
 /// meeting's band was moved or stretched, the start and end it has now are answered.
 pub(crate) fn show(app: &mut MailApp, ui: &mut Ui, view: &mut View, meeting: &Meeting, window: u64, height: f32) -> Shown {
@@ -518,6 +595,8 @@ pub(crate) fn show(app: &mut MailApp, ui: &mut Ui, view: &mut View, meeting: &Me
         bars: rows.iter().filter(|row| row.kind >= 1).filter_map(|row| row.day.as_ref()).map(|day| day.busy.len()).sum(),
         pending: look.pending,
         note: look.note.clone(),
+        picking: false,
+        pick_note: String::new(),
     };
     if look.pending {
         // (The host wakes the window when the answer is there; this is for a host that doesn't.)
@@ -529,10 +608,15 @@ pub(crate) fn show(app: &mut MailApp, ui: &mut Ui, view: &mut View, meeting: &Me
     let prefs = &app.session.prefs;
     let working = prefs.work_days.contains(&meeting.day.weekday());
     let (work_start, work_end) = (u32::from(prefs.work_start.min(24)) * 60, u32::from(prefs.work_end.min(24)) * 60);
-    let legend_h = 44.0;
+    let hours = crate::autopick::Hours { days: prefs.work_days.clone(), start: i64::from(work_start), end: i64::from(work_end) };
+    let now_here = app.session.local_now();
+    let today = (now_here.date, DateTime::at_midnight(now_here.date).minutes_until(now_here));
+    // AutoPick, when it is looking: the meeting moves before the grid is drawn.
+    let picked = auto_pick_step(view, meeting, &rows, &look, span, &hours, today, now_ms());
+    let legend_h = 74.0;
     let grid_h = (height - legend_h).max(HEAD_H + 2.0 * ROW_H);
     let content = vec2(NAME_W + f32::from(DAY as u16) * MINUTE_W, HEAD_H + rows.len() as f32 * ROW_H);
-    let mut moved = None;
+    let mut moved = picked;
     let mut area = egui::ScrollArea::both().id_salt(("scheduling", window)).max_height(grid_h).auto_shrink([false, false]);
     if !std::mem::replace(&mut view.placed, true) {
         // To begin with: the working day, or the meeting when that starts before it.
@@ -720,6 +804,30 @@ pub(crate) fn show(app: &mut MailApp, ui: &mut Ui, view: &mut View, meeting: &Me
             ui.add_space(6.0);
         }
     });
+    // AutoPick: to the next time (the one before) everybody counted is free, and whom it counts.
+    ui.horizontal(|ui| {
+        let movable = !meeting.all_day && meeting.span.is_some();
+        if ui.add_enabled(movable, egui::Button::new(tl!("<< AutoPick"))).on_hover_text(tl!("The time before this when everybody is free")).clicked()
+        {
+            view.auto_pick(meeting, false);
+        }
+        if ui.add_enabled(movable, egui::Button::new(tl!("AutoPick Next >>"))).on_hover_text(tl!("The next time when everybody is free")).clicked() {
+            view.auto_pick(meeting, true);
+        }
+        egui::ComboBox::from_id_salt(("autopick_among", window)).selected_text(view.among.label()).width(180.0).show_ui(ui, |ui| {
+            for among in [crate::autopick::Among::Everybody, crate::autopick::Among::Required] {
+                ui.selectable_value(&mut view.among, among, among.label());
+            }
+        });
+        if view.pick.is_some() {
+            ui.label(egui::RichText::new(tl!("Looking for a time…")).size(11.5).color(t.text_dim));
+            ui.ctx().request_repaint_after(std::time::Duration::from_millis(250));
+        } else if !view.pick_note.is_empty() {
+            ui.label(egui::RichText::new(view.pick_note.as_str()).size(11.5).color(t.text_dim));
+        }
+    });
+    view.drawn.picking = view.pick.is_some();
+    view.drawn.pick_note.clone_from(&view.pick_note);
     let note = if !look.note.is_empty() {
         look.note.clone()
     } else if look.pending {

@@ -439,6 +439,11 @@ msgid "60 Minutes"
 msgstr "60 perc"
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "<< AutoPick"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/credits.rs
 #, fuzzy
 msgid "@{login}, testing since {since}"
@@ -1463,6 +1468,11 @@ msgid "All of them"
 msgstr "Mindet."
 
 #. interface
+#: crates/ui-egui/src/autopick.rs
+msgid "All people and rooms"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "All the conditions must hold"
@@ -2414,6 +2424,16 @@ msgstr "augusztus"
 #, fuzzy
 msgid "AutoArchive"
 msgstr "Automatikus archívum"
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "AutoPick Next >>"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/windows.rs
+msgid "AutoPick is on the Find a Time page"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/backstage.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/spelling.rs
@@ -8717,6 +8737,11 @@ msgid "Looking at the server's certificate…"
 msgstr "A szerver tanúsítványát nézve…"
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "Looking for a time…"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/ribbon.rs
 #, fuzzy
 msgid "Looking for fonts…"
@@ -10771,6 +10796,11 @@ msgid "No due date"
 msgstr "Nincs határidő"
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "No earlier time when everybody is free, from today on"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "No end date"
@@ -10991,6 +11021,13 @@ msgstr "Nincsenek feladatok."
 #, fuzzy
 msgid "No testers credited yet."
 msgstr "Még nem írták alá a tesztet."
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "No time when everybody is free in the next {n} day"
+msgid_plural "No time when everybody is free in the next {n} days"
+msgstr[0] ""
+msgstr[1] ""
 
 #. interface
 #: crates/ui-egui/src/zones.rs
@@ -13866,6 +13903,11 @@ msgstr "Kérés a Postázandó üzenetek mappában."
 #, fuzzy
 msgid "Required"
 msgstr "Szükséges"
+
+#. interface
+#: crates/ui-egui/src/autopick.rs
+msgid "Required people"
+msgstr ""
 
 #. command label, interface, ribbon
 #: crates/engine/src/cmd/compose.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/ribbon.rs
@@ -18201,6 +18243,11 @@ msgstr "A címzettek által látott név; üresen a saját neve"
 msgid "The name the calendar gives itself"
 msgstr "A név, amelyet a naptár magának ad"
 
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "The next time when everybody is free"
+msgstr ""
+
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt
 #, fuzzy
@@ -18948,6 +18995,11 @@ msgstr "A teszt időpont már megint eltűnt, és a naptárban semmi mást nem o
 #, fuzzy
 msgid "The text wasn't found."
 msgstr "Az SMS-t nem találták meg."
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "The time before this when everybody is free"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/reminder_dialog.rs

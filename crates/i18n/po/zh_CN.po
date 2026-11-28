@@ -436,6 +436,11 @@ msgid "60 Minutes"
 msgstr "60 分钟"
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "<< AutoPick"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/credits.rs
 #, fuzzy
 msgid "@{login}, testing since {since}"
@@ -1460,6 +1465,11 @@ msgid "All of them"
 msgstr "全部"
 
 #. interface
+#: crates/ui-egui/src/autopick.rs
+msgid "All people and rooms"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "All the conditions must hold"
@@ -2411,6 +2421,16 @@ msgstr "8月"
 #, fuzzy
 msgid "AutoArchive"
 msgstr "自动归档"
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "AutoPick Next >>"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/windows.rs
+msgid "AutoPick is on the Find a Time page"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/backstage.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/spelling.rs
@@ -8716,6 +8736,11 @@ msgid "Looking at the server's certificate…"
 msgstr "查看服务器的证书…"
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "Looking for a time…"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/ribbon.rs
 #, fuzzy
 msgid "Looking for fonts…"
@@ -10770,6 +10795,11 @@ msgid "No due date"
 msgstr "无截止日期"
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "No earlier time when everybody is free, from today on"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "No end date"
@@ -10990,6 +11020,12 @@ msgstr "没有任务。"
 #, fuzzy
 msgid "No testers credited yet."
 msgstr "尚无已署名的测试人员。"
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "No time when everybody is free in the next {n} day"
+msgid_plural "No time when everybody is free in the next {n} days"
+msgstr[0] ""
 
 #. interface
 #: crates/ui-egui/src/zones.rs
@@ -13869,6 +13905,11 @@ msgstr "请求已放入发件箱。"
 #, fuzzy
 msgid "Required"
 msgstr "必填"
+
+#. interface
+#: crates/ui-egui/src/autopick.rs
+msgid "Required people"
+msgstr ""
 
 #. command label, interface, ribbon
 #: crates/engine/src/cmd/compose.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/ribbon.rs
@@ -18197,6 +18238,11 @@ msgstr "收件人看到的名称；留空时使用您自己的名称"
 msgid "The name the calendar gives itself"
 msgstr "日历给自己起的名称"
 
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "The next time when everybody is free"
+msgstr ""
+
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt
 #, fuzzy
@@ -18938,6 +18984,11 @@ msgstr "测试约会已被删除。日历中的其他内容均未被读取或更
 #, fuzzy
 msgid "The text wasn't found."
 msgstr "未找到该文本。"
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "The time before this when everybody is free"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/reminder_dialog.rs

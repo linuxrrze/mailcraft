@@ -132,6 +132,7 @@ mod font_index;
 #[cfg(test)]
 mod foreign_sign_in_tests;
 
+pub mod autopick;
 /// The fonts of this computer that text is drawn in: what a message asks for and what the
 /// composer offers, the index of what is installed and the faces read for it.
 pub(crate) mod fonts;
@@ -1467,7 +1468,7 @@ pub const UI_COMMANDS: &[(&str, &str, &str, &str)] = &[
         "ui.eventWindow",
         "Appointment Window",
         "Window",
-        r#"{"window"?: number (default: the appointment or meeting window in front), "page"?: "appointment"|"scheduling" (a meeting's Find a Time page), "recurrence"?: bool (open or close its Appointment Recurrence dialog), "do"?: "save"|"saveAndClose"|"send"|"close" — as its keys and its close button do: closing asks first when something isn't saved, and nothing is sent to anybody without the owner's yes; "freeBusy"?: {"people": [{"email", "busy": [{"start": seconds, "end": seconds, "showAs"}], "error"?: string}]} — a stand-in for the server's answer about the people invited, for Find a Time; "roomList"?: string (Room Finder's list of rooms to show, by its address), "bookRoom"?: string (a room's address: booked as Room Finder's Book does, in the form alone)} — answers {"window", "event", "page", "meeting", "dirty", "recurrence", "asking", "rooms": [the rooms booked, by address], "importance": "low"|"normal"|"high", "online": bool (it is, or is to be, a Teams meeting), "joinUrl": string (the link to join by, when its server gave one: data, never followed by itself), "scheduling"?: {"day", "start", "end", "rows", "known", "unknown", "bars", "pending", "note"}}"#,
+        r#"{"window"?: number (default: the appointment or meeting window in front), "page"?: "appointment"|"scheduling" (a meeting's Find a Time page), "recurrence"?: bool (open or close its Appointment Recurrence dialog), "do"?: "save"|"saveAndClose"|"send"|"close" — as its keys and its close button do: closing asks first when something isn't saved, and nothing is sent to anybody without the owner's yes; "freeBusy"?: {"people": [{"email", "busy": [{"start": seconds, "end": seconds, "showAs"}], "error"?: string}]} — a stand-in for the server's answer about the people invited, for Find a Time; "roomList"?: string (Room Finder's list of rooms to show, by its address), "bookRoom"?: string (a room's address: booked as Room Finder's Book does, in the form alone), "autoPickAmong"?: "everybody"|"required" (whose time AutoPick counts: everybody invited and the rooms booked, or the required people; the organizer always), "autoPick"?: "next"|"previous" (on the Find a Time page: the meeting moves to the next time, or the one before, when everybody counted is free, as AutoPick's buttons do; it is found as the page is drawn, a day at a time, and the form alone changes)} — answers {"window", "event", "page", "meeting", "dirty", "recurrence", "asking", "rooms": [the rooms booked, by address], "importance": "low"|"normal"|"high", "online": bool (it is, or is to be, a Teams meeting), "joinUrl": string (the link to join by, when its server gave one: data, never followed by itself), "scheduling"?: {"day", "start", "end", "rows", "known", "unknown", "bars", "pending", "note", "autoPickAmong", "picking": bool (AutoPick is looking), "pickNote": string (why it found nothing)}}"#,
     ),
     (
         "ui.unsubscribeMany",
