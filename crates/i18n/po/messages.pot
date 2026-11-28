@@ -728,6 +728,11 @@ msgstr ""
 msgid "A new version is downloaded in the background, kept only when MailCraft's own release signature says it is ours, and installed when you restart to update or quit."
 msgstr ""
 
+#. android
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/SettingsPages.kt
+msgid "A new-mail notification shows up to three buttons, in the order you tick them. Reply opens the reply; the others act on the message without opening the app."
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/dialogs.rs crates/ui-egui/src/meeting_dialogs.rs crates/ui-egui/src/reading/invitation.rs
 msgid "A note to go with it (optional)"
@@ -1732,6 +1737,11 @@ msgstr ""
 msgid "Anything still waiting to go to the server goes first: mail in the Outbox, and flags and moves made while you were offline. If MailCraft can't reach the server, the switch waits until it can."
 msgstr ""
 
+#. android
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Navigation.kt
+msgid "Appearance"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/account_setup.rs crates/ui-egui/src/account_setup/oauth_settings.rs
 msgid "Application (client) ID"
@@ -1918,7 +1928,7 @@ msgid "Aqua"
 msgstr ""
 
 #. android, command label, interface, name, ribbon
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListModel.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingToolbar.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/RowActionsSheet.kt crates/engine/src/cmd/mail.rs crates/model/src/mailbox.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/swipe.rs
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListModel.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/NoticeButtons.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingToolbar.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/RowActionsSheet.kt crates/engine/src/cmd/mail.rs crates/model/src/mailbox.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/swipe.rs
 msgid "Archive"
 msgstr ""
 
@@ -4103,8 +4113,8 @@ msgstr ""
 msgid "DOMAIN\\user or you@example.org; empty for your address"
 msgstr ""
 
-#. name
-#: crates/ui-egui/src/theme.rs
+#. android, name
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingPrefs.kt crates/ui-egui/src/theme.rs
 msgid "Dark"
 msgstr ""
 
@@ -4253,7 +4263,7 @@ msgid "Delayed until {when}"
 msgstr ""
 
 #. android, command label, interface, name, ribbon, ribbon location
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListModel.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingToolbar.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/RowActionsSheet.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt crates/engine/src/cmd/calendar.rs crates/engine/src/cmd/junk.rs crates/engine/src/cmd/mail.rs crates/engine/src/cmd/people.rs crates/engine/src/cmd/tasks.rs crates/ui-egui/src/agent_gate.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/dialogs.rs crates/ui-egui/src/forms.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/people_view.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/signatures.rs crates/ui-egui/src/swipe.rs crates/ui-egui/src/tasks_view.rs
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListModel.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/NoticeButtons.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingToolbar.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/RowActionsSheet.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt crates/engine/src/cmd/calendar.rs crates/engine/src/cmd/junk.rs crates/engine/src/cmd/mail.rs crates/engine/src/cmd/people.rs crates/engine/src/cmd/tasks.rs crates/ui-egui/src/agent_gate.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/dialogs.rs crates/ui-egui/src/forms.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/people_view.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/signatures.rs crates/ui-egui/src/swipe.rs crates/ui-egui/src/tasks_view.rs
 msgid "Delete"
 msgstr ""
 
@@ -4659,8 +4669,8 @@ msgstr ""
 msgid "Done: {n} new"
 msgstr ""
 
-#. ribbon location
-#: crates/engine/src/cmd/send_receive.rs
+#. android, ribbon location
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PicturesBanner.kt crates/engine/src/cmd/send_receive.rs
 msgid "Download"
 msgstr ""
 
@@ -5580,7 +5590,7 @@ msgid "First save Google's standard IMAP and SMTP settings and a matching email 
 msgstr ""
 
 #. android, interface, name
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListModel.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailRowView.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingToolbar.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/RowActionsSheet.kt crates/ui-egui/src/forms.rs crates/ui-egui/src/swipe.rs
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListModel.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailRowView.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/NoticeButtons.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingToolbar.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/RowActionsSheet.kt crates/ui-egui/src/forms.rs crates/ui-egui/src/swipe.rs
 msgid "Flag"
 msgstr ""
 
@@ -5600,7 +5610,7 @@ msgid "Flag the message and remind me:"
 msgstr ""
 
 #. android, name
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListModel.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailRowParts.kt crates/engine/src/session.rs
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListModel.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailRowParts.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/NoticeActions.kt crates/engine/src/session.rs
 msgid "Flagged"
 msgstr ""
 
@@ -5693,6 +5703,11 @@ msgstr ""
 #. command label, interface, ribbon
 #: crates/engine/src/cmd/compose.rs crates/engine/src/cmd/mail.rs crates/ui-egui/src/dialogs.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/ribbon.rs
 msgid "Follow Up"
+msgstr ""
+
+#. android
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingPrefs.kt
+msgid "Follow system"
 msgstr ""
 
 #. interface
@@ -6492,8 +6507,8 @@ msgstr ""
 msgid "High contrast"
 msgstr ""
 
-#. interface
-#: crates/ui-egui/src/calendar_view.rs
+#. android, interface
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailRowParts.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MessageHeader.kt crates/ui-egui/src/calendar_view.rs
 msgid "High importance"
 msgstr ""
 
@@ -7337,7 +7352,7 @@ msgid "June"
 msgstr ""
 
 #. android, interface, ribbon, ribbon location
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListModel.kt crates/engine/src/cmd/junk.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/ribbon.rs
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListModel.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/NoticeButtons.kt crates/engine/src/cmd/junk.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/ribbon.rs
 msgid "Junk"
 msgstr ""
 
@@ -7681,8 +7696,8 @@ msgstr ""
 msgid "Licences"
 msgstr ""
 
-#. name
-#: crates/ui-egui/src/theme.rs
+#. android, name
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingPrefs.kt crates/ui-egui/src/theme.rs
 msgid "Light"
 msgstr ""
 
@@ -7936,8 +7951,8 @@ msgstr ""
 msgid "Low Importance"
 msgstr ""
 
-#. interface
-#: crates/ui-egui/src/calendar_view.rs
+#. android, interface
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailRowParts.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MessageHeader.kt crates/ui-egui/src/calendar_view.rs
 msgid "Low importance"
 msgstr ""
 
@@ -8563,7 +8578,7 @@ msgid "Mark as Unread"
 msgstr ""
 
 #. android, interface, name
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailRowView.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingToolbar.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/RowActionsSheet.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/SettingsScreen.kt crates/ui-egui/src/forms.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/swipe.rs
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailRowView.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/NoticeButtons.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingToolbar.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/RowActionsSheet.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/SettingsScreen.kt crates/ui-egui/src/forms.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/swipe.rs
 msgid "Mark as read"
 msgstr ""
 
@@ -8575,6 +8590,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/security.rs
 msgid "Mark as verified"
+msgstr ""
+
+#. android
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/NoticeActions.kt
+msgid "Marked as read"
 msgstr ""
 
 #. interface
@@ -8964,7 +8984,7 @@ msgid "More about this"
 msgstr ""
 
 #. android
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailRowView.kt
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailRowView.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PicturesBanner.kt
 msgid "More actions"
 msgstr ""
 
@@ -9775,6 +9795,11 @@ msgstr ""
 msgid "No appointment matches."
 msgstr ""
 
+#. android
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/SettingsPages.kt
+msgid "No buttons"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/forms.rs
 msgid "No categories yet"
@@ -10460,6 +10485,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/sending.rs
 msgid "Nothing was sent: the mailbox couldn't be saved first ({error})"
+msgstr ""
+
+#. android
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Navigation.kt
+msgid "Notification buttons"
 msgstr ""
 
 #. android
@@ -12495,7 +12525,7 @@ msgid "Replies and forwards"
 msgstr ""
 
 #. android, command label, interface, ribbon
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Reply.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/RowActionsSheet.kt crates/engine/src/cmd/compose.rs crates/ui-egui/src/compose.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/ribbon.rs
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/NoticeActions.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/NoticeButtons.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Reply.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/RowActionsSheet.kt crates/engine/src/cmd/compose.rs crates/ui-egui/src/compose.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/ribbon.rs
 msgid "Reply"
 msgstr ""
 
@@ -15366,7 +15396,7 @@ msgid "That day of the series can't be put exactly where it was asked to go; not
 msgstr ""
 
 #. android
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListScreen.kt
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/NoticeActions.kt
 msgid "That did not work."
 msgstr ""
 
@@ -16315,6 +16345,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/reading/signature.rs
 msgid "The message was downloaded before MailCraft kept the bytes it came as. Check Again downloads them."
+msgstr ""
+
+#. android
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/NoticeActions.kt
+msgid "The message was moved or deleted already"
 msgstr ""
 
 #. interface
@@ -24215,6 +24250,11 @@ msgid "{name} is an online archive: it has no calendars, address books or to-do 
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/files.rs
+msgid "{name} is attached: it can't go in the text ({why})"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/lib.rs
 msgid "{name} is being sent and received now. Use Stop."
 msgstr ""
@@ -24852,7 +24892,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. android
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListScreen.kt
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/NoticeActions.kt
 msgid "{n} message archived"
 msgid_plural "{n} messages archived"
 msgstr[0] ""
@@ -24887,7 +24927,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. android
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListScreen.kt
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/NoticeActions.kt
 msgid "{n} message deleted"
 msgid_plural "{n} messages deleted"
 msgstr[0] ""
@@ -24929,7 +24969,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. android
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListScreen.kt
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/NoticeActions.kt
 msgid "{n} message moved to Junk"
 msgid_plural "{n} messages moved to Junk"
 msgstr[0] ""
