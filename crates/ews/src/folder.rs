@@ -436,6 +436,15 @@ fn read_folder_node(folder: &Node) -> Result<FolderInfo, Error> {
     })
 }
 
+/// A `PropertyTag` as a server writes it: in hex (`0x10f4`, either case) or in decimal.
+pub(crate) fn property_tag(text: &str) -> Option<u32> {
+    let text = text.trim();
+    match text.get(..2) {
+        Some("0x" | "0X") => text.get(2..).and_then(|hex| u32::from_str_radix(hex, 16).ok()),
+        _ => text.parse::<u32>().ok(),
+    }
+}
+
 /// `PidTagAttributeHidden` ([MS-OXPROPS] 2.602): a folder Outlook doesn't show.
 pub const HIDDEN_TAG: &str = "0x10F4";
 
@@ -443,15 +452,8 @@ pub const HIDDEN_TAG: &str = "0x10F4";
 /// is true (the tag compared as a number, as the server may write it in either case or in
 /// decimal).
 fn hidden(folder: &Node) -> bool {
-    let tag_of = |text: &str| {
-        let text = text.trim();
-        match text.get(..2) {
-            Some("0x" | "0X") => text.get(2..).and_then(|hex| u32::from_str_radix(hex, 16).ok()),
-            _ => text.parse::<u32>().ok(),
-        }
-    };
     folder.children.iter().filter(|child| child.is(TYPES, "ExtendedProperty")).any(|property| {
-        let tag = property.child_in(TYPES, "ExtendedFieldURI").and_then(|uri| uri.attribute("PropertyTag")).and_then(tag_of);
+        let tag = property.child_in(TYPES, "ExtendedFieldURI").and_then(|uri| uri.attribute("PropertyTag")).and_then(property_tag);
         tag == Some(0x10F4) && property.child_in(TYPES, "Value").is_some_and(|value| value.text.trim().eq_ignore_ascii_case("true"))
     })
 }

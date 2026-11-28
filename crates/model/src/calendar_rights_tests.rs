@@ -31,7 +31,7 @@ fn rights_and_owner_survive_a_save_and_reload() {
     }
     let account = mb.accounts[0].id;
     mb.account_mut(account).unwrap().opened_calendars =
-        vec![OpenedCalendar { address: "cy@example.org".into(), name: "Cy".into(), color: Rgb(1, 2, 3), ticked: true }];
+        vec![OpenedCalendar { address: "cy@example.org".into(), name: "Cy".into(), color: Rgb(1, 2, 3), ticked: true, shortcut: false }];
     let bytes = serde_json::to_vec(&mb).unwrap();
     let text = String::from_utf8(bytes.clone()).unwrap();
     assert!(!text.contains("read_only"), "the old key is gone");
