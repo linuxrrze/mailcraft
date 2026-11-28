@@ -1,0 +1,1 @@
+- AutoPick in Find a Time: `<< AutoPick` and `AutoPick Next >>` move a meeting to the nearest time before or after it when everybody invited and the rooms booked (or only the required people) are free, looking through the following working days when the day in view has no such time. ([#252](https://github.com/GITHUB_REPOSITORY/issues/252))

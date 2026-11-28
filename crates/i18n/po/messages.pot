@@ -364,6 +364,11 @@ msgid "60 Minutes"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "<< AutoPick"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/credits.rs
 msgid "@{login}, testing since {since}"
 msgstr ""
@@ -1214,6 +1219,11 @@ msgid "All of them"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/autopick.rs
+msgid "All people and rooms"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/forms.rs
 msgid "All the conditions must hold"
 msgstr ""
@@ -2009,6 +2019,16 @@ msgstr ""
 #. interface, name
 #: crates/ui-egui/src/folder_properties.rs
 msgid "AutoArchive"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "AutoPick Next >>"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/windows.rs
+msgid "AutoPick is on the Find a Time page"
 msgstr ""
 
 #. interface
@@ -7250,6 +7270,11 @@ msgid "Looking at the server's certificate…"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "Looking for a time…"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/ribbon.rs
 msgid "Looking for fonts…"
 msgstr ""
@@ -8947,6 +8972,11 @@ msgid "No due date"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "No earlier time when everybody is free, from today on"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/forms.rs
 msgid "No end date"
 msgstr ""
@@ -9130,6 +9160,13 @@ msgstr ""
 #: crates/ui-egui/src/credits.rs
 msgid "No testers credited yet."
 msgstr ""
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "No time when everybody is free in the next {n} day"
+msgid_plural "No time when everybody is free in the next {n} days"
+msgstr[0] ""
+msgstr[1] ""
 
 #. interface
 #: crates/ui-egui/src/zones.rs
@@ -11520,6 +11557,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/forms.rs crates/ui-egui/src/meeting_dialogs/share.rs crates/ui-egui/src/reading/invitation.rs crates/ui-egui/src/scheduling.rs
 msgid "Required"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/autopick.rs
+msgid "Required people"
 msgstr ""
 
 #. command label, interface, ribbon
@@ -15126,6 +15168,11 @@ msgstr ""
 msgid "The name the calendar gives itself"
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "The next time when everybody is free"
+msgstr ""
+
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt
 msgid "The notes are too long to edit here."
@@ -15751,6 +15798,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/find_replace.rs
 msgid "The text wasn't found."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "The time before this when everybody is free"
 msgstr ""
 
 #. interface

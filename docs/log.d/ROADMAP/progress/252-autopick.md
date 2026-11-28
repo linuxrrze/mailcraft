@@ -1,0 +1,1 @@
+| 2026-11-28 | #252: AutoPick in Find a Time: `<< AutoPick` and `AutoPick Next >>` move the meeting to the time before or after it when all people and rooms (or the required people) are free, a working day at a time for 30 days, never back past now; `autoPick` and `autoPickAmong` for `ui.eventWindow` |
