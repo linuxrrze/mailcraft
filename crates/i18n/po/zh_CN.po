@@ -496,6 +496,11 @@ msgid ":{tag} needs a string or a list after it."
 msgstr ":{tag} 后面需要一个字符串或列表。"
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "<< AutoPick"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/credits.rs
 #, fuzzy
 msgid "@{login}, testing since {since}"
@@ -1051,6 +1056,12 @@ msgstr "共享邮箱，使用 {account} 的登录信息读取"
 #, fuzzy
 msgid "A short note with the link to that page, to paste into mail or chat. MailCraft sends nothing itself."
 msgstr "一段附有该页面链接的简短说明,可粘贴到邮件或聊天中。MailCraft 本身不会发送任何内容。"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "A sign-in with your own identity provider is never sent to Microsoft's or Google's mail servers: change the servers above to your own."
+msgstr "使用你自己的身份提供方的登录绝不会发送到 Microsoft 或 Google 的邮件服务器：请把上面的服务器改成你自己的。"
 
 #. what a command says
 #: crates/engine/src/sieve_check.rs
@@ -1621,6 +1632,12 @@ msgstr "在邮件中接受、暂定接受或拒绝会议请求，或从日历中
 msgid "Agenda"
 msgstr "日程"
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Agree to the addresses outside your identity provider's domain, or enter others"
+msgstr "同意身份提供程序域之外的地址，或输入其他地址"
+
 #. command label
 #: crates/engine/src/cmd/format.rs
 msgid "Align Text"
@@ -1727,6 +1744,11 @@ msgstr "所有姓名均已检查"
 #, fuzzy
 msgid "All of them"
 msgstr "全部"
+
+#. interface
+#: crates/ui-egui/src/autopick.rs
+msgid "All people and rooms"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -2073,7 +2095,7 @@ msgid "Appearance"
 msgstr "外观"
 
 #. interface
-#: crates/ui-egui/src/account_setup.rs
+#: crates/ui-egui/src/account_setup.rs crates/ui-egui/src/account_setup/oauth_settings.rs
 #, fuzzy
 msgid "Application (client) ID"
 msgstr "应用程序（客户端）ID"
@@ -2167,6 +2189,11 @@ msgstr "应用下载的 Sieve 脚本"
 #, fuzzy
 msgid "Apply Downloaded To-dos"
 msgstr "应用下载的待办事项"
+
+#. command label
+#: crates/engine/src/cmd/ews_directory.rs
+msgid "Apply Read Exchange Calendar, Contacts and To-dos"
+msgstr ""
 
 #. command label
 #: crates/engine/src/cmd/search_server.rs
@@ -2485,10 +2512,26 @@ msgid "Asked first"
 msgstr "已先询问"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Asked for besides openid email offline_access"
+msgstr "在 openid email offline_access 之外请求的"
+
+#. interface
 #: crates/ui-egui/src/scheduling.rs
 #, fuzzy
 msgid "Asking about other people's time stopped unexpectedly"
 msgstr "查询他人空闲时间时意外停止"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking for the rooms stopped unexpectedly"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking the server for the rooms…"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/scheduling.rs
@@ -2507,6 +2550,11 @@ msgstr "正在查询服务器…"
 #, fuzzy
 msgid "Asking your domain's DNS…"
 msgstr "正在查询您域名的 DNS…"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking…"
+msgstr ""
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt
@@ -2537,6 +2585,11 @@ msgstr "每个列表最多 20 项。"
 #, fuzzy
 msgid "At most {max} contacts can be merged at once."
 msgstr "一次最多可合并 {max} 个联系人。"
+
+#. what a command says
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "At most {n} address books can be opened by address: remove one first."
+msgstr ""
 
 #. what a command says
 #: crates/engine/src/cmd/calendar_opened.rs
@@ -2699,10 +2752,26 @@ msgid "AutoArchive"
 msgstr "自动归档"
 
 #. interface
-#: crates/ui-egui/src/backstage.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/spelling.rs
+#: crates/ui-egui/src/scheduling.rs
+msgid "AutoPick Next >>"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/windows.rs
+msgid "AutoPick is on the Find a Time page"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs crates/ui-egui/src/backstage.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/spelling.rs
 #, fuzzy
 msgid "Automatic"
 msgstr "自动"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Automatic (OAUTHBEARER, else XOAUTH2)"
+msgstr "自动（OAUTHBEARER，否则 XOAUTH2）"
 
 #. interface
 #: crates/ui-egui/src/backstage.rs
@@ -3046,6 +3115,16 @@ msgstr "正文包含"
 msgid "Bold"
 msgstr "粗体"
 
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Book"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Booked"
+msgstr ""
+
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
 #, fuzzy
@@ -3094,8 +3173,8 @@ msgstr "项目符号列表"
 msgid "Bullets"
 msgstr "项目符号"
 
-#. name
-#: crates/model/src/calendar.rs
+#. interface, name
+#: crates/model/src/calendar.rs crates/ui-egui/src/room_finder.rs
 #, fuzzy
 msgid "Busy"
 msgstr "忙碌"
@@ -3857,6 +3936,12 @@ msgid "Checking the address with Microsoft…"
 msgstr "正在向 Microsoft 查询地址…"
 
 #. interface
+#: crates/ui-egui/src/dialogs.rs
+#, fuzzy
+msgid "Checking the address with the server…"
+msgstr "正在向服务器查询地址…"
+
+#. interface
 #: crates/ui-egui/src/calendar_sync.rs
 #, fuzzy
 msgid "Checking the calendar connection…"
@@ -3891,6 +3976,11 @@ msgstr "选择默认签名"
 #, fuzzy
 msgid "Choose Google sign-in, or select Use an app password instead."
 msgstr "选择 Google 登录，或选择使用应用密码。"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Choose a building…"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -4053,6 +4143,24 @@ msgstr "清除标记"
 #, fuzzy
 msgid "Click to select {name}; double-click to open it"
 msgstr "单击选择 {name}，双击打开。"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Client ID"
+msgstr "客户端 ID"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Client secret (optional)"
+msgstr "客户端密码（可选）"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Client secret sent"
+msgstr "客户端密码发送方式"
 
 #. ribbon, ribbon location
 #: crates/engine/src/cmd/edit.rs crates/engine/src/cmd/format.rs crates/ui-egui/src/ribbon.rs
@@ -4528,6 +4636,12 @@ msgstr "请先更正错误。"
 #, fuzzy
 msgid "Could not open Google sign-in"
 msgstr "无法打开 Google 登录"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "Couldn't ask the server which folders are other people's"
+msgstr "无法向服务器查询哪些文件夹属于其他人"
 
 #. why a mail server couldn't be used
 #: crates/net/src/push.rs
@@ -5323,6 +5437,12 @@ msgstr "将回复发送至"
 #, fuzzy
 msgid "Discard"
 msgstr "丢弃"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Discover"
+msgstr "发现"
 
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReminderScheduler.kt crates/ui-egui/src/reading/warnings.rs crates/ui-egui/src/reminders.rs
@@ -6234,6 +6354,11 @@ msgstr "界面中的每项操作都是一条命令：共 {commands} 条，覆盖
 msgid "Except if"
 msgstr "除非"
 
+#. command label
+#: crates/engine/src/cmd/ews_directory.rs
+msgid "Exchange Calendar, Contacts and To-dos to Read"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/account_setup/exchange.rs
 #, fuzzy
@@ -6337,6 +6462,12 @@ msgstr "导出…"
 #, fuzzy
 msgid "External"
 msgstr "外部"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Extra scopes"
+msgstr "额外范围"
 
 #. interface
 #: crates/ui-egui/src/calendar_sync.rs
@@ -6499,10 +6630,28 @@ msgid "Find next spelling error"
 msgstr "查找下一个拼写错误"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Find the sign-in and token addresses from the identity provider's address. Only that address is sent."
+msgstr "根据身份提供程序的地址查找登录地址和令牌地址。仅发送该地址。"
+
+#. interface
 #: crates/ui-egui/src/find_replace.rs
 #, fuzzy
 msgid "Find what"
 msgstr "查找内容"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Find your identity provider's addresses with Discover, or enter them"
+msgstr "使用“发现”查找身份提供程序的地址，或手动输入"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Finding the addresses stopped unexpectedly"
+msgstr "查找地址意外停止"
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -6651,7 +6800,7 @@ msgstr ""
 "属性"
 
 #. command label, ribbon location
-#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/folder.rs crates/engine/src/cmd/view.rs
+#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/folder.rs crates/engine/src/cmd/view.rs
 #, fuzzy
 msgid "Folder Pane"
 msgstr "文件夹窗格"
@@ -6832,6 +6981,12 @@ msgstr "清除已下载的日历和联系人"
 msgid "Forget Trusted Certificate"
 msgstr "取消信任证书"
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Forget the client secret"
+msgstr "忘记客户端密码"
+
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PicturesSettings.kt crates/ui-egui/src/reading/remote.rs
 #, fuzzy
@@ -6940,8 +7095,14 @@ msgid "Found {n} folder"
 msgid_plural "Found {n} folders"
 msgstr[0] "找到 {n} 个文件夹"
 
-#. name
-#: crates/model/src/calendar.rs
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Found: sign-in at {signIn}, tokens from {token}."
+msgstr "已找到：登录地址 {signIn}，令牌来自 {token}。"
+
+#. interface, name
+#: crates/model/src/calendar.rs crates/ui-egui/src/room_finder.rs
 #, fuzzy
 msgid "Free"
 msgstr "空闲"
@@ -7298,6 +7459,12 @@ msgstr "金色"
 msgid "Google"
 msgstr "Google"
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Google (built in)"
+msgstr "Google（内置）"
+
 #. command label
 #: crates/ui-egui/src/lib.rs
 #, fuzzy
@@ -7604,6 +7771,12 @@ msgstr "隐藏详细信息"
 msgid "Hide MailCraft"
 msgstr "隐藏 MailCraft"
 
+#. command label, interface
+#: crates/engine/src/cmd/ews_mail.rs crates/ui-egui/src/nav.rs
+#, fuzzy
+msgid "Hide Online Archive"
+msgstr "隐藏在线存档"
+
 #. interface
 #: crates/ui-egui/src/calendar_view.rs
 #, fuzzy
@@ -7730,6 +7903,12 @@ msgstr "重复方式由组织者决定。"
 msgid "How many messages each folder holds and the space they take"
 msgstr "每个文件夹包含的邮件数量及其占用空间"
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "I trust these addresses"
+msgstr "我信任这些地址"
+
 #. command label
 #: crates/ui-egui/src/lib.rs
 #, fuzzy
@@ -7747,6 +7926,18 @@ msgstr "我是管理员：为我的组织批准"
 #, fuzzy
 msgid "Icons"
 msgstr "图标"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Identity provider"
+msgstr "身份提供程序"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Identity provider (issuer)"
+msgstr "身份提供程序（颁发者）"
 
 #. interface
 #: crates/ui-egui/src/account_setup/help.rs
@@ -7807,6 +7998,12 @@ msgstr "如果您不同意，则不会向其发送任何内容，搜索会在其
 #, fuzzy
 msgid "If you don't, nothing is sent, and you can change the servers in Server settings."
 msgstr "如果不继续，则不会发送任何内容，您可以在“服务器设置”中更改服务器。"
+
+#. interface
+#: crates/ui-egui/src/account_setup.rs
+#, fuzzy
+msgid "If you go on, you sign in on your identity provider's page and the access token it gives is sent to {hosts}. Go on only if you know it is your provider's."
+msgstr "如果继续，你将在身份提供程序的页面上登录，它颁发的访问令牌将发送到 {hosts}。仅在你确定这些地址属于你的提供程序时才继续。"
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -8110,6 +8307,12 @@ msgid "In line with text"
 msgstr "嵌入文字"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "In the Authorization header (client_secret_basic)"
+msgstr "在 Authorization 标头中（client_secret_basic）"
+
+#. interface
 #: crates/ui-egui/src/lib.rs
 #, fuzzy
 msgid "In the Outbox: it is on its way"
@@ -8126,6 +8329,12 @@ msgstr "在发件箱中：等待其时间"
 #, fuzzy
 msgid "In the folder pane's order"
 msgstr "按照文件夹窗格的顺序"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "In the form (client_secret_post)"
+msgstr "在表单中（client_secret_post）"
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
@@ -8402,6 +8611,12 @@ msgstr "获得更改服务器规则的权限后，规则将发送到服务器（
 #, fuzzy
 msgid "It goes with the next Send/Receive; the list then takes you off it."
 msgstr "它会在下次发送/接收时发出，之后邮件列表会将你移除。"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "It hands out no refresh tokens: you'll be asked to sign in again each time a sign-in runs out."
+msgstr "它不颁发刷新令牌：每次登录过期时，都会要求你重新登录。"
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -8753,6 +8968,12 @@ msgid "Keep on the server of {address}"
 msgstr "保留在 {address} 的服务器上"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Keep the built-in settings"
+msgstr "保留内置设置"
+
+#. interface
 #: crates/ui-egui/src/import_pst.rs
 #, fuzzy
 msgid "Keep the notes and journal entries"
@@ -8843,6 +9064,12 @@ msgid "Kept in this browser's storage, saved as you go. Use Open & Export to kee
 msgstr "保存在此浏览器中，随操作自动保存。使用“打开和导出”可将副本保存为文件。"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Kept in your system's credential store, never in the mailbox. A desktop program can't really keep it secret from you."
+msgstr "保存在系统的凭据存储中，绝不保存在邮箱中。桌面程序无法真正对你保密。"
+
+#. interface
 #: crates/ui-egui/src/backstage.rs
 #, fuzzy
 msgid "Kept in {path}, saved as you go."
@@ -8877,6 +9104,12 @@ msgstr "仅保存在此计算机上"
 #, fuzzy
 msgid "Kept on this computer only: invitations and repeating events aren't sent to the server yet"
 msgstr "仅保存在此计算机上：邀请和重复日程尚未发送到服务器"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Kept: type a new one to replace it"
+msgstr "已保存：键入新的密码以替换"
 
 #. interface
 #: crates/ui-egui/src/reading/signature.rs
@@ -9167,6 +9400,11 @@ msgid "List Accounts"
 msgstr "列出账户"
 
 #. command label
+#: crates/engine/src/cmd/people.rs
+msgid "List Address Books"
+msgstr ""
+
+#. command label
 #: crates/engine/src/cmd/calendar_settings.rs
 #, fuzzy
 msgid "List Calendars"
@@ -9220,8 +9458,8 @@ msgstr "列出任务"
 msgid "List {n}"
 msgstr "列表 {n}"
 
-#. android
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarSpeech.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PeopleScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TasksScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TodayScreen.kt
+#. android, interface
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarSpeech.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PeopleScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TasksScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TodayScreen.kt crates/ui-egui/src/nav.rs
 #, fuzzy
 msgid "Loading…"
 msgstr "正在加载…"
@@ -9273,6 +9511,11 @@ msgstr "相似地址。"
 #, fuzzy
 msgid "Looking at the server's certificate…"
 msgstr "查看服务器的证书…"
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "Looking for a time…"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
@@ -9436,17 +9679,35 @@ msgstr "邮件文件夹：账户的 {folder}"
 msgid "Mail from another mailbox can't go into an Outbox: the next Send/Receive would send it"
 msgstr "不能将其他邮箱的邮件放入发件箱：下次发送/接收时会将其发送"
 
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "Mail goes into an online archive only from its own mailbox: move it into that mailbox first"
+msgstr "邮件只能从其所属邮箱进入在线存档：请先将其移到该邮箱"
+
 #. interface
 #: crates/ui-egui/src/dialogs.rs
 #, fuzzy
 msgid "Mail in Junk E-mail still asks first. File › Options turns this off again."
 msgstr "垃圾邮件中的邮件仍须逐封询问。可在“文件 › 选项”中关闭此功能。"
 
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "Mail in an online archive is copied within the archive: move it out instead"
+msgstr "在线存档中的邮件只能在存档内复制：请改为将其移出"
+
 #. interface
 #: crates/ui-egui/src/shared_mailboxes.rs
 #, fuzzy
 msgid "Mail in this shared mailbox's Outbox waits: sending from shared mailboxes needs your permission. Use Send/Receive."
 msgstr "此共享邮箱发件箱中的邮件正在等待发送：从共享邮箱发送邮件需要您的许可。请使用“发送/接收”。"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "Mail isn't copied into an online archive from elsewhere: move it there from its own mailbox"
+msgstr "不能从其他位置将邮件复制到在线存档：请从其所属邮箱将其移到那里"
 
 #. what a command says
 #: crates/model/src/mailbox.rs
@@ -10120,6 +10381,12 @@ msgstr "区分大小写"
 msgid "May"
 msgstr "5月"
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Mechanism"
+msgstr "机制"
+
 #. command label, interface, ribbon, ribbon location
 #: crates/engine/src/cmd/calendar.rs crates/engine/src/cmd/calendar/invitation.rs crates/engine/src/cmd/calendar/meeting.rs crates/engine/src/cmd/calendar/share.rs crates/engine/src/cmd/people.rs crates/ui-egui/src/forms.rs crates/ui-egui/src/lib.rs crates/ui-egui/src/ribbon.rs
 #, fuzzy
@@ -10332,6 +10599,12 @@ msgstr "Microsoft 365"
 #, fuzzy
 msgid "Microsoft 365 mail is added as a Microsoft account: you sign in on Microsoft's own page in your browser, and MailCraft never sees your password."
 msgstr "Microsoft 365 邮箱会作为 Microsoft 账户添加：您在浏览器中登录 Microsoft 官方页面，MailCraft 不会看到您的密码。"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Microsoft 365 or Outlook.com (built in)"
+msgstr "Microsoft 365 或 Outlook.com（内置）"
 
 #. command label
 #: crates/ui-egui/src/lib.rs
@@ -11517,6 +11790,12 @@ msgstr "尚无账户：文件 › 添加账户"
 msgid "No account's server keeps a calendar here yet, so there is nowhere to move these to."
 msgstr "当前没有账户的服务器在此处保存日历，因此无法将这些项目移过去。"
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "No addresses found: {reason}"
+msgstr "未找到地址：{reason}"
+
 #. android, what a command says
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt crates/mobile/src/attachments.rs
 #, fuzzy
@@ -11656,6 +11935,11 @@ msgid "No due date"
 msgstr "无截止日期"
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "No earlier time when everybody is free, from today on"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "No end date"
@@ -11686,7 +11970,7 @@ msgid "No folders match"
 msgstr "没有匹配的文件夹"
 
 #. interface
-#: crates/ui-egui/src/scheduling.rs
+#: crates/ui-egui/src/room_finder.rs crates/ui-egui/src/scheduling.rs
 #, fuzzy
 msgid "No information"
 msgstr "暂无信息"
@@ -11882,6 +12166,12 @@ msgstr "没有任务。"
 #, fuzzy
 msgid "No testers credited yet."
 msgstr "尚无已署名的测试人员。"
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "No time when everybody is free in the next {n} day"
+msgid_plural "No time when everybody is free in the next {n} days"
+msgstr[0] ""
 
 #. interface
 #: crates/ui-egui/src/zones.rs
@@ -12405,6 +12695,18 @@ msgstr "编号列表"
 msgid "Numbering"
 msgstr "编号"
 
+#. command label
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "OAuth Built-in Settings"
+msgstr "OAuth 内置设置"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "OAuth settings"
+msgstr "OAuth 设置"
+
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AboutPages.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AccountDialogs.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/calendar_sync.rs crates/ui-egui/src/check_names.rs crates/ui-egui/src/dialogs.rs crates/ui-egui/src/forms.rs crates/ui-egui/src/merge_contacts.rs crates/ui-egui/src/move_items.rs crates/ui-egui/src/reminder_dialog.rs crates/ui-egui/src/send_later.rs crates/ui-egui/src/settings_notice.rs crates/ui-egui/src/software.rs crates/ui-egui/src/updates.rs
 #, fuzzy
@@ -12628,6 +12930,12 @@ msgid "Online"
 msgstr "在线"
 
 #. interface
+#: crates/ui-egui/src/nav.rs
+#, fuzzy
+msgid "Online Archive – {address}"
+msgstr "在线存档 – {address}"
+
+#. interface
 #: crates/ui-egui/src/calendar_view.rs
 #, fuzzy
 msgid "Online meeting"
@@ -12692,6 +13000,12 @@ msgstr "仅这一次，并发送"
 #, fuzzy
 msgid "Only if nobody replies"
 msgstr "仅当无人回复时"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Only if your provider gave one"
+msgstr "仅当提供程序提供了密码时"
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -12906,6 +13220,18 @@ msgstr "在新窗口中打开回复和转发的邮件"
 msgid "Open Result from the Server"
 msgstr "从服务器打开结果"
 
+#. ribbon
+#: crates/ui-egui/src/ribbon.rs
+msgid ""
+"Open Shared\n"
+"Address Book"
+msgstr ""
+
+#. command label, interface
+#: crates/engine/src/cmd/contacts_opened.rs crates/ui-egui/src/dialogs.rs
+msgid "Open Shared Address Book"
+msgstr ""
+
 #. command label, interface
 #: crates/engine/src/cmd/calendar_opened.rs crates/ui-egui/src/backstage.rs crates/ui-egui/src/dialogs.rs
 #, fuzzy
@@ -13064,9 +13390,20 @@ msgstr "打开 {name}？{why}"
 
 #. interface
 #: crates/ui-egui/src/open_shared.rs
+msgid "Opened the address book of {address}. It is read at the next Send/Receive, and kept on this computer only."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/open_shared.rs
 #, fuzzy
 msgid "Opened the calendar of {name}. It is listed under Shared Calendars, on this computer only."
 msgstr "已打开 {name} 的日历。它列在“共享日历”下，仅保存在此计算机上。"
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+#, fuzzy
+msgid "Opened with {owner}'s server and password. It needs Full Access to the mailbox, which your organisation's administrator gives. What you change in it goes to it."
+msgstr "使用 {owner} 的服务器和密码打开。此操作需要组织管理员授予您对该邮箱的完全访问权限。您在其中所做的更改会同步到该邮箱。"
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
@@ -13483,7 +13820,7 @@ msgid "Pending development"
 msgstr "待开发"
 
 #. android, command label, interface, name, ribbon location
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Navigation.kt crates/engine/src/cmd/people.rs crates/engine/src/cmd/people_merge.rs crates/engine/src/cmd/view.rs crates/engine/src/session.rs crates/ui-egui/src/people_view.rs
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Navigation.kt crates/engine/src/cmd/contacts_opened.rs crates/engine/src/cmd/people.rs crates/engine/src/cmd/people_merge.rs crates/engine/src/cmd/view.rs crates/engine/src/session.rs crates/ui-egui/src/people_view.rs
 #, fuzzy
 msgid "People"
 msgstr "联系人"
@@ -14065,6 +14402,16 @@ msgstr "立即从 Outlook 重新读取收藏夹"
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
+msgid "Read with {owner}'s sign-in, for as long as you keep it: the person has to have shared their address book with you. It is kept on this computer only, and read at the next Send/Receive."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+msgid "Read with {owner}'s sign-in, for as long as you keep it: the person has to have shared their calendar with you. It is kept on this computer only, and read at the next Send/Receive."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
 #, fuzzy
 msgid "Read with {owner}'s sign-in, for as long as you keep it: the person has to have shared their calendar with you. It is kept on this computer only: it won't appear in Outlook or on your other devices. Microsoft asks you once to let MailCraft read other people's calendars."
 msgstr "使用 {owner} 的登录信息读取，直到您移除该日历：对方须先与您共享日历。此日历仅保存在本机，不会出现在 Outlook 或其他设备上。Microsoft 会询问您是否允许 MailCraft 读取他人的日历。"
@@ -14257,6 +14604,12 @@ msgstr "重复"
 msgid "Red category"
 msgstr "红色类别"
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Redirect port"
+msgstr "重定向端口"
+
 #. command label, name
 #: crates/engine/src/cmd/edit.rs crates/ui-egui/src/menubar.rs
 #, fuzzy
@@ -14276,7 +14629,7 @@ msgid "Redo {what}"
 msgstr "重做 {what}"
 
 #. interface
-#: crates/ui-egui/src/security.rs
+#: crates/ui-egui/src/nav.rs crates/ui-egui/src/security.rs
 #, fuzzy
 msgid "Refresh"
 msgstr "刷新"
@@ -14286,6 +14639,12 @@ msgstr "刷新"
 #, fuzzy
 msgid "Refresh Your Certificates and Keys"
 msgstr "刷新您的证书和密钥"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Register http://127.0.0.1 with any port (or the one above) as the redirect address."
+msgstr "将 http://127.0.0.1（任意端口或上面的端口）注册为重定向地址。"
 
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
@@ -14472,6 +14831,11 @@ msgstr "取消重复"
 #, fuzzy
 msgid "Remove Reminder"
 msgstr "删除提醒"
+
+#. command label
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "Remove Shared Address Book"
+msgstr ""
 
 #. command label, interface
 #: crates/engine/src/cmd/calendar_opened.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/dialogs.rs
@@ -14685,6 +15049,12 @@ msgstr "正在服务器上重命名类别：{done}/{total} 封邮件"
 msgid "Renewing the sign-in…"
 msgstr "正在更新登录信息…"
 
+#. interface
+#: crates/ui-egui/src/lib.rs
+#, fuzzy
+msgid "Renewing the sign-in… If it can't be renewed, sign in on the page that opens in your browser."
+msgstr "正在续订登录… 如果无法续订，请在浏览器中打开的页面上登录。"
+
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt crates/ui-egui/src/forms.rs crates/ui-egui/src/meeting_dialogs/share.rs
 #, fuzzy
@@ -14831,6 +15201,11 @@ msgstr "请求已放入发件箱。"
 msgid "Required"
 msgstr "必填"
 
+#. interface
+#: crates/ui-egui/src/autopick.rs
+msgid "Required people"
+msgstr ""
+
 #. command label, interface, ribbon
 #: crates/engine/src/cmd/compose.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/ribbon.rs
 #, fuzzy
@@ -14907,6 +15282,12 @@ msgstr "重新启动以更新"
 msgid "Restart to update is the owner's click."
 msgstr "“重新启动以更新”必须由用户亲自点击。"
 
+#. command label
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "Restore Default OAuth Settings"
+msgstr "还原默认 OAuth 设置"
+
 #. interface
 #: crates/ui-egui/src/attachment_preview.rs
 #, fuzzy
@@ -14972,6 +15353,12 @@ msgid "Review certificate…"
 msgstr "查看证书…"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Revocation address (optional)"
+msgstr "吊销地址（可选）"
+
+#. interface
 #: crates/ui-egui/src/reading/signature.rs
 #, fuzzy
 msgid "Revocation not checked."
@@ -15028,6 +15415,21 @@ msgstr "右侧"
 #, fuzzy
 msgid "Right before or after: {items}"
 msgstr "紧接在之前或之后：{items}"
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "Room"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Room Finder"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+msgid "Rooms"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/sieve_editor.rs
@@ -15544,6 +15946,12 @@ msgstr "只有在您确实要求智能体执行此操作时才选择“是”。
 msgid "Says what you and your organisation's administrator can do, and lets an administrator approve MailCraft on Microsoft's page from here."
 msgstr "说明您和您组织的管理员可以执行的操作，并让管理员从此处在 Microsoft 页面上批准 MailCraft。"
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Scopes"
+msgstr "范围"
+
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
 #, fuzzy
@@ -15829,7 +16237,7 @@ msgid "Send & Receive"
 msgstr "发送和接收"
 
 #. ribbon location
-#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/auto_replies.rs crates/engine/src/cmd/calendar_settings.rs crates/engine/src/cmd/calendar_subscribed.rs crates/engine/src/cmd/categories_remote.rs crates/engine/src/cmd/contacts_remote.rs crates/engine/src/cmd/dav_sync.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/followup.rs crates/engine/src/cmd/graph_mail.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/jmap_mail.rs crates/engine/src/cmd/remote.rs crates/engine/src/cmd/rules_remote.rs crates/engine/src/cmd/send_later.rs crates/engine/src/cmd/send_receive.rs crates/engine/src/cmd/sieve_replies.rs crates/engine/src/cmd/snooze.rs crates/engine/src/cmd/sync_progress.rs crates/engine/src/cmd/tasks_remote.rs crates/ui-egui/src/lib.rs
+#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/auto_replies.rs crates/engine/src/cmd/calendar_settings.rs crates/engine/src/cmd/calendar_subscribed.rs crates/engine/src/cmd/categories_remote.rs crates/engine/src/cmd/contacts_remote.rs crates/engine/src/cmd/dav_sync.rs crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/followup.rs crates/engine/src/cmd/graph_mail.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/jmap_mail.rs crates/engine/src/cmd/remote.rs crates/engine/src/cmd/rules_remote.rs crates/engine/src/cmd/send_later.rs crates/engine/src/cmd/send_receive.rs crates/engine/src/cmd/sieve_replies.rs crates/engine/src/cmd/snooze.rs crates/engine/src/cmd/sync_progress.rs crates/engine/src/cmd/tasks_remote.rs crates/ui-egui/src/lib.rs
 #, fuzzy
 msgid "Send / Receive"
 msgstr "发送/接收"
@@ -16055,7 +16463,7 @@ msgid "Send your password to another server?"
 msgstr "将您的密码发送到另一台服务器？"
 
 #. interface
-#: crates/ui-egui/src/account_setup/exchange.rs
+#: crates/ui-egui/src/account_setup.rs crates/ui-egui/src/account_setup/exchange.rs
 #, fuzzy
 msgid "Send your sign-in to another server?"
 msgstr "将您的登录信息发送到另一台服务器？"
@@ -16130,6 +16538,12 @@ msgstr "发送/接收会登录 Microsoft；之后即可搜索服务器。"
 #, fuzzy
 msgid "Send/Receive stopped unexpectedly"
 msgstr "发送/接收意外中断"
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+#, fuzzy
+msgid "Send/Receive the mailbox to sign in and read its online archive"
+msgstr "对该邮箱执行发送/接收以登录并读取其在线存档"
 
 #. command label
 #: crates/engine/src/cmd/ews_mail.rs
@@ -16549,6 +16963,12 @@ msgstr "显示 MailCraft"
 #, fuzzy
 msgid "Show Message"
 msgstr "显示邮件"
+
+#. command label, interface
+#: crates/engine/src/cmd/ews_mail.rs crates/ui-egui/src/nav.rs
+#, fuzzy
+msgid "Show Online Archive"
+msgstr "显示在线存档"
 
 #. command label, interface
 #: crates/engine/src/cmd/calendar_settings.rs crates/ui-egui/src/calendar_view.rs
@@ -17055,10 +17475,27 @@ msgid "Sign in with Send/Receive first."
 msgstr "请先通过“发送/接收”登录。"
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Sign in with Send/Receive to see the rooms."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/scheduling.rs
 #, fuzzy
 msgid "Sign in with Send/Receive to see when other people are busy."
 msgstr "使用“发送/接收”登录，以查看其他人的忙闲状态。"
+
+#. interface
+#: crates/ui-egui/src/account_setup.rs
+#, fuzzy
+msgid "Sign in with your identity provider (OAuth 2.0) instead"
+msgstr "改为使用身份提供程序登录（OAuth 2.0）"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Sign-in address"
+msgstr "登录地址"
 
 #. interface
 #: crates/ui-egui/src/lib.rs
@@ -17961,7 +18398,7 @@ msgid "Tell MailCraft's makers what went wrong, on GitHub or by email. You check
 msgstr "通过 GitHub 或电子邮件向 MailCraft 开发者反馈问题。由您检查并亲自发送报告。"
 
 #. interface
-#: crates/ui-egui/src/account_setup.rs
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
 #, fuzzy
 msgid "Tenant"
 msgstr "租户"
@@ -18189,6 +18626,11 @@ msgid "That is not a sender's address"
 msgstr "这不是发件人地址"
 
 #. what a command says
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "That is this account's own address: its own address book is there already."
+msgstr ""
+
+#. what a command says
 #: crates/engine/src/cmd/calendar_opened.rs
 #, fuzzy
 msgid "That is this account's own address: its own calendar is there already."
@@ -18409,6 +18851,31 @@ msgstr "该账户的服务器尚未向该会议提供加入链接。"
 #, fuzzy
 msgid "The account's server makes it when the meeting is sent; the link to join by comes back with it."
 msgstr "发送会议时，账户服务器会创建会议，并返回加入链接。"
+
+#. what a command says
+#: crates/engine/src/cmd/people.rs
+msgid "The address book \"{name}\" can only be read: the server hasn't given this account permission to change its contacts."
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/people.rs
+msgid "The address book \"{name}\" is no longer available. Send/Receive may bring it back, and the contact can be changed then."
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "The address book of {address} is open already."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/people_view.rs
+msgid "The address book this contact came from can only be read: the server hasn't given this account permission to change its contacts."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/people_view.rs
+msgid "The address book this contact came from is no longer in the account's list, so changes here could not reach the server. Send/Receive may bring it back."
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/check_names.rs
@@ -18719,6 +19186,24 @@ msgid "The check stopped unexpectedly"
 msgstr "检查意外停止"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "The client secret can only be letters, digits and punctuation"
+msgstr "客户端密码只能包含字母、数字和标点符号"
+
+#. interface
+#: crates/ui-egui/src/lib.rs
+#, fuzzy
+msgid "The client secret for {account} isn't stored on this computer: enter it again in Account Settings (File › Info)"
+msgstr "{account} 的客户端密码未存储在此计算机上：请在“账户设置”（文件 › 信息）中重新输入"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "The client secret is kept for the settings as they were: enter it again to use it with these, or it is forgotten when you save."
+msgstr "客户端密钥是为原先的设置保存的：要在这些设置中使用，请重新输入，否则保存时会被忘记。"
+
+#. interface
 #: crates/ui-egui/src/account_setup.rs
 #, fuzzy
 msgid "The connection test only checks that this server answers. If it does want a sign-in, the first message you send says so."
@@ -18853,6 +19338,11 @@ msgstr "下载已取消。"
 #. interface
 #: crates/ui-egui/src/attachment_open.rs
 msgid "The draft isn't open any more"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+msgid "The e-mail address of the person whose address book you want to open"
 msgstr ""
 
 #. interface
@@ -19288,6 +19778,11 @@ msgstr "收件人看到的名称；留空时使用您自己的名称"
 msgid "The name the calendar gives itself"
 msgstr "日历给自己起的名称"
 
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "The next time when everybody is free"
+msgstr ""
+
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt
 #, fuzzy
@@ -19295,16 +19790,39 @@ msgid "The notes are too long to edit here."
 msgstr "备注太长，无法在此编辑。"
 
 #. interface
-#: crates/ui-egui/src/account_setup.rs
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
 #, fuzzy
 msgid "The one in File › Options"
 msgstr "“文件 › 选项”中的设置"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "The one registered for MailCraft"
+msgstr "为 MailCraft 注册的 ID"
 
 #. interface
 #: crates/ui-egui/src/backstage.rs
 #, fuzzy
 msgid "The one this build came with"
 msgstr "此版本附带的设置"
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+#, fuzzy
+msgid "The online archive couldn't be read: Refresh to try again"
+msgstr "无法读取在线存档：请刷新以重试"
+
+#. interface
+#: crates/ui-egui/src/nav.rs
+#, fuzzy
+msgid "The online archive needs a connection to the server"
+msgstr "在线存档需要连接到服务器"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "The organisation has no lists of rooms."
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/meeting_dialogs.rs
@@ -19407,6 +19925,12 @@ msgstr "范围需要一个结束日期"
 #, fuzzy
 msgid "The range needs a day to start on"
 msgstr "范围需要一个开始日期"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "The redirect port is a number from 1 to 65535, or empty for any free one"
+msgstr "重定向端口是 1 到 65535 之间的数字，留空则使用任意空闲端口"
 
 #. interface
 #: crates/ui-egui/src/report_problem.rs
@@ -19732,6 +20256,12 @@ msgstr "服务器有 {total} 个文件夹：一次同步读取前 {max} 个，�
 msgid "The server is busy. Try again in a few minutes."
 msgstr "服务器繁忙。请几分钟后重试。"
 
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+#, fuzzy
+msgid "The server no longer has the online archive: changes made in it that hadn't reached the server are lost"
+msgstr "服务器上已没有在线存档：其中尚未到达服务器的更改已丢失"
+
 #. interface
 #: crates/ui-egui/src/dialogs.rs
 #, fuzzy
@@ -19943,6 +20473,12 @@ msgid "The shared mailbox couldn't be added"
 msgstr "无法添加共享邮箱"
 
 #. interface
+#: crates/ui-egui/src/ews_mail.rs
+#, fuzzy
+msgid "The shared mailbox couldn't be read."
+msgstr "无法读取共享邮箱。"
+
+#. interface
 #: crates/ui-egui/src/dialogs.rs
 #, fuzzy
 msgid "The shared mailbox opened through it is removed from this device too."
@@ -19971,6 +20507,12 @@ msgstr "登录未成功。"
 #, fuzzy
 msgid "The sign-in didn't work. Try again."
 msgstr "登录未成功。请重试。"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "The sign-in is only sent to: {servers}"
+msgstr "登录信息仅发送到：{servers}"
 
 #. interface, what a command says
 #: crates/engine/src/sync_driver/calendar_plan.rs crates/ui-egui/src/shared_mailboxes.rs
@@ -20128,6 +20670,11 @@ msgid "The text wasn't found."
 msgstr "未找到该文本。"
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "The time before this when everybody is free"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/reminder_dialog.rs
 #, fuzzy
 msgid "The time is kept on this computer; a flag goes to the account's server as any flag does."
@@ -20266,6 +20813,12 @@ msgid "Thesaurus"
 msgstr "同义词库"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "These addresses are outside your identity provider's domain: {hosts}"
+msgstr "以下地址位于身份提供程序的域之外：{hosts}"
+
+#. interface
 #: crates/ui-egui/src/dialogs.rs
 #, fuzzy
 msgid "These are meetings somebody else organizes; you are invited to them. Deleting them takes them out of your calendar only, and the organizer is not told that you won't come. Declining them tells the organizer, if you choose."
@@ -20294,6 +20847,12 @@ msgstr "这些联系人无法在此处合并：可以更改的联系人少于两
 #, fuzzy
 msgid "These could not be removed. Remove them yourself:"
 msgstr "无法移除以下项目，请自行移除："
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "These settings will no longer be {provider}'s: MailCraft will treat this account as one with your own identity provider, starting from the values above, and you'll sign in again."
+msgstr "这些设置将不再属于 {provider}：MailCraft 将把此账户视为使用你自己的身份提供程序的账户，以上面的值为起点，并且你需要重新登录。"
 
 #. interface
 #: crates/ui-egui/src/task_sync.rs
@@ -20497,6 +21056,16 @@ msgstr "此附件过大，无法预览。"
 #, fuzzy
 msgid "This build can't ask a server when other people are busy: only your own calendar is shown."
 msgstr "此版本无法向服务器查询其他人的忙闲信息：仅显示您自己的日历。"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "This build can't ask the Exchange server for rooms."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "This build can't ask the Exchange server when other people are busy: only your own calendar is shown."
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/lib.rs crates/ui-egui/src/sending.rs crates/ui-egui/src/shared_mailboxes.rs
@@ -20944,6 +21513,11 @@ msgid "This link goes to"
 msgstr "此链接指向"
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "This list has no rooms."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/reading/unsubscribe.rs
 #, fuzzy
 msgid "This list unsubscribes on its own page, at {host}. It opens in your browser: visiting it tells the list that this address is read."
@@ -20978,6 +21552,12 @@ msgstr "此邮箱是从文件打开的。其账户连接到："
 #, fuzzy
 msgid "This mailbox was opened from a file: confirm its servers first"
 msgstr "此邮箱是从文件打开的：请先确认其服务器"
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+#, fuzzy
+msgid "This mailbox's online archive is kept in Microsoft 365, which needs a Microsoft sign-in, so it isn't shown"
+msgstr "此邮箱的在线存档保存在 Microsoft 365 中，需要 Microsoft 登录，因此不显示"
 
 #. interface
 #: crates/ui-egui/src/calendar_sync.rs
@@ -21711,6 +22291,12 @@ msgstr ""
 "在你允许之前，不会读取这些邮箱和日历的任何内容，来自共享邮箱的邮件和会议答复会在这台电脑上等待，也不会改用你自己的地址发送任何内容。"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "To sign in with your own identity provider, first change the incoming and outgoing servers to your own: a sign-in from it is never sent to {provider}'s servers."
+msgstr "要使用你自己的身份提供方登录，请先把接收和发送服务器改成你自己的：来自它的登录绝不会发送到 {provider} 的服务器。"
+
+#. interface
 #: crates/ui-egui/src/account_setup.rs
 #, fuzzy
 msgid "To switch, first save Google's standard IMAP and SMTP servers and an email-matching user name."
@@ -21751,6 +22337,12 @@ msgstr "今天"
 #, fuzzy
 msgid "Today could not be read."
 msgstr "无法读取今天。"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Token address"
+msgstr "令牌地址"
 
 #. android, interface, name, ribbon
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/DueDates.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt crates/ui-egui/src/forms.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/tasks_view.rs
@@ -21955,6 +22547,11 @@ msgstr "输入电子邮件地址，MailCraft 会查找其余设置：Microsoft 3
 #, fuzzy
 msgid "Typing * or - and a space at the start of a line starts a bulleted list, 1. or 1) a numbered one. Undo puts what you typed back."
 msgstr "在行首输入 * 或 - 并加一个空格可开始项目符号列表；输入 1. 或 1) 并加空格可开始编号列表。撤销可恢复原先输入的内容。"
+
+#. interface
+#: crates/ui-egui/src/people_view.rs
+msgid "Unavailable"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/import_pst.rs
@@ -22259,6 +22856,12 @@ msgid "Use a Google app password, not your everyday Google account password."
 msgstr "请使用 Google 应用密码，而不是平时的 Google 账户密码。"
 
 #. interface
+#: crates/ui-egui/src/account_setup.rs
+#, fuzzy
+msgid "Use a password instead"
+msgstr "改用密码"
+
+#. interface
 #: crates/ui-egui/src/account_setup.rs crates/ui-egui/src/account_setup/help.rs
 #, fuzzy
 msgid "Use an app password"
@@ -22277,6 +22880,18 @@ msgid "Use https:// instead"
 msgstr "改用 https://"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Use it"
+msgstr "使用"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Use my own identity provider"
+msgstr "使用我自己的身份提供程序"
+
+#. interface
 #: crates/ui-egui/src/calendar_view.rs
 #, fuzzy
 msgid "Use my own working hours"
@@ -22293,6 +22908,12 @@ msgstr "使用系统设置"
 #, fuzzy
 msgid "Use system setting follows Animation effects in Windows' settings. Where MailCraft can't read the system's setting yet, animations play until you choose Never play."
 msgstr "“使用系统设置”遵循 Windows 设置中的“动画效果”。如果 MailCraft 暂时无法读取系统设置，动画会照常播放，直到您选择“从不播放”。"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Use your own identity provider instead…"
+msgstr "改用你自己的身份提供程序…"
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -22439,6 +23060,12 @@ msgid "Wait for the other attachment preview to finish."
 msgstr "请等待另一个附件预览完成。"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Wait for your identity provider's addresses"
+msgstr "请等待身份提供程序的地址"
+
+#. interface
 #: crates/ui-egui/src/sync_panel.rs
 #, fuzzy
 msgid "Waiting"
@@ -22455,6 +23082,12 @@ msgstr "等待 MailCraft 的 Google 注册"
 #, fuzzy
 msgid "Waiting for the approval stopped unexpectedly"
 msgstr "等待审批的过程意外停止"
+
+#. interface
+#: crates/ui-egui/src/lib.rs
+#, fuzzy
+msgid "Waiting for the system's credential store…"
+msgstr "正在等待系统的凭据存储…"
 
 #. what a command says
 #: crates/engine/src/cmd/contacts_remote.rs
@@ -23240,6 +23873,12 @@ msgid "Your data was removed"
 msgstr "您的数据已移除"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Your domain names {issuer} for signing in."
+msgstr "你的域指定 {issuer} 用于登录。"
+
+#. interface
 #: crates/ui-egui/src/account_setup/exchange.rs
 #, fuzzy
 msgid "Your domain's DNS couldn't be asked. Check the network connection and search again."
@@ -23454,6 +24093,12 @@ msgstr "您所在组织的规则不允许您的账户执行此操作。这是您
 #, fuzzy
 msgid "Your own certificates and keys are used by MailCraft's desktop program: here Digital signatures are checked, and nothing is signed or decrypted."
 msgstr "MailCraft 桌面程序使用您自己的证书和密钥；此处只检查数字签名，不会进行签名或解密。"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Your own identity provider"
+msgstr "你自己的身份提供程序"
 
 #. interface
 #: crates/ui-egui/src/security.rs
@@ -23871,6 +24516,12 @@ msgstr "共享邮箱没有“已暂缓”文件夹"
 #. what a command says
 #: crates/engine/src/cmd/account.rs
 #, fuzzy
+msgid "a shared mailbox is reached through the server settings of the account it is opened through: change that account's"
+msgstr "共享邮箱通过打开它所用账户的服务器设置访问；请更改该账户的设置"
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
 msgid "a shared mailbox keeps as much mail offline as the account it is opened through: change that account's"
 msgstr "共享邮箱离线保留邮件的范围与打开它所用的账户相同；请更改该账户的设置"
 
@@ -23897,6 +24548,36 @@ msgstr "共享邮箱地址无法更改：请移除原邮箱并添加新的邮箱
 #, fuzzy
 msgid "a shared mailbox's rules are its own: this version doesn't make them"
 msgstr "共享邮箱有自己的规则：此版本无法创建这些规则"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "a sign-in with your identity provider is never sent to Microsoft's or Google's mail servers"
+msgstr "使用身份提供程序的登录信息绝不会发送到 Microsoft 或 Google 的邮件服务器"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "a sign-in with your identity provider is only sent to a mail server on this computer in a test"
+msgstr "使用身份提供程序的登录信息仅在测试中发送到此计算机上的邮件服务器"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "a sign-in with your identity provider is only used with this account's own mail servers"
+msgstr "使用身份提供程序的登录信息仅用于此账户自己的邮件服务器"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+#, fuzzy
+msgid "a sign-in with your own identity provider is for mail only, not Microsoft Graph"
+msgstr "使用你自己的身份提供程序的登录仅用于邮件，不用于 Microsoft Graph"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+#, fuzzy
+msgid "a sign-in with {provider} comes back through a loopback port only"
+msgstr "使用 {provider} 的登录只通过环回端口返回"
 
 #. why a command can't run
 #: crates/engine/src/cmd/picture.rs
@@ -23928,6 +24609,12 @@ msgstr "任务必须有标题"
 msgid "a web server"
 msgstr "Web 服务器"
 
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "access was refused on the sign-in page"
+msgstr "登录页面上拒绝了访问"
+
 #. what a command says, why a command can't run
 #: crates/engine/src/cmd/people.rs
 #, fuzzy
@@ -23951,6 +24638,23 @@ msgstr "请先添加账户（文件 › 添加账户）"
 #, fuzzy
 msgid "add at least one recipient"
 msgstr "请至少添加一位收件人"
+
+#. what a command says, why a command can't run
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "address books open under an Exchange server account"
+msgstr ""
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "an Exchange server account needs a server address that can be used to open a shared mailbox"
+msgstr "Exchange 服务器账户需要可以使用的服务器地址才能打开共享邮箱"
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "an Exchange server account's server and user name can't be changed while a shared mailbox opened through it has mail here: remove the shared mailbox first"
+msgstr "通过 Exchange 服务器账户打开的共享邮箱的邮件仍在此处时，无法更改该账户的服务器和用户名：请先移除该共享邮箱"
 
 #. what a command says
 #: crates/engine/src/cmd/account.rs
@@ -24023,6 +24727,17 @@ msgstr "一个账户最多有 {max} 个发件人地址"
 #, fuzzy
 msgid "an event needs a title"
 msgstr "日程需要标题"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+msgid "an online archive can't open a shared mailbox: name the account it belongs to"
+msgstr ""
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "an online archive stays under its mailbox: move that account"
+msgstr "在线存档始终位于其邮箱之下：请移动该帐户"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -24197,6 +24912,12 @@ msgid "couldn't make a secure connection to {host}: {reason}"
 msgstr "无法与 {host} 建立安全连接：{reason}"
 
 #. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+#, fuzzy
+msgid "couldn't open a port on this computer for the sign-in to come back to"
+msgstr "无法在此计算机上打开供登录返回的端口"
+
+#. why a mail server couldn't be used
 #: crates/net/src/lib.rs
 #, fuzzy
 msgid "couldn't reach {host}: {reason}"
@@ -24232,6 +24953,18 @@ msgstr "输入密码登录"
 msgid "enter a user name to sign in"
 msgstr "输入用户名以登录"
 
+#. what a command says
+#: crates/model/src/oauth.rs
+#, fuzzy
+msgid "enter the client id registered for MailCraft at your identity provider"
+msgstr "输入在身份提供程序处为 MailCraft 注册的客户端 ID"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "enter your identity provider's address (its issuer)"
+msgstr "请输入你的身份提供程序的地址（其颁发者）"
+
 #. interface
 #: crates/ui-egui/src/reading/remote.rs
 #, fuzzy
@@ -24243,6 +24976,12 @@ msgstr "@{domain} 的所有人"
 #, fuzzy
 msgid "expected and replacement must be on one line"
 msgstr "要查找的文本和替换文本都必须各占一行"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+#, fuzzy
+msgid "find your identity provider's sign-in addresses (Discover), or enter them"
+msgstr "查找身份提供程序的登录地址（发现），或手动输入"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -24960,7 +25699,7 @@ msgid "no account here keeps its rules on its server"
 msgstr "此处没有账户在服务器上保存规则"
 
 #. what a command says, why a command can't run
-#: crates/engine/src/cmd/ews_mail.rs
+#: crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs
 #, fuzzy
 msgid "no account is an Exchange server account"
 msgstr "没有 Exchange 服务器账户"
@@ -24996,10 +25735,20 @@ msgid "no account with id {account}"
 msgstr "没有 ID 为 {account} 的账户"
 
 #. what a command says
-#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/calendar_opened.rs crates/engine/src/cmd/calendar_settings.rs crates/engine/src/cmd/compose.rs crates/engine/src/cmd/contacts_remote.rs crates/engine/src/cmd/dav_account.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/folder.rs crates/engine/src/cmd/graph_mail.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/graph_switch.rs crates/engine/src/cmd/jmap_mail.rs crates/engine/src/cmd/offline.rs crates/engine/src/cmd/remote.rs crates/engine/src/cmd/rules.rs crates/engine/src/cmd/rules_sieve.rs crates/engine/src/cmd/search_server.rs crates/engine/src/cmd/senders.rs crates/engine/src/cmd/shared.rs crates/engine/src/cmd/signature.rs
+#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/calendar_opened.rs crates/engine/src/cmd/calendar_settings.rs crates/engine/src/cmd/compose.rs crates/engine/src/cmd/contacts_remote.rs crates/engine/src/cmd/dav_account.rs crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/folder.rs crates/engine/src/cmd/graph_mail.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/graph_switch.rs crates/engine/src/cmd/jmap_mail.rs crates/engine/src/cmd/offline.rs crates/engine/src/cmd/remote.rs crates/engine/src/cmd/rules.rs crates/engine/src/cmd/rules_sieve.rs crates/engine/src/cmd/search_server.rs crates/engine/src/cmd/senders.rs crates/engine/src/cmd/shared.rs crates/engine/src/cmd/signature.rs
 #, fuzzy
 msgid "no account with id {id}"
 msgstr "没有 ID 为 {id} 的账户"
+
+#. why a command can't run
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "no address book was opened by address"
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "no address book {address} is open"
+msgstr ""
 
 #. why a mail server couldn't be used
 #: crates/net/src/transport.rs
@@ -25211,6 +25960,11 @@ msgid "nobody else is invited to this appointment"
 msgstr "没有邀请其他人参加此约会"
 
 #. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+msgid "nobody with an address is asked about"
+msgstr ""
+
+#. what a command says
 #: crates/engine/src/cmd/followup.rs
 #, fuzzy
 msgid "none of these messages has a reminder showing"
@@ -25343,6 +26097,12 @@ msgid "only a message you sent can be sent again"
 msgstr "只能重新发送您自己发出的邮件"
 
 #. what a command says
+#: crates/model/src/archive.rs
+#, fuzzy
+msgid "only an Exchange server account has an online archive here"
+msgstr "此处只有 Exchange 服务器账户才有在线存档"
+
+#. what a command says
 #: crates/engine/src/cmd/senders.rs
 #, fuzzy
 msgid "only an IMAP account sends from other addresses"
@@ -25431,6 +26191,12 @@ msgstr "个人"
 msgid "pictures from the web are not downloaded: save the picture and add it from the file"
 msgstr "无法下载网络图片：请先保存图片，再从文件添加"
 
+#. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+#, fuzzy
+msgid "port {port} on this computer is in use: choose another redirect port, or automatic"
+msgstr "此计算机上的端口 {port} 已被占用：请选择其他重定向端口，或选择自动"
+
 #. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
@@ -25490,6 +26256,12 @@ msgstr "回复最多可发送到 {n} 个地址"
 #, fuzzy
 msgid "require goes before every other command."
 msgstr "require 必须位于所有其他命令之前。"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "revocation"
+msgstr "吊销"
 
 #. name
 #: crates/engine/src/agent.rs
@@ -25606,14 +26378,14 @@ msgstr "共享邮箱"
 #. what a command says, why a command can't run
 #: crates/engine/src/cmd/shared.rs
 #, fuzzy
-msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
-msgstr "请在通过 Microsoft Graph 同步的账户下打开共享邮箱"
+msgid "shared mailboxes open under an account kept in step through Microsoft Graph, or an Exchange server account"
+msgstr "请在通过 Microsoft Graph 同步的账户或 Exchange 服务器账户下打开共享邮箱"
 
 #. what a command says
 #: crates/model/src/mailbox.rs
 #, fuzzy
-msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
-msgstr "共享邮箱在通过 Microsoft Graph 同步的账户下打开"
+msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph or is an Exchange server account"
+msgstr "共享邮箱需在通过 Microsoft Graph 同步的账户或 Exchange 服务器账户下打开"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -25632,6 +26404,12 @@ msgstr "首先登录账户"
 #, fuzzy
 msgid "sign in to {who} first"
 msgstr "请先登录 {who}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "sign-in"
+msgstr "登录"
 
 #. why a mail server couldn't be used
 #: crates/proto/src/lib.rs
@@ -25680,6 +26458,17 @@ msgstr "主题包含 {words}"
 #, fuzzy
 msgid "subject or body contains {words}"
 msgstr "主题或正文包含 {words}"
+
+#. what a command says
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "that account can't open an address book by address"
+msgstr ""
+
+#. what a command says
+#: crates/model/src/archive.rs
+#, fuzzy
+msgid "that account isn't an online archive"
+msgstr "该账户不是在线存档"
 
 #. what a command says
 #: crates/engine/src/cmd/calendar.rs
@@ -25775,6 +26564,12 @@ msgstr "该邮件不在这里"
 #, fuzzy
 msgid "that message isn't waiting in the Outbox"
 msgstr "该邮件未在发件箱中等待"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+#, fuzzy
+msgid "that redirect port can't be used: choose another, or automatic"
+msgstr "无法使用该重定向端口：请选择其他端口，或选择自动"
 
 #. what a command says
 #: crates/engine/src/cmd/calendar/selection.rs
@@ -25878,10 +26673,16 @@ msgid "the account has no user name or e-mail address to sign in with"
 msgstr "此账户没有可用于登录的用户名或电子邮件地址"
 
 #. what a command says
-#: crates/engine/src/cmd/calendar/invitation.rs crates/engine/src/cmd/calendar_opened.rs crates/engine/src/cmd/compose.rs crates/engine/src/cmd/react.rs crates/engine/src/cmd/unsubscribe.rs
+#: crates/engine/src/cmd/calendar/invitation.rs crates/engine/src/cmd/calendar_opened.rs crates/engine/src/cmd/compose.rs crates/engine/src/cmd/contacts_opened.rs crates/engine/src/cmd/react.rs crates/engine/src/cmd/unsubscribe.rs
 #, fuzzy
 msgid "the account is gone"
 msgstr "此账户已不存在"
+
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+#, fuzzy
+msgid "the account {name} is the online archive of is gone"
+msgstr "此在线存档所属的账户 {name} 已不存在"
 
 #. name
 #: crates/engine/src/cmd/rules.rs
@@ -25996,6 +26797,18 @@ msgstr "更改后的单次日程已不存在"
 #, fuzzy
 msgid "the check stopped unexpectedly"
 msgstr "检查意外停止"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+#, fuzzy
+msgid "the client id can only be letters, digits and punctuation, at most 200 of them"
+msgstr "客户端 ID 只能包含字母、数字和标点符号，最多 200 个"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "the client secret can only be letters, digits and punctuation"
+msgstr "客户端密码只能包含字母、数字和标点符号"
 
 #. why a mail server couldn't be used
 #: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/mod.rs
@@ -26166,6 +26979,90 @@ msgid "the folder was numbered anew while it was being read"
 msgstr "文件夹在读取过程中被重新编号"
 
 #. what a command says
+#: crates/model/src/oauth.rs
+#, fuzzy
+msgid "the identity provider (issuer) address can't have a query or a fragment"
+msgstr "身份提供程序（颁发者）地址不能包含查询或片段"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider doesn't describe itself at the usual addresses: enter its sign-in addresses"
+msgstr "身份提供程序未在常用地址上描述自身：请输入其登录地址"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider sent its description on through too many redirects"
+msgstr "身份提供程序经过太多次重定向转发了其描述"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider sent its description on to an address on this computer, a private network or without https"
+msgstr "身份提供程序将其描述转发到了此计算机上、专用网络中或不使用 https 的地址"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's address can't have a query or a fragment"
+msgstr "身份提供程序地址不能包含查询或片段"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's address {why}"
+msgstr "身份提供程序地址{why}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description couldn't be fetched: {other}"
+msgstr "无法获取身份提供程序的描述：{other}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description gives a {what} address that {why}"
+msgstr "身份提供程序的描述给出的{what}地址{why}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description has no {what} address"
+msgstr "身份提供程序的描述未给出{what}地址"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description is too long"
+msgstr "身份提供程序的描述太长"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description isn't the JSON it should be"
+msgstr "身份提供程序的描述不是预期的 JSON"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description names another issuer than the address entered: check the address, character for character"
+msgstr "身份提供程序的描述所列颁发者与输入的地址不同：请逐字符检查地址"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description says it doesn't sign people in on its page (authorization code)"
+msgstr "身份提供程序的描述称它不在其页面上为任何人登录（授权码）"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description says it doesn't take the protected sign-in (PKCE with S256) MailCraft uses"
+msgstr "身份提供程序的描述称它不支持 MailCraft 使用的受保护登录（使用 S256 的 PKCE）"
+
+#. what a command says
 #: crates/engine/src/import_pst.rs
 #, fuzzy
 msgid "the import couldn't account for every item of {path}"
@@ -26182,6 +27079,12 @@ msgstr "没有可供导入邮件的目标文件夹"
 #, fuzzy
 msgid "the import was stopped"
 msgstr "导入已停止"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "the incoming and outgoing servers above"
+msgstr "上面的接收和发送服务器"
 
 #. what a command says
 #: crates/engine/src/cmd/keys.rs
@@ -26212,6 +27115,12 @@ msgstr "列表显示每个账户的文件夹：请打开某个账户的文件夹
 #, fuzzy
 msgid "the mail server doesn't know your contacts: replies outside the organisation go to nobody or to everybody"
 msgstr "邮件服务器不知道你的联系人：组织外的回复要么不发给任何人，要么发给所有人"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/oauthbearer.rs
+#, fuzzy
+msgid "the mail server's name can't be sent with a sign-in"
+msgstr "邮件服务器的名称不能随登录信息一起发送"
 
 #. what a command says
 #: crates/engine/src/cmd/file.rs
@@ -26310,6 +27219,18 @@ msgid "the occurrence was not changed; nothing was moved"
 msgstr "单次日程未更改；未移动任何内容"
 
 #. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+#, fuzzy
+msgid "the online archive has changes that haven't reached the server yet: Send/Receive first, then hide it"
+msgstr "在线存档有尚未到达服务器的更改：请先发送/接收，然后再隐藏"
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "the online archive has changes that haven't reached the server yet: Send/Receive first, then say it is kept in Exchange Online"
+msgstr "在线存档有尚未到达服务器的更改：请先发送/接收，然后再标明它保存在 Exchange Online 中"
+
+#. what a command says
 #: crates/model/src/mailbox.rs
 #, fuzzy
 msgid "the parent folder belongs to another account"
@@ -26352,6 +27273,12 @@ msgid "the proposed end is not after the proposed start"
 msgstr "建议的结束时间必须晚于建议的开始时间"
 
 #. what a command says
+#: crates/model/src/oauth.rs
+#, fuzzy
+msgid "the redirect port must be between 1 and 65535, or automatic"
+msgstr "重定向端口必须介于 1 和 65535 之间，或为自动"
+
+#. what a command says
 #: crates/model/src/mailbox_followup.rs
 #, fuzzy
 msgid "the reminder time must be in the future"
@@ -26370,10 +27297,16 @@ msgid "the result would make this account keep more sync state than is taken in"
 msgstr "处理此结果会使账户保存的同步状态超过允许的大小"
 
 #. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
+#: crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs
 #, fuzzy
 msgid "the result {why}"
 msgstr "结果 {why}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "the revocation address {why}"
+msgstr "吊销地址{why}"
 
 #. name
 #: crates/engine/src/cmd/sieve_elsewhere.rs
@@ -26640,6 +27573,18 @@ msgid "the server doesn't take a password on this connection"
 msgstr "服务器不接受在此连接中使用密码"
 
 #. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "the server doesn't take a token with OAUTHBEARER, which this account's OAuth settings ask for"
+msgstr "服务器不接受通过 OAUTHBEARER 提供的令牌，而此账户的 OAuth 设置要求使用它"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "the server doesn't take a token with XOAUTH2, which this account's OAuth settings ask for"
+msgstr "服务器不接受通过 XOAUTH2 提供的令牌，而此账户的 OAuth 设置要求使用它"
+
+#. why a mail server couldn't be used
 #: crates/proto/src/imap/mod.rs
 #, fuzzy
 msgid "the server ended the command early"
@@ -26702,6 +27647,12 @@ msgstr "服务器不支持使用密码登录"
 #, fuzzy
 msgid "the server offers no way to sign in with an access token"
 msgstr "服务器不支持使用访问令牌登录"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "the server offers no way to sign in with an access token (neither OAUTHBEARER nor XOAUTH2)"
+msgstr "服务器不提供使用访问令牌登录的方式（既不支持 OAUTHBEARER，也不支持 XOAUTH2）"
 
 #. why a mail server couldn't be used
 #: crates/net/src/transport.rs
@@ -26934,6 +27885,18 @@ msgstr "服务器的响应嵌套得太深"
 msgid "the server's response is too long"
 msgstr "服务器的响应太长"
 
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "the sign-in came back from another identity provider than the one asked: nothing of it was used"
+msgstr "登录从与所请求的不同的身份提供程序返回：未使用其中任何内容"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "the sign-in came back without your identity provider's name, which it says it always gives: nothing of it was used"
+msgstr "登录返回时没有你的身份提供程序的名称，而它声称总会提供：未使用其中任何内容"
+
 #. what a command says
 #: crates/engine/src/cmd/signature.rs
 #, fuzzy
@@ -26994,13 +27957,13 @@ msgid "the top level"
 msgstr "顶层"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/lib.rs
+#: crates/proto/src/lib.rs crates/proto/src/oauthbearer.rs
 #, fuzzy
 msgid "the user name or access token has a character that can't be sent"
 msgstr "用户名或访问令牌包含无法发送的字符"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/lib.rs
+#: crates/proto/src/lib.rs crates/proto/src/oauthbearer.rs
 #, fuzzy
 msgid "the user name or access token is too long to be sent"
 msgstr "用户名或访问令牌太长而无法发送"
@@ -27078,7 +28041,7 @@ msgid "there is already a signature named \"{to}\""
 msgstr "已经有一个名为“{to}”的签名"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/lib.rs
+#: crates/proto/src/lib.rs crates/proto/src/oauthbearer.rs
 #, fuzzy
 msgid "there is no access token to sign in with"
 msgstr "没有可供登录的访问令牌"
@@ -27094,6 +28057,12 @@ msgstr "没有账户"
 #, fuzzy
 msgid "there is no account to remove"
 msgstr "没有可删除的账户"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "there is no earlier sign-in to renew"
+msgstr "没有可续订的先前登录"
 
 #. what a command says
 #: crates/engine/src/cmd/graph_switch.rs
@@ -27166,6 +28135,12 @@ msgstr "此次发送/接收针对的是另一个账户，不是 {name}"
 #, fuzzy
 msgid "this Send/Receive was for the server {name} named before"
 msgstr "此次发送/接收针对的是之前指定的服务器 {name}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "this account doesn't sign in with your own identity provider"
+msgstr "此账户不使用你自己的身份提供程序登录"
 
 #. what a command says
 #: crates/engine/src/cmd/compose.rs crates/engine/src/cmd/send_later.rs
@@ -27250,6 +28225,11 @@ msgstr "该联系人没有电子邮件地址"
 #, fuzzy
 msgid "this contacts folder can only be read"
 msgstr "此联系人文件夹只能读取"
+
+#. what a command says
+#: crates/engine/src/cmd/ews_directory.rs
+msgid "this directory was for another account, not for {name}"
+msgstr ""
 
 #. what a command says
 #: crates/engine/src/cmd/remote.rs
@@ -27403,6 +28383,12 @@ msgstr "发给 {people}"
 msgid "to {recipient}"
 msgstr "发送给 {recipient}"
 
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "token"
+msgstr "令牌"
+
 #. what a command says
 #: crates/engine/src/cmd/tasks.rs
 #, fuzzy
@@ -27432,6 +28418,12 @@ msgstr "输入地址，例如 someone@example.org；或输入域，例如 @examp
 #, fuzzy
 msgid "unexpected server response: {reason}"
 msgstr "意外的服务器响应：{reason}"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+#, fuzzy
+msgid "use common, consumers, organizations, or a directory's id or domain as the tenant"
+msgstr "使用 common、consumers、organizations，或目录的 ID 或域作为租户"
 
 #. interface
 #: crates/ui-egui/src/security.rs
@@ -27592,6 +28584,54 @@ msgstr "您以其他人的身份登录"
 #, fuzzy
 msgid "you@example.org"
 msgstr "you@example.org"
+
+#. name
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "your identity provider"
+msgstr "你的身份提供程序"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider answered with status {status}"
+msgstr "你的身份提供程序以状态 {status} 应答"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider can't sign anybody in just now: try again later"
+msgstr "你的身份提供程序目前无法为任何人登录：请稍后再试"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider doesn't know this client id, or its client secret: check the OAuth settings"
+msgstr "你的身份提供程序不认识此客户端 ID 或其客户端密码：请检查 OAuth 设置"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider no longer takes this sign-in: sign in again"
+msgstr "你的身份提供程序不再接受此登录：请重新登录"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider refused the sign-in"
+msgstr "你的身份提供程序拒绝了登录"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider won't give what was asked for: check the extra scopes in the OAuth settings"
+msgstr "你的身份提供程序不提供所请求的内容：请检查 OAuth 设置中的额外范围"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider's addresses must start with https://"
+msgstr "你的身份提供程序的地址必须以 https:// 开头"
 
 #. interface
 #: crates/ui-egui/src/graph_switch.rs
@@ -27797,6 +28837,12 @@ msgstr "{days}（全天）"
 #, fuzzy
 msgid "{day} at {time}"
 msgstr "{day} {time}"
+
+#. interface
+#: crates/ui-egui/src/account_setup.rs
+#, fuzzy
+msgid "{domain} says its mail signs in with an identity provider (OAuth 2.0)."
+msgstr "{domain} 表明其邮件通过身份提供程序登录（OAuth 2.0）。"
 
 #. interface
 #: crates/ui-egui/src/import_pst.rs crates/ui-egui/src/sync_panel.rs
@@ -28008,6 +29054,11 @@ msgstr "{name} 接受了本次会议。"
 msgid "{name} answered this invitation."
 msgstr "{name} 回复了此邀请。"
 
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+msgid "{name} can't be both an online archive and a shared mailbox"
+msgstr ""
+
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ShareLoad.kt
 #, fuzzy
@@ -28069,7 +29120,12 @@ msgid "{name} has no :{tag}."
 msgstr "{name} 没有 :{tag}。"
 
 #. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
+#: crates/engine/src/cmd/ews_directory.rs
+msgid "{name} has no Exchange server account it is opened through"
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs
 #, fuzzy
 msgid "{name} has no Exchange server address that can be used"
 msgstr "{name} 没有可以使用的 Exchange 服务器地址"
@@ -28123,7 +29179,7 @@ msgid "{name} is a command; a test belongs here."
 msgstr "{name} 是命令；此处应为测试。"
 
 #. what a command says
-#: crates/engine/src/cmd/graph_mail.rs
+#: crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/graph_mail.rs
 #, fuzzy
 msgid "{name} is a shared mailbox whose account is gone: remove it and add it again"
 msgstr "{name} 是共享邮箱，其所属账户已不存在：请将其删除并重新添加"
@@ -28139,6 +29195,11 @@ msgstr "{name} 是测试；此处应为命令。"
 #, fuzzy
 msgid "{name} is already in {folder}."
 msgstr "{name} 已在 {folder} 中。"
+
+#. what a command says
+#: crates/engine/src/cmd/ews_directory.rs
+msgid "{name} is an online archive: it has no calendars, address books or to-do lists of its own"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/files.rs
@@ -28225,7 +29286,7 @@ msgid "{name} isn't among the Favorites"
 msgstr "{name} 不在收藏夹中"
 
 #. what a command says
-#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/ews_mail.rs
+#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs
 #, fuzzy
 msgid "{name} isn't an Exchange server account"
 msgstr "{name} 不是 Exchange 服务器账户"
@@ -29049,6 +30110,12 @@ msgid_plural "{n} more questions are waiting."
 msgstr[0] "还有 {n} 个问题等待处理。"
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "{n} more room isn't shown"
+msgid_plural "{n} more rooms aren't shown"
+msgstr[0] ""
+
+#. interface
 #: crates/ui-egui/src/files.rs
 #, fuzzy
 msgid "{n} more was left out: at most {mb} MB at a time"
@@ -29649,6 +30716,14 @@ msgid "−Lines"
 msgstr "−行"
 
 #, fuzzy
+#~ msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
+#~ msgstr "请在通过 Microsoft Graph 同步的账户下打开共享邮箱"
+
+#, fuzzy
+#~ msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
+#~ msgstr "共享邮箱在通过 Microsoft Graph 同步的账户下打开"
+
+#, fuzzy
 #~ msgid "This account's server keeps this contact. Changes made here aren't sent back yet, so it can't be edited or deleted here. Favorite and categories are kept on this computer."
 #~ msgstr "此联系人由该账户的服务器保存。在此处所做的更改尚不能发送回服务器，因此不能在此编辑或删除。收藏状态和类别保存在此计算机上。"
 
@@ -29989,818 +31064,3 @@ msgstr "−行"
 #~ msgid "The draft stays in Drafts. {why}"
 #~ msgstr "草稿保留在“草稿”中。{why}"
 
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "A sign-in with your own identity provider is never sent to Microsoft's or Google's mail servers: change the servers above to your own."
-msgstr "使用你自己的身份提供方的登录绝不会发送到 Microsoft 或 Google 的邮件服务器：请把上面的服务器改成你自己的。"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Agree to the addresses outside your identity provider's domain, or enter others"
-msgstr "同意身份提供程序域之外的地址，或输入其他地址"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Asked for besides openid email offline_access"
-msgstr "在 openid email offline_access 之外请求的"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Automatic (OAUTHBEARER, else XOAUTH2)"
-msgstr "自动（OAUTHBEARER，否则 XOAUTH2）"
-
-#. interface
-#: crates/ui-egui/src/dialogs.rs
-#, fuzzy
-msgid "Checking the address with the server…"
-msgstr "正在向服务器查询地址…"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Client ID"
-msgstr "客户端 ID"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Client secret (optional)"
-msgstr "客户端密码（可选）"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Client secret sent"
-msgstr "客户端密码发送方式"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "Couldn't ask the server which folders are other people's"
-msgstr "无法向服务器查询哪些文件夹属于其他人"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Discover"
-msgstr "发现"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Extra scopes"
-msgstr "额外范围"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Find the sign-in and token addresses from the identity provider's address. Only that address is sent."
-msgstr "根据身份提供程序的地址查找登录地址和令牌地址。仅发送该地址。"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Find your identity provider's addresses with Discover, or enter them"
-msgstr "使用“发现”查找身份提供程序的地址，或手动输入"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Finding the addresses stopped unexpectedly"
-msgstr "查找地址意外停止"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Forget the client secret"
-msgstr "忘记客户端密码"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Found: sign-in at {signIn}, tokens from {token}."
-msgstr "已找到：登录地址 {signIn}，令牌来自 {token}。"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Google (built in)"
-msgstr "Google（内置）"
-
-#. command label, interface
-#: crates/engine/src/cmd/ews_mail.rs crates/ui-egui/src/nav.rs
-#, fuzzy
-msgid "Hide Online Archive"
-msgstr "隐藏在线存档"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "I trust these addresses"
-msgstr "我信任这些地址"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Identity provider"
-msgstr "身份提供程序"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Identity provider (issuer)"
-msgstr "身份提供程序（颁发者）"
-
-#. interface
-#: crates/ui-egui/src/account_setup.rs
-#, fuzzy
-msgid "If you go on, you sign in on your identity provider's page and the access token it gives is sent to {hosts}. Go on only if you know it is your provider's."
-msgstr "如果继续，你将在身份提供程序的页面上登录，它颁发的访问令牌将发送到 {hosts}。仅在你确定这些地址属于你的提供程序时才继续。"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "In the Authorization header (client_secret_basic)"
-msgstr "在 Authorization 标头中（client_secret_basic）"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "In the form (client_secret_post)"
-msgstr "在表单中（client_secret_post）"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "It hands out no refresh tokens: you'll be asked to sign in again each time a sign-in runs out."
-msgstr "它不颁发刷新令牌：每次登录过期时，都会要求你重新登录。"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Keep the built-in settings"
-msgstr "保留内置设置"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Kept in your system's credential store, never in the mailbox. A desktop program can't really keep it secret from you."
-msgstr "保存在系统的凭据存储中，绝不保存在邮箱中。桌面程序无法真正对你保密。"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Kept: type a new one to replace it"
-msgstr "已保存：键入新的密码以替换"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "Mail goes into an online archive only from its own mailbox: move it into that mailbox first"
-msgstr "邮件只能从其所属邮箱进入在线存档：请先将其移到该邮箱"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "Mail in an online archive is copied within the archive: move it out instead"
-msgstr "在线存档中的邮件只能在存档内复制：请改为将其移出"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "Mail isn't copied into an online archive from elsewhere: move it there from its own mailbox"
-msgstr "不能从其他位置将邮件复制到在线存档：请从其所属邮箱将其移到那里"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Mechanism"
-msgstr "机制"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Microsoft 365 or Outlook.com (built in)"
-msgstr "Microsoft 365 或 Outlook.com（内置）"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "No addresses found: {reason}"
-msgstr "未找到地址：{reason}"
-
-#. command label
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
-msgid "OAuth Built-in Settings"
-msgstr "OAuth 内置设置"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "OAuth settings"
-msgstr "OAuth 设置"
-
-#. interface
-#: crates/ui-egui/src/nav.rs
-#, fuzzy
-msgid "Online Archive – {address}"
-msgstr "在线存档 – {address}"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Only if your provider gave one"
-msgstr "仅当提供程序提供了密码时"
-
-#. interface
-#: crates/ui-egui/src/dialogs.rs
-#, fuzzy
-msgid "Opened with {owner}'s server and password. It needs Full Access to the mailbox, which your organisation's administrator gives. What you change in it goes to it."
-msgstr "使用 {owner} 的服务器和密码打开。此操作需要组织管理员授予您对该邮箱的完全访问权限。您在其中所做的更改会同步到该邮箱。"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Redirect port"
-msgstr "重定向端口"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Register http://127.0.0.1 with any port (or the one above) as the redirect address."
-msgstr "将 http://127.0.0.1（任意端口或上面的端口）注册为重定向地址。"
-
-#. interface
-#: crates/ui-egui/src/lib.rs
-#, fuzzy
-msgid "Renewing the sign-in… If it can't be renewed, sign in on the page that opens in your browser."
-msgstr "正在续订登录… 如果无法续订，请在浏览器中打开的页面上登录。"
-
-#. command label
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
-msgid "Restore Default OAuth Settings"
-msgstr "还原默认 OAuth 设置"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Revocation address (optional)"
-msgstr "吊销地址（可选）"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Scopes"
-msgstr "范围"
-
-#. interface
-#: crates/ui-egui/src/ews_mail.rs
-#, fuzzy
-msgid "Send/Receive the mailbox to sign in and read its online archive"
-msgstr "对该邮箱执行发送/接收以登录并读取其在线存档"
-
-#. command label, interface
-#: crates/engine/src/cmd/ews_mail.rs crates/ui-egui/src/nav.rs
-#, fuzzy
-msgid "Show Online Archive"
-msgstr "显示在线存档"
-
-#. interface
-#: crates/ui-egui/src/account_setup.rs
-#, fuzzy
-msgid "Sign in with your identity provider (OAuth 2.0) instead"
-msgstr "改为使用身份提供程序登录（OAuth 2.0）"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Sign-in address"
-msgstr "登录地址"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "The client secret can only be letters, digits and punctuation"
-msgstr "客户端密码只能包含字母、数字和标点符号"
-
-#. interface
-#: crates/ui-egui/src/lib.rs
-#, fuzzy
-msgid "The client secret for {account} isn't stored on this computer: enter it again in Account Settings (File › Info)"
-msgstr "{account} 的客户端密码未存储在此计算机上：请在“账户设置”（文件 › 信息）中重新输入"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "The client secret is kept for the settings as they were: enter it again to use it with these, or it is forgotten when you save."
-msgstr "客户端密钥是为原先的设置保存的：要在这些设置中使用，请重新输入，否则保存时会被忘记。"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "The one registered for MailCraft"
-msgstr "为 MailCraft 注册的 ID"
-
-#. interface
-#: crates/ui-egui/src/ews_mail.rs
-#, fuzzy
-msgid "The online archive couldn't be read: Refresh to try again"
-msgstr "无法读取在线存档：请刷新以重试"
-
-#. interface
-#: crates/ui-egui/src/nav.rs
-#, fuzzy
-msgid "The online archive needs a connection to the server"
-msgstr "在线存档需要连接到服务器"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "The redirect port is a number from 1 to 65535, or empty for any free one"
-msgstr "重定向端口是 1 到 65535 之间的数字，留空则使用任意空闲端口"
-
-#. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
-#, fuzzy
-msgid "The server no longer has the online archive: changes made in it that hadn't reached the server are lost"
-msgstr "服务器上已没有在线存档：其中尚未到达服务器的更改已丢失"
-
-#. interface
-#: crates/ui-egui/src/ews_mail.rs
-#, fuzzy
-msgid "The shared mailbox couldn't be read."
-msgstr "无法读取共享邮箱。"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "The sign-in is only sent to: {servers}"
-msgstr "登录信息仅发送到：{servers}"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "These addresses are outside your identity provider's domain: {hosts}"
-msgstr "以下地址位于身份提供程序的域之外：{hosts}"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "These settings will no longer be {provider}'s: MailCraft will treat this account as one with your own identity provider, starting from the values above, and you'll sign in again."
-msgstr "这些设置将不再属于 {provider}：MailCraft 将把此账户视为使用你自己的身份提供程序的账户，以上面的值为起点，并且你需要重新登录。"
-
-#. interface
-#: crates/ui-egui/src/ews_mail.rs
-#, fuzzy
-msgid "This mailbox's online archive is kept in Microsoft 365, which needs a Microsoft sign-in, so it isn't shown"
-msgstr "此邮箱的在线存档保存在 Microsoft 365 中，需要 Microsoft 登录，因此不显示"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "To sign in with your own identity provider, first change the incoming and outgoing servers to your own: a sign-in from it is never sent to {provider}'s servers."
-msgstr "要使用你自己的身份提供方登录，请先把接收和发送服务器改成你自己的：来自它的登录绝不会发送到 {provider} 的服务器。"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Token address"
-msgstr "令牌地址"
-
-#. interface
-#: crates/ui-egui/src/account_setup.rs
-#, fuzzy
-msgid "Use a password instead"
-msgstr "改用密码"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Use it"
-msgstr "使用"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Use my own identity provider"
-msgstr "使用我自己的身份提供程序"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Use your own identity provider instead…"
-msgstr "改用你自己的身份提供程序…"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Wait for your identity provider's addresses"
-msgstr "请等待身份提供程序的地址"
-
-#. interface
-#: crates/ui-egui/src/lib.rs
-#, fuzzy
-msgid "Waiting for the system's credential store…"
-msgstr "正在等待系统的凭据存储…"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Your domain names {issuer} for signing in."
-msgstr "你的域指定 {issuer} 用于登录。"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Your own identity provider"
-msgstr "你自己的身份提供程序"
-
-#. what a command says
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
-msgid "a shared mailbox is reached through the server settings of the account it is opened through: change that account's"
-msgstr "共享邮箱通过打开它所用账户的服务器设置访问；请更改该账户的设置"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "a sign-in with your identity provider is never sent to Microsoft's or Google's mail servers"
-msgstr "使用身份提供程序的登录信息绝不会发送到 Microsoft 或 Google 的邮件服务器"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "a sign-in with your identity provider is only sent to a mail server on this computer in a test"
-msgstr "使用身份提供程序的登录信息仅在测试中发送到此计算机上的邮件服务器"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "a sign-in with your identity provider is only used with this account's own mail servers"
-msgstr "使用身份提供程序的登录信息仅用于此账户自己的邮件服务器"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth.rs
-#, fuzzy
-msgid "a sign-in with your own identity provider is for mail only, not Microsoft Graph"
-msgstr "使用你自己的身份提供程序的登录仅用于邮件，不用于 Microsoft Graph"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth.rs
-#, fuzzy
-msgid "a sign-in with {provider} comes back through a loopback port only"
-msgstr "使用 {provider} 的登录只通过环回端口返回"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "access was refused on the sign-in page"
-msgstr "登录页面上拒绝了访问"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "an Exchange server account needs a server address that can be used to open a shared mailbox"
-msgstr "Exchange 服务器账户需要可以使用的服务器地址才能打开共享邮箱"
-
-#. what a command says
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
-msgid "an Exchange server account's server and user name can't be changed while a shared mailbox opened through it has mail here: remove the shared mailbox first"
-msgstr "通过 Exchange 服务器账户打开的共享邮箱的邮件仍在此处时，无法更改该账户的服务器和用户名：请先移除该共享邮箱"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "an online archive stays under its mailbox: move that account"
-msgstr "在线存档始终位于其邮箱之下：请移动该帐户"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth.rs
-#, fuzzy
-msgid "couldn't open a port on this computer for the sign-in to come back to"
-msgstr "无法在此计算机上打开供登录返回的端口"
-
-#. what a command says
-#: crates/model/src/oauth.rs
-#, fuzzy
-msgid "enter the client id registered for MailCraft at your identity provider"
-msgstr "输入在身份提供程序处为 MailCraft 注册的客户端 ID"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "enter your identity provider's address (its issuer)"
-msgstr "请输入你的身份提供程序的地址（其颁发者）"
-
-#. what a command says
-#: crates/model/src/oauth.rs
-#, fuzzy
-msgid "find your identity provider's sign-in addresses (Discover), or enter them"
-msgstr "查找身份提供程序的登录地址（发现），或手动输入"
-
-#. what a command says
-#: crates/model/src/archive.rs
-#, fuzzy
-msgid "only an Exchange server account has an online archive here"
-msgstr "此处只有 Exchange 服务器账户才有在线存档"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth.rs
-#, fuzzy
-msgid "port {port} on this computer is in use: choose another redirect port, or automatic"
-msgstr "此计算机上的端口 {port} 已被占用：请选择其他重定向端口，或选择自动"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "revocation"
-msgstr "吊销"
-
-#. what a command says, why a command can't run
-#: crates/engine/src/cmd/shared.rs
-#, fuzzy
-msgid "shared mailboxes open under an account kept in step through Microsoft Graph, or an Exchange server account"
-msgstr "请在通过 Microsoft Graph 同步的账户或 Exchange 服务器账户下打开共享邮箱"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph or is an Exchange server account"
-msgstr "共享邮箱需在通过 Microsoft Graph 同步的账户或 Exchange 服务器账户下打开"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "sign-in"
-msgstr "登录"
-
-#. what a command says
-#: crates/model/src/archive.rs
-#, fuzzy
-msgid "that account isn't an online archive"
-msgstr "该账户不是在线存档"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth.rs
-#, fuzzy
-msgid "that redirect port can't be used: choose another, or automatic"
-msgstr "无法使用该重定向端口：请选择其他端口，或选择自动"
-
-#. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
-#, fuzzy
-msgid "the account {name} is the online archive of is gone"
-msgstr "此在线存档所属的账户 {name} 已不存在"
-
-#. what a command says
-#: crates/model/src/oauth.rs
-#, fuzzy
-msgid "the client id can only be letters, digits and punctuation, at most 200 of them"
-msgstr "客户端 ID 只能包含字母、数字和标点符号，最多 200 个"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "the client secret can only be letters, digits and punctuation"
-msgstr "客户端密码只能包含字母、数字和标点符号"
-
-#. what a command says
-#: crates/model/src/oauth.rs
-#, fuzzy
-msgid "the identity provider (issuer) address can't have a query or a fragment"
-msgstr "身份提供程序（颁发者）地址不能包含查询或片段"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider doesn't describe itself at the usual addresses: enter its sign-in addresses"
-msgstr "身份提供程序未在常用地址上描述自身：请输入其登录地址"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider sent its description on through too many redirects"
-msgstr "身份提供程序经过太多次重定向转发了其描述"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider sent its description on to an address on this computer, a private network or without https"
-msgstr "身份提供程序将其描述转发到了此计算机上、专用网络中或不使用 https 的地址"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's address can't have a query or a fragment"
-msgstr "身份提供程序地址不能包含查询或片段"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's address {why}"
-msgstr "身份提供程序地址{why}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description couldn't be fetched: {other}"
-msgstr "无法获取身份提供程序的描述：{other}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description gives a {what} address that {why}"
-msgstr "身份提供程序的描述给出的{what}地址{why}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description has no {what} address"
-msgstr "身份提供程序的描述未给出{what}地址"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description is too long"
-msgstr "身份提供程序的描述太长"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description isn't the JSON it should be"
-msgstr "身份提供程序的描述不是预期的 JSON"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description names another issuer than the address entered: check the address, character for character"
-msgstr "身份提供程序的描述所列颁发者与输入的地址不同：请逐字符检查地址"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description says it doesn't sign people in on its page (authorization code)"
-msgstr "身份提供程序的描述称它不在其页面上为任何人登录（授权码）"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description says it doesn't take the protected sign-in (PKCE with S256) MailCraft uses"
-msgstr "身份提供程序的描述称它不支持 MailCraft 使用的受保护登录（使用 S256 的 PKCE）"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "the incoming and outgoing servers above"
-msgstr "上面的接收和发送服务器"
-
-#. why a mail server couldn't be used
-#: crates/proto/src/oauthbearer.rs
-#, fuzzy
-msgid "the mail server's name can't be sent with a sign-in"
-msgstr "邮件服务器的名称不能随登录信息一起发送"
-
-#. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
-#, fuzzy
-msgid "the online archive has changes that haven't reached the server yet: Send/Receive first, then hide it"
-msgstr "在线存档有尚未到达服务器的更改：请先发送/接收，然后再隐藏"
-
-#. what a command says
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
-msgid "the online archive has changes that haven't reached the server yet: Send/Receive first, then say it is kept in Exchange Online"
-msgstr "在线存档有尚未到达服务器的更改：请先发送/接收，然后再标明它保存在 Exchange Online 中"
-
-#. what a command says
-#: crates/model/src/oauth.rs
-#, fuzzy
-msgid "the redirect port must be between 1 and 65535, or automatic"
-msgstr "重定向端口必须介于 1 和 65535 之间，或为自动"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "the revocation address {why}"
-msgstr "吊销地址{why}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "the server doesn't take a token with OAUTHBEARER, which this account's OAuth settings ask for"
-msgstr "服务器不接受通过 OAUTHBEARER 提供的令牌，而此账户的 OAuth 设置要求使用它"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "the server doesn't take a token with XOAUTH2, which this account's OAuth settings ask for"
-msgstr "服务器不接受通过 XOAUTH2 提供的令牌，而此账户的 OAuth 设置要求使用它"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "the server offers no way to sign in with an access token (neither OAUTHBEARER nor XOAUTH2)"
-msgstr "服务器不提供使用访问令牌登录的方式（既不支持 OAUTHBEARER，也不支持 XOAUTH2）"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "the sign-in came back from another identity provider than the one asked: nothing of it was used"
-msgstr "登录从与所请求的不同的身份提供程序返回：未使用其中任何内容"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "the sign-in came back without your identity provider's name, which it says it always gives: nothing of it was used"
-msgstr "登录返回时没有你的身份提供程序的名称，而它声称总会提供：未使用其中任何内容"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "there is no earlier sign-in to renew"
-msgstr "没有可续订的先前登录"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "this account doesn't sign in with your own identity provider"
-msgstr "此账户不使用你自己的身份提供程序登录"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "token"
-msgstr "令牌"
-
-#. what a command says
-#: crates/model/src/oauth.rs
-#, fuzzy
-msgid "use common, consumers, organizations, or a directory's id or domain as the tenant"
-msgstr "使用 common、consumers、organizations，或目录的 ID 或域作为租户"
-
-#. name
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "your identity provider"
-msgstr "你的身份提供程序"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider answered with status {status}"
-msgstr "你的身份提供程序以状态 {status} 应答"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider can't sign anybody in just now: try again later"
-msgstr "你的身份提供程序目前无法为任何人登录：请稍后再试"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider doesn't know this client id, or its client secret: check the OAuth settings"
-msgstr "你的身份提供程序不认识此客户端 ID 或其客户端密码：请检查 OAuth 设置"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider no longer takes this sign-in: sign in again"
-msgstr "你的身份提供程序不再接受此登录：请重新登录"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider refused the sign-in"
-msgstr "你的身份提供程序拒绝了登录"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider won't give what was asked for: check the extra scopes in the OAuth settings"
-msgstr "你的身份提供程序不提供所请求的内容：请检查 OAuth 设置中的额外范围"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider's addresses must start with https://"
-msgstr "你的身份提供程序的地址必须以 https:// 开头"
-
-#. interface
-#: crates/ui-egui/src/account_setup.rs
-#, fuzzy
-msgid "{domain} says its mail signs in with an identity provider (OAuth 2.0)."
-msgstr "{domain} 表明其邮件通过身份提供程序登录（OAuth 2.0）。"
-
-#. what a command says
-#: crates/engine/src/cmd/auto_replies.rs
-#, fuzzy
-msgid "Automatic replies are kept on the mail server, and MailCraft can set them only for accounts that sign in with Microsoft so far: IMAP has no standard way to set them (Sieve vacation replies may come later)"
-msgstr "自动回复保存在邮件服务器上。目前 MailCraft 只能为通过 Microsoft 登录的账户设置自动回复：IMAP 没有标准设置方式（将来可能支持 Sieve 假期回复）。"

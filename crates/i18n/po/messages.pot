@@ -414,6 +414,11 @@ msgid ":{tag} needs a string or a list after it."
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "<< AutoPick"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/credits.rs
 msgid "@{login}, testing since {since}"
 msgstr ""
@@ -876,6 +881,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/account_setup/help.rs
 msgid "A short note with the link to that page, to paste into mail or chat. MailCraft sends nothing itself."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "A sign-in with your own identity provider is never sent to Microsoft's or Google's mail servers: change the servers above to your own."
 msgstr ""
 
 #. what a command says
@@ -1348,6 +1358,11 @@ msgstr ""
 msgid "Agenda"
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Agree to the addresses outside your identity provider's domain, or enter others"
+msgstr ""
+
 #. command label
 #: crates/engine/src/cmd/format.rs
 msgid "Align Text"
@@ -1436,6 +1451,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/merge_contacts.rs
 msgid "All of them"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/autopick.rs
+msgid "All people and rooms"
 msgstr ""
 
 #. interface
@@ -1728,7 +1748,7 @@ msgid "Appearance"
 msgstr ""
 
 #. interface
-#: crates/ui-egui/src/account_setup.rs
+#: crates/ui-egui/src/account_setup.rs crates/ui-egui/src/account_setup/oauth_settings.rs
 msgid "Application (client) ID"
 msgstr ""
 
@@ -1805,6 +1825,11 @@ msgstr ""
 #. command label
 #: crates/engine/src/cmd/tasks_remote.rs
 msgid "Apply Downloaded To-dos"
+msgstr ""
+
+#. command label
+#: crates/engine/src/cmd/ews_directory.rs
+msgid "Apply Read Exchange Calendar, Contacts and To-dos"
 msgstr ""
 
 #. command label
@@ -2070,8 +2095,23 @@ msgid "Asked first"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Asked for besides openid email offline_access"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/scheduling.rs
 msgid "Asking about other people's time stopped unexpectedly"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking for the rooms stopped unexpectedly"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking the server for the rooms…"
 msgstr ""
 
 #. interface
@@ -2087,6 +2127,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/account_setup/exchange.rs
 msgid "Asking your domain's DNS…"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking…"
 msgstr ""
 
 #. android
@@ -2112,6 +2157,11 @@ msgstr ""
 #. what a command says
 #: crates/engine/src/cmd/people_merge.rs
 msgid "At most {max} contacts can be merged at once."
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "At most {n} address books can be opened by address: remove one first."
 msgstr ""
 
 #. what a command says
@@ -2249,8 +2299,23 @@ msgid "AutoArchive"
 msgstr ""
 
 #. interface
-#: crates/ui-egui/src/backstage.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/spelling.rs
+#: crates/ui-egui/src/scheduling.rs
+msgid "AutoPick Next >>"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/windows.rs
+msgid "AutoPick is on the Find a Time page"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs crates/ui-egui/src/backstage.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/spelling.rs
 msgid "Automatic"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Automatic (OAUTHBEARER, else XOAUTH2)"
 msgstr ""
 
 #. interface
@@ -2538,6 +2603,16 @@ msgstr ""
 msgid "Bold"
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Book"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Booked"
+msgstr ""
+
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
 msgid "Bookmark"
@@ -2578,8 +2653,8 @@ msgstr ""
 msgid "Bullets"
 msgstr ""
 
-#. name
-#: crates/model/src/calendar.rs
+#. interface, name
+#: crates/model/src/calendar.rs crates/ui-egui/src/room_finder.rs
 msgid "Busy"
 msgstr ""
 
@@ -3210,6 +3285,11 @@ msgid "Checking the address with Microsoft…"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/dialogs.rs
+msgid "Checking the address with the server…"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/calendar_sync.rs
 msgid "Checking the calendar connection…"
 msgstr ""
@@ -3237,6 +3317,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/account_setup.rs
 msgid "Choose Google sign-in, or select Use an app password instead."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Choose a building…"
 msgstr ""
 
 #. interface
@@ -3372,6 +3457,21 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/reading.rs
 msgid "Click to select {name}; double-click to open it"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Client ID"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Client secret (optional)"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Client secret sent"
 msgstr ""
 
 #. ribbon, ribbon location
@@ -3766,6 +3866,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/account_setup/help.rs
 msgid "Could not open Google sign-in"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "Couldn't ask the server which folders are other people's"
 msgstr ""
 
 #. why a mail server couldn't be used
@@ -4427,6 +4532,11 @@ msgstr ""
 #. android, command label, interface, ribbon
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt crates/engine/src/cmd/compose.rs crates/ui-egui/src/compose.rs crates/ui-egui/src/dialogs.rs crates/ui-egui/src/ribbon.rs
 msgid "Discard"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Discover"
 msgstr ""
 
 #. android, interface
@@ -5193,6 +5303,11 @@ msgstr ""
 msgid "Except if"
 msgstr ""
 
+#. command label
+#: crates/engine/src/cmd/ews_directory.rs
+msgid "Exchange Calendar, Contacts and To-dos to Read"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/account_setup/exchange.rs
 msgid "Exchange server"
@@ -5275,6 +5390,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/reading/warnings.rs
 msgid "External"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Extra scopes"
 msgstr ""
 
 #. interface
@@ -5410,8 +5530,23 @@ msgid "Find next spelling error"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Find the sign-in and token addresses from the identity provider's address. Only that address is sent."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/find_replace.rs
 msgid "Find what"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Find your identity provider's addresses with Discover, or enter them"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Finding the addresses stopped unexpectedly"
 msgstr ""
 
 #. interface
@@ -5534,7 +5669,7 @@ msgid ""
 msgstr ""
 
 #. command label, ribbon location
-#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/folder.rs crates/engine/src/cmd/view.rs
+#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/folder.rs crates/engine/src/cmd/view.rs
 msgid "Folder Pane"
 msgstr ""
 
@@ -5685,6 +5820,11 @@ msgstr ""
 msgid "Forget Trusted Certificate"
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Forget the client secret"
+msgstr ""
+
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PicturesSettings.kt crates/ui-egui/src/reading/remote.rs
 msgid "Forget the pictures that are kept; they are downloaded again when you ask."
@@ -5776,8 +5916,13 @@ msgid_plural "Found {n} folders"
 msgstr[0] ""
 msgstr[1] ""
 
-#. name
-#: crates/model/src/calendar.rs
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Found: sign-in at {signIn}, tokens from {token}."
+msgstr ""
+
+#. interface, name
+#: crates/model/src/calendar.rs crates/ui-egui/src/room_finder.rs
 msgid "Free"
 msgstr ""
 
@@ -6074,6 +6219,11 @@ msgstr ""
 msgid "Google"
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Google (built in)"
+msgstr ""
+
 #. command label
 #: crates/ui-egui/src/lib.rs
 msgid "Google Desktop Application ID"
@@ -6317,6 +6467,11 @@ msgstr ""
 msgid "Hide MailCraft"
 msgstr ""
 
+#. command label, interface
+#: crates/engine/src/cmd/ews_mail.rs crates/ui-egui/src/nav.rs
+msgid "Hide Online Archive"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/calendar_view.rs
 msgid "Hide This Copy"
@@ -6422,6 +6577,11 @@ msgstr ""
 msgid "How many messages each folder holds and the space they take"
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "I trust these addresses"
+msgstr ""
+
 #. command label
 #: crates/ui-egui/src/lib.rs
 msgid "I'm an Administrator: Approve MailCraft for My Organisation"
@@ -6435,6 +6595,16 @@ msgstr ""
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
 msgid "Icons"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Identity provider"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Identity provider (issuer)"
 msgstr ""
 
 #. interface
@@ -6485,6 +6655,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/account_setup.rs
 msgid "If you don't, nothing is sent, and you can change the servers in Server settings."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup.rs
+msgid "If you go on, you sign in on your identity provider's page and the access token it gives is sent to {hosts}. Go on only if you know it is your provider's."
 msgstr ""
 
 #. interface
@@ -6740,6 +6915,11 @@ msgid "In line with text"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "In the Authorization header (client_secret_basic)"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/lib.rs
 msgid "In the Outbox: it is on its way"
 msgstr ""
@@ -6752,6 +6932,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/folder_properties.rs
 msgid "In the folder pane's order"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "In the form (client_secret_post)"
 msgstr ""
 
 #. interface
@@ -6982,6 +7167,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/reading/unsubscribe.rs
 msgid "It goes with the next Send/Receive; the list then takes you off it."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "It hands out no refresh tokens: you'll be asked to sign in again each time a sign-in runs out."
 msgstr ""
 
 #. interface
@@ -7277,6 +7467,11 @@ msgid "Keep on the server of {address}"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Keep the built-in settings"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/import_pst.rs
 msgid "Keep the notes and journal entries"
 msgstr ""
@@ -7352,6 +7547,11 @@ msgid "Kept in this browser's storage, saved as you go. Use Open & Export to kee
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Kept in your system's credential store, never in the mailbox. A desktop program can't really keep it secret from you."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/backstage.rs
 msgid "Kept in {path}, saved as you go."
 msgstr ""
@@ -7379,6 +7579,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/forms.rs
 msgid "Kept on this computer only: invitations and repeating events aren't sent to the server yet"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Kept: type a new one to replace it"
 msgstr ""
 
 #. interface
@@ -7622,6 +7827,11 @@ msgid "List Accounts"
 msgstr ""
 
 #. command label
+#: crates/engine/src/cmd/people.rs
+msgid "List Address Books"
+msgstr ""
+
+#. command label
 #: crates/engine/src/cmd/calendar_settings.rs
 msgid "List Calendars"
 msgstr ""
@@ -7666,8 +7876,8 @@ msgstr ""
 msgid "List {n}"
 msgstr ""
 
-#. android
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarSpeech.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PeopleScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TasksScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TodayScreen.kt
+#. android, interface
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarSpeech.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PeopleScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TasksScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TodayScreen.kt crates/ui-egui/src/nav.rs
 msgid "Loading…"
 msgstr ""
 
@@ -7709,6 +7919,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/account_setup/exchange.rs
 msgid "Looking at the server's certificate…"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "Looking for a time…"
 msgstr ""
 
 #. interface
@@ -7846,14 +8061,29 @@ msgstr ""
 msgid "Mail from another mailbox can't go into an Outbox: the next Send/Receive would send it"
 msgstr ""
 
+#. what a command says
+#: crates/model/src/mailbox.rs
+msgid "Mail goes into an online archive only from its own mailbox: move it into that mailbox first"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/dialogs.rs
 msgid "Mail in Junk E-mail still asks first. File › Options turns this off again."
 msgstr ""
 
+#. what a command says
+#: crates/model/src/mailbox.rs
+msgid "Mail in an online archive is copied within the archive: move it out instead"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/shared_mailboxes.rs
 msgid "Mail in this shared mailbox's Outbox waits: sending from shared mailboxes needs your permission. Use Send/Receive."
+msgstr ""
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+msgid "Mail isn't copied into an online archive from elsewhere: move it there from its own mailbox"
 msgstr ""
 
 #. what a command says
@@ -8417,6 +8647,11 @@ msgstr ""
 msgid "May"
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Mechanism"
+msgstr ""
+
 #. command label, interface, ribbon, ribbon location
 #: crates/engine/src/cmd/calendar.rs crates/engine/src/cmd/calendar/invitation.rs crates/engine/src/cmd/calendar/meeting.rs crates/engine/src/cmd/calendar/share.rs crates/engine/src/cmd/people.rs crates/ui-egui/src/forms.rs crates/ui-egui/src/lib.rs crates/ui-egui/src/ribbon.rs
 msgid "Meeting"
@@ -8591,6 +8826,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/account_setup/exchange.rs
 msgid "Microsoft 365 mail is added as a Microsoft account: you sign in on Microsoft's own page in your browser, and MailCraft never sees your password."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Microsoft 365 or Outlook.com (built in)"
 msgstr ""
 
 #. command label
@@ -9570,6 +9810,11 @@ msgstr ""
 msgid "No account's server keeps a calendar here yet, so there is nowhere to move these to."
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "No addresses found: {reason}"
+msgstr ""
+
 #. android, what a command says
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt crates/mobile/src/attachments.rs
 msgid "No app on this phone can open that file."
@@ -9686,6 +9931,11 @@ msgid "No due date"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "No earlier time when everybody is free, from today on"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/forms.rs
 msgid "No end date"
 msgstr ""
@@ -9711,7 +9961,7 @@ msgid "No folders match"
 msgstr ""
 
 #. interface
-#: crates/ui-egui/src/scheduling.rs
+#: crates/ui-egui/src/room_finder.rs crates/ui-egui/src/scheduling.rs
 msgid "No information"
 msgstr ""
 
@@ -9874,6 +10124,13 @@ msgstr ""
 #: crates/ui-egui/src/credits.rs
 msgid "No testers credited yet."
 msgstr ""
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "No time when everybody is free in the next {n} day"
+msgid_plural "No time when everybody is free in the next {n} days"
+msgstr[0] ""
+msgstr[1] ""
 
 #. interface
 #: crates/ui-egui/src/zones.rs
@@ -10310,6 +10567,16 @@ msgstr ""
 msgid "Numbering"
 msgstr ""
 
+#. command label
+#: crates/engine/src/cmd/account.rs
+msgid "OAuth Built-in Settings"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "OAuth settings"
+msgstr ""
+
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AboutPages.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AccountDialogs.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/calendar_sync.rs crates/ui-egui/src/check_names.rs crates/ui-egui/src/dialogs.rs crates/ui-egui/src/forms.rs crates/ui-egui/src/merge_contacts.rs crates/ui-egui/src/move_items.rs crates/ui-egui/src/reminder_dialog.rs crates/ui-egui/src/send_later.rs crates/ui-egui/src/settings_notice.rs crates/ui-egui/src/software.rs crates/ui-egui/src/updates.rs
 msgid "OK"
@@ -10496,6 +10763,11 @@ msgid "Online"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/nav.rs
+msgid "Online Archive – {address}"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/calendar_view.rs
 msgid "Online meeting"
 msgstr ""
@@ -10548,6 +10820,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/reminder_dialog.rs
 msgid "Only if nobody replies"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Only if your provider gave one"
 msgstr ""
 
 #. interface
@@ -10727,6 +11004,18 @@ msgstr ""
 msgid "Open Result from the Server"
 msgstr ""
 
+#. ribbon
+#: crates/ui-egui/src/ribbon.rs
+msgid ""
+"Open Shared\n"
+"Address Book"
+msgstr ""
+
+#. command label, interface
+#: crates/engine/src/cmd/contacts_opened.rs crates/ui-egui/src/dialogs.rs
+msgid "Open Shared Address Book"
+msgstr ""
+
 #. command label, interface
 #: crates/engine/src/cmd/calendar_opened.rs crates/ui-egui/src/backstage.rs crates/ui-egui/src/dialogs.rs
 msgid "Open Shared Calendar"
@@ -10859,7 +11148,17 @@ msgstr ""
 
 #. interface
 #: crates/ui-egui/src/open_shared.rs
+msgid "Opened the address book of {address}. It is read at the next Send/Receive, and kept on this computer only."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/open_shared.rs
 msgid "Opened the calendar of {name}. It is listed under Shared Calendars, on this computer only."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+msgid "Opened with {owner}'s server and password. It needs Full Access to the mailbox, which your organisation's administrator gives. What you change in it goes to it."
 msgstr ""
 
 #. interface
@@ -11208,7 +11507,7 @@ msgid "Pending development"
 msgstr ""
 
 #. android, command label, interface, name, ribbon location
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Navigation.kt crates/engine/src/cmd/people.rs crates/engine/src/cmd/people_merge.rs crates/engine/src/cmd/view.rs crates/engine/src/session.rs crates/ui-egui/src/people_view.rs
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Navigation.kt crates/engine/src/cmd/contacts_opened.rs crates/engine/src/cmd/people.rs crates/engine/src/cmd/people_merge.rs crates/engine/src/cmd/view.rs crates/engine/src/session.rs crates/ui-egui/src/people_view.rs
 msgid "People"
 msgstr ""
 
@@ -11693,6 +11992,16 @@ msgstr ""
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
+msgid "Read with {owner}'s sign-in, for as long as you keep it: the person has to have shared their address book with you. It is kept on this computer only, and read at the next Send/Receive."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+msgid "Read with {owner}'s sign-in, for as long as you keep it: the person has to have shared their calendar with you. It is kept on this computer only, and read at the next Send/Receive."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
 msgid "Read with {owner}'s sign-in, for as long as you keep it: the person has to have shared their calendar with you. It is kept on this computer only: it won't appear in Outlook or on your other devices. Microsoft asks you once to let MailCraft read other people's calendars."
 msgstr ""
 
@@ -11850,6 +12159,11 @@ msgstr ""
 msgid "Red category"
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Redirect port"
+msgstr ""
+
 #. command label, name
 #: crates/engine/src/cmd/edit.rs crates/ui-egui/src/menubar.rs
 msgid "Redo"
@@ -11866,13 +12180,18 @@ msgid "Redo {what}"
 msgstr ""
 
 #. interface
-#: crates/ui-egui/src/security.rs
+#: crates/ui-egui/src/nav.rs crates/ui-egui/src/security.rs
 msgid "Refresh"
 msgstr ""
 
 #. command label
 #: crates/ui-egui/src/lib.rs
 msgid "Refresh Your Certificates and Keys"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Register http://127.0.0.1 with any port (or the one above) as the redirect address."
 msgstr ""
 
 #. ribbon
@@ -12024,6 +12343,11 @@ msgstr ""
 #. command label, interface
 #: crates/engine/src/cmd/followup.rs crates/ui-egui/src/ribbon.rs
 msgid "Remove Reminder"
+msgstr ""
+
+#. command label
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "Remove Shared Address Book"
 msgstr ""
 
 #. command label, interface
@@ -12200,6 +12524,11 @@ msgstr ""
 msgid "Renewing the sign-in…"
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/lib.rs
+msgid "Renewing the sign-in… If it can't be renewed, sign in on the page that opens in your browser."
+msgstr ""
+
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt crates/ui-egui/src/forms.rs crates/ui-egui/src/meeting_dialogs/share.rs
 msgid "Repeats"
@@ -12319,6 +12648,11 @@ msgstr ""
 msgid "Required"
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/autopick.rs
+msgid "Required people"
+msgstr ""
+
 #. command label, interface, ribbon
 #: crates/engine/src/cmd/compose.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/ribbon.rs
 msgid "Resend Message"
@@ -12381,6 +12715,11 @@ msgstr ""
 msgid "Restart to update is the owner's click."
 msgstr ""
 
+#. command label
+#: crates/engine/src/cmd/account.rs
+msgid "Restore Default OAuth Settings"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/attachment_preview.rs
 msgid "Restore attachment preview warnings"
@@ -12434,6 +12773,11 @@ msgid "Review certificate…"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Revocation address (optional)"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/reading/signature.rs
 msgid "Revocation not checked."
 msgstr ""
@@ -12478,6 +12822,21 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/reading/invitation.rs
 msgid "Right before or after: {items}"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "Room"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Room Finder"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+msgid "Rooms"
 msgstr ""
 
 #. interface
@@ -12907,6 +13266,11 @@ msgstr ""
 msgid "Says what you and your organisation's administrator can do, and lets an administrator approve MailCraft on Microsoft's page from here."
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Scopes"
+msgstr ""
+
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
 msgid "Screenshot"
@@ -13142,7 +13506,7 @@ msgid "Send & Receive"
 msgstr ""
 
 #. ribbon location
-#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/auto_replies.rs crates/engine/src/cmd/calendar_settings.rs crates/engine/src/cmd/calendar_subscribed.rs crates/engine/src/cmd/categories_remote.rs crates/engine/src/cmd/contacts_remote.rs crates/engine/src/cmd/dav_sync.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/followup.rs crates/engine/src/cmd/graph_mail.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/jmap_mail.rs crates/engine/src/cmd/remote.rs crates/engine/src/cmd/rules_remote.rs crates/engine/src/cmd/send_later.rs crates/engine/src/cmd/send_receive.rs crates/engine/src/cmd/sieve_replies.rs crates/engine/src/cmd/snooze.rs crates/engine/src/cmd/sync_progress.rs crates/engine/src/cmd/tasks_remote.rs crates/ui-egui/src/lib.rs
+#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/auto_replies.rs crates/engine/src/cmd/calendar_settings.rs crates/engine/src/cmd/calendar_subscribed.rs crates/engine/src/cmd/categories_remote.rs crates/engine/src/cmd/contacts_remote.rs crates/engine/src/cmd/dav_sync.rs crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/followup.rs crates/engine/src/cmd/graph_mail.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/jmap_mail.rs crates/engine/src/cmd/remote.rs crates/engine/src/cmd/rules_remote.rs crates/engine/src/cmd/send_later.rs crates/engine/src/cmd/send_receive.rs crates/engine/src/cmd/sieve_replies.rs crates/engine/src/cmd/snooze.rs crates/engine/src/cmd/sync_progress.rs crates/engine/src/cmd/tasks_remote.rs crates/ui-egui/src/lib.rs
 msgid "Send / Receive"
 msgstr ""
 
@@ -13329,7 +13693,7 @@ msgid "Send your password to another server?"
 msgstr ""
 
 #. interface
-#: crates/ui-egui/src/account_setup/exchange.rs
+#: crates/ui-egui/src/account_setup.rs crates/ui-egui/src/account_setup/exchange.rs
 msgid "Send your sign-in to another server?"
 msgstr ""
 
@@ -13390,6 +13754,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/ews_mail.rs crates/ui-egui/src/jmap_mail.rs crates/ui-egui/src/lib.rs
 msgid "Send/Receive stopped unexpectedly"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+msgid "Send/Receive the mailbox to sign in and read its online archive"
 msgstr ""
 
 #. command label
@@ -13740,6 +14109,11 @@ msgstr ""
 #. command label
 #: crates/ui-egui/src/lib.rs
 msgid "Show Message"
+msgstr ""
+
+#. command label, interface
+#: crates/engine/src/cmd/ews_mail.rs crates/ui-egui/src/nav.rs
+msgid "Show Online Archive"
 msgstr ""
 
 #. command label, interface
@@ -14162,8 +14536,23 @@ msgid "Sign in with Send/Receive first."
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Sign in with Send/Receive to see the rooms."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/scheduling.rs
 msgid "Sign in with Send/Receive to see when other people are busy."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup.rs
+msgid "Sign in with your identity provider (OAuth 2.0) instead"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Sign-in address"
 msgstr ""
 
 #. interface
@@ -14917,7 +15306,7 @@ msgid "Tell MailCraft's makers what went wrong, on GitHub or by email. You check
 msgstr ""
 
 #. interface
-#: crates/ui-egui/src/account_setup.rs
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
 msgid "Tenant"
 msgstr ""
 
@@ -15107,6 +15496,11 @@ msgid "That is not a sender's address"
 msgstr ""
 
 #. what a command says
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "That is this account's own address: its own address book is there already."
+msgstr ""
+
+#. what a command says
 #: crates/engine/src/cmd/calendar_opened.rs
 msgid "That is this account's own address: its own calendar is there already."
 msgstr ""
@@ -15289,6 +15683,31 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/forms.rs
 msgid "The account's server makes it when the meeting is sent; the link to join by comes back with it."
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/people.rs
+msgid "The address book \"{name}\" can only be read: the server hasn't given this account permission to change its contacts."
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/people.rs
+msgid "The address book \"{name}\" is no longer available. Send/Receive may bring it back, and the contact can be changed then."
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "The address book of {address} is open already."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/people_view.rs
+msgid "The address book this contact came from can only be read: the server hasn't given this account permission to change its contacts."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/people_view.rs
+msgid "The address book this contact came from is no longer in the account's list, so changes here could not reach the server. Send/Receive may bring it back."
 msgstr ""
 
 #. interface
@@ -15547,6 +15966,21 @@ msgid "The check stopped unexpectedly"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "The client secret can only be letters, digits and punctuation"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/lib.rs
+msgid "The client secret for {account} isn't stored on this computer: enter it again in Account Settings (File › Info)"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "The client secret is kept for the settings as they were: enter it again to use it with these, or it is forgotten when you save."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/account_setup.rs
 msgid "The connection test only checks that this server answers. If it does want a sign-in, the first message you send says so."
 msgstr ""
@@ -15659,6 +16093,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/attachment_open.rs
 msgid "The draft isn't open any more"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+msgid "The e-mail address of the person whose address book you want to open"
 msgstr ""
 
 #. interface
@@ -16023,19 +16462,44 @@ msgstr ""
 msgid "The name the calendar gives itself"
 msgstr ""
 
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "The next time when everybody is free"
+msgstr ""
+
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt
 msgid "The notes are too long to edit here."
 msgstr ""
 
 #. interface
-#: crates/ui-egui/src/account_setup.rs
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
 msgid "The one in File › Options"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "The one registered for MailCraft"
 msgstr ""
 
 #. interface
 #: crates/ui-egui/src/backstage.rs
 msgid "The one this build came with"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+msgid "The online archive couldn't be read: Refresh to try again"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/nav.rs
+msgid "The online archive needs a connection to the server"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "The organisation has no lists of rooms."
 msgstr ""
 
 #. interface
@@ -16121,6 +16585,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/forms.rs
 msgid "The range needs a day to start on"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "The redirect port is a number from 1 to 65535, or empty for any free one"
 msgstr ""
 
 #. interface
@@ -16393,6 +16862,11 @@ msgstr ""
 msgid "The server is busy. Try again in a few minutes."
 msgstr ""
 
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+msgid "The server no longer has the online archive: changes made in it that hadn't reached the server are lost"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/dialogs.rs
 msgid "The server of {account} sends the {n} person invited the invitation by mail."
@@ -16576,6 +17050,11 @@ msgid "The shared mailbox couldn't be added"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/ews_mail.rs
+msgid "The shared mailbox couldn't be read."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/dialogs.rs
 msgid "The shared mailbox opened through it is removed from this device too."
 msgstr ""
@@ -16598,6 +17077,11 @@ msgstr ""
 #. what a command says
 #: crates/mobile/src/sync_api.rs
 msgid "The sign-in didn't work. Try again."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "The sign-in is only sent to: {servers}"
 msgstr ""
 
 #. interface, what a command says
@@ -16731,6 +17215,11 @@ msgid "The text wasn't found."
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "The time before this when everybody is free"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/reminder_dialog.rs
 msgid "The time is kept on this computer; a flag goes to the account's server as any flag does."
 msgstr ""
@@ -16846,6 +17335,11 @@ msgid "Thesaurus"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "These addresses are outside your identity provider's domain: {hosts}"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/dialogs.rs
 msgid "These are meetings somebody else organizes; you are invited to them. Deleting them takes them out of your calendar only, and the organizer is not told that you won't come. Declining them tells the organizer, if you choose."
 msgstr ""
@@ -16868,6 +17362,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/data_removal.rs
 msgid "These could not be removed. Remove them yourself:"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "These settings will no longer be {provider}'s: MailCraft will treat this account as one with your own identity provider, starting from the values above, and you'll sign in again."
 msgstr ""
 
 #. interface
@@ -17038,6 +17537,16 @@ msgstr ""
 #. what a command says
 #: crates/engine/src/sync_driver/free_busy.rs
 msgid "This build can't ask a server when other people are busy: only your own calendar is shown."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "This build can't ask the Exchange server for rooms."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "This build can't ask the Exchange server when other people are busy: only your own calendar is shown."
 msgstr ""
 
 #. interface
@@ -17420,6 +17929,11 @@ msgid "This link goes to"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "This list has no rooms."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/reading/unsubscribe.rs
 msgid "This list unsubscribes on its own page, at {host}. It opens in your browser: visiting it tells the list that this address is read."
 msgstr ""
@@ -17447,6 +17961,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/lib.rs
 msgid "This mailbox was opened from a file: confirm its servers first"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+msgid "This mailbox's online archive is kept in Microsoft 365, which needs a Microsoft sign-in, so it isn't shown"
 msgstr ""
 
 #. interface
@@ -18048,6 +18567,11 @@ msgid ""
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "To sign in with your own identity provider, first change the incoming and outgoing servers to your own: a sign-in from it is never sent to {provider}'s servers."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/account_setup.rs
 msgid "To switch, first save Google's standard IMAP and SMTP servers and an email-matching user name."
 msgstr ""
@@ -18080,6 +18604,11 @@ msgstr ""
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Today.kt
 msgid "Today could not be read."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Token address"
 msgstr ""
 
 #. android, interface, name, ribbon
@@ -18250,6 +18779,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/backstage.rs
 msgid "Typing * or - and a space at the start of a line starts a bulleted list, 1. or 1) a numbered one. Undo puts what you typed back."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/people_view.rs
+msgid "Unavailable"
 msgstr ""
 
 #. interface
@@ -18508,6 +19042,11 @@ msgid "Use a Google app password, not your everyday Google account password."
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/account_setup.rs
+msgid "Use a password instead"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/account_setup.rs crates/ui-egui/src/account_setup/help.rs
 msgid "Use an app password"
 msgstr ""
@@ -18523,6 +19062,16 @@ msgid "Use https:// instead"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Use it"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Use my own identity provider"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/calendar_view.rs
 msgid "Use my own working hours"
 msgstr ""
@@ -18535,6 +19084,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/backstage.rs
 msgid "Use system setting follows Animation effects in Windows' settings. Where MailCraft can't read the system's setting yet, animations play until you choose Never play."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Use your own identity provider instead…"
 msgstr ""
 
 #. interface
@@ -18658,6 +19212,11 @@ msgid "Wait for the other attachment preview to finish."
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Wait for your identity provider's addresses"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/sync_panel.rs
 msgid "Waiting"
 msgstr ""
@@ -18670,6 +19229,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/approval.rs
 msgid "Waiting for the approval stopped unexpectedly"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/lib.rs
+msgid "Waiting for the system's credential store…"
 msgstr ""
 
 #. what a command says
@@ -19321,6 +19885,11 @@ msgid "Your data was removed"
 msgstr ""
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Your domain names {issuer} for signing in."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/account_setup/exchange.rs
 msgid "Your domain's DNS couldn't be asked. Check the network connection and search again."
 msgstr ""
@@ -19498,6 +20067,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/security.rs
 msgid "Your own certificates and keys are used by MailCraft's desktop program: here Digital signatures are checked, and nothing is signed or decrypted."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "Your own identity provider"
 msgstr ""
 
 #. interface
@@ -19847,6 +20421,11 @@ msgstr ""
 
 #. what a command says
 #: crates/engine/src/cmd/account.rs
+msgid "a shared mailbox is reached through the server settings of the account it is opened through: change that account's"
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
 msgid "a shared mailbox keeps as much mail offline as the account it is opened through: change that account's"
 msgstr ""
 
@@ -19868,6 +20447,31 @@ msgstr ""
 #. what a command says
 #: crates/engine/src/cmd/rules.rs
 msgid "a shared mailbox's rules are its own: this version doesn't make them"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "a sign-in with your identity provider is never sent to Microsoft's or Google's mail servers"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "a sign-in with your identity provider is only sent to a mail server on this computer in a test"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "a sign-in with your identity provider is only used with this account's own mail servers"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+msgid "a sign-in with your own identity provider is for mail only, not Microsoft Graph"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+msgid "a sign-in with {provider} comes back through a loopback port only"
 msgstr ""
 
 #. why a command can't run
@@ -19895,6 +20499,11 @@ msgstr ""
 msgid "a web server"
 msgstr ""
 
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+msgid "access was refused on the sign-in page"
+msgstr ""
+
 #. what a command says, why a command can't run
 #: crates/engine/src/cmd/people.rs
 msgid "add an Exchange server account first: its organisation's address list is searched"
@@ -19913,6 +20522,21 @@ msgstr ""
 #. what a command says
 #: crates/engine/src/cmd/compose.rs
 msgid "add at least one recipient"
+msgstr ""
+
+#. what a command says, why a command can't run
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "address books open under an Exchange server account"
+msgstr ""
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+msgid "an Exchange server account needs a server address that can be used to open a shared mailbox"
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+msgid "an Exchange server account's server and user name can't be changed while a shared mailbox opened through it has mail here: remove the shared mailbox first"
 msgstr ""
 
 #. what a command says
@@ -19973,6 +20597,16 @@ msgstr ""
 #. what a command says
 #: crates/engine/src/cmd/calendar.rs
 msgid "an event needs a title"
+msgstr ""
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+msgid "an online archive can't open a shared mailbox: name the account it belongs to"
+msgstr ""
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+msgid "an online archive stays under its mailbox: move that account"
 msgstr ""
 
 #. interface
@@ -20123,6 +20757,11 @@ msgid "couldn't make a secure connection to {host}: {reason}"
 msgstr ""
 
 #. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+msgid "couldn't open a port on this computer for the sign-in to come back to"
+msgstr ""
+
+#. why a mail server couldn't be used
 #: crates/net/src/lib.rs
 msgid "couldn't reach {host}: {reason}"
 msgstr ""
@@ -20152,6 +20791,16 @@ msgstr ""
 msgid "enter a user name to sign in"
 msgstr ""
 
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "enter the client id registered for MailCraft at your identity provider"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+msgid "enter your identity provider's address (its issuer)"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/reading/remote.rs
 msgid "everybody at @{domain}"
@@ -20160,6 +20809,11 @@ msgstr ""
 #. what a command says
 #: crates/model/src/rich/body.rs
 msgid "expected and replacement must be on one line"
+msgstr ""
+
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "find your identity provider's sign-in addresses (Discover), or enter them"
 msgstr ""
 
 #. interface
@@ -20761,7 +21415,7 @@ msgid "no account here keeps its rules on its server"
 msgstr ""
 
 #. what a command says, why a command can't run
-#: crates/engine/src/cmd/ews_mail.rs
+#: crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs
 msgid "no account is an Exchange server account"
 msgstr ""
 
@@ -20791,8 +21445,18 @@ msgid "no account with id {account}"
 msgstr ""
 
 #. what a command says
-#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/calendar_opened.rs crates/engine/src/cmd/calendar_settings.rs crates/engine/src/cmd/compose.rs crates/engine/src/cmd/contacts_remote.rs crates/engine/src/cmd/dav_account.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/folder.rs crates/engine/src/cmd/graph_mail.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/graph_switch.rs crates/engine/src/cmd/jmap_mail.rs crates/engine/src/cmd/offline.rs crates/engine/src/cmd/remote.rs crates/engine/src/cmd/rules.rs crates/engine/src/cmd/rules_sieve.rs crates/engine/src/cmd/search_server.rs crates/engine/src/cmd/senders.rs crates/engine/src/cmd/shared.rs crates/engine/src/cmd/signature.rs
+#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/calendar_opened.rs crates/engine/src/cmd/calendar_settings.rs crates/engine/src/cmd/compose.rs crates/engine/src/cmd/contacts_remote.rs crates/engine/src/cmd/dav_account.rs crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/folder.rs crates/engine/src/cmd/graph_mail.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/graph_switch.rs crates/engine/src/cmd/jmap_mail.rs crates/engine/src/cmd/offline.rs crates/engine/src/cmd/remote.rs crates/engine/src/cmd/rules.rs crates/engine/src/cmd/rules_sieve.rs crates/engine/src/cmd/search_server.rs crates/engine/src/cmd/senders.rs crates/engine/src/cmd/shared.rs crates/engine/src/cmd/signature.rs
 msgid "no account with id {id}"
+msgstr ""
+
+#. why a command can't run
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "no address book was opened by address"
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "no address book {address} is open"
 msgstr ""
 
 #. why a mail server couldn't be used
@@ -20971,6 +21635,11 @@ msgid "nobody else is invited to this appointment"
 msgstr ""
 
 #. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+msgid "nobody with an address is asked about"
+msgstr ""
+
+#. what a command says
 #: crates/engine/src/cmd/followup.rs
 msgid "none of these messages has a reminder showing"
 msgstr ""
@@ -21081,6 +21750,11 @@ msgid "only a message you sent can be sent again"
 msgstr ""
 
 #. what a command says
+#: crates/model/src/archive.rs
+msgid "only an Exchange server account has an online archive here"
+msgstr ""
+
+#. what a command says
 #: crates/engine/src/cmd/senders.rs
 msgid "only an IMAP account sends from other addresses"
 msgstr ""
@@ -21155,6 +21829,11 @@ msgstr ""
 msgid "pictures from the web are not downloaded: save the picture and add it from the file"
 msgstr ""
 
+#. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+msgid "port {port} on this computer is in use: choose another redirect port, or automatic"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/forms.rs
 msgid "private"
@@ -21203,6 +21882,11 @@ msgstr ""
 #. what a command says
 #: crates/engine/src/sieve_check.rs
 msgid "require goes before every other command."
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+msgid "revocation"
 msgstr ""
 
 #. name
@@ -21301,12 +21985,12 @@ msgstr ""
 
 #. what a command says, why a command can't run
 #: crates/engine/src/cmd/shared.rs
-msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
+msgid "shared mailboxes open under an account kept in step through Microsoft Graph, or an Exchange server account"
 msgstr ""
 
 #. what a command says
 #: crates/model/src/mailbox.rs
-msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
+msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph or is an Exchange server account"
 msgstr ""
 
 #. interface
@@ -21322,6 +22006,11 @@ msgstr ""
 #. why a mail server couldn't be used
 #: crates/net/src/lib.rs
 msgid "sign in to {who} first"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+msgid "sign-in"
 msgstr ""
 
 #. why a mail server couldn't be used
@@ -21362,6 +22051,16 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/forms.rs
 msgid "subject or body contains {words}"
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "that account can't open an address book by address"
+msgstr ""
+
+#. what a command says
+#: crates/model/src/archive.rs
+msgid "that account isn't an online archive"
 msgstr ""
 
 #. what a command says
@@ -21442,6 +22141,11 @@ msgstr ""
 #. what a command says
 #: crates/engine/src/cmd/send_later.rs
 msgid "that message isn't waiting in the Outbox"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+msgid "that redirect port can't be used: choose another, or automatic"
 msgstr ""
 
 #. what a command says
@@ -21530,8 +22234,13 @@ msgid "the account has no user name or e-mail address to sign in with"
 msgstr ""
 
 #. what a command says
-#: crates/engine/src/cmd/calendar/invitation.rs crates/engine/src/cmd/calendar_opened.rs crates/engine/src/cmd/compose.rs crates/engine/src/cmd/react.rs crates/engine/src/cmd/unsubscribe.rs
+#: crates/engine/src/cmd/calendar/invitation.rs crates/engine/src/cmd/calendar_opened.rs crates/engine/src/cmd/compose.rs crates/engine/src/cmd/contacts_opened.rs crates/engine/src/cmd/react.rs crates/engine/src/cmd/unsubscribe.rs
 msgid "the account is gone"
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+msgid "the account {name} is the online archive of is gone"
 msgstr ""
 
 #. name
@@ -21627,6 +22336,16 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/calendar_sync.rs
 msgid "the check stopped unexpectedly"
+msgstr ""
+
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "the client id can only be letters, digits and punctuation, at most 200 of them"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+msgid "the client secret can only be letters, digits and punctuation"
 msgstr ""
 
 #. why a mail server couldn't be used
@@ -21770,6 +22489,76 @@ msgid "the folder was numbered anew while it was being read"
 msgstr ""
 
 #. what a command says
+#: crates/model/src/oauth.rs
+msgid "the identity provider (issuer) address can't have a query or a fragment"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+msgid "the identity provider doesn't describe itself at the usual addresses: enter its sign-in addresses"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+msgid "the identity provider sent its description on through too many redirects"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+msgid "the identity provider sent its description on to an address on this computer, a private network or without https"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+msgid "the identity provider's address can't have a query or a fragment"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+msgid "the identity provider's address {why}"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+msgid "the identity provider's description couldn't be fetched: {other}"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+msgid "the identity provider's description gives a {what} address that {why}"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+msgid "the identity provider's description has no {what} address"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+msgid "the identity provider's description is too long"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+msgid "the identity provider's description isn't the JSON it should be"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+msgid "the identity provider's description names another issuer than the address entered: check the address, character for character"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+msgid "the identity provider's description says it doesn't sign people in on its page (authorization code)"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+msgid "the identity provider's description says it doesn't take the protected sign-in (PKCE with S256) MailCraft uses"
+msgstr ""
+
+#. what a command says
 #: crates/engine/src/import_pst.rs
 msgid "the import couldn't account for every item of {path}"
 msgstr ""
@@ -21782,6 +22571,11 @@ msgstr ""
 #. what a command says
 #: crates/engine/src/import_pst.rs
 msgid "the import was stopped"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+msgid "the incoming and outgoing servers above"
 msgstr ""
 
 #. what a command says
@@ -21807,6 +22601,11 @@ msgstr ""
 #. what a command says
 #: crates/engine/src/cmd/sieve_replies.rs
 msgid "the mail server doesn't know your contacts: replies outside the organisation go to nobody or to everybody"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/proto/src/oauthbearer.rs
+msgid "the mail server's name can't be sent with a sign-in"
 msgstr ""
 
 #. what a command says
@@ -21890,6 +22689,16 @@ msgid "the occurrence was not changed; nothing was moved"
 msgstr ""
 
 #. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+msgid "the online archive has changes that haven't reached the server yet: Send/Receive first, then hide it"
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+msgid "the online archive has changes that haven't reached the server yet: Send/Receive first, then say it is kept in Exchange Online"
+msgstr ""
+
+#. what a command says
 #: crates/model/src/mailbox.rs
 msgid "the parent folder belongs to another account"
 msgstr ""
@@ -21925,6 +22734,11 @@ msgid "the proposed end is not after the proposed start"
 msgstr ""
 
 #. what a command says
+#: crates/model/src/oauth.rs
+msgid "the redirect port must be between 1 and 65535, or automatic"
+msgstr ""
+
+#. what a command says
 #: crates/model/src/mailbox_followup.rs
 msgid "the reminder time must be in the future"
 msgstr ""
@@ -21940,8 +22754,13 @@ msgid "the result would make this account keep more sync state than is taken in"
 msgstr ""
 
 #. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
+#: crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs
 msgid "the result {why}"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+msgid "the revocation address {why}"
 msgstr ""
 
 #. name
@@ -22165,6 +22984,16 @@ msgid "the server doesn't take a password on this connection"
 msgstr ""
 
 #. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "the server doesn't take a token with OAUTHBEARER, which this account's OAuth settings ask for"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "the server doesn't take a token with XOAUTH2, which this account's OAuth settings ask for"
+msgstr ""
+
+#. why a mail server couldn't be used
 #: crates/proto/src/imap/mod.rs
 msgid "the server ended the command early"
 msgstr ""
@@ -22217,6 +23046,11 @@ msgstr ""
 #. why a mail server couldn't be used
 #: crates/proto/src/managesieve/mod.rs crates/proto/src/smtp.rs
 msgid "the server offers no way to sign in with an access token"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+msgid "the server offers no way to sign in with an access token (neither OAUTHBEARER nor XOAUTH2)"
 msgstr ""
 
 #. why a mail server couldn't be used
@@ -22414,6 +23248,16 @@ msgstr ""
 msgid "the server's response is too long"
 msgstr ""
 
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+msgid "the sign-in came back from another identity provider than the one asked: nothing of it was used"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+msgid "the sign-in came back without your identity provider's name, which it says it always gives: nothing of it was used"
+msgstr ""
+
 #. what a command says
 #: crates/engine/src/cmd/signature.rs
 msgid "the signature has changes: save it, or close it with discard"
@@ -22465,12 +23309,12 @@ msgid "the top level"
 msgstr ""
 
 #. why a mail server couldn't be used
-#: crates/proto/src/lib.rs
+#: crates/proto/src/lib.rs crates/proto/src/oauthbearer.rs
 msgid "the user name or access token has a character that can't be sent"
 msgstr ""
 
 #. why a mail server couldn't be used
-#: crates/proto/src/lib.rs
+#: crates/proto/src/lib.rs crates/proto/src/oauthbearer.rs
 msgid "the user name or access token is too long to be sent"
 msgstr ""
 
@@ -22535,7 +23379,7 @@ msgid "there is already a signature named \"{to}\""
 msgstr ""
 
 #. why a mail server couldn't be used
-#: crates/proto/src/lib.rs
+#: crates/proto/src/lib.rs crates/proto/src/oauthbearer.rs
 msgid "there is no access token to sign in with"
 msgstr ""
 
@@ -22547,6 +23391,11 @@ msgstr ""
 #. what a command says
 #: crates/engine/src/cmd/account.rs
 msgid "there is no account to remove"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+msgid "there is no earlier sign-in to renew"
 msgstr ""
 
 #. what a command says
@@ -22607,6 +23456,11 @@ msgstr ""
 #. what a command says
 #: crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/jmap_mail.rs
 msgid "this Send/Receive was for the server {name} named before"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+msgid "this account doesn't sign in with your own identity provider"
 msgstr ""
 
 #. what a command says
@@ -22677,6 +23531,11 @@ msgstr ""
 #. why a command can't run
 #: crates/engine/src/cmd/people.rs
 msgid "this contacts folder can only be read"
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/ews_directory.rs
+msgid "this directory was for another account, not for {name}"
 msgstr ""
 
 #. what a command says
@@ -22808,6 +23667,11 @@ msgstr ""
 msgid "to {recipient}"
 msgstr ""
 
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+msgid "token"
+msgstr ""
+
 #. what a command says
 #: crates/engine/src/cmd/tasks.rs
 msgid "too many deletions are waiting to be sent to Microsoft To Do; wait for them to go first"
@@ -22831,6 +23695,11 @@ msgstr ""
 #. why a mail server couldn't be used
 #: crates/proto/src/lib.rs
 msgid "unexpected server response: {reason}"
+msgstr ""
+
+#. what a command says
+#: crates/model/src/oauth.rs
+msgid "use common, consumers, organizations, or a directory's id or domain as the tenant"
 msgstr ""
 
 #. interface
@@ -22966,6 +23835,46 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/account_setup.rs
 msgid "you@example.org"
+msgstr ""
+
+#. name
+#: crates/model/src/mailbox.rs
+msgid "your identity provider"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+msgid "your identity provider answered with status {status}"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+msgid "your identity provider can't sign anybody in just now: try again later"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+msgid "your identity provider doesn't know this client id, or its client secret: check the OAuth settings"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+msgid "your identity provider no longer takes this sign-in: sign in again"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+msgid "your identity provider refused the sign-in"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+msgid "your identity provider won't give what was asked for: check the extra scopes in the OAuth settings"
+msgstr ""
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+msgid "your identity provider's addresses must start with https://"
 msgstr ""
 
 #. interface
@@ -23138,6 +24047,11 @@ msgstr ""
 #. interface
 #: crates/ui-egui/src/dialogs.rs
 msgid "{day} at {time}"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup.rs
+msgid "{domain} says its mail signs in with an identity provider (OAuth 2.0)."
 msgstr ""
 
 #. interface
@@ -23315,6 +24229,11 @@ msgstr ""
 msgid "{name} answered this invitation."
 msgstr ""
 
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+msgid "{name} can't be both an online archive and a shared mailbox"
+msgstr ""
+
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ShareLoad.kt
 msgid "{name} could not be read, so it was not attached."
@@ -23366,7 +24285,12 @@ msgid "{name} has no :{tag}."
 msgstr ""
 
 #. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
+#: crates/engine/src/cmd/ews_directory.rs
+msgid "{name} has no Exchange server account it is opened through"
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs
 msgid "{name} has no Exchange server address that can be used"
 msgstr ""
 
@@ -23411,7 +24335,7 @@ msgid "{name} is a command; a test belongs here."
 msgstr ""
 
 #. what a command says
-#: crates/engine/src/cmd/graph_mail.rs
+#: crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/graph_mail.rs
 msgid "{name} is a shared mailbox whose account is gone: remove it and add it again"
 msgstr ""
 
@@ -23423,6 +24347,11 @@ msgstr ""
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MovePerson.kt crates/ui-egui/src/move_contacts.rs
 msgid "{name} is already in {folder}."
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/ews_directory.rs
+msgid "{name} is an online archive: it has no calendars, address books or to-do lists of its own"
 msgstr ""
 
 #. interface
@@ -23496,7 +24425,7 @@ msgid "{name} isn't among the Favorites"
 msgstr ""
 
 #. what a command says
-#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/ews_mail.rs
+#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs
 msgid "{name} isn't an Exchange server account"
 msgstr ""
 
@@ -24279,6 +25208,13 @@ msgstr[1] ""
 #: crates/ui-egui/src/agent_gate.rs
 msgid "{n} more question is waiting."
 msgid_plural "{n} more questions are waiting."
+msgstr[0] ""
+msgstr[1] ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "{n} more room isn't shown"
+msgid_plural "{n} more rooms aren't shown"
 msgstr[0] ""
 msgstr[1] ""
 

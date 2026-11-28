@@ -494,6 +494,11 @@ msgid ":{tag} needs a string or a list after it."
 msgstr "Na :{tag} moet een tekenreeks of lijst komen."
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "<< AutoPick"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/credits.rs
 #, fuzzy
 msgid "@{login}, testing since {since}"
@@ -1049,6 +1054,12 @@ msgstr "Een gedeelde postbus, gelezen met de aanmelding van {account}"
 msgid "A short note with the link to that page, to paste into mail or chat. MailCraft sends nothing itself."
 msgstr "Een korte notitie met de link naar die pagina, om in e-mail of chat te plakken. MailCraft verstuurt zelf niets."
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "A sign-in with your own identity provider is never sent to Microsoft's or Google's mail servers: change the servers above to your own."
+msgstr "Een aanmelding bij uw eigen identiteitsprovider wordt nooit naar de mailservers van Microsoft of Google gestuurd: vervang de servers hierboven door uw eigen servers."
+
 #. what a command says
 #: crates/engine/src/sieve_check.rs
 #, fuzzy
@@ -1593,6 +1604,12 @@ msgstr "Nadat u een vergaderverzoek in de e-mail hebt geaccepteerd, voorlopig he
 msgid "Agenda"
 msgstr "Agenda"
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Agree to the addresses outside your identity provider's domain, or enter others"
+msgstr "Ga akkoord met de adressen buiten het domein van uw identiteitsprovider, of voer andere in"
+
 #. command label
 #: crates/engine/src/cmd/format.rs
 #, fuzzy
@@ -1699,6 +1716,11 @@ msgstr "Alle namen zijn gecontroleerd"
 #, fuzzy
 msgid "All of them"
 msgstr "Allemaal"
+
+#. interface
+#: crates/ui-egui/src/autopick.rs
+msgid "All people and rooms"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -2037,7 +2059,7 @@ msgid "Appearance"
 msgstr "Weergave"
 
 #. interface
-#: crates/ui-egui/src/account_setup.rs
+#: crates/ui-egui/src/account_setup.rs crates/ui-egui/src/account_setup/oauth_settings.rs
 #, fuzzy
 msgid "Application (client) ID"
 msgstr "Toepassings-id (client)"
@@ -2119,6 +2141,11 @@ msgstr "Gedownloade Sieve-scripts toepassen"
 #: crates/engine/src/cmd/tasks_remote.rs
 msgid "Apply Downloaded To-dos"
 msgstr "Gedownloade to-do's toepassen"
+
+#. command label
+#: crates/engine/src/cmd/ews_directory.rs
+msgid "Apply Read Exchange Calendar, Contacts and To-dos"
+msgstr ""
 
 #. command label
 #: crates/engine/src/cmd/search_server.rs
@@ -2419,10 +2446,26 @@ msgid "Asked first"
 msgstr "Eerst gevraagd"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Asked for besides openid email offline_access"
+msgstr "Aangevraagd naast openid email offline_access"
+
+#. interface
 #: crates/ui-egui/src/scheduling.rs
 #, fuzzy
 msgid "Asking about other people's time stopped unexpectedly"
 msgstr "Het opvragen van de beschikbaarheid van anderen is onverwacht gestopt"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking for the rooms stopped unexpectedly"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking the server for the rooms…"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/scheduling.rs
@@ -2440,6 +2483,11 @@ msgstr "Bezig de server te vragen…"
 #: crates/ui-egui/src/account_setup/exchange.rs
 msgid "Asking your domain's DNS…"
 msgstr "Bezig het DNS van uw domein te vragen…"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Asking…"
+msgstr ""
 
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt
@@ -2470,6 +2518,11 @@ msgstr "Maximaal 20 items per lijst."
 #, fuzzy
 msgid "At most {max} contacts can be merged at once."
 msgstr "Er kunnen hoogstens {max} contactpersonen tegelijk worden samengevoegd."
+
+#. what a command says
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "At most {n} address books can be opened by address: remove one first."
+msgstr ""
 
 #. what a command says
 #: crates/engine/src/cmd/calendar_opened.rs
@@ -2627,10 +2680,26 @@ msgid "AutoArchive"
 msgstr "AutoArchive"
 
 #. interface
-#: crates/ui-egui/src/backstage.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/spelling.rs
+#: crates/ui-egui/src/scheduling.rs
+msgid "AutoPick Next >>"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/windows.rs
+msgid "AutoPick is on the Find a Time page"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs crates/ui-egui/src/backstage.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/spelling.rs
 #, fuzzy
 msgid "Automatic"
 msgstr "Automatisch"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Automatic (OAUTHBEARER, else XOAUTH2)"
+msgstr "Automatisch (OAUTHBEARER, anders XOAUTH2)"
 
 #. interface
 #: crates/ui-egui/src/backstage.rs
@@ -2967,6 +3036,16 @@ msgstr "Hoofdtekst bevat"
 msgid "Bold"
 msgstr "Vet"
 
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Book"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Booked"
+msgstr ""
+
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
 msgid "Bookmark"
@@ -3012,8 +3091,8 @@ msgstr "Lijst met opsommingstekens"
 msgid "Bullets"
 msgstr "Opsommingstekens"
 
-#. name
-#: crates/model/src/calendar.rs
+#. interface, name
+#: crates/model/src/calendar.rs crates/ui-egui/src/room_finder.rs
 #, fuzzy
 msgid "Busy"
 msgstr "Bezet"
@@ -3754,6 +3833,12 @@ msgid "Checking the address with Microsoft…"
 msgstr "Bezig het adres bij Microsoft te controleren…"
 
 #. interface
+#: crates/ui-egui/src/dialogs.rs
+#, fuzzy
+msgid "Checking the address with the server…"
+msgstr "Bezig het adres bij de server te controleren…"
+
+#. interface
 #: crates/ui-egui/src/calendar_sync.rs
 #, fuzzy
 msgid "Checking the calendar connection…"
@@ -3787,6 +3872,11 @@ msgstr "Standaardhandtekening kiezen"
 #, fuzzy
 msgid "Choose Google sign-in, or select Use an app password instead."
 msgstr "Kies aanmelden met Google, of kies Gebruik een app-wachtwoord in plaats daarvan."
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Choose a building…"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -3943,6 +4033,24 @@ msgstr "Markering wissen"
 #, fuzzy
 msgid "Click to select {name}; double-click to open it"
 msgstr "Klik om {name} te selecteren; dubbelklik om het te openen"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Client ID"
+msgstr "Client-id"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Client secret (optional)"
+msgstr "Clientgeheim (optioneel)"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Client secret sent"
+msgstr "Verzending van clientgeheim"
 
 #. ribbon, ribbon location
 #: crates/engine/src/cmd/edit.rs crates/engine/src/cmd/format.rs crates/ui-egui/src/ribbon.rs
@@ -4388,6 +4496,12 @@ msgstr "Verbeter eerst de fouten."
 #, fuzzy
 msgid "Could not open Google sign-in"
 msgstr "Kan de aanmelding met Google niet openen"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "Couldn't ask the server which folders are other people's"
+msgstr "Kon de server niet vragen welke mappen van andere mensen zijn"
 
 #. why a mail server couldn't be used
 #: crates/net/src/push.rs
@@ -5160,6 +5274,12 @@ msgstr "Antwoorden rechtstreeks naar"
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt crates/engine/src/cmd/compose.rs crates/ui-egui/src/compose.rs crates/ui-egui/src/dialogs.rs crates/ui-egui/src/ribbon.rs
 msgid "Discard"
 msgstr "Verwerpen"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Discover"
+msgstr "Detecteren"
 
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReminderScheduler.kt crates/ui-egui/src/reading/warnings.rs crates/ui-egui/src/reminders.rs
@@ -6044,6 +6164,11 @@ msgstr "Alles wat de interface doet, is een opdracht: {commands} opdrachten, die
 msgid "Except if"
 msgstr "Behalve als"
 
+#. command label
+#: crates/engine/src/cmd/ews_directory.rs
+msgid "Exchange Calendar, Contacts and To-dos to Read"
+msgstr ""
+
 #. interface
 #: crates/ui-egui/src/account_setup/exchange.rs
 #, fuzzy
@@ -6139,6 +6264,12 @@ msgstr "Exporteren…"
 #, fuzzy
 msgid "External"
 msgstr "Extern"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Extra scopes"
+msgstr "Extra bereiken"
 
 #. interface
 #: crates/ui-egui/src/calendar_sync.rs
@@ -6289,10 +6420,28 @@ msgid "Find next spelling error"
 msgstr "Volgende spelfout zoeken"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Find the sign-in and token addresses from the identity provider's address. Only that address is sent."
+msgstr "Zoekt de aanmeld- en tokenadressen op aan de hand van het adres van de identiteitsprovider. Alleen dat adres wordt verzonden."
+
+#. interface
 #: crates/ui-egui/src/find_replace.rs
 #, fuzzy
 msgid "Find what"
 msgstr "Zoeken naar"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Find your identity provider's addresses with Discover, or enter them"
+msgstr "Zoek de adressen van uw identiteitsprovider op met Detecteren, of voer ze in"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Finding the addresses stopped unexpectedly"
+msgstr "Het zoeken naar de adressen is onverwacht gestopt"
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -6432,7 +6581,7 @@ msgid ""
 msgstr "Mapeigenschappen"
 
 #. command label, ribbon location
-#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/folder.rs crates/engine/src/cmd/view.rs
+#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/folder.rs crates/engine/src/cmd/view.rs
 msgid "Folder Pane"
 msgstr "Mappenvenster"
 
@@ -6604,6 +6753,12 @@ msgstr "Gedownloade agenda en contactpersonen vergeten"
 msgid "Forget Trusted Certificate"
 msgstr "Vertrouwd certificaat vergeten"
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Forget the client secret"
+msgstr "Clientgeheim vergeten"
+
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PicturesSettings.kt crates/ui-egui/src/reading/remote.rs
 #, fuzzy
@@ -6704,8 +6859,14 @@ msgid_plural "Found {n} folders"
 msgstr[0] "{n} map gevonden"
 msgstr[1] "{n} mappen gevonden"
 
-#. name
-#: crates/model/src/calendar.rs
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Found: sign-in at {signIn}, tokens from {token}."
+msgstr "Gevonden: aanmelden bij {signIn}, tokens van {token}."
+
+#. interface, name
+#: crates/model/src/calendar.rs crates/ui-egui/src/room_finder.rs
 #, fuzzy
 msgid "Free"
 msgstr "Vrij"
@@ -7050,6 +7211,12 @@ msgstr "Goud"
 msgid "Google"
 msgstr "Google"
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Google (built in)"
+msgstr "Google (ingebouwd)"
+
 #. command label
 #: crates/ui-egui/src/lib.rs
 msgid "Google Desktop Application ID"
@@ -7346,6 +7513,12 @@ msgstr "Details verbergen"
 msgid "Hide MailCraft"
 msgstr "Verberg MailCraft"
 
+#. command label, interface
+#: crates/engine/src/cmd/ews_mail.rs crates/ui-egui/src/nav.rs
+#, fuzzy
+msgid "Hide Online Archive"
+msgstr "Onlinearchief verbergen"
+
 #. interface
 #: crates/ui-egui/src/calendar_view.rs
 #, fuzzy
@@ -7467,6 +7640,12 @@ msgstr "Hoe het terugkeert, is aan de organisator."
 msgid "How many messages each folder holds and the space they take"
 msgstr "Hoeveel berichten elke map bevat en hoeveel ruimte ze innemen"
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "I trust these addresses"
+msgstr "Ik vertrouw deze adressen"
+
 #. command label
 #: crates/ui-egui/src/lib.rs
 msgid "I'm an Administrator: Approve MailCraft for My Organisation"
@@ -7482,6 +7661,18 @@ msgstr "Ik ben beheerder: het voor mijn organisatie goedkeuren"
 #: crates/ui-egui/src/ribbon.rs
 msgid "Icons"
 msgstr "Pictogrammen"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Identity provider"
+msgstr "Identiteitsprovider"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Identity provider (issuer)"
+msgstr "Identiteitsprovider (uitgever)"
 
 #. interface
 #: crates/ui-egui/src/account_setup/help.rs
@@ -7542,6 +7733,12 @@ msgstr "Als u dat niet doet, wordt er niets naartoe verzonden, en het zoeken gaa
 #, fuzzy
 msgid "If you don't, nothing is sent, and you can change the servers in Server settings."
 msgstr "Als u dat niet doet, wordt er niets verzonden en kunt u de servers wijzigen in Serverinstellingen."
+
+#. interface
+#: crates/ui-egui/src/account_setup.rs
+#, fuzzy
+msgid "If you go on, you sign in on your identity provider's page and the access token it gives is sent to {hosts}. Go on only if you know it is your provider's."
+msgstr "Als u doorgaat, meldt u zich aan op de pagina van uw identiteitsprovider en wordt het toegangstoken dat deze uitgeeft naar {hosts} verzonden. Ga alleen door als u weet dat dit van uw provider is."
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -7842,6 +8039,12 @@ msgid "In line with text"
 msgstr "In de tekstregel"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "In the Authorization header (client_secret_basic)"
+msgstr "In de Authorization-header (client_secret_basic)"
+
+#. interface
 #: crates/ui-egui/src/lib.rs
 #, fuzzy
 msgid "In the Outbox: it is on its way"
@@ -7858,6 +8061,12 @@ msgstr "In het Postvak UIT: het wacht op zijn tijd"
 #, fuzzy
 msgid "In the folder pane's order"
 msgstr "In de volgorde van het mappenvenster"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "In the form (client_secret_post)"
+msgstr "In het formulier (client_secret_post)"
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
@@ -8122,6 +8331,12 @@ msgstr "Hij gaat naar de server zodra MailCraft de regels van de server mag wijz
 #, fuzzy
 msgid "It goes with the next Send/Receive; the list then takes you off it."
 msgstr "Het gaat mee met de volgende Verzenden/ontvangen; daarna haalt de lijst u eraf."
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "It hands out no refresh tokens: you'll be asked to sign in again each time a sign-in runs out."
+msgstr "Deze geeft geen vernieuwingstokens uit: u wordt telkens opnieuw gevraagd zich aan te melden wanneer een aanmelding verloopt."
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -8466,6 +8681,12 @@ msgid "Keep on the server of {address}"
 msgstr "Op de server van {address} bewaren"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Keep the built-in settings"
+msgstr "Ingebouwde instellingen behouden"
+
+#. interface
 #: crates/ui-egui/src/import_pst.rs
 #, fuzzy
 msgid "Keep the notes and journal entries"
@@ -8556,6 +8777,12 @@ msgid "Kept in this browser's storage, saved as you go. Use Open & Export to kee
 msgstr "Bewaard in de opslag van deze browser, opgeslagen terwijl u werkt. Gebruik Openen & exporteren om een kopie als bestand te bewaren."
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Kept in your system's credential store, never in the mailbox. A desktop program can't really keep it secret from you."
+msgstr "Bewaard in de referentieopslag van uw systeem, nooit in het postvak. Een desktopprogramma kan het niet echt voor u geheimhouden."
+
+#. interface
 #: crates/ui-egui/src/backstage.rs
 #, fuzzy
 msgid "Kept in {path}, saved as you go."
@@ -8590,6 +8817,12 @@ msgstr "Alleen op deze computer bewaard"
 #, fuzzy
 msgid "Kept on this computer only: invitations and repeating events aren't sent to the server yet"
 msgstr "Alleen op deze computer bewaard: uitnodigingen en terugkerende gebeurtenissen worden nog niet naar de server verzonden"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Kept: type a new one to replace it"
+msgstr "Bewaard: typ een nieuw om het te vervangen"
 
 #. interface
 #: crates/ui-egui/src/reading/signature.rs
@@ -8873,6 +9106,11 @@ msgid "List Accounts"
 msgstr "Accounts opsommen"
 
 #. command label
+#: crates/engine/src/cmd/people.rs
+msgid "List Address Books"
+msgstr ""
+
+#. command label
 #: crates/engine/src/cmd/calendar_settings.rs
 msgid "List Calendars"
 msgstr "Agenda's opsommen"
@@ -8920,8 +9158,8 @@ msgstr "Taken opsommen"
 msgid "List {n}"
 msgstr "Lijst {n}"
 
-#. android
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarSpeech.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PeopleScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TasksScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TodayScreen.kt
+#. android, interface
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarSpeech.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ComposerScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/MailListScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/PeopleScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ReadingScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TasksScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TodayScreen.kt crates/ui-egui/src/nav.rs
 #, fuzzy
 msgid "Loading…"
 msgstr "Laden…"
@@ -8972,6 +9210,11 @@ msgstr "Adres dat erop lijkt."
 #, fuzzy
 msgid "Looking at the server's certificate…"
 msgstr "Bezig met bekijken van het certificaat van de server…"
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "Looking for a time…"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/ribbon.rs
@@ -9132,17 +9375,35 @@ msgstr "E-mailmap: {folder} van het account"
 msgid "Mail from another mailbox can't go into an Outbox: the next Send/Receive would send it"
 msgstr "E-mail uit een ander postvak kan niet in een Postvak UIT worden gezet: bij het volgende Verzenden/ontvangen zou die worden verzonden"
 
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "Mail goes into an online archive only from its own mailbox: move it into that mailbox first"
+msgstr "E-mail komt alleen vanuit het eigen postvak in een onlinearchief: verplaats het eerst naar dat postvak"
+
 #. interface
 #: crates/ui-egui/src/dialogs.rs
 #, fuzzy
 msgid "Mail in Junk E-mail still asks first. File › Options turns this off again."
 msgstr "E-mail in Ongewenste e-mail vraagt nog steeds eerst. Bestand › Opties zet dit weer uit."
 
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "Mail in an online archive is copied within the archive: move it out instead"
+msgstr "E-mail in een onlinearchief wordt binnen het archief gekopieerd: verplaats het in plaats daarvan naar buiten"
+
 #. interface
 #: crates/ui-egui/src/shared_mailboxes.rs
 #, fuzzy
 msgid "Mail in this shared mailbox's Outbox waits: sending from shared mailboxes needs your permission. Use Send/Receive."
 msgstr "E-mail in het Postvak UIT van dit gedeelde postvak wacht: verzenden vanuit gedeelde postvakken heeft uw toestemming nodig. Gebruik Verzenden/ontvangen."
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "Mail isn't copied into an online archive from elsewhere: move it there from its own mailbox"
+msgstr "E-mail wordt niet van elders naar een onlinearchief gekopieerd: verplaats het daarheen vanuit het eigen postvak"
 
 #. what a command says
 #: crates/model/src/mailbox.rs
@@ -9803,6 +10064,12 @@ msgstr "Identieke hoofdletters/kleine letters"
 msgid "May"
 msgstr "mei"
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Mechanism"
+msgstr "Mechanisme"
+
 #. command label, interface, ribbon, ribbon location
 #: crates/engine/src/cmd/calendar.rs crates/engine/src/cmd/calendar/invitation.rs crates/engine/src/cmd/calendar/meeting.rs crates/engine/src/cmd/calendar/share.rs crates/engine/src/cmd/people.rs crates/ui-egui/src/forms.rs crates/ui-egui/src/lib.rs crates/ui-egui/src/ribbon.rs
 msgid "Meeting"
@@ -10005,6 +10272,12 @@ msgstr "Microsoft 365"
 #, fuzzy
 msgid "Microsoft 365 mail is added as a Microsoft account: you sign in on Microsoft's own page in your browser, and MailCraft never sees your password."
 msgstr "E-mail van Microsoft 365 wordt toegevoegd als een Microsoft-account: u meldt zich aan op de eigen pagina van Microsoft in uw browser, en MailCraft ziet uw wachtwoord nooit."
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Microsoft 365 or Outlook.com (built in)"
+msgstr "Microsoft 365 of Outlook.com (ingebouwd)"
 
 #. command label
 #: crates/ui-egui/src/lib.rs
@@ -11149,6 +11422,12 @@ msgstr "Nog geen account: Bestand › Account toevoegen"
 msgid "No account's server keeps a calendar here yet, so there is nowhere to move these to."
 msgstr "Nog geen server van een account bewaart hier een agenda, dus er is nergens om deze naartoe te verplaatsen."
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "No addresses found: {reason}"
+msgstr "Geen adressen gevonden: {reason}"
+
 #. android, what a command says
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AttachmentsView.kt crates/mobile/src/attachments.rs
 #, fuzzy
@@ -11287,6 +11566,11 @@ msgid "No due date"
 msgstr "Geen vervaldatum"
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "No earlier time when everybody is free, from today on"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
 msgid "No end date"
@@ -11317,7 +11601,7 @@ msgid "No folders match"
 msgstr "Geen mappen komen overeen"
 
 #. interface
-#: crates/ui-egui/src/scheduling.rs
+#: crates/ui-egui/src/room_finder.rs crates/ui-egui/src/scheduling.rs
 #, fuzzy
 msgid "No information"
 msgstr "Geen informatie"
@@ -11513,6 +11797,13 @@ msgstr "Geen taken."
 #, fuzzy
 msgid "No testers credited yet."
 msgstr "Nog geen testers vermeld."
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "No time when everybody is free in the next {n} day"
+msgid_plural "No time when everybody is free in the next {n} days"
+msgstr[0] ""
+msgstr[1] ""
 
 #. interface
 #: crates/ui-egui/src/zones.rs
@@ -12031,6 +12322,18 @@ msgstr "Genummerde lijst"
 msgid "Numbering"
 msgstr "Nummering"
 
+#. command label
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "OAuth Built-in Settings"
+msgstr "Ingebouwde OAuth-instellingen"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "OAuth settings"
+msgstr "OAuth-instellingen"
+
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AboutPages.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/AccountDialogs.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarScreen.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt crates/ui-egui/src/auto_replies.rs crates/ui-egui/src/calendar_sync.rs crates/ui-egui/src/check_names.rs crates/ui-egui/src/dialogs.rs crates/ui-egui/src/forms.rs crates/ui-egui/src/merge_contacts.rs crates/ui-egui/src/move_items.rs crates/ui-egui/src/reminder_dialog.rs crates/ui-egui/src/send_later.rs crates/ui-egui/src/settings_notice.rs crates/ui-egui/src/software.rs crates/ui-egui/src/updates.rs
 #, fuzzy
@@ -12252,6 +12555,12 @@ msgid "Online"
 msgstr "Online"
 
 #. interface
+#: crates/ui-egui/src/nav.rs
+#, fuzzy
+msgid "Online Archive – {address}"
+msgstr "Onlinearchief – {address}"
+
+#. interface
 #: crates/ui-egui/src/calendar_view.rs
 #, fuzzy
 msgid "Online meeting"
@@ -12316,6 +12625,12 @@ msgstr "Alleen deze keer, en verzenden"
 #, fuzzy
 msgid "Only if nobody replies"
 msgstr "Alleen als niemand antwoordt"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Only if your provider gave one"
+msgstr "Alleen als uw provider er een heeft gegeven"
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -12520,6 +12835,18 @@ msgstr "Antwoorden en doorgestuurde berichten in een nieuw venster openen"
 msgid "Open Result from the Server"
 msgstr "Resultaat van de server openen"
 
+#. ribbon
+#: crates/ui-egui/src/ribbon.rs
+msgid ""
+"Open Shared\n"
+"Address Book"
+msgstr ""
+
+#. command label, interface
+#: crates/engine/src/cmd/contacts_opened.rs crates/ui-egui/src/dialogs.rs
+msgid "Open Shared Address Book"
+msgstr ""
+
 #. command label, interface
 #: crates/engine/src/cmd/calendar_opened.rs crates/ui-egui/src/backstage.rs crates/ui-egui/src/dialogs.rs
 msgid "Open Shared Calendar"
@@ -12675,9 +13002,20 @@ msgstr "{name} openen? {why}"
 
 #. interface
 #: crates/ui-egui/src/open_shared.rs
+msgid "Opened the address book of {address}. It is read at the next Send/Receive, and kept on this computer only."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/open_shared.rs
 #, fuzzy
 msgid "Opened the calendar of {name}. It is listed under Shared Calendars, on this computer only."
 msgstr "De agenda van {name} is geopend. Die staat onder Gedeelde agenda's, alleen op deze computer."
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+#, fuzzy
+msgid "Opened with {owner}'s server and password. It needs Full Access to the mailbox, which your organisation's administrator gives. What you change in it goes to it."
+msgstr "Geopend met de server en het wachtwoord van {owner}. Er is Volledige toegang tot het postvak nodig, die de beheerder van uw organisatie verleent. Wat u erin wijzigt, gaat ernaartoe."
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
@@ -13087,7 +13425,7 @@ msgid "Pending development"
 msgstr "In ontwikkeling"
 
 #. android, command label, interface, name, ribbon location
-#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Navigation.kt crates/engine/src/cmd/people.rs crates/engine/src/cmd/people_merge.rs crates/engine/src/cmd/view.rs crates/engine/src/session.rs crates/ui-egui/src/people_view.rs
+#: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/Navigation.kt crates/engine/src/cmd/contacts_opened.rs crates/engine/src/cmd/people.rs crates/engine/src/cmd/people_merge.rs crates/engine/src/cmd/view.rs crates/engine/src/session.rs crates/ui-egui/src/people_view.rs
 msgid "People"
 msgstr "Personen"
 
@@ -13654,6 +13992,16 @@ msgstr "Favorieten uit Outlook nu opnieuw lezen"
 
 #. interface
 #: crates/ui-egui/src/dialogs.rs
+msgid "Read with {owner}'s sign-in, for as long as you keep it: the person has to have shared their address book with you. It is kept on this computer only, and read at the next Send/Receive."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+msgid "Read with {owner}'s sign-in, for as long as you keep it: the person has to have shared their calendar with you. It is kept on this computer only, and read at the next Send/Receive."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
 #, fuzzy
 msgid "Read with {owner}'s sign-in, for as long as you keep it: the person has to have shared their calendar with you. It is kept on this computer only: it won't appear in Outlook or on your other devices. Microsoft asks you once to let MailCraft read other people's calendars."
 msgstr "Lezen met de aanmelding van {owner}, zolang u die bewaart: de persoon moet diens agenda met u hebben gedeeld. De agenda wordt alleen op deze computer bewaard: die verschijnt niet in Outlook of op uw andere apparaten. Microsoft vraagt u één keer om MailCraft de agenda's van anderen te laten lezen."
@@ -13839,6 +14187,12 @@ msgstr "Terugkeerpatroon"
 msgid "Red category"
 msgstr "Rode categorie"
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Redirect port"
+msgstr "Omleidingspoort"
+
 #. command label, name
 #: crates/engine/src/cmd/edit.rs crates/ui-egui/src/menubar.rs
 msgid "Redo"
@@ -13856,7 +14210,7 @@ msgid "Redo {what}"
 msgstr "{what} opnieuw"
 
 #. interface
-#: crates/ui-egui/src/security.rs
+#: crates/ui-egui/src/nav.rs crates/ui-egui/src/security.rs
 #, fuzzy
 msgid "Refresh"
 msgstr "Vernieuwen"
@@ -13866,6 +14220,12 @@ msgstr "Vernieuwen"
 #, fuzzy
 msgid "Refresh Your Certificates and Keys"
 msgstr "Uw certificaten en sleutels vernieuwen"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Register http://127.0.0.1 with any port (or the one above) as the redirect address."
+msgstr "Registreer http://127.0.0.1 met een willekeurige poort (of de poort hierboven) als omleidingsadres."
 
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
@@ -14039,6 +14399,11 @@ msgstr "Terugkeerpatroon verwijderen"
 #, fuzzy
 msgid "Remove Reminder"
 msgstr "Herinnering verwijderen"
+
+#. command label
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "Remove Shared Address Book"
+msgstr ""
 
 #. command label, interface
 #: crates/engine/src/cmd/calendar_opened.rs crates/ui-egui/src/calendar_view.rs crates/ui-egui/src/dialogs.rs
@@ -14243,6 +14608,12 @@ msgstr "Categorie wordt hernoemd op de server: {done} van {total} berichten"
 msgid "Renewing the sign-in…"
 msgstr "Bezig met vernieuwen van de aanmelding…"
 
+#. interface
+#: crates/ui-egui/src/lib.rs
+#, fuzzy
+msgid "Renewing the sign-in… If it can't be renewed, sign in on the page that opens in your browser."
+msgstr "De aanmelding wordt vernieuwd… Als dat niet lukt, meldt u zich aan op de pagina die in uw browser wordt geopend."
+
 #. android, interface
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/CalendarEditor.kt crates/ui-egui/src/forms.rs crates/ui-egui/src/meeting_dialogs/share.rs
 #, fuzzy
@@ -14379,6 +14750,11 @@ msgstr "Verzoek in uw Postvak UIT."
 msgid "Required"
 msgstr "Vereist"
 
+#. interface
+#: crates/ui-egui/src/autopick.rs
+msgid "Required people"
+msgstr ""
+
 #. command label, interface, ribbon
 #: crates/engine/src/cmd/compose.rs crates/ui-egui/src/mail_view.rs crates/ui-egui/src/ribbon.rs
 msgid "Resend Message"
@@ -14449,6 +14825,12 @@ msgstr "Opnieuw starten om bij te werken"
 msgid "Restart to update is the owner's click."
 msgstr "Opnieuw starten om bij te werken is de klik van de eigenaar."
 
+#. command label
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "Restore Default OAuth Settings"
+msgstr "Standaard-OAuth-instellingen herstellen"
+
 #. interface
 #: crates/ui-egui/src/attachment_preview.rs
 #, fuzzy
@@ -14511,6 +14893,12 @@ msgid "Review certificate…"
 msgstr "Certificaat controleren…"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Revocation address (optional)"
+msgstr "Intrekkingsadres (optioneel)"
+
+#. interface
 #: crates/ui-egui/src/reading/signature.rs
 #, fuzzy
 msgid "Revocation not checked."
@@ -14563,6 +14951,21 @@ msgstr "Rechts"
 #, fuzzy
 msgid "Right before or after: {items}"
 msgstr "Meteen ervoor of erna: {items}"
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "Room"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Room Finder"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/forms.rs
+msgid "Rooms"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/sieve_editor.rs
@@ -15065,6 +15468,12 @@ msgstr "Zeg alleen ja als u de agent hierom hebt gevraagd. Tekst in een bericht 
 msgid "Says what you and your organisation's administrator can do, and lets an administrator approve MailCraft on Microsoft's page from here."
 msgstr "Geeft aan wat u en de beheerder van uw organisatie kunnen doen, en laat een beheerder MailCraft vanaf hier goedkeuren op de pagina van Microsoft."
 
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Scopes"
+msgstr "Bereiken"
+
 #. ribbon
 #: crates/ui-egui/src/ribbon.rs
 msgid "Screenshot"
@@ -15333,7 +15742,7 @@ msgid "Send & Receive"
 msgstr "Verzenden & ontvangen"
 
 #. ribbon location
-#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/auto_replies.rs crates/engine/src/cmd/calendar_settings.rs crates/engine/src/cmd/calendar_subscribed.rs crates/engine/src/cmd/categories_remote.rs crates/engine/src/cmd/contacts_remote.rs crates/engine/src/cmd/dav_sync.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/followup.rs crates/engine/src/cmd/graph_mail.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/jmap_mail.rs crates/engine/src/cmd/remote.rs crates/engine/src/cmd/rules_remote.rs crates/engine/src/cmd/send_later.rs crates/engine/src/cmd/send_receive.rs crates/engine/src/cmd/sieve_replies.rs crates/engine/src/cmd/snooze.rs crates/engine/src/cmd/sync_progress.rs crates/engine/src/cmd/tasks_remote.rs crates/ui-egui/src/lib.rs
+#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/auto_replies.rs crates/engine/src/cmd/calendar_settings.rs crates/engine/src/cmd/calendar_subscribed.rs crates/engine/src/cmd/categories_remote.rs crates/engine/src/cmd/contacts_remote.rs crates/engine/src/cmd/dav_sync.rs crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/followup.rs crates/engine/src/cmd/graph_mail.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/jmap_mail.rs crates/engine/src/cmd/remote.rs crates/engine/src/cmd/rules_remote.rs crates/engine/src/cmd/send_later.rs crates/engine/src/cmd/send_receive.rs crates/engine/src/cmd/sieve_replies.rs crates/engine/src/cmd/snooze.rs crates/engine/src/cmd/sync_progress.rs crates/engine/src/cmd/tasks_remote.rs crates/ui-egui/src/lib.rs
 msgid "Send / Receive"
 msgstr "Verzenden/ontvangen"
 
@@ -15554,7 +15963,7 @@ msgid "Send your password to another server?"
 msgstr "Uw wachtwoord naar een andere server verzenden?"
 
 #. interface
-#: crates/ui-egui/src/account_setup/exchange.rs
+#: crates/ui-egui/src/account_setup.rs crates/ui-egui/src/account_setup/exchange.rs
 #, fuzzy
 msgid "Send your sign-in to another server?"
 msgstr "Uw aanmelding naar een andere server verzenden?"
@@ -15627,6 +16036,12 @@ msgstr "Verzenden/ontvangen meldt aan bij Microsoft; daarna kan de server worden
 #, fuzzy
 msgid "Send/Receive stopped unexpectedly"
 msgstr "Verzenden/ontvangen is onverwacht gestopt"
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+#, fuzzy
+msgid "Send/Receive the mailbox to sign in and read its online archive"
+msgstr "Voer Verzenden/ontvangen uit voor het postvak om aan te melden en het onlinearchief te lezen"
 
 #. command label
 #: crates/engine/src/cmd/ews_mail.rs
@@ -16041,6 +16456,12 @@ msgstr "MailCraft tonen"
 #, fuzzy
 msgid "Show Message"
 msgstr "Bericht weergeven"
+
+#. command label, interface
+#: crates/engine/src/cmd/ews_mail.rs crates/ui-egui/src/nav.rs
+#, fuzzy
+msgid "Show Online Archive"
+msgstr "Onlinearchief weergeven"
 
 #. command label, interface
 #: crates/engine/src/cmd/calendar_settings.rs crates/ui-egui/src/calendar_view.rs
@@ -16534,10 +16955,27 @@ msgid "Sign in with Send/Receive first."
 msgstr "Meld u eerst aan met Verzenden/ontvangen."
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "Sign in with Send/Receive to see the rooms."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/scheduling.rs
 #, fuzzy
 msgid "Sign in with Send/Receive to see when other people are busy."
 msgstr "Meld u aan met Verzenden/ontvangen om te zien wanneer andere personen bezet zijn."
+
+#. interface
+#: crates/ui-egui/src/account_setup.rs
+#, fuzzy
+msgid "Sign in with your identity provider (OAuth 2.0) instead"
+msgstr "In plaats daarvan aanmelden met uw identiteitsprovider (OAuth 2.0)"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Sign-in address"
+msgstr "Aanmeldadres"
 
 #. interface
 #: crates/ui-egui/src/lib.rs
@@ -17418,7 +17856,7 @@ msgid "Tell MailCraft's makers what went wrong, on GitHub or by email. You check
 msgstr "Vertel de makers van MailCraft wat er misging, op GitHub of per e-mail. U controleert het rapport en verzendt het zelf."
 
 #. interface
-#: crates/ui-egui/src/account_setup.rs
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
 #, fuzzy
 msgid "Tenant"
 msgstr "Tenant"
@@ -17641,6 +18079,11 @@ msgid "That is not a sender's address"
 msgstr "Dat is geen adres van een afzender"
 
 #. what a command says
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "That is this account's own address: its own address book is there already."
+msgstr ""
+
+#. what a command says
 #: crates/engine/src/cmd/calendar_opened.rs
 #, fuzzy
 msgid "That is this account's own address: its own calendar is there already."
@@ -17861,6 +18304,31 @@ msgstr "De server van het account heeft deze vergadering nog geen koppeling gege
 #, fuzzy
 msgid "The account's server makes it when the meeting is sent; the link to join by comes back with it."
 msgstr "De server van het account maakt deze aan wanneer de vergadering wordt verzonden; de koppeling om deel te nemen komt daarbij terug."
+
+#. what a command says
+#: crates/engine/src/cmd/people.rs
+msgid "The address book \"{name}\" can only be read: the server hasn't given this account permission to change its contacts."
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/people.rs
+msgid "The address book \"{name}\" is no longer available. Send/Receive may bring it back, and the contact can be changed then."
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "The address book of {address} is open already."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/people_view.rs
+msgid "The address book this contact came from can only be read: the server hasn't given this account permission to change its contacts."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/people_view.rs
+msgid "The address book this contact came from is no longer in the account's list, so changes here could not reach the server. Send/Receive may bring it back."
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/check_names.rs
@@ -18173,6 +18641,24 @@ msgid "The check stopped unexpectedly"
 msgstr "De controle is onverwacht gestopt"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "The client secret can only be letters, digits and punctuation"
+msgstr "Het clientgeheim mag alleen letters, cijfers en leestekens bevatten"
+
+#. interface
+#: crates/ui-egui/src/lib.rs
+#, fuzzy
+msgid "The client secret for {account} isn't stored on this computer: enter it again in Account Settings (File › Info)"
+msgstr "Het clientgeheim voor {account} is niet op deze computer opgeslagen: voer het opnieuw in bij Accountinstellingen (Bestand › Info)"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "The client secret is kept for the settings as they were: enter it again to use it with these, or it is forgotten when you save."
+msgstr "Het clientgeheim is bewaard voor de instellingen zoals ze waren: voer het opnieuw in om het met deze te gebruiken, anders wordt het bij opslaan vergeten."
+
+#. interface
 #: crates/ui-egui/src/account_setup.rs
 #, fuzzy
 msgid "The connection test only checks that this server answers. If it does want a sign-in, the first message you send says so."
@@ -18305,6 +18791,11 @@ msgstr "De download is afgebroken."
 #. interface
 #: crates/ui-egui/src/attachment_open.rs
 msgid "The draft isn't open any more"
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/dialogs.rs
+msgid "The e-mail address of the person whose address book you want to open"
 msgstr ""
 
 #. interface
@@ -18741,6 +19232,11 @@ msgstr "De naam die ontvangers zien; leeg uw eigen naam"
 msgid "The name the calendar gives itself"
 msgstr "De naam die de agenda zichzelf geeft"
 
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "The next time when everybody is free"
+msgstr ""
+
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt
 #, fuzzy
@@ -18748,16 +19244,39 @@ msgid "The notes are too long to edit here."
 msgstr "De notities zijn te lang om hier te bewerken."
 
 #. interface
-#: crates/ui-egui/src/account_setup.rs
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
 #, fuzzy
 msgid "The one in File › Options"
 msgstr "Die in Bestand › Opties"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "The one registered for MailCraft"
+msgstr "Het id dat voor MailCraft is geregistreerd"
 
 #. interface
 #: crates/ui-egui/src/backstage.rs
 #, fuzzy
 msgid "The one this build came with"
 msgstr "Die waarmee deze build is geleverd"
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+#, fuzzy
+msgid "The online archive couldn't be read: Refresh to try again"
+msgstr "Het onlinearchief kon niet worden gelezen: vernieuw om het opnieuw te proberen"
+
+#. interface
+#: crates/ui-egui/src/nav.rs
+#, fuzzy
+msgid "The online archive needs a connection to the server"
+msgstr "Het onlinearchief heeft een verbinding met de server nodig"
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "The organisation has no lists of rooms."
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/meeting_dialogs.rs
@@ -18860,6 +19379,12 @@ msgstr "Het bereik heeft een einddag nodig"
 #, fuzzy
 msgid "The range needs a day to start on"
 msgstr "Het bereik heeft een startdag nodig"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "The redirect port is a number from 1 to 65535, or empty for any free one"
+msgstr "De omleidingspoort is een getal van 1 tot 65535, of leeg voor een willekeurige vrije poort"
 
 #. interface
 #: crates/ui-egui/src/report_problem.rs
@@ -19185,6 +19710,12 @@ msgstr "De server heeft {total} mappen: één run leest de eerste {max} en laat 
 msgid "The server is busy. Try again in a few minutes."
 msgstr "De server is bezig. Probeer het over een paar minuten opnieuw."
 
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+#, fuzzy
+msgid "The server no longer has the online archive: changes made in it that hadn't reached the server are lost"
+msgstr "De server heeft het onlinearchief niet meer: wijzigingen erin die de server nog niet hadden bereikt, zijn verloren"
+
 #. interface
 #: crates/ui-egui/src/dialogs.rs
 #, fuzzy
@@ -19400,6 +19931,12 @@ msgid "The shared mailbox couldn't be added"
 msgstr "Het gedeelde postvak kon niet worden toegevoegd"
 
 #. interface
+#: crates/ui-egui/src/ews_mail.rs
+#, fuzzy
+msgid "The shared mailbox couldn't be read."
+msgstr "Het gedeelde postvak kon niet worden gelezen."
+
+#. interface
 #: crates/ui-egui/src/dialogs.rs
 #, fuzzy
 msgid "The shared mailbox opened through it is removed from this device too."
@@ -19428,6 +19965,12 @@ msgstr "De aanmelding is niet gelukt."
 #, fuzzy
 msgid "The sign-in didn't work. Try again."
 msgstr "De aanmelding werkte niet. Probeer het opnieuw."
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "The sign-in is only sent to: {servers}"
+msgstr "De aanmelding wordt alleen verzonden naar: {servers}"
 
 #. interface, what a command says
 #: crates/engine/src/sync_driver/calendar_plan.rs crates/ui-egui/src/shared_mailboxes.rs
@@ -19586,6 +20129,11 @@ msgid "The text wasn't found."
 msgstr "De tekst is niet gevonden."
 
 #. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "The time before this when everybody is free"
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/reminder_dialog.rs
 #, fuzzy
 msgid "The time is kept on this computer; a flag goes to the account's server as any flag does."
@@ -19722,6 +20270,12 @@ msgid "Thesaurus"
 msgstr "Synoniemenlijst"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "These addresses are outside your identity provider's domain: {hosts}"
+msgstr "Deze adressen liggen buiten het domein van uw identiteitsprovider: {hosts}"
+
+#. interface
 #: crates/ui-egui/src/dialogs.rs
 #, fuzzy
 msgid "These are meetings somebody else organizes; you are invited to them. Deleting them takes them out of your calendar only, and the organizer is not told that you won't come. Declining them tells the organizer, if you choose."
@@ -19750,6 +20304,12 @@ msgstr "Deze contactpersonen kunnen hier niet worden samengevoegd: minder dan tw
 #, fuzzy
 msgid "These could not be removed. Remove them yourself:"
 msgstr "Deze konden niet worden verwijderd. Verwijder ze zelf:"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "These settings will no longer be {provider}'s: MailCraft will treat this account as one with your own identity provider, starting from the values above, and you'll sign in again."
+msgstr "Deze instellingen zijn dan niet meer die van {provider}: MailCraft behandelt dit account als een account met uw eigen identiteitsprovider, uitgaande van de bovenstaande waarden, en u meldt zich opnieuw aan."
 
 #. interface
 #: crates/ui-egui/src/task_sync.rs
@@ -19951,6 +20511,16 @@ msgstr "Deze bijlage is te groot voor een voorbeeld."
 #, fuzzy
 msgid "This build can't ask a server when other people are busy: only your own calendar is shown."
 msgstr "Deze build kan een server niet vragen wanneer andere personen bezet zijn: alleen uw eigen agenda wordt weergegeven."
+
+#. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "This build can't ask the Exchange server for rooms."
+msgstr ""
+
+#. interface
+#: crates/ui-egui/src/scheduling.rs
+msgid "This build can't ask the Exchange server when other people are busy: only your own calendar is shown."
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/lib.rs crates/ui-egui/src/sending.rs crates/ui-egui/src/shared_mailboxes.rs
@@ -20404,6 +20974,11 @@ msgid "This link goes to"
 msgstr "Deze link gaat naar"
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "This list has no rooms."
+msgstr ""
+
+#. interface
 #: crates/ui-egui/src/reading/unsubscribe.rs
 #, fuzzy
 msgid "This list unsubscribes on its own page, at {host}. It opens in your browser: visiting it tells the list that this address is read."
@@ -20438,6 +21013,12 @@ msgstr "Dit postvak is geopend vanuit een bestand. De accounts verbinden met:"
 #, fuzzy
 msgid "This mailbox was opened from a file: confirm its servers first"
 msgstr "Dit postvak is geopend vanuit een bestand: bevestig eerst de servers"
+
+#. interface
+#: crates/ui-egui/src/ews_mail.rs
+#, fuzzy
+msgid "This mailbox's online archive is kept in Microsoft 365, which needs a Microsoft sign-in, so it isn't shown"
+msgstr "Het onlinearchief van dit postvak staat in Microsoft 365, waarvoor aanmelden bij Microsoft nodig is, dus het wordt niet weergegeven"
 
 #. interface
 #: crates/ui-egui/src/calendar_sync.rs
@@ -21166,6 +21747,12 @@ msgstr ""
 "Totdat u het toestaat, wordt er niets van die postvakken en agenda's gelezen, wachten e-mail en antwoorden op vergaderingen uit een gedeeld postvak op deze computer, en wordt er in hun plaats niets vanaf uw eigen adres verzonden."
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "To sign in with your own identity provider, first change the incoming and outgoing servers to your own: a sign-in from it is never sent to {provider}'s servers."
+msgstr "Om u aan te melden bij uw eigen identiteitsprovider, vervangt u eerst de inkomende en uitgaande server door uw eigen servers: een aanmelding daarvan wordt nooit naar de servers van {provider} gestuurd."
+
+#. interface
 #: crates/ui-egui/src/account_setup.rs
 msgid "To switch, first save Google's standard IMAP and SMTP servers and an email-matching user name."
 msgstr "Sla voor het overschakelen eerst de standaard-IMAP- en SMTP-servers van Google op, en een gebruikersnaam die bij het e-mailadres past."
@@ -21203,6 +21790,12 @@ msgstr "Vandaag"
 #, fuzzy
 msgid "Today could not be read."
 msgstr "Vandaag kon niet worden gelezen."
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Token address"
+msgstr "Tokenadres"
 
 #. android, interface, name, ribbon
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/DueDates.kt apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/TaskEditorScreen.kt crates/ui-egui/src/forms.rs crates/ui-egui/src/ribbon.rs crates/ui-egui/src/tasks_view.rs
@@ -21401,6 +21994,11 @@ msgstr "Typ uw e-mailadres en MailCraft zoekt de rest: Microsoft 365, Outlook.co
 #, fuzzy
 msgid "Typing * or - and a space at the start of a line starts a bulleted list, 1. or 1) a numbered one. Undo puts what you typed back."
 msgstr "Door aan het begin van een regel * of - en een spatie te typen, begint u een lijst met opsommingstekens, met 1. of 1) een genummerde lijst. Ongedaan maken zet terug wat u typte."
+
+#. interface
+#: crates/ui-egui/src/people_view.rs
+msgid "Unavailable"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/import_pst.rs
@@ -21704,6 +22302,12 @@ msgid "Use a Google app password, not your everyday Google account password."
 msgstr "Gebruik een app-wachtwoord van Google, niet uw gebruikelijke wachtwoord van uw Google-account."
 
 #. interface
+#: crates/ui-egui/src/account_setup.rs
+#, fuzzy
+msgid "Use a password instead"
+msgstr "In plaats daarvan een wachtwoord gebruiken"
+
+#. interface
 #: crates/ui-egui/src/account_setup.rs crates/ui-egui/src/account_setup/help.rs
 #, fuzzy
 msgid "Use an app password"
@@ -21722,6 +22326,18 @@ msgid "Use https:// instead"
 msgstr "In plaats daarvan https:// gebruiken"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Use it"
+msgstr "Gebruiken"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Use my own identity provider"
+msgstr "Mijn eigen identiteitsprovider gebruiken"
+
+#. interface
 #: crates/ui-egui/src/calendar_view.rs
 #, fuzzy
 msgid "Use my own working hours"
@@ -21737,6 +22353,12 @@ msgstr "Systeeminstelling gebruiken"
 #: crates/ui-egui/src/backstage.rs
 msgid "Use system setting follows Animation effects in Windows' settings. Where MailCraft can't read the system's setting yet, animations play until you choose Never play."
 msgstr "De systeeminstelling volgt de animatie-instellingen van Windows. In gevallen waar MailCraft de systeeminstelling nog niet kan lezen, worden animaties afgespeeld tot u Nooit afspelen kiest."
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Use your own identity provider instead…"
+msgstr "In plaats daarvan uw eigen identiteitsprovider gebruiken…"
 
 #. interface
 #: crates/ui-egui/src/account_setup.rs
@@ -21880,6 +22502,12 @@ msgid "Wait for the other attachment preview to finish."
 msgstr "Wacht tot het andere voorbeeld van een bijlage klaar is."
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Wait for your identity provider's addresses"
+msgstr "Wacht op de adressen van uw identiteitsprovider"
+
+#. interface
 #: crates/ui-egui/src/sync_panel.rs
 #, fuzzy
 msgid "Waiting"
@@ -21896,6 +22524,12 @@ msgstr "Wacht op de registratie van MailCraft bij Google"
 #, fuzzy
 msgid "Waiting for the approval stopped unexpectedly"
 msgstr "Het wachten op de goedkeuring is onverwacht gestopt"
+
+#. interface
+#: crates/ui-egui/src/lib.rs
+#, fuzzy
+msgid "Waiting for the system's credential store…"
+msgstr "Wachten op de referentieopslag van het systeem…"
 
 #. what a command says
 #: crates/engine/src/cmd/contacts_remote.rs
@@ -22662,6 +23296,12 @@ msgid "Your data was removed"
 msgstr "Je gegevens zijn verwijderd"
 
 #. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Your domain names {issuer} for signing in."
+msgstr "Uw domein noemt {issuer} voor het aanmelden."
+
+#. interface
 #: crates/ui-egui/src/account_setup/exchange.rs
 msgid "Your domain's DNS couldn't be asked. Check the network connection and search again."
 msgstr "De DNS van uw domein kon niet worden gevraagd. Controleer de netwerkverbinding en zoek opnieuw."
@@ -22873,6 +23513,12 @@ msgstr "De regels van uw organisatie staan dit niet toe voor uw account. Dit is 
 #, fuzzy
 msgid "Your own certificates and keys are used by MailCraft's desktop program: here Digital signatures are checked, and nothing is signed or decrypted."
 msgstr "Uw eigen certificaten en sleutels worden gebruikt door het desktopprogramma van MailCraft: hier worden digitale handtekeningen gecontroleerd en wordt niets ondertekend of ontsleuteld."
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "Your own identity provider"
+msgstr "Uw eigen identiteitsprovider"
 
 #. interface
 #: crates/ui-egui/src/security.rs
@@ -23286,6 +23932,12 @@ msgstr "een gedeelde postbus heeft geen map Uitgesteld"
 #. what a command says
 #: crates/engine/src/cmd/account.rs
 #, fuzzy
+msgid "a shared mailbox is reached through the server settings of the account it is opened through: change that account's"
+msgstr "een gedeeld postvak wordt bereikt via de serverinstellingen van het account waarmee het is geopend: wijzig die van dat account"
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
 msgid "a shared mailbox keeps as much mail offline as the account it is opened through: change that account's"
 msgstr "een gedeeld postvak bewaart offline evenveel e-mail als het account waarmee het is geopend: wijzig die van dat account"
 
@@ -23312,6 +23964,36 @@ msgstr "het adres van een gedeeld postvak kan niet worden gewijzigd: verwijder h
 #, fuzzy
 msgid "a shared mailbox's rules are its own: this version doesn't make them"
 msgstr "de regels van een gedeeld postvak zijn van dat postvak: deze versie maakt ze niet"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "a sign-in with your identity provider is never sent to Microsoft's or Google's mail servers"
+msgstr "een aanmelding bij uw identiteitsprovider wordt nooit naar de mailservers van Microsoft of Google verzonden"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "a sign-in with your identity provider is only sent to a mail server on this computer in a test"
+msgstr "een aanmelding bij uw identiteitsprovider wordt alleen in een test naar een mailserver op deze computer verzonden"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "a sign-in with your identity provider is only used with this account's own mail servers"
+msgstr "een aanmelding bij uw identiteitsprovider wordt alleen gebruikt met de eigen mailservers van dit account"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+#, fuzzy
+msgid "a sign-in with your own identity provider is for mail only, not Microsoft Graph"
+msgstr "een aanmelding bij uw eigen identiteitsprovider is alleen voor e-mail, niet voor Microsoft Graph"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+#, fuzzy
+msgid "a sign-in with {provider} comes back through a loopback port only"
+msgstr "een aanmelding bij {provider} komt alleen terug via een loopbackpoort"
 
 #. why a command can't run
 #: crates/engine/src/cmd/picture.rs
@@ -23343,6 +24025,12 @@ msgstr "een taak heeft een titel nodig"
 msgid "a web server"
 msgstr "een webserver"
 
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "access was refused on the sign-in page"
+msgstr "de toegang is geweigerd op de aanmeldpagina"
+
 #. what a command says, why a command can't run
 #: crates/engine/src/cmd/people.rs
 #, fuzzy
@@ -23366,6 +24054,23 @@ msgstr "voeg eerst een account toe (Bestand › Account toevoegen)"
 #, fuzzy
 msgid "add at least one recipient"
 msgstr "voeg minstens één ontvanger toe"
+
+#. what a command says, why a command can't run
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "address books open under an Exchange server account"
+msgstr ""
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "an Exchange server account needs a server address that can be used to open a shared mailbox"
+msgstr "een Exchange-serveraccount heeft een serveradres nodig dat kan worden gebruikt om een gedeeld postvak te openen"
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "an Exchange server account's server and user name can't be changed while a shared mailbox opened through it has mail here: remove the shared mailbox first"
+msgstr "de server en de gebruikersnaam van een Exchange-serveraccount kunnen niet worden gewijzigd zolang de e-mail van een gedeeld postvak dat ermee is geopend hier is: verwijder eerst het gedeelde postvak"
 
 #. what a command says
 #: crates/engine/src/cmd/account.rs
@@ -23438,6 +24143,17 @@ msgstr "een account heeft hoogstens {max} afzenderadressen"
 #, fuzzy
 msgid "an event needs a title"
 msgstr "een gebeurtenis heeft een titel nodig"
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+msgid "an online archive can't open a shared mailbox: name the account it belongs to"
+msgstr ""
+
+#. what a command says
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "an online archive stays under its mailbox: move that account"
+msgstr "een onlinearchief blijft onder het postvak: verplaats dat account"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -23615,6 +24331,12 @@ msgid "couldn't make a secure connection to {host}: {reason}"
 msgstr "er kon geen beveiligde verbinding met {host} worden gemaakt: {reason}"
 
 #. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+#, fuzzy
+msgid "couldn't open a port on this computer for the sign-in to come back to"
+msgstr "kan geen poort op deze computer openen waarop de aanmelding kan terugkomen"
+
+#. why a mail server couldn't be used
 #: crates/net/src/lib.rs
 #, fuzzy
 msgid "couldn't reach {host}: {reason}"
@@ -23650,6 +24372,18 @@ msgstr "voer een wachtwoord in om u aan te melden"
 msgid "enter a user name to sign in"
 msgstr "voer een gebruikersnaam in om u aan te melden"
 
+#. what a command says
+#: crates/model/src/oauth.rs
+#, fuzzy
+msgid "enter the client id registered for MailCraft at your identity provider"
+msgstr "voer de client-id in die bij uw identiteitsprovider voor MailCraft is geregistreerd"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "enter your identity provider's address (its issuer)"
+msgstr "voer het adres van uw identiteitsprovider in (de uitgever)"
+
 #. interface
 #: crates/ui-egui/src/reading/remote.rs
 #, fuzzy
@@ -23661,6 +24395,12 @@ msgstr "iedereen bij @{domain}"
 #, fuzzy
 msgid "expected and replacement must be on one line"
 msgstr "de te zoeken en de vervangende tekst moeten op één regel staan"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+#, fuzzy
+msgid "find your identity provider's sign-in addresses (Discover), or enter them"
+msgstr "zoek de aanmeldadressen van uw identiteitsprovider op (Detecteren), of voer ze in"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -24376,7 +25116,7 @@ msgid "no account here keeps its rules on its server"
 msgstr "geen account hier bewaart zijn regels op zijn server"
 
 #. what a command says, why a command can't run
-#: crates/engine/src/cmd/ews_mail.rs
+#: crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs
 #, fuzzy
 msgid "no account is an Exchange server account"
 msgstr "geen account is een Exchange-serveraccount"
@@ -24412,10 +25152,20 @@ msgid "no account with id {account}"
 msgstr "geen account met id {account}"
 
 #. what a command says
-#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/calendar_opened.rs crates/engine/src/cmd/calendar_settings.rs crates/engine/src/cmd/compose.rs crates/engine/src/cmd/contacts_remote.rs crates/engine/src/cmd/dav_account.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/folder.rs crates/engine/src/cmd/graph_mail.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/graph_switch.rs crates/engine/src/cmd/jmap_mail.rs crates/engine/src/cmd/offline.rs crates/engine/src/cmd/remote.rs crates/engine/src/cmd/rules.rs crates/engine/src/cmd/rules_sieve.rs crates/engine/src/cmd/search_server.rs crates/engine/src/cmd/senders.rs crates/engine/src/cmd/shared.rs crates/engine/src/cmd/signature.rs
+#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/calendar_opened.rs crates/engine/src/cmd/calendar_settings.rs crates/engine/src/cmd/compose.rs crates/engine/src/cmd/contacts_remote.rs crates/engine/src/cmd/dav_account.rs crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/folder.rs crates/engine/src/cmd/graph_mail.rs crates/engine/src/cmd/graph_send.rs crates/engine/src/cmd/graph_switch.rs crates/engine/src/cmd/jmap_mail.rs crates/engine/src/cmd/offline.rs crates/engine/src/cmd/remote.rs crates/engine/src/cmd/rules.rs crates/engine/src/cmd/rules_sieve.rs crates/engine/src/cmd/search_server.rs crates/engine/src/cmd/senders.rs crates/engine/src/cmd/shared.rs crates/engine/src/cmd/signature.rs
 #, fuzzy
 msgid "no account with id {id}"
 msgstr "geen account met id {id}"
+
+#. why a command can't run
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "no address book was opened by address"
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "no address book {address} is open"
+msgstr ""
 
 #. why a mail server couldn't be used
 #: crates/net/src/transport.rs
@@ -24628,6 +25378,11 @@ msgid "nobody else is invited to this appointment"
 msgstr "er is niemand anders uitgenodigd voor deze afspraak"
 
 #. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+msgid "nobody with an address is asked about"
+msgstr ""
+
+#. what a command says
 #: crates/engine/src/cmd/followup.rs
 #, fuzzy
 msgid "none of these messages has a reminder showing"
@@ -24760,6 +25515,12 @@ msgid "only a message you sent can be sent again"
 msgstr "alleen een bericht dat u hebt verzonden, kan opnieuw worden verzonden"
 
 #. what a command says
+#: crates/model/src/archive.rs
+#, fuzzy
+msgid "only an Exchange server account has an online archive here"
+msgstr "hier heeft alleen een Exchange-serveraccount een onlinearchief"
+
+#. what a command says
 #: crates/engine/src/cmd/senders.rs
 #, fuzzy
 msgid "only an IMAP account sends from other addresses"
@@ -24849,6 +25610,12 @@ msgstr "persoonlijk"
 msgid "pictures from the web are not downloaded: save the picture and add it from the file"
 msgstr "afbeeldingen van het web worden niet gedownload: sla de afbeelding op en voeg die toe vanuit het bestand"
 
+#. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+#, fuzzy
+msgid "port {port} on this computer is in use: choose another redirect port, or automatic"
+msgstr "poort {port} op deze computer is in gebruik: kies een andere omleidingspoort, of automatisch"
+
 #. interface
 #: crates/ui-egui/src/forms.rs
 #, fuzzy
@@ -24908,6 +25675,12 @@ msgstr "antwoorden kunnen naar hoogstens {n} adressen gaan"
 #, fuzzy
 msgid "require goes before every other command."
 msgstr "require komt vóór alle andere opdrachten."
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "revocation"
+msgstr "intrekkings"
 
 #. name
 #: crates/engine/src/agent.rs
@@ -25024,14 +25797,14 @@ msgstr "gedeeld postvak"
 #. what a command says, why a command can't run
 #: crates/engine/src/cmd/shared.rs
 #, fuzzy
-msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
-msgstr "gedeelde postvakken worden geopend onder een via Microsoft Graph bijgehouden account"
+msgid "shared mailboxes open under an account kept in step through Microsoft Graph, or an Exchange server account"
+msgstr "gedeelde postvakken worden geopend onder een via Microsoft Graph bijgehouden account of onder een Exchange-serveraccount"
 
 #. what a command says
 #: crates/model/src/mailbox.rs
 #, fuzzy
-msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
-msgstr "gedeelde postvakken worden geopend onder een account dat via Microsoft Graph wordt bijgehouden"
+msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph or is an Exchange server account"
+msgstr "gedeelde postvakken worden geopend onder een account dat via Microsoft Graph wordt bijgehouden of een Exchange-serveraccount is"
 
 #. interface
 #: crates/ui-egui/src/forms.rs
@@ -25050,6 +25823,12 @@ msgstr "meld u eerst aan bij het account"
 #, fuzzy
 msgid "sign in to {who} first"
 msgstr "meld u eerst aan bij {who}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "sign-in"
+msgstr "aanmeld"
 
 #. why a mail server couldn't be used
 #: crates/proto/src/lib.rs
@@ -25098,6 +25877,17 @@ msgstr "het onderwerp bevat {words}"
 #, fuzzy
 msgid "subject or body contains {words}"
 msgstr "het onderwerp of de tekst bevat {words}"
+
+#. what a command says
+#: crates/engine/src/cmd/contacts_opened.rs
+msgid "that account can't open an address book by address"
+msgstr ""
+
+#. what a command says
+#: crates/model/src/archive.rs
+#, fuzzy
+msgid "that account isn't an online archive"
+msgstr "dat account is geen onlinearchief"
 
 #. what a command says
 #: crates/engine/src/cmd/calendar.rs
@@ -25193,6 +25983,12 @@ msgstr "dat bericht is hier niet"
 #, fuzzy
 msgid "that message isn't waiting in the Outbox"
 msgstr "dat bericht wacht niet in het Postvak UIT"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth.rs
+#, fuzzy
+msgid "that redirect port can't be used: choose another, or automatic"
+msgstr "die omleidingspoort kan niet worden gebruikt: kies een andere, of automatisch"
 
 #. what a command says
 #: crates/engine/src/cmd/calendar/selection.rs
@@ -25296,10 +26092,16 @@ msgid "the account has no user name or e-mail address to sign in with"
 msgstr "het account heeft geen gebruikersnaam of e-mailadres om mee aan te melden"
 
 #. what a command says
-#: crates/engine/src/cmd/calendar/invitation.rs crates/engine/src/cmd/calendar_opened.rs crates/engine/src/cmd/compose.rs crates/engine/src/cmd/react.rs crates/engine/src/cmd/unsubscribe.rs
+#: crates/engine/src/cmd/calendar/invitation.rs crates/engine/src/cmd/calendar_opened.rs crates/engine/src/cmd/compose.rs crates/engine/src/cmd/contacts_opened.rs crates/engine/src/cmd/react.rs crates/engine/src/cmd/unsubscribe.rs
 #, fuzzy
 msgid "the account is gone"
 msgstr "het account is verdwenen"
+
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+#, fuzzy
+msgid "the account {name} is the online archive of is gone"
+msgstr "het account {name} waarvan dit het onlinearchief is, bestaat niet meer"
 
 #. name
 #: crates/engine/src/cmd/rules.rs
@@ -25413,6 +26215,18 @@ msgstr "het gewijzigde exemplaar is er niet meer"
 #, fuzzy
 msgid "the check stopped unexpectedly"
 msgstr "de controle is onverwacht gestopt"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+#, fuzzy
+msgid "the client id can only be letters, digits and punctuation, at most 200 of them"
+msgstr "de client-id mag alleen letters, cijfers en leestekens bevatten, maximaal 200"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "the client secret can only be letters, digits and punctuation"
+msgstr "het clientgeheim mag alleen letters, cijfers en leestekens bevatten"
 
 #. why a mail server couldn't be used
 #: crates/proto/src/imap/mod.rs crates/proto/src/managesieve/mod.rs
@@ -25583,6 +26397,90 @@ msgid "the folder was numbered anew while it was being read"
 msgstr "de map is tijdens het lezen opnieuw genummerd"
 
 #. what a command says
+#: crates/model/src/oauth.rs
+#, fuzzy
+msgid "the identity provider (issuer) address can't have a query or a fragment"
+msgstr "het adres van de identiteitsprovider (uitgever) mag geen query of fragment bevatten"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider doesn't describe itself at the usual addresses: enter its sign-in addresses"
+msgstr "de identiteitsprovider beschrijft zichzelf niet op de gebruikelijke adressen: voer de aanmeldadressen in"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider sent its description on through too many redirects"
+msgstr "de identiteitsprovider heeft zijn beschrijving via te veel omleidingen doorgestuurd"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider sent its description on to an address on this computer, a private network or without https"
+msgstr "de identiteitsprovider heeft zijn beschrijving doorgestuurd naar een adres op deze computer, in een privénetwerk of zonder https"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's address can't have a query or a fragment"
+msgstr "het adres van de identiteitsprovider mag geen query of fragment bevatten"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's address {why}"
+msgstr "het adres van de identiteitsprovider {why}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description couldn't be fetched: {other}"
+msgstr "de beschrijving van de identiteitsprovider kon niet worden opgehaald: {other}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description gives a {what} address that {why}"
+msgstr "de beschrijving van de identiteitsprovider geeft een {what}adres dat {why}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description has no {what} address"
+msgstr "de beschrijving van de identiteitsprovider geeft geen {what}adres"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description is too long"
+msgstr "de beschrijving van de identiteitsprovider is te lang"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description isn't the JSON it should be"
+msgstr "de beschrijving van de identiteitsprovider is niet de verwachte JSON"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description names another issuer than the address entered: check the address, character for character"
+msgstr "de beschrijving van de identiteitsprovider noemt een andere uitgever dan het ingevoerde adres: controleer het adres, teken voor teken"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description says it doesn't sign people in on its page (authorization code)"
+msgstr "volgens de beschrijving meldt de identiteitsprovider niemand aan op zijn pagina (autorisatiecode)"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "the identity provider's description says it doesn't take the protected sign-in (PKCE with S256) MailCraft uses"
+msgstr "volgens de beschrijving ondersteunt de identiteitsprovider de beveiligde aanmelding (PKCE met S256) die MailCraft gebruikt niet"
+
+#. what a command says
 #: crates/engine/src/import_pst.rs
 #, fuzzy
 msgid "the import couldn't account for every item of {path}"
@@ -25599,6 +26497,12 @@ msgstr "de import heeft geen map om e-mail in te zetten"
 #, fuzzy
 msgid "the import was stopped"
 msgstr "de import werd gestopt"
+
+#. interface
+#: crates/ui-egui/src/account_setup/oauth_settings.rs
+#, fuzzy
+msgid "the incoming and outgoing servers above"
+msgstr "de inkomende en uitgaande servers hierboven"
 
 #. what a command says
 #: crates/engine/src/cmd/keys.rs
@@ -25629,6 +26533,12 @@ msgstr "de lijst toont de map van elk account: open de map van één account, of
 #, fuzzy
 msgid "the mail server doesn't know your contacts: replies outside the organisation go to nobody or to everybody"
 msgstr "de e-mailserver kent uw contactpersonen niet: antwoorden buiten de organisatie gaan naar niemand of naar iedereen"
+
+#. why a mail server couldn't be used
+#: crates/proto/src/oauthbearer.rs
+#, fuzzy
+msgid "the mail server's name can't be sent with a sign-in"
+msgstr "de naam van de mailserver kan niet met een aanmelding worden verzonden"
 
 #. what a command says
 #: crates/engine/src/cmd/file.rs
@@ -25726,6 +26636,18 @@ msgid "the occurrence was not changed; nothing was moved"
 msgstr "het exemplaar is niet gewijzigd; er is niets verplaatst"
 
 #. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+#, fuzzy
+msgid "the online archive has changes that haven't reached the server yet: Send/Receive first, then hide it"
+msgstr "het onlinearchief heeft wijzigingen die de server nog niet hebben bereikt: eerst Verzenden/ontvangen, dan verbergen"
+
+#. what a command says
+#: crates/engine/src/cmd/account.rs
+#, fuzzy
+msgid "the online archive has changes that haven't reached the server yet: Send/Receive first, then say it is kept in Exchange Online"
+msgstr "het onlinearchief heeft wijzigingen die de server nog niet hebben bereikt: eerst Verzenden/ontvangen, dan aangeven dat het in Exchange Online staat"
+
+#. what a command says
 #: crates/model/src/mailbox.rs
 #, fuzzy
 msgid "the parent folder belongs to another account"
@@ -25765,6 +26687,12 @@ msgid "the proposed end is not after the proposed start"
 msgstr "het voorgestelde einde ligt niet na het voorgestelde begin"
 
 #. what a command says
+#: crates/model/src/oauth.rs
+#, fuzzy
+msgid "the redirect port must be between 1 and 65535, or automatic"
+msgstr "de omleidingspoort moet tussen 1 en 65535 liggen, of automatisch zijn"
+
+#. what a command says
 #: crates/model/src/mailbox_followup.rs
 #, fuzzy
 msgid "the reminder time must be in the future"
@@ -25783,10 +26711,16 @@ msgid "the result would make this account keep more sync state than is taken in"
 msgstr "het resultaat zou dit account meer status om bij te houden laten bewaren dan wordt opgenomen"
 
 #. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
+#: crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs
 #, fuzzy
 msgid "the result {why}"
 msgstr "het resultaat {why}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "the revocation address {why}"
+msgstr "het intrekkingsadres {why}"
 
 #. name
 #: crates/engine/src/cmd/sieve_elsewhere.rs
@@ -26053,6 +26987,18 @@ msgid "the server doesn't take a password on this connection"
 msgstr "de server accepteert geen wachtwoord via deze verbinding"
 
 #. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "the server doesn't take a token with OAUTHBEARER, which this account's OAuth settings ask for"
+msgstr "de server accepteert geen token met OAUTHBEARER, waar de OAuth-instellingen van dit account om vragen"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "the server doesn't take a token with XOAUTH2, which this account's OAuth settings ask for"
+msgstr "de server accepteert geen token met XOAUTH2, waar de OAuth-instellingen van dit account om vragen"
+
+#. why a mail server couldn't be used
 #: crates/proto/src/imap/mod.rs
 #, fuzzy
 msgid "the server ended the command early"
@@ -26114,6 +27060,12 @@ msgstr "de server biedt geen manier om met een wachtwoord aan te melden"
 #, fuzzy
 msgid "the server offers no way to sign in with an access token"
 msgstr "de server biedt geen manier om met een toegangstoken aan te melden"
+
+#. why a mail server couldn't be used
+#: crates/net/src/sync.rs
+#, fuzzy
+msgid "the server offers no way to sign in with an access token (neither OAUTHBEARER nor XOAUTH2)"
+msgstr "de server biedt geen manier om aan te melden met een toegangstoken (OAUTHBEARER noch XOAUTH2)"
 
 #. why a mail server couldn't be used
 #: crates/net/src/transport.rs
@@ -26346,6 +27298,18 @@ msgstr "het antwoord van de server is te diep genest"
 msgid "the server's response is too long"
 msgstr "het antwoord van de server is te lang"
 
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "the sign-in came back from another identity provider than the one asked: nothing of it was used"
+msgstr "de aanmelding kwam terug van een andere identiteitsprovider dan gevraagd: er is niets van gebruikt"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "the sign-in came back without your identity provider's name, which it says it always gives: nothing of it was used"
+msgstr "de aanmelding kwam terug zonder de naam van uw identiteitsprovider, die hij naar eigen zeggen altijd meestuurt: er is niets van gebruikt"
+
 #. what a command says
 #: crates/engine/src/cmd/signature.rs
 #, fuzzy
@@ -26407,13 +27371,13 @@ msgid "the top level"
 msgstr "het bovenste niveau"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/lib.rs
+#: crates/proto/src/lib.rs crates/proto/src/oauthbearer.rs
 #, fuzzy
 msgid "the user name or access token has a character that can't be sent"
 msgstr "de gebruikersnaam of het toegangstoken bevat een teken dat niet kan worden verzonden"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/lib.rs
+#: crates/proto/src/lib.rs crates/proto/src/oauthbearer.rs
 #, fuzzy
 msgid "the user name or access token is too long to be sent"
 msgstr "de gebruikersnaam of het toegangstoken is te lang om te worden verzonden"
@@ -26491,7 +27455,7 @@ msgid "there is already a signature named \"{to}\""
 msgstr "er is al een handtekening met de naam „{to}”"
 
 #. why a mail server couldn't be used
-#: crates/proto/src/lib.rs
+#: crates/proto/src/lib.rs crates/proto/src/oauthbearer.rs
 #, fuzzy
 msgid "there is no access token to sign in with"
 msgstr "er is geen toegangstoken om mee aan te melden"
@@ -26507,6 +27471,12 @@ msgstr "er is geen account"
 #, fuzzy
 msgid "there is no account to remove"
 msgstr "er is geen account om te verwijderen"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "there is no earlier sign-in to renew"
+msgstr "er is geen eerdere aanmelding om te vernieuwen"
 
 #. what a command says
 #: crates/engine/src/cmd/graph_switch.rs
@@ -26579,6 +27549,12 @@ msgstr "deze Verzenden/ontvangen was voor een ander account, niet voor {name}"
 #, fuzzy
 msgid "this Send/Receive was for the server {name} named before"
 msgstr "deze Verzenden/ontvangen was voor de eerder genoemde server {name}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "this account doesn't sign in with your own identity provider"
+msgstr "dit account meldt zich niet aan bij uw eigen identiteitsprovider"
 
 #. what a command says
 #: crates/engine/src/cmd/compose.rs crates/engine/src/cmd/send_later.rs
@@ -26663,6 +27639,11 @@ msgstr "dit contact heeft geen e-mailadres"
 #, fuzzy
 msgid "this contacts folder can only be read"
 msgstr "deze contactpersonenmap is alleen-lezen"
+
+#. what a command says
+#: crates/engine/src/cmd/ews_directory.rs
+msgid "this directory was for another account, not for {name}"
+msgstr ""
 
 #. what a command says
 #: crates/engine/src/cmd/remote.rs
@@ -26818,6 +27799,12 @@ msgstr "aan {people}"
 msgid "to {recipient}"
 msgstr "aan {recipient}"
 
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/discovery.rs
+#, fuzzy
+msgid "token"
+msgstr "token"
+
 #. what a command says
 #: crates/engine/src/cmd/tasks.rs
 #, fuzzy
@@ -26847,6 +27834,12 @@ msgstr "typ een adres, zoals naam@example.org, of een domein, zoals @example.org
 #, fuzzy
 msgid "unexpected server response: {reason}"
 msgstr "onverwacht antwoord van de server: {reason}"
+
+#. what a command says
+#: crates/model/src/oauth.rs
+#, fuzzy
+msgid "use common, consumers, organizations, or a directory's id or domain as the tenant"
+msgstr "gebruik common, consumers, organizations, of de id of het domein van een directory als tenant"
 
 #. interface
 #: crates/ui-egui/src/security.rs
@@ -27007,6 +28000,54 @@ msgstr "u hebt zich aangemeld als iemand anders"
 #, fuzzy
 msgid "you@example.org"
 msgstr "naam@example.org"
+
+#. name
+#: crates/model/src/mailbox.rs
+#, fuzzy
+msgid "your identity provider"
+msgstr "uw identiteitsprovider"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider answered with status {status}"
+msgstr "uw identiteitsprovider antwoordde met status {status}"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider can't sign anybody in just now: try again later"
+msgstr "uw identiteitsprovider kan op dit moment niemand aanmelden: probeer het later opnieuw"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider doesn't know this client id, or its client secret: check the OAuth settings"
+msgstr "uw identiteitsprovider kent deze client-id of het clientgeheim niet: controleer de OAuth-instellingen"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider no longer takes this sign-in: sign in again"
+msgstr "uw identiteitsprovider accepteert deze aanmelding niet meer: meld u opnieuw aan"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider refused the sign-in"
+msgstr "uw identiteitsprovider heeft de aanmelding geweigerd"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider won't give what was asked for: check the extra scopes in the OAuth settings"
+msgstr "uw identiteitsprovider geeft niet wat is gevraagd: controleer de extra bereiken in de OAuth-instellingen"
+
+#. why a mail server couldn't be used
+#: crates/net/src/oauth/custom.rs
+#, fuzzy
+msgid "your identity provider's addresses must start with https://"
+msgstr "de adressen van uw identiteitsprovider moeten beginnen met https://"
 
 #. interface
 #: crates/ui-egui/src/graph_switch.rs
@@ -27215,6 +28256,12 @@ msgid "{day} at {time}"
 msgstr "{day} om {time}"
 
 #. interface
+#: crates/ui-egui/src/account_setup.rs
+#, fuzzy
+msgid "{domain} says its mail signs in with an identity provider (OAuth 2.0)."
+msgstr "{domain} geeft aan dat de e-mail daar aanmeldt via een identiteitsprovider (OAuth 2.0)."
+
+#. interface
 #: crates/ui-egui/src/import_pst.rs crates/ui-egui/src/sync_panel.rs
 #, fuzzy
 msgid "{done} of {total}"
@@ -27421,6 +28468,11 @@ msgstr "{name} heeft deze vergadering geaccepteerd."
 msgid "{name} answered this invitation."
 msgstr "{name} heeft deze uitnodiging beantwoord."
 
+#. what a command says
+#: crates/engine/src/cmd/ews_mail.rs
+msgid "{name} can't be both an online archive and a shared mailbox"
+msgstr ""
+
 #. android
 #: apps/mailcraft-android/app/src/main/kotlin/work/mailcraft/android/ShareLoad.kt
 #, fuzzy
@@ -27482,7 +28534,12 @@ msgid "{name} has no :{tag}."
 msgstr "{name} heeft geen :{tag}."
 
 #. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
+#: crates/engine/src/cmd/ews_directory.rs
+msgid "{name} has no Exchange server account it is opened through"
+msgstr ""
+
+#. what a command says
+#: crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs
 #, fuzzy
 msgid "{name} has no Exchange server address that can be used"
 msgstr "{name} heeft geen Exchange-serveradres dat kan worden gebruikt"
@@ -27536,7 +28593,7 @@ msgid "{name} is a command; a test belongs here."
 msgstr "{name} is een opdracht; hier hoort een test."
 
 #. what a command says
-#: crates/engine/src/cmd/graph_mail.rs
+#: crates/engine/src/cmd/ews_mail.rs crates/engine/src/cmd/graph_mail.rs
 #, fuzzy
 msgid "{name} is a shared mailbox whose account is gone: remove it and add it again"
 msgstr "{name} is een gedeeld postvak waarvan het account is verdwenen: verwijder het en voeg het opnieuw toe"
@@ -27552,6 +28609,11 @@ msgstr "{name} is een test; hier hoort een opdracht."
 #, fuzzy
 msgid "{name} is already in {folder}."
 msgstr "{name} staat al in {folder}."
+
+#. what a command says
+#: crates/engine/src/cmd/ews_directory.rs
+msgid "{name} is an online archive: it has no calendars, address books or to-do lists of its own"
+msgstr ""
 
 #. interface
 #: crates/ui-egui/src/files.rs
@@ -27638,7 +28700,7 @@ msgid "{name} isn't among the Favorites"
 msgstr "{name} staat niet bij de favorieten"
 
 #. what a command says
-#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/ews_mail.rs
+#: crates/engine/src/cmd/account.rs crates/engine/src/cmd/ews_directory.rs crates/engine/src/cmd/ews_mail.rs
 #, fuzzy
 msgid "{name} isn't an Exchange server account"
 msgstr "{name} is geen Exchange-serveraccount"
@@ -28547,6 +29609,13 @@ msgstr[0] "{n} vraag wacht nog."
 msgstr[1] "{n} vragen wachten nog."
 
 #. interface
+#: crates/ui-egui/src/room_finder.rs
+msgid "{n} more room isn't shown"
+msgid_plural "{n} more rooms aren't shown"
+msgstr[0] ""
+msgstr[1] ""
+
+#. interface
 #: crates/ui-egui/src/files.rs
 #, fuzzy
 msgid "{n} more was left out: at most {mb} MB at a time"
@@ -29193,6 +30262,14 @@ msgid "−Lines"
 msgstr "−Regels"
 
 #, fuzzy
+#~ msgid "shared mailboxes open under an account kept in step through Microsoft Graph"
+#~ msgstr "gedeelde postvakken worden geopend onder een via Microsoft Graph bijgehouden account"
+
+#, fuzzy
+#~ msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph"
+#~ msgstr "gedeelde postvakken worden geopend onder een account dat via Microsoft Graph wordt bijgehouden"
+
+#, fuzzy
 #~ msgid "This account's server keeps this contact. Changes made here aren't sent back yet, so it can't be edited or deleted here. Favorite and categories are kept on this computer."
 #~ msgstr "De server van dit account bewaart deze contactpersoon. Wijzigingen die hier worden gemaakt, worden nog niet teruggestuurd, dus deze kan hier niet worden bewerkt of verwijderd. Favoriet en categorieën worden op deze computer bewaard."
 
@@ -29707,818 +30784,3 @@ msgstr "−Regels"
 #~ msgid "Scheduling Assistant"
 #~ msgstr "Planningassistent"
 
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "A sign-in with your own identity provider is never sent to Microsoft's or Google's mail servers: change the servers above to your own."
-msgstr "Een aanmelding bij uw eigen identiteitsprovider wordt nooit naar de mailservers van Microsoft of Google gestuurd: vervang de servers hierboven door uw eigen servers."
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Agree to the addresses outside your identity provider's domain, or enter others"
-msgstr "Ga akkoord met de adressen buiten het domein van uw identiteitsprovider, of voer andere in"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Asked for besides openid email offline_access"
-msgstr "Aangevraagd naast openid email offline_access"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Automatic (OAUTHBEARER, else XOAUTH2)"
-msgstr "Automatisch (OAUTHBEARER, anders XOAUTH2)"
-
-#. interface
-#: crates/ui-egui/src/dialogs.rs
-#, fuzzy
-msgid "Checking the address with the server…"
-msgstr "Bezig het adres bij de server te controleren…"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Client ID"
-msgstr "Client-id"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Client secret (optional)"
-msgstr "Clientgeheim (optioneel)"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Client secret sent"
-msgstr "Verzending van clientgeheim"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "Couldn't ask the server which folders are other people's"
-msgstr "Kon de server niet vragen welke mappen van andere mensen zijn"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Discover"
-msgstr "Detecteren"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Extra scopes"
-msgstr "Extra bereiken"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Find the sign-in and token addresses from the identity provider's address. Only that address is sent."
-msgstr "Zoekt de aanmeld- en tokenadressen op aan de hand van het adres van de identiteitsprovider. Alleen dat adres wordt verzonden."
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Find your identity provider's addresses with Discover, or enter them"
-msgstr "Zoek de adressen van uw identiteitsprovider op met Detecteren, of voer ze in"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Finding the addresses stopped unexpectedly"
-msgstr "Het zoeken naar de adressen is onverwacht gestopt"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Forget the client secret"
-msgstr "Clientgeheim vergeten"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Found: sign-in at {signIn}, tokens from {token}."
-msgstr "Gevonden: aanmelden bij {signIn}, tokens van {token}."
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Google (built in)"
-msgstr "Google (ingebouwd)"
-
-#. command label, interface
-#: crates/engine/src/cmd/ews_mail.rs crates/ui-egui/src/nav.rs
-#, fuzzy
-msgid "Hide Online Archive"
-msgstr "Onlinearchief verbergen"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "I trust these addresses"
-msgstr "Ik vertrouw deze adressen"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Identity provider"
-msgstr "Identiteitsprovider"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Identity provider (issuer)"
-msgstr "Identiteitsprovider (uitgever)"
-
-#. interface
-#: crates/ui-egui/src/account_setup.rs
-#, fuzzy
-msgid "If you go on, you sign in on your identity provider's page and the access token it gives is sent to {hosts}. Go on only if you know it is your provider's."
-msgstr "Als u doorgaat, meldt u zich aan op de pagina van uw identiteitsprovider en wordt het toegangstoken dat deze uitgeeft naar {hosts} verzonden. Ga alleen door als u weet dat dit van uw provider is."
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "In the Authorization header (client_secret_basic)"
-msgstr "In de Authorization-header (client_secret_basic)"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "In the form (client_secret_post)"
-msgstr "In het formulier (client_secret_post)"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "It hands out no refresh tokens: you'll be asked to sign in again each time a sign-in runs out."
-msgstr "Deze geeft geen vernieuwingstokens uit: u wordt telkens opnieuw gevraagd zich aan te melden wanneer een aanmelding verloopt."
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Keep the built-in settings"
-msgstr "Ingebouwde instellingen behouden"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Kept in your system's credential store, never in the mailbox. A desktop program can't really keep it secret from you."
-msgstr "Bewaard in de referentieopslag van uw systeem, nooit in het postvak. Een desktopprogramma kan het niet echt voor u geheimhouden."
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Kept: type a new one to replace it"
-msgstr "Bewaard: typ een nieuw om het te vervangen"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "Mail goes into an online archive only from its own mailbox: move it into that mailbox first"
-msgstr "E-mail komt alleen vanuit het eigen postvak in een onlinearchief: verplaats het eerst naar dat postvak"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "Mail in an online archive is copied within the archive: move it out instead"
-msgstr "E-mail in een onlinearchief wordt binnen het archief gekopieerd: verplaats het in plaats daarvan naar buiten"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "Mail isn't copied into an online archive from elsewhere: move it there from its own mailbox"
-msgstr "E-mail wordt niet van elders naar een onlinearchief gekopieerd: verplaats het daarheen vanuit het eigen postvak"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Mechanism"
-msgstr "Mechanisme"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Microsoft 365 or Outlook.com (built in)"
-msgstr "Microsoft 365 of Outlook.com (ingebouwd)"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "No addresses found: {reason}"
-msgstr "Geen adressen gevonden: {reason}"
-
-#. command label
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
-msgid "OAuth Built-in Settings"
-msgstr "Ingebouwde OAuth-instellingen"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "OAuth settings"
-msgstr "OAuth-instellingen"
-
-#. interface
-#: crates/ui-egui/src/nav.rs
-#, fuzzy
-msgid "Online Archive – {address}"
-msgstr "Onlinearchief – {address}"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Only if your provider gave one"
-msgstr "Alleen als uw provider er een heeft gegeven"
-
-#. interface
-#: crates/ui-egui/src/dialogs.rs
-#, fuzzy
-msgid "Opened with {owner}'s server and password. It needs Full Access to the mailbox, which your organisation's administrator gives. What you change in it goes to it."
-msgstr "Geopend met de server en het wachtwoord van {owner}. Er is Volledige toegang tot het postvak nodig, die de beheerder van uw organisatie verleent. Wat u erin wijzigt, gaat ernaartoe."
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Redirect port"
-msgstr "Omleidingspoort"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Register http://127.0.0.1 with any port (or the one above) as the redirect address."
-msgstr "Registreer http://127.0.0.1 met een willekeurige poort (of de poort hierboven) als omleidingsadres."
-
-#. interface
-#: crates/ui-egui/src/lib.rs
-#, fuzzy
-msgid "Renewing the sign-in… If it can't be renewed, sign in on the page that opens in your browser."
-msgstr "De aanmelding wordt vernieuwd… Als dat niet lukt, meldt u zich aan op de pagina die in uw browser wordt geopend."
-
-#. command label
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
-msgid "Restore Default OAuth Settings"
-msgstr "Standaard-OAuth-instellingen herstellen"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Revocation address (optional)"
-msgstr "Intrekkingsadres (optioneel)"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Scopes"
-msgstr "Bereiken"
-
-#. interface
-#: crates/ui-egui/src/ews_mail.rs
-#, fuzzy
-msgid "Send/Receive the mailbox to sign in and read its online archive"
-msgstr "Voer Verzenden/ontvangen uit voor het postvak om aan te melden en het onlinearchief te lezen"
-
-#. command label, interface
-#: crates/engine/src/cmd/ews_mail.rs crates/ui-egui/src/nav.rs
-#, fuzzy
-msgid "Show Online Archive"
-msgstr "Onlinearchief weergeven"
-
-#. interface
-#: crates/ui-egui/src/account_setup.rs
-#, fuzzy
-msgid "Sign in with your identity provider (OAuth 2.0) instead"
-msgstr "In plaats daarvan aanmelden met uw identiteitsprovider (OAuth 2.0)"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Sign-in address"
-msgstr "Aanmeldadres"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "The client secret can only be letters, digits and punctuation"
-msgstr "Het clientgeheim mag alleen letters, cijfers en leestekens bevatten"
-
-#. interface
-#: crates/ui-egui/src/lib.rs
-#, fuzzy
-msgid "The client secret for {account} isn't stored on this computer: enter it again in Account Settings (File › Info)"
-msgstr "Het clientgeheim voor {account} is niet op deze computer opgeslagen: voer het opnieuw in bij Accountinstellingen (Bestand › Info)"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "The client secret is kept for the settings as they were: enter it again to use it with these, or it is forgotten when you save."
-msgstr "Het clientgeheim is bewaard voor de instellingen zoals ze waren: voer het opnieuw in om het met deze te gebruiken, anders wordt het bij opslaan vergeten."
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "The one registered for MailCraft"
-msgstr "Het id dat voor MailCraft is geregistreerd"
-
-#. interface
-#: crates/ui-egui/src/ews_mail.rs
-#, fuzzy
-msgid "The online archive couldn't be read: Refresh to try again"
-msgstr "Het onlinearchief kon niet worden gelezen: vernieuw om het opnieuw te proberen"
-
-#. interface
-#: crates/ui-egui/src/nav.rs
-#, fuzzy
-msgid "The online archive needs a connection to the server"
-msgstr "Het onlinearchief heeft een verbinding met de server nodig"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "The redirect port is a number from 1 to 65535, or empty for any free one"
-msgstr "De omleidingspoort is een getal van 1 tot 65535, of leeg voor een willekeurige vrije poort"
-
-#. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
-#, fuzzy
-msgid "The server no longer has the online archive: changes made in it that hadn't reached the server are lost"
-msgstr "De server heeft het onlinearchief niet meer: wijzigingen erin die de server nog niet hadden bereikt, zijn verloren"
-
-#. interface
-#: crates/ui-egui/src/ews_mail.rs
-#, fuzzy
-msgid "The shared mailbox couldn't be read."
-msgstr "Het gedeelde postvak kon niet worden gelezen."
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "The sign-in is only sent to: {servers}"
-msgstr "De aanmelding wordt alleen verzonden naar: {servers}"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "These addresses are outside your identity provider's domain: {hosts}"
-msgstr "Deze adressen liggen buiten het domein van uw identiteitsprovider: {hosts}"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "These settings will no longer be {provider}'s: MailCraft will treat this account as one with your own identity provider, starting from the values above, and you'll sign in again."
-msgstr "Deze instellingen zijn dan niet meer die van {provider}: MailCraft behandelt dit account als een account met uw eigen identiteitsprovider, uitgaande van de bovenstaande waarden, en u meldt zich opnieuw aan."
-
-#. interface
-#: crates/ui-egui/src/ews_mail.rs
-#, fuzzy
-msgid "This mailbox's online archive is kept in Microsoft 365, which needs a Microsoft sign-in, so it isn't shown"
-msgstr "Het onlinearchief van dit postvak staat in Microsoft 365, waarvoor aanmelden bij Microsoft nodig is, dus het wordt niet weergegeven"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "To sign in with your own identity provider, first change the incoming and outgoing servers to your own: a sign-in from it is never sent to {provider}'s servers."
-msgstr "Om u aan te melden bij uw eigen identiteitsprovider, vervangt u eerst de inkomende en uitgaande server door uw eigen servers: een aanmelding daarvan wordt nooit naar de servers van {provider} gestuurd."
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Token address"
-msgstr "Tokenadres"
-
-#. interface
-#: crates/ui-egui/src/account_setup.rs
-#, fuzzy
-msgid "Use a password instead"
-msgstr "In plaats daarvan een wachtwoord gebruiken"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Use it"
-msgstr "Gebruiken"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Use my own identity provider"
-msgstr "Mijn eigen identiteitsprovider gebruiken"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Use your own identity provider instead…"
-msgstr "In plaats daarvan uw eigen identiteitsprovider gebruiken…"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Wait for your identity provider's addresses"
-msgstr "Wacht op de adressen van uw identiteitsprovider"
-
-#. interface
-#: crates/ui-egui/src/lib.rs
-#, fuzzy
-msgid "Waiting for the system's credential store…"
-msgstr "Wachten op de referentieopslag van het systeem…"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Your domain names {issuer} for signing in."
-msgstr "Uw domein noemt {issuer} voor het aanmelden."
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "Your own identity provider"
-msgstr "Uw eigen identiteitsprovider"
-
-#. what a command says
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
-msgid "a shared mailbox is reached through the server settings of the account it is opened through: change that account's"
-msgstr "een gedeeld postvak wordt bereikt via de serverinstellingen van het account waarmee het is geopend: wijzig die van dat account"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "a sign-in with your identity provider is never sent to Microsoft's or Google's mail servers"
-msgstr "een aanmelding bij uw identiteitsprovider wordt nooit naar de mailservers van Microsoft of Google verzonden"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "a sign-in with your identity provider is only sent to a mail server on this computer in a test"
-msgstr "een aanmelding bij uw identiteitsprovider wordt alleen in een test naar een mailserver op deze computer verzonden"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "a sign-in with your identity provider is only used with this account's own mail servers"
-msgstr "een aanmelding bij uw identiteitsprovider wordt alleen gebruikt met de eigen mailservers van dit account"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth.rs
-#, fuzzy
-msgid "a sign-in with your own identity provider is for mail only, not Microsoft Graph"
-msgstr "een aanmelding bij uw eigen identiteitsprovider is alleen voor e-mail, niet voor Microsoft Graph"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth.rs
-#, fuzzy
-msgid "a sign-in with {provider} comes back through a loopback port only"
-msgstr "een aanmelding bij {provider} komt alleen terug via een loopbackpoort"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "access was refused on the sign-in page"
-msgstr "de toegang is geweigerd op de aanmeldpagina"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "an Exchange server account needs a server address that can be used to open a shared mailbox"
-msgstr "een Exchange-serveraccount heeft een serveradres nodig dat kan worden gebruikt om een gedeeld postvak te openen"
-
-#. what a command says
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
-msgid "an Exchange server account's server and user name can't be changed while a shared mailbox opened through it has mail here: remove the shared mailbox first"
-msgstr "de server en de gebruikersnaam van een Exchange-serveraccount kunnen niet worden gewijzigd zolang de e-mail van een gedeeld postvak dat ermee is geopend hier is: verwijder eerst het gedeelde postvak"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "an online archive stays under its mailbox: move that account"
-msgstr "een onlinearchief blijft onder het postvak: verplaats dat account"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth.rs
-#, fuzzy
-msgid "couldn't open a port on this computer for the sign-in to come back to"
-msgstr "kan geen poort op deze computer openen waarop de aanmelding kan terugkomen"
-
-#. what a command says
-#: crates/model/src/oauth.rs
-#, fuzzy
-msgid "enter the client id registered for MailCraft at your identity provider"
-msgstr "voer de client-id in die bij uw identiteitsprovider voor MailCraft is geregistreerd"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "enter your identity provider's address (its issuer)"
-msgstr "voer het adres van uw identiteitsprovider in (de uitgever)"
-
-#. what a command says
-#: crates/model/src/oauth.rs
-#, fuzzy
-msgid "find your identity provider's sign-in addresses (Discover), or enter them"
-msgstr "zoek de aanmeldadressen van uw identiteitsprovider op (Detecteren), of voer ze in"
-
-#. what a command says
-#: crates/model/src/archive.rs
-#, fuzzy
-msgid "only an Exchange server account has an online archive here"
-msgstr "hier heeft alleen een Exchange-serveraccount een onlinearchief"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth.rs
-#, fuzzy
-msgid "port {port} on this computer is in use: choose another redirect port, or automatic"
-msgstr "poort {port} op deze computer is in gebruik: kies een andere omleidingspoort, of automatisch"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "revocation"
-msgstr "intrekkings"
-
-#. what a command says, why a command can't run
-#: crates/engine/src/cmd/shared.rs
-#, fuzzy
-msgid "shared mailboxes open under an account kept in step through Microsoft Graph, or an Exchange server account"
-msgstr "gedeelde postvakken worden geopend onder een via Microsoft Graph bijgehouden account of onder een Exchange-serveraccount"
-
-#. what a command says
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "shared mailboxes open under an account that is kept in step through Microsoft Graph or is an Exchange server account"
-msgstr "gedeelde postvakken worden geopend onder een account dat via Microsoft Graph wordt bijgehouden of een Exchange-serveraccount is"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "sign-in"
-msgstr "aanmeld"
-
-#. what a command says
-#: crates/model/src/archive.rs
-#, fuzzy
-msgid "that account isn't an online archive"
-msgstr "dat account is geen onlinearchief"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth.rs
-#, fuzzy
-msgid "that redirect port can't be used: choose another, or automatic"
-msgstr "die omleidingspoort kan niet worden gebruikt: kies een andere, of automatisch"
-
-#. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
-#, fuzzy
-msgid "the account {name} is the online archive of is gone"
-msgstr "het account {name} waarvan dit het onlinearchief is, bestaat niet meer"
-
-#. what a command says
-#: crates/model/src/oauth.rs
-#, fuzzy
-msgid "the client id can only be letters, digits and punctuation, at most 200 of them"
-msgstr "de client-id mag alleen letters, cijfers en leestekens bevatten, maximaal 200"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "the client secret can only be letters, digits and punctuation"
-msgstr "het clientgeheim mag alleen letters, cijfers en leestekens bevatten"
-
-#. what a command says
-#: crates/model/src/oauth.rs
-#, fuzzy
-msgid "the identity provider (issuer) address can't have a query or a fragment"
-msgstr "het adres van de identiteitsprovider (uitgever) mag geen query of fragment bevatten"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider doesn't describe itself at the usual addresses: enter its sign-in addresses"
-msgstr "de identiteitsprovider beschrijft zichzelf niet op de gebruikelijke adressen: voer de aanmeldadressen in"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider sent its description on through too many redirects"
-msgstr "de identiteitsprovider heeft zijn beschrijving via te veel omleidingen doorgestuurd"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider sent its description on to an address on this computer, a private network or without https"
-msgstr "de identiteitsprovider heeft zijn beschrijving doorgestuurd naar een adres op deze computer, in een privénetwerk of zonder https"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's address can't have a query or a fragment"
-msgstr "het adres van de identiteitsprovider mag geen query of fragment bevatten"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's address {why}"
-msgstr "het adres van de identiteitsprovider {why}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description couldn't be fetched: {other}"
-msgstr "de beschrijving van de identiteitsprovider kon niet worden opgehaald: {other}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description gives a {what} address that {why}"
-msgstr "de beschrijving van de identiteitsprovider geeft een {what}adres dat {why}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description has no {what} address"
-msgstr "de beschrijving van de identiteitsprovider geeft geen {what}adres"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description is too long"
-msgstr "de beschrijving van de identiteitsprovider is te lang"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description isn't the JSON it should be"
-msgstr "de beschrijving van de identiteitsprovider is niet de verwachte JSON"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description names another issuer than the address entered: check the address, character for character"
-msgstr "de beschrijving van de identiteitsprovider noemt een andere uitgever dan het ingevoerde adres: controleer het adres, teken voor teken"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description says it doesn't sign people in on its page (authorization code)"
-msgstr "volgens de beschrijving meldt de identiteitsprovider niemand aan op zijn pagina (autorisatiecode)"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "the identity provider's description says it doesn't take the protected sign-in (PKCE with S256) MailCraft uses"
-msgstr "volgens de beschrijving ondersteunt de identiteitsprovider de beveiligde aanmelding (PKCE met S256) die MailCraft gebruikt niet"
-
-#. interface
-#: crates/ui-egui/src/account_setup/oauth_settings.rs
-#, fuzzy
-msgid "the incoming and outgoing servers above"
-msgstr "de inkomende en uitgaande servers hierboven"
-
-#. why a mail server couldn't be used
-#: crates/proto/src/oauthbearer.rs
-#, fuzzy
-msgid "the mail server's name can't be sent with a sign-in"
-msgstr "de naam van de mailserver kan niet met een aanmelding worden verzonden"
-
-#. what a command says
-#: crates/engine/src/cmd/ews_mail.rs
-#, fuzzy
-msgid "the online archive has changes that haven't reached the server yet: Send/Receive first, then hide it"
-msgstr "het onlinearchief heeft wijzigingen die de server nog niet hebben bereikt: eerst Verzenden/ontvangen, dan verbergen"
-
-#. what a command says
-#: crates/engine/src/cmd/account.rs
-#, fuzzy
-msgid "the online archive has changes that haven't reached the server yet: Send/Receive first, then say it is kept in Exchange Online"
-msgstr "het onlinearchief heeft wijzigingen die de server nog niet hebben bereikt: eerst Verzenden/ontvangen, dan aangeven dat het in Exchange Online staat"
-
-#. what a command says
-#: crates/model/src/oauth.rs
-#, fuzzy
-msgid "the redirect port must be between 1 and 65535, or automatic"
-msgstr "de omleidingspoort moet tussen 1 en 65535 liggen, of automatisch zijn"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "the revocation address {why}"
-msgstr "het intrekkingsadres {why}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "the server doesn't take a token with OAUTHBEARER, which this account's OAuth settings ask for"
-msgstr "de server accepteert geen token met OAUTHBEARER, waar de OAuth-instellingen van dit account om vragen"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "the server doesn't take a token with XOAUTH2, which this account's OAuth settings ask for"
-msgstr "de server accepteert geen token met XOAUTH2, waar de OAuth-instellingen van dit account om vragen"
-
-#. why a mail server couldn't be used
-#: crates/net/src/sync.rs
-#, fuzzy
-msgid "the server offers no way to sign in with an access token (neither OAUTHBEARER nor XOAUTH2)"
-msgstr "de server biedt geen manier om aan te melden met een toegangstoken (OAUTHBEARER noch XOAUTH2)"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "the sign-in came back from another identity provider than the one asked: nothing of it was used"
-msgstr "de aanmelding kwam terug van een andere identiteitsprovider dan gevraagd: er is niets van gebruikt"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "the sign-in came back without your identity provider's name, which it says it always gives: nothing of it was used"
-msgstr "de aanmelding kwam terug zonder de naam van uw identiteitsprovider, die hij naar eigen zeggen altijd meestuurt: er is niets van gebruikt"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "there is no earlier sign-in to renew"
-msgstr "er is geen eerdere aanmelding om te vernieuwen"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "this account doesn't sign in with your own identity provider"
-msgstr "dit account meldt zich niet aan bij uw eigen identiteitsprovider"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/discovery.rs
-#, fuzzy
-msgid "token"
-msgstr "token"
-
-#. what a command says
-#: crates/model/src/oauth.rs
-#, fuzzy
-msgid "use common, consumers, organizations, or a directory's id or domain as the tenant"
-msgstr "gebruik common, consumers, organizations, of de id of het domein van een directory als tenant"
-
-#. name
-#: crates/model/src/mailbox.rs
-#, fuzzy
-msgid "your identity provider"
-msgstr "uw identiteitsprovider"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider answered with status {status}"
-msgstr "uw identiteitsprovider antwoordde met status {status}"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider can't sign anybody in just now: try again later"
-msgstr "uw identiteitsprovider kan op dit moment niemand aanmelden: probeer het later opnieuw"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider doesn't know this client id, or its client secret: check the OAuth settings"
-msgstr "uw identiteitsprovider kent deze client-id of het clientgeheim niet: controleer de OAuth-instellingen"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider no longer takes this sign-in: sign in again"
-msgstr "uw identiteitsprovider accepteert deze aanmelding niet meer: meld u opnieuw aan"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider refused the sign-in"
-msgstr "uw identiteitsprovider heeft de aanmelding geweigerd"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider won't give what was asked for: check the extra scopes in the OAuth settings"
-msgstr "uw identiteitsprovider geeft niet wat is gevraagd: controleer de extra bereiken in de OAuth-instellingen"
-
-#. why a mail server couldn't be used
-#: crates/net/src/oauth/custom.rs
-#, fuzzy
-msgid "your identity provider's addresses must start with https://"
-msgstr "de adressen van uw identiteitsprovider moeten beginnen met https://"
-
-#. interface
-#: crates/ui-egui/src/account_setup.rs
-#, fuzzy
-msgid "{domain} says its mail signs in with an identity provider (OAuth 2.0)."
-msgstr "{domain} geeft aan dat de e-mail daar aanmeldt via een identiteitsprovider (OAuth 2.0)."
-
-#. what a command says
-#: crates/engine/src/cmd/auto_replies.rs
-#, fuzzy
-msgid "Automatic replies are kept on the mail server, and MailCraft can set them only for accounts that sign in with Microsoft so far: IMAP has no standard way to set them (Sieve vacation replies may come later)"
-msgstr "Automatische antwoorden blijven op de e-mailserver, en MailCraft kan ze tot nu toe alleen instellen voor accounts die zich aanmelden met Microsoft: IMAP heeft geen standaardmanier om ze in te stellen (vakantieantwoorden via Sieve kunnen later komen)"
